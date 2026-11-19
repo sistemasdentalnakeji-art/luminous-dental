@@ -1,47 +1,40 @@
-import { clinic, services } from '@/content/clinic'
-import { BookingForm } from '@/features/booking/BookingForm'
+import { useEffect, type ComponentType } from 'react'
+import { Layout } from '@/components/Layout'
+import { routes } from '@/config/routes'
+import { useLocation } from '@/lib/router'
+import About from '@/pages/About'
+import Contact from '@/pages/Contact'
+import Home from '@/pages/Home'
+import Insurance from '@/pages/Insurance'
+import Services from '@/pages/Services'
 
-// Stage 0 shell: semantic layout with real data only. The design arrives in stage 2.
+const pages: Record<(typeof routes)[number]['path'], ComponentType> = {
+  '/': Home,
+  '/about': About,
+  '/services': Services,
+  '/insurance-financing': Insurance,
+  '/contact': Contact,
+}
+
 export default function App() {
-  const groups = [...new Set(services.map((s) => s.group))]
+  const { path, hash } = useLocation()
+  const route = routes.find((r) => r.path === path)
+  const Page = route ? pages[route.path] : Home // unknown address: show the home page (a real 404 page has no design yet)
+  useEffect(() => {
+    document.title = route?.title ?? routes[0].title
+  }, [route])
+  useEffect(() => {
+    // Scroll after the new page is drawn: to the anchor if there is one, else to the top.
+    const id = requestAnimationFrame(() => {
+      const target = hash && document.getElementById(decodeURIComponent(hash.slice(1)))
+      if (target) target.scrollIntoView()
+      else if (!hash) scrollTo({ top: 0, behavior: 'instant' })
+    })
+    return () => cancelAnimationFrame(id)
+  }, [path, hash])
   return (
-    <>
-      <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:p-3">Skip to content</a>
-      <header className="border-b px-4 py-4">
-        <p className="font-semibold">{clinic.name}</p>
-      </header>
-      <main id="main" className="mx-auto max-w-3xl space-y-10 px-4 py-10">
-        <section>
-          <h1 className="text-3xl font-semibold">{clinic.tagline}</h1>
-          <a className="mt-4 inline-block underline" href="#book">Book an appointment</a>
-        </section>
-        <section aria-labelledby="services">
-          <h2 id="services" className="text-xl font-semibold">Services</h2>
-          {groups.map((g) => (
-            <div key={g} className="mt-4">
-              <h3 className="font-medium">{g}</h3>
-              <ul className="list-disc pl-6 text-muted">
-                {services.filter((s) => s.group === g).map((s) => <li key={s.name}>{s.name}</li>)}
-              </ul>
-            </div>
-          ))}
-        </section>
-        <section aria-labelledby="doctor">
-          <h2 id="doctor" className="text-xl font-semibold">{clinic.doctor.name}</h2>
-          <p className="mt-2">{clinic.doctor.bio}</p>
-        </section>
-        <section id="book" aria-labelledby="book-title">
-          <h2 id="book-title" className="text-xl font-semibold">Request an Appointment</h2>
-          <BookingForm />
-        </section>
-      </main>
-      <footer className="border-t px-4 py-6 text-sm">
-        <address className="not-italic">
-          <a href={clinic.mapsUrl}>{clinic.address.street} · {clinic.address.city}, {clinic.address.state}</a><br />
-          <a href={clinic.phone.href}>{clinic.phone.label}</a> · <a href={`mailto:${clinic.email}`}>{clinic.email}</a>
-        </address>
-        <p className="mt-2">© {new Date().getFullYear()} {clinic.name}</p>
-      </footer>
-    </>
+    <Layout path={route ? path : '/'}>
+      <Page />
+    </Layout>
   )
 }

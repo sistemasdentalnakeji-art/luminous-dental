@@ -176,3 +176,7 @@ Falta: movimiento en vivo y prueba dentro del lienzo real; B2 no está en `canva
 ## 2026-11-18 · Diseñador UI-UX 1 · B5 (hero con 5 servicios)
 - Estilo-B5 y Estilo-B5-movil (copia de B4 con la figura de 5 servicios: brackets, implantes, puente, corona, blanqueamiento) en el lienzo; figura en `lienzo/anatomy/servicios/` con una página suelta por servicio. Hoja en `lienzo/hoja-b5.md`. B5 pesa 287 KB (65.6 KB gzip), +3 KB gzip sobre B4. Auditoría propia: pasa; extremos de líneas: 0 en los 5 servicios.
 - Sin verificar: runtime real del lienzo, toque real, fps, lector de pantalla, contraste medido. Espera: la dueña aprueba textos nuevos y decide si la rotación automática de servicios se queda.
+
+## 2026-11-18 · Jefe web · Menú y pie como Dental Nakeji
+- Página real (`apps/web`) con B5 a medio pasar (programador parado a petición de la dueña). Menú: Home · Services (panel con los 11 servicios) · Insurance & Financing · Contact · About. Pie en columnas: marca, Services, Clinic, Contact y línea final. La página nueva corre en `http://localhost:5181` (el 5180 es el proyecto viejo).
+- Sin verificar: celular a fondo, lector de pantalla. Privacy/Terms/Blog fuera del menú hasta tener contenido.

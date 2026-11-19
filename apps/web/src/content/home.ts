@@ -12,13 +12,15 @@ export const home = {
   // 1. Header and menu
   header: {
     skipLink: 'Skip to main content',
+    // Same order as the Dental Nakeji menu (same owner). "Services" opens a panel with every service.
     nav: [
       { label: 'Home', href: '/' },
-      { label: 'About', href: '/about' },
-      { label: 'Services', href: '/services' },
+      { label: 'Services', href: '/services', menu: true },
       { label: 'Insurance & Financing', href: '/insurance-financing' },
       { label: 'Contact', href: '/contact' },
+      { label: 'About', href: '/about' },
     ],
+    servicesOverview: 'View all services',
     cta: { label: 'Request an appointment', href: '#appointment' },
     phone: { label: 'Call or text (702) 805-8688', href: 'tel:+17028058688' },
   },
@@ -26,6 +28,7 @@ export const home = {
   // 2. Hero
   hero: {
     headline: 'Your teeth should last a lifetime',
+    emphasis: 'last a lifetime', // the part of the headline shown in italic gold
     support:
       'Nothing can truly replace the function of your natural teeth, so keeping them for as long as possible is our priority. Dr. Christian Hahn and our team care for the whole family in Las Vegas.',
     primaryCta: { label: 'Request an appointment', href: '#appointment' },
@@ -160,6 +163,15 @@ export const home = {
       error: 'Something went wrong and your request was not sent. Please call or text (702) 805-8688.',
       missingFields: 'Please complete the highlighted fields.',
     },
+    // Per-field messages (written by the designer in B5, not from the official site).
+    errors: {
+      firstName: 'Enter your first name.',
+      lastName: 'Enter your last name.',
+      phone: 'Enter a phone number.',
+      email: 'Enter a valid email, like name@example.com.',
+      treatment: 'Choose a treatment.',
+      consent: 'Check the box so we can contact you about this request.',
+    },
     location: { heading: 'Visit us', address: '1212 S Maryland Pkwy, Las Vegas, NV 89104', mapLabel: 'Open in Google Maps' },
   },
 
@@ -174,12 +186,16 @@ export const home = {
       { label: 'Instagram', href: 'https://www.instagram.com/luminousdentalvegas' },
       { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61554688456073' },
     ],
+    // Columns like the Dental Nakeji footer. Privacy Policy and Terms join when their pages have real content (docs/datos.md).
+    servicesHeading: 'Services',
+    services: ['Porcelain Veneers & Crowns', 'Dental Implants', 'Invisalign & Braces', 'Teeth Whitening'], // names from clinic.ts
+    clinicHeading: 'Clinic',
     links: [
+      { label: 'Home', href: '/' },
       { label: 'About', href: '/about' },
-      { label: 'Services', href: '/services' },
       { label: 'Insurance & Financing', href: '/insurance-financing' },
       { label: 'Contact', href: '/contact' },
-      { label: 'Privacy Policy', href: '/privacy-policy' },
+      { label: 'Request an appointment', href: '#appointment' },
     ],
     legal: 'Luminous Dental, Las Vegas. All rights reserved.', // the component adds the year
     note: 'Individual results vary.',

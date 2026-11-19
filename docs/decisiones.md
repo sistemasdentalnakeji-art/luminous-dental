@@ -63,3 +63,8 @@
 - Solo Luminous: Dental Appliances · Cosmetic Bonding.
 - Solo Nakeji (Luminous no los anuncia): All-on-4 · All-on-6 · Root canal · Gum treatment. Si Luminous los hace: POR CONFIRMAR.
 - 18-11-2026 · La dueña aprobó los 5 servicios de la figura del hero: Braces & Invisalign, Dental implants, Dentures & bridges, Porcelain veneers & crowns, Teeth whitening. All-on-6 fuera hasta confirmar que la clínica lo hace. Encargo: `docs/lienzo/HERO-SERVICIOS.md` → Estilo-B5.
+
+## 2026-11-18 (noche) — Se acaba el lienzo; B5 pasa a la página real
+- La dueña pide dejar de hacer variantes en el lienzo: B5 queda como diseño elegido (equivale al Sí 2) y todo cambio desde ahora se ve ya programado en `apps/web`.
+- Textos nuevos de la figura (hoja-b5.md) se usan tal cual; siguen marcados para su aprobación final.
+- Encargo: `docs/ETAPA-3-CODIGO.md`.

@@ -1,19 +1,31 @@
-import { useState, type FormEvent } from 'react'
+import { useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { sendAppointment, type AppointmentRequest } from '@/config/booking'
-import { clinic, services } from '@/content/clinic'
+import { services } from '@/content/clinic'
+import { home } from '@/content/home'
 
 type Status = 'idle' | 'sending' | 'sent' | 'preview' | 'error'
 
-const field = 'mt-1 block w-full rounded border border-ink/30 bg-paper px-3 py-2 min-h-11'
+const { submitLabel, consent, messages, errors } = home.appointment
+const phone = home.footer.phone
 
 // Fields mirror the official contact form; the shape is AppointmentRequest in packages/types.
 export function BookingForm() {
   const [status, setStatus] = useState<Status>('idle')
+  const [bad, setBad] = useState<Record<string, boolean>>({})
+  const form = useRef<HTMLFormElement>(null)
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const data = new FormData(e.currentTarget)
+    const el = e.currentTarget
+    const data = new FormData(el)
     if (data.get('company')) return // honeypot: bots fill hidden fields
+    const invalid = [...el.querySelectorAll<HTMLInputElement>('[required]')].filter((i) => !i.checkValidity())
+    setBad(Object.fromEntries(invalid.map((i) => [i.name, true])))
+    if (invalid.length) {
+      setStatus('idle')
+      invalid[0].focus()
+      return
+    }
     const s = (k: string) => String(data.get(k) ?? '').trim()
     const request: AppointmentRequest = {
       firstName: s('firstName'),
@@ -34,37 +46,57 @@ export function BookingForm() {
     }
   }
 
+  // One field: label, control, and its own message linked with aria-describedby.
+  const field = (name: keyof typeof errors, label: string, control: (p: object) => ReactNode, wide = false) => (
+    <div className={`f${wide ? ' w2' : ''}${bad[name] ? ' bad' : ''}`}>
+      <label htmlFor={`b-${name}`}>{label}</label>
+      {control({ id: `b-${name}`, name, required: true, 'aria-describedby': `e-${name}`, 'aria-invalid': bad[name] ? true : undefined })}
+      <p className="err" id={`e-${name}`}>{errors[name]}</p>
+    </div>
+  )
+
   return (
-    <form onSubmit={onSubmit} className="mt-4 grid gap-4 sm:grid-cols-2">
-      <label>First name<input name="firstName" required autoComplete="given-name" className={field} /></label>
-      <label>Last name<input name="lastName" required autoComplete="family-name" className={field} /></label>
-      <label>Email<input name="email" type="email" required autoComplete="email" className={field} /></label>
-      <label>Phone<input name="phone" type="tel" required autoComplete="tel" className={field} /></label>
-      <label className="sm:col-span-2">Treatment
-        <select name="treatment" required defaultValue="" className={field}>
-          <option value="" disabled>Choose a treatment</option>
-          {services.map((s) => <option key={s.name}>{s.name}</option>)}
-          <option>Not sure yet</option>
-        </select>
-      </label>
-      <label className="sm:col-span-2">Preferred day and time <span className="text-muted">(optional, Las Vegas time)</span>
-        <input name="preferredTime" className={field} />
-      </label>
-      <label className="sm:col-span-2">Your message<textarea name="message" required rows={4} className={field} /></label>
-      <label className="hidden" aria-hidden="true">Company<input name="company" tabIndex={-1} autoComplete="off" /></label>
-      <label className="flex items-start gap-2 sm:col-span-2">
-        <input name="consent" type="checkbox" required className="mt-1 size-5" />
-        <span>I agree to be contacted by {clinic.name} about my appointment request.</span>
-      </label>
-      <p className="text-sm text-muted sm:col-span-2">Please don't include medical history or payment information. Sending a request does not book an appointment; our team will contact you to confirm.</p>
-      <button type="submit" disabled={status === 'sending'} className="min-h-11 rounded bg-ink px-5 py-2 font-medium text-paper sm:col-span-2 sm:justify-self-start">
-        {status === 'sending' ? 'Sending…' : 'Request appointment'}
-      </button>
-      <p role="status" aria-live="polite" className="sm:col-span-2">
-        {status === 'sent' && 'Thank you! Our team will contact you soon to confirm your appointment.'}
-        {status === 'preview' && `Preview only: this form is not connected yet. Please call ${clinic.phone.label} to book.`}
-        {status === 'error' && `Something went wrong. Please call ${clinic.phone.label}.`}
-      </p>
+    <form ref={form} onSubmit={onSubmit} noValidate>
+      <div className="fields">
+        {field('firstName', 'First name', (p) => <input type="text" autoComplete="given-name" {...p} />)}
+        {field('lastName', 'Last name', (p) => <input type="text" autoComplete="family-name" {...p} />)}
+        {field('phone', 'Phone', (p) => <input type="tel" autoComplete="tel" {...p} />)}
+        {field('email', 'Email', (p) => <input type="email" autoComplete="email" {...p} />)}
+        {field('treatment', 'What do you need?', (p) => (
+          <select defaultValue="" {...p}>
+            <option value="" disabled>Choose a treatment</option>
+            {services.map((s) => <option key={s.name}>{s.name}</option>)}
+            <option>Not sure yet</option>
+          </select>
+        ), true)}
+        <div className="f w2">
+          <label htmlFor="b-preferredTime">Preferred day and time (optional, Las Vegas time)</label>
+          <input id="b-preferredTime" name="preferredTime" type="text" />
+        </div>
+        <div className="f w2">
+          <label htmlFor="b-message">Anything else we should know</label>
+          <textarea id="b-message" name="message" rows={3} />
+          <p className="hint">Please don’t include medical history or payment information.</p>
+        </div>
+        <label className="hidden" aria-hidden="true">Company<input name="company" tabIndex={-1} autoComplete="off" /></label>
+        <div className={`f w2${bad.consent ? ' bad' : ''}`}>
+          <label className="consent" htmlFor="b-consent">
+            <input id="b-consent" name="consent" type="checkbox" required aria-describedby="e-consent" aria-invalid={bad.consent ? true : undefined} />
+            <span>{consent}</span>
+          </label>
+          <p className="err" id="e-consent">{errors.consent}</p>
+        </div>
+      </div>
+      <div className="submit-row">
+        <button className="btn" type="submit" disabled={status === 'sending'}>{status === 'sending' ? messages.sending : submitLabel}</button>
+        <a className="tlink" href={phone.href}>{phone.label}</a>
+      </div>
+      <div role="status" aria-live="polite">
+        {Object.keys(bad).length > 0 && status === 'idle' && <p className="status">{messages.missingFields}</p>}
+        {status === 'sent' && <p className="status">{messages.success}</p>}
+        {status === 'preview' && <p className="status">{messages.preview}</p>}
+        {status === 'error' && <p className="status">{messages.error}</p>}
+      </div>
     </form>
   )
 }

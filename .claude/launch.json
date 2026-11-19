@@ -7,9 +7,9 @@
       "runtimeArgs": [
         "C:/Users/Dental Nakeji/Desktop/Proyectos/Páginas web/React + Vite/Empresas/Luminous Dental/node_modules/vite/bin/vite.js",
         "C:/Users/Dental Nakeji/Desktop/Proyectos/Páginas web/React + Vite/Empresas/Luminous Dental/apps/web",
-        "--port", "5180", "--strictPort"
+        "--port", "5181", "--strictPort"
       ],
-      "port": 5180
+      "port": 5181
     },
     {
       "name": "luminous-lienzo",

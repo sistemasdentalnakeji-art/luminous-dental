@@ -1,13 +1,31 @@
 @import "tailwindcss";
 
-/* Neutral placeholders: the real palette and fonts come from DESIGN.md in stage 2. */
+/* Colors, fonts and measures of the site (design B5, "night sky"). Real brand source: the owner's DESIGN.md (Newsreader + Figtree, night blue, star gold, sky blue). */
 @theme {
-  --color-ink: oklch(0.22 0.03 255);
-  --color-paper: oklch(0.99 0 0);
-  --color-muted: oklch(0.45 0.02 255);
+  --color-night: #0a1529;
+  --color-surface: #0d1c37;
+  --color-surface-deep: #0c1a33;
+  --color-ridge-far: #16305a;
+  --color-glow: #2f63ad;
+  --color-ink: #2a4269;
+  --color-sky: #7bc3eb;
+  --color-gold: #e0b65c;
+  --color-gold-soft: #f3d79a;
+  --color-title: #fff;
+  --color-text: #f4f9ff;
+  --color-text2: #f2f8fe;
+  --color-line: rgb(255 255 255 / 0.14);
+  --color-line-ui: rgb(255 255 255 / 0.34);
+  --color-field-text: #1d3152;
+  --color-field-border: #8592a7;
+  --color-error: #e0715f;
+  --font-serif: "Newsreader", "Georgia", "Times New Roman", serif;
+  --font-sans: "Figtree", "Arial", "Helvetica", sans-serif;
 }
 
-body {
-  background: var(--color-paper);
-  color: var(--color-ink);
+:root {
+  --pad: clamp(18px, 4.4vw, 64px);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --logo-img: url("/logo.png");
+  --logo-star: url("/logo-star.png");
 }
