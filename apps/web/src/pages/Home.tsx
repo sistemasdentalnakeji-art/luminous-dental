@@ -46,7 +46,7 @@ export default function Home() {
                 <circle key={deg} className={`arc arc-${arcs[i]}`} cx="50" cy="50" r="47" pathLength="100" strokeDasharray="22.5 77.5" transform={`rotate(${deg} 50 50)`} />
               ))}
             </svg>
-            <div className="portrait"><img src="/dr-hahn.jpg" alt="Dr. Christian Hahn, general dentist, in a white coat" width="734" height="737" /></div>
+            <div className="portrait"><img src={`${import.meta.env.BASE_URL}dr-hahn.jpg`} alt="Dr. Christian Hahn, general dentist, in a white coat" width="734" height="737" /></div>
             <span className="key" aria-hidden="true" />
           </div>
           {services.groups.map((g, i) => (

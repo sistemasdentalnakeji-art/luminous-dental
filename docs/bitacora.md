@@ -180,3 +180,7 @@ Falta: movimiento en vivo y prueba dentro del lienzo real; B2 no está en `canva
 ## 2026-11-18 · Jefe web · Menú y pie como Dental Nakeji
 - Página real (`apps/web`) con B5 a medio pasar (programador parado a petición de la dueña). Menú: Home · Services (panel con los 11 servicios) · Insurance & Financing · Contact · About. Pie en columnas: marca, Services, Clinic, Contact y línea final. La página nueva corre en `http://localhost:5181` (el 5180 es el proyecto viejo).
 - Sin verificar: celular a fondo, lector de pantalla. Privacy/Terms/Blog fuera del menú hasta tener contenido.
+
+## 2026-11-18 · Jefe web · Enlace público en GitHub Pages
+- Con el sí de Jadro (vía la asistente) y la elección «Todo público», el repositorio `luminous-dental` quedó **público** y la página se ve en https://sistemasdentalnakeji-art.github.io/luminous-dental/ (rama `gh-pages`, solo la página armada). Marcada noindex para no competir con luminousdentallv.com.
+- Para actualizarla: armar con `PAGES_BASE=/luminous-dental/` (en PowerShell), copiar `index.html` a `404.html`, agregar `.nojekyll` y subir `apps/web/dist` a la rama `gh-pages`.

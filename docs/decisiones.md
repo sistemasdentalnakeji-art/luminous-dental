@@ -68,3 +68,6 @@
 - La dueña pide dejar de hacer variantes en el lienzo: B5 queda como diseño elegido (equivale al Sí 2) y todo cambio desde ahora se ve ya programado en `apps/web`.
 - Textos nuevos de la figura (hoja-b5.md) se usan tal cual; siguen marcados para su aprobación final.
 - Encargo: `docs/ETAPA-3-CODIGO.md`.
+
+## 2026-11-18 (noche) — Repositorio público y enlace en GitHub Pages
+- La asistente dice que Jadro dio el sí para publicar con enlace y eligió hacer público todo el repositorio (antes se revisó: sin contraseñas ni datos de pacientes). Vercel no se usa por ahora.

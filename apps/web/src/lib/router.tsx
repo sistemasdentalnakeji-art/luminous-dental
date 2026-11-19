@@ -2,7 +2,9 @@ import { useEffect, useState, type AnchorHTMLAttributes, type MouseEvent } from 
 
 // Tiny router (no dependency): clean paths with the History API. The host must send every path to index.html.
 const EVENT = 'ld:navigate'
-const read = () => ({ path: location.pathname.replace(/(.)\/$/, '$1'), hash: location.hash })
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '') // '' locally, '/luminous-dental' on GitHub Pages
+const strip = (p: string) => (BASE && p.startsWith(BASE) ? p.slice(BASE.length) || '/' : p)
+const read = () => ({ path: strip(location.pathname).replace(/(.)\/$/, '$1'), hash: location.hash })
 
 export function useLocation() {
   const [loc, setLoc] = useState(read)
@@ -19,7 +21,7 @@ export function useLocation() {
 }
 
 export function navigate(to: string) {
-  history.pushState(null, '', to)
+  history.pushState(null, '', internal(to) ? BASE + to : to)
   dispatchEvent(new Event(EVENT))
 }
 
@@ -33,5 +35,5 @@ export function Link({ href, onClick, ...rest }: AnchorHTMLAttributes<HTMLAnchor
     e.preventDefault()
     navigate(href)
   }
-  return <a href={href} onClick={go} {...rest} />
+  return <a href={internal(href) ? BASE + href : href} onClick={go} {...rest} />
 }
