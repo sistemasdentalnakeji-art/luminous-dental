@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Luminous Dental home, direction C</title>
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&display=swap">
+  <style>
+    /* Direction C: "Sol". Sun-yellow ground, ink-navy type, enamel-white frames, one cobalt accent. */
+    :root {
+      --sun: #FFC93C;
+      --ink: #0F1F3D;
+      --ink-soft: #2A3957;
+      --paper: #FFFBF0;
+      --cobalt: #2340E0;
+      --ring: #2340E0;
+      --display: 'Bricolage Grotesque', 'Arial Narrow', system-ui, sans-serif;
+      --text: 'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --gutter: clamp(20px, 5vw, 72px);
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
+    body { margin: 0; background: var(--sun); color: var(--ink); font-family: var(--text); font-size: 1.125rem; line-height: 1.55; }
+    .page { overflow-x: clip; background: var(--sun); }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; }
+    h1, h2, h3, p, ul, ol, blockquote, figure { margin: 0; }
+    ul, ol { padding: 0; list-style: none; }
+    h1, h2, h3 { font-family: var(--display); font-weight: 800; font-variation-settings: 'wdth' 80; letter-spacing: -0.006em; line-height: 0.94; text-wrap: balance; }
+    p { text-wrap: pretty; }
+    :focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; border-radius: 4px; }
+    .on-cobalt, .on-ink { --ring: var(--sun); }
+    .wrap { width: 100%; max-width: 1440px; margin-inline: auto; padding-inline: var(--gutter); }
+    .skip { position: absolute; left: 12px; top: -80px; z-index: 50; background: var(--ink); color: var(--sun); padding: 12px 20px; border-radius: 999px; font-weight: 700; text-decoration: none; }
+    .skip:focus { top: 12px; }
+
+    /* Buttons: one pill family, three grounds */
+    .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 28px; border-radius: 999px; border: 3px solid var(--ink); background: var(--ink); color: var(--sun); font: 700 1.0625rem/1.1 var(--text); text-decoration: none; text-align: center; cursor: pointer; transition-property: transform, background-color, color; transition-duration: 160ms; transition-timing-function: ease-out; }
+    .btn:hover { transform: translateY(-2px); background: var(--paper); color: var(--ink); }
+    .btn:active { transform: scale(0.97); }
+    .btn--line { background: transparent; color: var(--ink); }
+    .btn--line:hover { background: var(--ink); color: var(--sun); }
+    .btn--paper { background: var(--paper); border-color: var(--paper); color: var(--ink); }
+    .btn--paper:hover { background: var(--sun); border-color: var(--sun); }
+    .btn--sun { background: var(--sun); border-color: var(--sun); color: var(--ink); }
+    .btn--sun:hover { background: var(--paper); border-color: var(--paper); }
+    .link { font-weight: 700; text-decoration-thickness: 3px; text-underline-offset: 6px; transition: text-underline-offset 160ms ease-out; display: inline-block; padding-block: 10px; }
+    .link:hover { text-underline-offset: 10px; }
+
+    /* Header */
+    .top { position: relative; z-index: 20; }
+    .top__in { display: flex; align-items: center; gap: 28px; min-height: 88px; }
+    .logo { font: 800 1.6rem/1 var(--display); font-variation-settings: 'wdth' 75; letter-spacing: -0.008em; text-decoration: none; margin-right: auto; padding-block: 10px; min-height: 44px; display: inline-flex; align-items: center; }
+    .nav { display: flex; gap: 6px; }
+    .nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; text-decoration: none; font-weight: 700; font-size: 1rem; text-decoration-thickness: 3px; text-underline-offset: 8px; }
+    .nav a:hover, .nav a[aria-current] { text-decoration: underline; }
+    .tel { font-weight: 700; font-size: 1rem; font-variant-numeric: tabular-nums; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding-inline: 4px; }
+    .tel:hover { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; }
+    .menu { display: none; position: relative; }
+    .menu summary { list-style: none; display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 20px; border: 3px solid var(--ink); border-radius: 999px; font-weight: 700; cursor: pointer; transition: background-color 160ms ease-out; }
+    .menu summary::-webkit-details-marker { display: none; }
+    .menu summary:hover { background: var(--paper); }
+    .menu[open] summary { background: var(--ink); color: var(--sun); }
+    .menu__panel { position: absolute; right: 0; top: calc(100% + 10px); width: min(320px, calc(100vw - 40px)); background: var(--paper); border: 3px solid var(--ink); border-radius: 24px; padding: 12px; display: grid; }
+    .menu__panel a { display: flex; align-items: center; min-height: 52px; padding: 0 16px; border-radius: 12px; font: 800 1.5rem/1 var(--display); font-variation-settings: 'wdth' 75; text-decoration: none; transition: background-color 160ms ease-out; }
+    .menu__panel a:hover { background: var(--sun); }
+    svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+    /* Hero */
+    .hero { padding-block: clamp(28px, 4vw, 56px) clamp(64px, 8vw, 112px); }
+    .hero__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: start; }
+    .hero__h { grid-column: 1 / span 8; grid-row: 1; font-size: clamp(3.5rem, 10.4vw, 9.5rem); line-height: 0.86; letter-spacing: -0.008em; }
+    .hero__h span { display: block; }
+    .hero__photo { grid-column: 9 / span 4; grid-row: 1 / span 2; margin-top: 8px; position: relative; }
+    .hero__photo::before { content: ''; position: absolute; inset: 24px -24px -24px 24px; background: var(--cobalt); }
+    .hero__photo .frame { position: relative; z-index: 1; }
+    .crop { overflow: hidden; aspect-ratio: 4 / 5; outline: 1px solid rgba(0, 0, 0, 0.1); outline-offset: -1px; }
+    .crop img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; transform: scale(1.5); transform-origin: 46% 10%; outline: 0; }
+    .hero__side { grid-column: 1 / span 7; grid-row: 2; margin-top: clamp(28px, 3.2vw, 48px); display: grid; gap: 28px; }
+    .hero__support { font-size: 1.3125rem; line-height: 1.5; max-width: 34em; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+
+    /* Framed photo: every photo wears the same enamel-white print frame */
+    .frame { margin: 0; background: var(--paper); padding: 10px; }
+    .frame img { width: 100%; outline: 1px solid rgba(0, 0, 0, 0.1); outline-offset: -1px; }
+
+    /* Signature: the lifetime line */
+    .life { position: relative; margin: clamp(48px, 6vw, 88px) 0 0; padding: 0; border: 0; min-width: 0; }
+    .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    .life__track { position: relative; display: flex; justify-content: space-between; gap: 12px; }
+    .life__track::before { content: ''; position: absolute; top: 50%; left: calc(50% - 50vw); width: 100vw; height: 6px; margin-top: -3px; background: var(--ink); transform-origin: left center; animation: draw 1500ms cubic-bezier(0.2, 0.7, 0.2, 1) 300ms both; }
+    .life input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+    .life label { position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 30px; border: 4px solid var(--ink); border-radius: 999px; background: var(--sun); font: 700 1.1875rem/1.1 var(--text); cursor: pointer; transition-property: transform, background-color, color; transition-duration: 160ms; transition-timing-function: ease-out; animation: settle 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+    .life label:nth-of-type(1) { animation-delay: 500ms; }
+    .life label:nth-of-type(2) { animation-delay: 650ms; }
+    .life label:nth-of-type(3) { animation-delay: 800ms; }
+    .life label:nth-of-type(4) { animation-delay: 950ms; }
+    .life label:hover { transform: translateY(-3px); background: var(--paper); }
+    .life label:active { transform: scale(0.97); }
+    .life input:checked + label { background: var(--ink); color: var(--sun); }
+    .life input:focus-visible + label { outline: 3px solid var(--ring); outline-offset: 4px; }
+    @keyframes draw { from { transform: scaleX(0); } }
+    @keyframes settle { from { transform: translateY(10px); } }
+
+    /* Services: a staircase of rows that answers the lifetime line */
+    .svc { padding-block: 0 clamp(80px, 10vw, 150px); }
+    .svc__h { font-size: clamp(2.5rem, 5.6vw, 5rem); max-width: 12em; }
+    .svc__list { margin-top: clamp(36px, 5vw, 64px); display: grid; gap: 0; }
+    .svc__row { position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); column-gap: 40px; row-gap: 10px; align-items: baseline; padding: 30px 28px 34px; border-top: 4px solid var(--ink); transition: background-color 200ms ease-out; }
+    .svc__row:last-child { border-bottom: 4px solid var(--ink); }
+    .svc__row:nth-child(2) { margin-left: 7%; }
+    .svc__row:nth-child(3) { margin-left: 14%; }
+    .svc__row:nth-child(4) { margin-left: 21%; }
+    .svc__row h3 { font-size: clamp(2rem, 3.6vw, 3.25rem); }
+    .svc__row h3 a { text-decoration: none; transition: color 200ms ease-out; }
+    .svc__row h3 a::after { content: ''; position: absolute; inset: 0; }
+    .svc__row p { max-width: 32em; }
+    .svc__row:hover { background: rgba(255, 251, 240, 0.55); }
+    .fit { display: none; }
+    .svc__more { margin-top: 40px; display: flex; justify-content: flex-end; }
+    /* stage choice: only rows that home.ts ties to that stage get an enamel fill and a cobalt title; Cosmetic names no age, so it never lights */
+    .page:has(#st-kids:checked) .f-kids, .page:has(#st-teens:checked) .f-teens, .page:has(#st-adults:checked) .f-adults { background: var(--paper); }
+    .page:has(#st-kids:checked) .f-kids h3 a, .page:has(#st-teens:checked) .f-teens h3 a, .page:has(#st-adults:checked) .f-adults h3 a { color: var(--cobalt); }
+    .page:has(#st-kids:checked) .f-kids .fit, .page:has(#st-teens:checked) .f-teens .fit, .page:has(#st-adults:checked) .f-adults .fit { display: block; position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+    /* Why: one loud statement, three quiet ones on a stagger */
+    .why { background: var(--paper); padding-block: clamp(80px, 10vw, 150px); }
+    .why__h { font-size: clamp(1.75rem, 2.6vw, 2.25rem); }
+    .why__big { margin-top: clamp(28px, 4vw, 56px); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; row-gap: 28px; align-items: end; }
+    .why__big h3 { grid-column: 1 / span 9; font-size: clamp(3rem, 8.6vw, 8rem); line-height: 0.88; }
+    .why__big p { grid-column: 8 / span 5; font-size: 1.3125rem; }
+    .why__small { margin-top: clamp(56px, 7vw, 104px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; align-items: start; }
+    .why__small li { border-top: 4px solid var(--cobalt); padding-top: 22px; }
+    .why__small li:nth-child(2) { margin-top: 56px; }
+    .why__small li:nth-child(3) { margin-top: 112px; }
+    .why__small h3 { font-size: clamp(1.6rem, 2.3vw, 2.1rem); line-height: 1; margin-bottom: 14px; }
+
+    /* Doctor */
+    .doc { background: var(--cobalt); color: #fff; padding-block: clamp(80px, 10vw, 150px); }
+    .doc__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: end; }
+    .doc__photo { grid-column: 1 / span 5; position: relative; }
+    .doc__photo::before { content: ''; position: absolute; inset: 28px -28px -28px 28px; background: var(--sun); z-index: 0; }
+    .doc__photo .frame { position: relative; z-index: 1; }
+    .doc__body { grid-column: 7 / span 6; padding-bottom: 28px; }
+    .doc__role { font-weight: 700; font-size: 1.25rem; color: var(--sun); margin-bottom: 14px; }
+    .doc__h { font-size: clamp(3rem, 7.4vw, 6.75rem); line-height: 0.88; }
+    .doc__text { margin-top: 28px; font-size: 1.3125rem; max-width: 28em; }
+    .doc__lang { margin-top: 18px; font-weight: 700; }
+    .doc .btn { margin-top: 32px; }
+
+    /* Smile */
+    .smile { padding-block: clamp(80px, 10vw, 150px); }
+    .smile__h { font-size: clamp(3rem, 9.4vw, 8.75rem); line-height: 0.86; letter-spacing: -0.008em; max-width: 9.5em; }
+    .smile__row { margin-top: clamp(32px, 4vw, 56px); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; }
+    .smile__body { grid-column: 6 / span 6; display: grid; gap: 26px; justify-items: start; }
+    .smile__body p:first-child { font-size: 1.3125rem; }
+    .smile__fine { font-size: 1rem; font-weight: 700; }
+
+    /* Reviews: three voices, three sizes */
+    .rev { background: var(--paper); padding-block: clamp(80px, 10vw, 150px); }
+    .rev__h { font-size: clamp(2.25rem, 4.6vw, 4.25rem); }
+    .rev__grid { margin-top: clamp(40px, 5vw, 72px); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; row-gap: 48px; }
+    .quote { margin: 0; }
+    .quote blockquote { font-family: var(--display); font-weight: 700; font-variation-settings: 'wdth' 85; letter-spacing: -0.005em; line-height: 1.04; text-wrap: balance; }
+    .quote figcaption { margin-top: 16px; font-weight: 700; }
+    .quote--a { grid-column: 1 / span 8; }
+    .quote--a blockquote { font-size: clamp(1.9rem, 4.2vw, 3.75rem); }
+    .quote--b { grid-column: 7 / span 6; }
+    .quote--b blockquote { font-size: clamp(1.6rem, 2.8vw, 2.5rem); color: var(--cobalt); }
+    .quote--c { grid-column: 2 / span 5; }
+    .quote--c blockquote { font-size: clamp(1.35rem, 2vw, 1.75rem); }
+    .rev__foot { grid-column: 8 / span 5; align-self: end; display: grid; gap: 14px; justify-items: start; }
+
+    /* Coverage: a split strip, wide and narrow */
+    .cov { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+    .cov__a { background: var(--ink); color: var(--paper); padding: clamp(56px, 7vw, 104px) var(--gutter); }
+    .cov__b { background: var(--cobalt); color: #fff; padding: clamp(56px, 7vw, 104px) clamp(24px, 4vw, 64px); }
+    .cov h2 { font-size: clamp(2.25rem, 4.4vw, 4rem); }
+    .cov p { margin-top: 20px; max-width: 26em; font-size: 1.1875rem; }
+    .cov .btn, .cov .link { margin-top: 28px; }
+    .cov__a-in { max-width: 640px; margin-left: auto; }
+
+    /* Appointment */
+    .appt { padding-block: clamp(80px, 10vw, 150px); }
+    .appt__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; row-gap: 48px; align-items: start; }
+    .appt__lead { grid-column: 1 / span 5; }
+    .appt__h { font-size: clamp(3rem, 6.6vw, 6rem); line-height: 0.88; }
+    .appt__intro { margin-top: 26px; max-width: 26em; font-size: 1.1875rem; }
+    .appt__tel { margin-top: 22px; display: inline-flex; align-items: center; gap: 10px; font: 800 clamp(1.6rem, 2.6vw, 2.25rem)/1 var(--display); font-variation-settings: 'wdth' 80; font-variant-numeric: tabular-nums; text-decoration: underline; text-decoration-thickness: 4px; text-underline-offset: 8px; min-height: 48px; }
+    .visit { margin-top: 44px; border-top: 4px solid var(--ink); padding-top: 20px; }
+    .visit h3 { font-size: 1.75rem; margin-bottom: 8px; }
+    .visit address { font-style: normal; font-weight: 700; margin-bottom: 4px; }
+    .form { grid-column: 7 / span 6; background: var(--paper); border-radius: 36px; padding: clamp(24px, 3.4vw, 44px); display: grid; gap: 20px; }
+    .field { display: grid; gap: 8px; }
+    .field label { font-weight: 700; }
+    .field input, .field select { width: 100%; min-height: 56px; padding: 0 18px; border: 3px solid var(--ink); border-radius: 18px; background: #fff; color: var(--ink); font: 400 1.125rem/1.2 var(--text); transition: border-color 160ms ease-out, background-color 160ms ease-out; }
+    .field input:hover, .field select:hover { background: #FFF6D6; }
+    .field input:focus-visible, .field select:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 3px; background: #fff; }
+    .field :user-invalid { border-color: #B3261E; background: #FFF1EF; }
+    .field :user-invalid + .req { display: block; }
+    .req { display: none; font-weight: 700; color: #B3261E; font-size: 0.9375rem; }
+    .row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+    .consent { position: relative; display: grid; grid-template-columns: 32px 1fr; gap: 14px; align-items: center; min-height: 56px; font-size: 1rem; }
+    .consent input { width: 32px; height: 32px; margin: 0; accent-color: var(--cobalt); }
+    .consent label::after { content: ''; position: absolute; inset: 0; } /* the whole row is the touch target */
+    .form .btn { width: 100%; min-height: 60px; font-size: 1.1875rem; }
+    .status { padding: 14px 18px; border-radius: 18px; background: var(--sun); font-weight: 700; }
+
+    /* Footer */
+    .foot { background: var(--ink); color: var(--paper); padding-block: clamp(64px, 8vw, 112px) 40px; }
+    .foot__tag { font-size: clamp(2rem, 4.4vw, 4rem); color: var(--sun); max-width: 11em; }
+    .foot__cols { margin-top: clamp(40px, 5vw, 72px); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; row-gap: 36px; }
+    .foot__col { grid-column: span 4; }
+    .foot__col h3 { font-size: 1.5rem; line-height: 1.1; margin-bottom: 14px; color: var(--sun); }
+    .foot__col--bare { padding-top: calc(1.65rem + 14px); } /* lines the link lists up with the Contact text */
+    .foot__col address { font-style: normal; }
+    .foot__col ul { display: grid; gap: 0; }
+    .foot a { text-decoration-thickness: 2px; text-underline-offset: 5px; display: inline-flex; align-items: center; min-height: 44px; }
+    .foot a:hover { color: var(--sun); }
+    .foot__mark { margin-top: clamp(48px, 7vw, 96px); font: 800 clamp(3.25rem, 13.6vw, 13rem)/0.82 var(--display); font-variation-settings: 'wdth' 75; letter-spacing: -0.012em; color: var(--sun); white-space: nowrap; }
+    .foot__legal { margin-top: 32px; padding-top: 20px; border-top: 2px solid rgba(255, 251, 240, 0.35); display: flex; flex-wrap: wrap; gap: 8px 28px; font-size: 0.9375rem; }
+
+    /* Mobile dock: request and call stay in thumb reach */
+    .dock { display: none; }
+
+    @media (max-width: 1359px) { .top .tel { display: none; } }
+    @media (max-width: 1099px) {
+      .nav, .top .btn { display: none; }
+      .menu { display: block; }
+      .hero__h { grid-column: 1 / span 12; }
+      .hero__side { grid-column: 1 / span 12; grid-row: 2; }
+      .hero__photo { grid-column: 1 / span 7; grid-row: 3; margin-top: 48px; }
+      .doc__photo { grid-column: 1 / span 6; }
+      .doc__body { grid-column: 7 / span 6; }
+    }
+    @media (max-width: 899px) {
+      .svc__row { grid-template-columns: 1fr; }
+      .svc__row:nth-child(2) { margin-left: 3%; }
+      .svc__row:nth-child(3) { margin-left: 6%; }
+      .svc__row:nth-child(4) { margin-left: 9%; }
+      .why__big h3, .why__big p { grid-column: 1 / -1; }
+      .why__small { grid-template-columns: 1fr; gap: 32px; }
+      .why__small li:nth-child(2), .why__small li:nth-child(3) { margin-top: 0; }
+      .doc__grid { row-gap: 56px; }
+      .doc__photo { grid-column: 1 / span 11; }
+      .doc__body { grid-column: 1 / -1; padding: 0; }
+      .smile__body { grid-column: 1 / -1; }
+      .quote--a, .quote--b, .quote--c, .rev__foot { grid-column: 1 / -1; }
+      .cov { grid-template-columns: 1fr; }
+      .cov__a-in { margin-left: 0; }
+      .appt__lead, .form { grid-column: 1 / -1; }
+      .foot__col { grid-column: 1 / -1; }
+      .foot__col--bare { padding-top: 0; }
+      .life__track { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+      .life__track::before { display: none; }
+      .life label { padding: 0 12px; min-height: 52px; }
+      .dock { display: grid; grid-template-columns: 1.4fr 1fr; gap: 10px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: var(--paper); border-top: 3px solid var(--ink); }
+      .dock .btn { min-height: 52px; padding: 0 12px; font-size: 1rem; }
+      .page { padding-bottom: 84px; }
+    }
+    @media (max-width: 559px) {
+      body { font-size: 1.0625rem; }
+      .row2 { grid-template-columns: 1fr; }
+      .top__in { min-height: 76px; }
+      .logo { font-size: 1.45rem; }
+      .hero__support { font-size: 1.1875rem; }
+      .hero__h { font-size: 19vw; }
+      .hero__photo { grid-column: 1 / span 11; }
+      .hero__photo::before { inset: 16px -16px -16px 16px; }
+      .doc__photo::before { inset: 18px -14px -18px 14px; }
+      .doc__photo { grid-column: 1 / span 12; padding-right: 14px; }
+      .foot__mark { font-size: 12.4vw; }
+    }
+
+    /* Reduced motion: everything rests, the line is already drawn */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .btn:hover, .life label:hover { transform: none; }
+    }
+  </style>
+</helmet>
+
+<div class="page">
+  <a class="skip" href="#main">Skip to main content</a>
+
+  <header class="top">
+    <div class="wrap top__in">
+      <a class="logo" href="/" aria-label="Luminous Dental, home">Luminous Dental</a>
+      <nav class="nav" aria-label="Main">
+        <a href="/" aria-current="page">Home</a>
+        <a href="/about">About</a>
+        <a href="/services">Services</a>
+        <a href="/insurance-financing">Insurance &amp; Financing</a>
+        <a href="/contact">Contact</a>
+      </nav>
+      <a class="tel" href="tel:+17028058688"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>Call or text (702) 805-8688</a>
+      <a class="btn" href="#appointment">Request an appointment</a>
+      <details class="menu">
+        <summary>Menu</summary>
+        <nav class="menu__panel" aria-label="Main">
+          <a href="/" aria-current="page">Home</a>
+          <a href="/about">About</a>
+          <a href="/services">Services</a>
+          <a href="/insurance-financing">Insurance &amp; Financing</a>
+          <a href="/contact">Contact</a>
+        </nav>
+      </details>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- 2. Hero -->
+    <section class="hero" aria-labelledby="hero-h">
+      <div class="wrap">
+        <div class="hero__grid">
+          <h1 class="hero__h" id="hero-h"><span>Your teeth</span><span>should last</span><span>a lifetime</span></h1>
+          <div class="hero__photo">
+            <figure class="frame"><div class="crop"><img src="/_blob/f083a374d6191d67857e1e7615274e99" width="734" height="737" alt="Dr. Christian Hahn smiling, wearing a white coat"></div></figure>
+          </div>
+          <div class="hero__side">
+            <p class="hero__support">Nothing can truly replace the function of your natural teeth, so keeping them for as long as possible is our priority. Dr. Christian Hahn and our team care for the whole family in Las Vegas.</p>
+            <div class="cta-row">
+              <a class="btn" href="#appointment">Request an appointment</a>
+              <a class="btn btn--line" href="tel:+17028058688">Call or text (702) 805-8688</a>
+            </div>
+          </div>
+        </div>
+
+        <fieldset class="life">
+          <legend class="vh">Pick a stage of life</legend>
+          <div class="life__track">
+            <input type="radio" name="stage" id="st-all" checked>
+            <label for="st-all">Whole family</label>
+            <input type="radio" name="stage" id="st-kids">
+            <label for="st-kids">Children</label>
+            <input type="radio" name="stage" id="st-teens">
+            <label for="st-teens">Teens</label>
+            <input type="radio" name="stage" id="st-adults">
+            <label for="st-adults">Adults</label>
+          </div>
+        </fieldset>
+      </div>
+    </section>
+
+    <!-- 3. Services -->
+    <section class="svc" aria-labelledby="svc-h">
+      <div class="wrap">
+        <h2 class="svc__h" id="svc-h">Dental care for the whole family</h2>
+        <ul class="svc__list">
+          <li class="svc__row f-kids f-teens f-adults">
+            <h3><a href="/services#general">General Dentistry</a></h3>
+            <p>Checkups, cleanings, fillings and preventive care to keep your smile healthy at every stage of life.</p>
+            <span class="fit">Fits this stage</span>
+          </li>
+          <li class="svc__row">
+            <h3><a href="/services#cosmetic">Cosmetic Dentistry</a></h3>
+            <p>Veneers, crowns, bonding, implants and whitening to improve how your smile looks and works.</p>
+            <span class="fit">Fits this stage</span>
+          </li>
+          <li class="svc__row f-kids f-teens f-adults">
+            <h3><a href="/services#orthodontics">Orthodontics</a></h3>
+            <p>Invisalign and braces for a straighter smile and a better bite, for children, teens and adults.</p>
+            <span class="fit">Fits this stage</span>
+          </li>
+          <li class="svc__row f-kids">
+            <h3><a href="/services#pediatric">Pediatric Dentistry</a></h3>
+            <p>Gentle exams, cleanings and tips for kids, in a comfortable setting.</p>
+            <span class="fit">Fits this stage</span>
+          </li>
+        </ul>
+        <div class="svc__more"><a class="btn btn--line" href="/services">See all services</a></div>
+      </div>
+    </section>
+
+    <!-- 4. Why Luminous -->
+    <section class="why" aria-labelledby="why-h">
+      <div class="wrap">
+        <h2 class="why__h" id="why-h">Why patients choose Luminous Dental</h2>
+        <div class="why__big">
+          <h3>We help you keep your own teeth</h3>
+          <p>Nothing can truly replace the function of your natural teeth. Keeping them as long as possible comes first in every plan.</p>
+        </div>
+        <ul class="why__small">
+          <li>
+            <h3>Care that feels comfortable</h3>
+            <p>Our team is dedicated to personalized, comfortable, high-quality dental care for every patient.</p>
+          </li>
+          <li>
+            <h3>One office for the whole family</h3>
+            <p>General, cosmetic, orthodontic and pediatric care in the same place, so everyone at home can see the same team.</p>
+          </li>
+          <li>
+            <h3>We work with most private dental insurance</h3>
+            <p>Our providers are affiliated with most private dental insurance. Ask our team to confirm your plan.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 5. Doctor -->
+    <section class="doc on-cobalt" aria-labelledby="doc-h">
+      <div class="wrap doc__grid">
+        <div class="doc__photo">
+          <figure class="frame"><img src="/_blob/f083a374d6191d67857e1e7615274e99" width="734" height="737" alt="Dr. Christian Hahn smiling, wearing a white coat"></figure>
+        </div>
+        <div class="doc__body">
+          <p class="doc__role">General Dentist</p>
+          <h2 class="doc__h" id="doc-h">Meet Dr. Christian Hahn</h2>
+          <p class="doc__text">Dr. Christian Hahn is a general dentist with 4 years of experience. He completed his dental training at the University of Nevada, Las Vegas. He is committed to delivering quality care and a comfortable experience for his patients.</p>
+          <p class="doc__lang">Language: English</p>
+          <a class="btn btn--sun" href="/about">About Dr. Hahn</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Smile -->
+    <section class="smile" aria-labelledby="smile-h">
+      <div class="wrap">
+        <h2 class="smile__h" id="smile-h">Thinking about changing your smile?</h2>
+        <div class="smile__row">
+          <div class="smile__body">
+            <p>Veneers, crowns, bonding, whitening and implants can change the color, shape or fit of your teeth. Tell us what bothers you, and we will talk through the options that fit your teeth and your goals.</p>
+            <a class="btn" href="#appointment">Request an appointment</a>
+            <p class="smile__fine">Individual results vary.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Reviews -->
+    <section class="rev" aria-labelledby="rev-h">
+      <div class="wrap">
+        <h2 class="rev__h" id="rev-h">What our patients say</h2>
+        <div class="rev__grid">
+          <figure class="quote quote--a">
+            <blockquote>“Dr Christian, Joshua and Anna have done a great job and made us feel very happy and satisfied.”</blockquote>
+            <figcaption>Ashok R.</figcaption>
+          </figure>
+          <figure class="quote quote--b">
+            <blockquote>“Amazing dental office amazing staff.”</blockquote>
+            <figcaption>Ana B.</figcaption>
+          </figure>
+          <figure class="quote quote--c">
+            <blockquote>“The staff and the specialist is all professional and very friendly.”</blockquote>
+            <figcaption>Sandra P.</figcaption>
+          </figure>
+          <div class="rev__foot">
+            <a class="link" href="/patient-reviews">Read more patient reviews</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Coverage -->
+    <section class="cov" aria-label="Insurance and visitors from out of town">
+      <div class="cov__a on-ink">
+        <div class="cov__a-in">
+          <h2>Insurance</h2>
+          <p>We work with most private dental insurance. Check the list and ask our team to confirm your coverage before your visit.</p>
+          <a class="btn btn--sun" href="/insurance-financing">See insurance and financing</a>
+        </div>
+      </div>
+      <div class="cov__b on-cobalt">
+        <h2>Coming from out of town?</h2>
+        <p>We've partnered with SAHARA Las Vegas to offer exclusive benefits for our patients.</p>
+        <a class="btn btn--paper" href="https://stay.saharalasvegas.com/promo?hotel=SLSLV&amp;accessCode=LUMI" target="_blank" rel="noopener">See SAHARA Las Vegas benefits</a>
+      </div>
+    </section>
+
+    <!-- 9. Appointment -->
+    <section class="appt" id="appointment" aria-labelledby="appt-h">
+      <div class="wrap appt__grid">
+        <div class="appt__lead">
+          <h2 class="appt__h" id="appt-h">Request an appointment</h2>
+          <p class="appt__intro">Tell us who you are and what you need. Sending this form does not reserve a time. Our team will follow up to set your visit. You can also call or text (702) 805-8688.</p>
+          <a class="appt__tel" href="tel:+17028058688"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:28px;height:28px"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>(702) 805-8688</a>
+          <div class="visit">
+            <h3>Visit us</h3>
+            <address>1212 S Maryland Pkwy, Las Vegas, NV 89104</address>
+            <a class="link" href="https://www.google.com/maps/search/?api=1&amp;query=1212+S+Maryland+Pkwy+Las+Vegas+NV+89104" target="_blank" rel="noopener">Open in Google Maps</a>
+          </div>
+        </div>
+
+        <form class="form" onsubmit="return false" aria-labelledby="appt-h">
+          <div class="row2">
+            <div class="field">
+              <label for="f-name">Full name</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required>
+              <span class="req">Required</span>
+            </div>
+            <div class="field">
+              <label for="f-phone">Phone</label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
+              <span class="req">Required</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required>
+            <span class="req">Required</span>
+          </div>
+          <div class="field">
+            <label for="f-care">Type of care</label>
+            <select id="f-care" name="care" required>
+              <option value="">Choose one</option>
+              <option>General Dentistry</option>
+              <option>Cosmetic Dentistry</option>
+              <option>Orthodontics</option>
+              <option>Pediatric Dentistry</option>
+            </select>
+            <span class="req">Required</span>
+          </div>
+          <div class="consent">
+            <input id="f-consent" name="consent" type="checkbox" required>
+            <label for="f-consent">I agree that Luminous Dental may contact me about this request.</label>
+          </div>
+          <button class="btn" type="submit">Send my request</button>
+          <p class="status" role="status">This form is not connected yet, so your request was not sent. Please call or text (702) 805-8688 to book.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- 10. Footer -->
+  <footer class="foot on-ink">
+    <div class="wrap">
+      <p class="foot__tag" style="font-family: var(--display); font-weight: 800; font-variation-settings: 'wdth' 75; letter-spacing: -0.008em; line-height: 0.95;">Your teeth should last a lifetime.</p>
+      <div class="foot__cols">
+        <div class="foot__col">
+          <h3>Contact</h3>
+          <address>1212 S Maryland Pkwy, Las Vegas, NV 89104</address>
+          <ul>
+            <li><a href="tel:+17028058688">Call or text (702) 805-8688</a></li>
+            <li><a href="mailto:info@luminousdentallv.com">info@luminousdentallv.com</a></li>
+          </ul>
+        </div>
+        <div class="foot__col foot__col--bare">
+          <ul aria-label="Pages">
+            <li><a href="/about">About</a></li>
+            <li><a href="/services">Services</a></li>
+            <li><a href="/insurance-financing">Insurance &amp; Financing</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/privacy-policy">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="foot__col foot__col--bare">
+          <ul aria-label="Social media">
+            <li><a href="https://www.instagram.com/luminousdentalvegas" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="https://www.facebook.com/profile.php?id=61554688456073" target="_blank" rel="noopener">Facebook</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="foot__mark" aria-hidden="true">Luminous Dental</p>
+      <div class="foot__legal">
+        <span>© 2026 Luminous Dental, Las Vegas. All rights reserved.</span>
+        <span>Individual results vary.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile dock -->
+  <div class="dock" role="group" aria-label="Quick actions">
+    <a class="btn" href="#appointment">Request an appointment</a>
+    <a class="btn btn--line" href="tel:+17028058688" aria-label="Call or text (702) 805-8688">Call or text</a>
+  </div>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":375,"height":9100}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

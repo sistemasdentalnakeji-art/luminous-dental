@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+/* Neutral placeholders: the real palette and fonts come from DESIGN.md in stage 2. */
+@theme {
+  --color-ink: oklch(0.22 0.03 255);
+  --color-paper: oklch(0.99 0 0);
+  --color-muted: oklch(0.45 0.02 255);
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}

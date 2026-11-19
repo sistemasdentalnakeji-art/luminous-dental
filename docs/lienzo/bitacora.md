@@ -1,0 +1,1 @@
+18-11-2026 · B2 corregida según CORRECCIONES-B2.md (dientes en una fila y tenues, sin animación de arcos, menos huecos, pie alineado, oro solo en estrella, aviso del formulario tras enviar, teléfono en cabecera, resplandor abajo); `$preview` 1440×8169 y 375×9114; falta verla en vivo.

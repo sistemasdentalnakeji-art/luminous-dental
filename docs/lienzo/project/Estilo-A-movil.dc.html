@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Luminous Dental · Direction A · Home (light)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Figtree:wght@400..700&display=swap">
+<style>
+  :root{
+    --paper:#F6F8F7; --ink:#0F2A2E; --muted:#456066; --line:#C9D6D4; --tint:#E3F0EC; --mint:#B9DDD3;
+    --accent:#0B7A68; --accent-deep:#08594C; --white:#fff;
+    --display:'Funnel Display', 'Segoe UI', sans-serif; --text:'Figtree', 'Segoe UI', sans-serif;
+    --pad:clamp(20px,5vw,72px);
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--text);font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  img{display:block;max-width:100%}
+  h1,h2,h3,p,figure,blockquote{margin:0}
+  .page{overflow-x:clip}
+  .wrap{max-width:1360px;margin:0 auto;padding-inline:var(--pad)}
+  .skip{position:absolute;left:-9999px;top:8px;background:var(--ink);color:#fff;padding:10px 16px;z-index:50}
+  .skip:focus{left:8px}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+  /* buttons */
+  .btn{white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;border-radius:999px;font:600 17px/1 var(--text);text-decoration:none;border:2px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;
+    transition-property:transform,background-color,color,box-shadow;transition-duration:.18s;transition-timing-function:ease-out}
+  .btn:hover{background:var(--accent-deep);border-color:var(--accent-deep);transform:translateY(-1px);box-shadow:0 1px 1px rgba(15,42,46,.08),0 6px 14px -6px rgba(8,89,76,.5)}
+  .btn:active{transform:scale(.97)}
+  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+  .btn-ghost:hover{background:var(--ink);border-color:var(--ink);color:#fff}
+  .tlink{position:relative;text-decoration:none;font-weight:600;color:var(--accent-deep);min-height:44px;display:inline-flex;align-items:center}
+  .tlink::after{content:"";position:absolute;left:0;right:0;bottom:8px;height:2px;background:currentColor;transform-origin:left;transform:scaleX(.25);transition:transform .25s var(--ease)}
+  .tlink:hover::after,.tlink:focus-visible::after{transform:scaleX(1)}
+
+  /* header */
+  .hdr{display:flex;align-items:center;gap:24px;padding-block:20px}
+  .logo{font:700 26px/1 var(--display);letter-spacing:-.005em;text-decoration:none;margin-right:auto;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center}
+  .nav{display:flex;gap:24px;white-space:nowrap}
+  .nav a{font-weight:500;text-decoration:none;font-size:16px;padding:10px 2px;position:relative}
+  .nav a::after{content:"";position:absolute;left:0;right:0;bottom:4px;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .25s var(--ease)}
+  .nav a:hover::after,.nav a:focus-visible::after,.nav a[aria-current]::after{transform:scaleX(1)}
+  .hdr-phone{font-weight:600;font-size:16px;text-decoration:none;white-space:nowrap}
+  .hdr-phone:hover{text-decoration:underline}
+  .menu{display:none}
+  .menu summary{list-style:none;cursor:pointer;min-height:48px;min-width:48px;display:flex;align-items:center;justify-content:center;font-weight:600;border:2px solid var(--ink);border-radius:999px;padding:0 18px}
+  .menu summary::-webkit-details-marker{display:none}
+  .menu nav{position:absolute;left:var(--pad);right:var(--pad);top:84px;background:#fff;border:2px solid var(--ink);border-radius:20px;padding:12px 24px;display:flex;flex-direction:column;z-index:20}
+  .menu nav a{padding:14px 0;min-height:48px;text-decoration:none;font-weight:500;border-bottom:1px solid var(--line)}
+  .menu nav a:last-child{border:0}
+
+  /* hero */
+  .hero{padding-top:clamp(24px,4.5vw,64px)}
+  .hero h1{font:600 clamp(44px,9.2vw,138px)/.98 var(--display);letter-spacing:-.012em;text-wrap:balance;max-width:11em}
+  .hero-row{margin-top:clamp(24px,3vw,44px);max-width:36em}
+  .hero-support{font-size:clamp(18px,1.5vw,21px);color:var(--muted);text-wrap:pretty}
+  .hero-cta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-top:28px}
+
+  /* signature: a full set of natural teeth, lit from the middle out */
+  .smilebar{margin-top:clamp(36px,5vw,72px);background:var(--accent-deep);height:clamp(120px,15vw,216px);overflow:hidden}
+  .smilebar svg{display:block;width:100%;height:100%}
+  .t{animation:tooth .8s ease-out both;animation-delay:calc(.25s + var(--d))}
+  @keyframes tooth{from{opacity:.1}to{opacity:1}}
+
+  /* section frame */
+  .sec{padding-block:clamp(64px,8.5vw,128px)}
+  .h2{font:600 clamp(34px,5vw,70px)/1.02 var(--display);letter-spacing:-.01em;text-wrap:balance}
+  .grid12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}
+
+  /* services ledger */
+  .svc-head{grid-column:1 / span 4;align-self:start}
+  .svc-list{grid-column:5 / span 8;border-top:2px solid var(--ink)}
+  .row{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);column-gap:32px;align-items:baseline;padding:clamp(22px,2.6vw,34px) 18px;border-bottom:1px solid var(--line);text-decoration:none;position:relative;transition:background-color .2s ease-out}
+  .row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent);transform:scaleY(0);transform-origin:bottom;transition:transform .3s var(--ease)}
+  .row:hover,.row:focus-visible{background:var(--tint)}
+  .row:hover::before,.row:focus-visible::before{transform:scaleY(1)}
+  .row h3{font:600 clamp(24px,2.4vw,34px)/1.08 var(--display);letter-spacing:-.005em;transition:transform .3s var(--ease)}
+  .row:hover h3,.row:focus-visible h3{transform:translateX(10px)}
+  .row p{color:var(--muted);font-size:17px;text-wrap:pretty}
+  .svc-cta{margin-top:28px}
+
+  /* why: one big promise, three supporting notes */
+  .why{background:#fff;border-block:1px solid var(--line)}
+  .why-main{grid-column:1 / span 6;margin-top:clamp(36px,5vw,72px)}
+  .why-main h3{font:600 clamp(34px,5vw,72px)/1.02 var(--display);letter-spacing:-.01em;text-wrap:balance;margin-bottom:20px}
+  .why-main p{color:var(--muted);font-size:clamp(18px,1.6vw,22px);max-width:26em}
+  .why-rest{grid-column:8 / span 5;margin-top:clamp(36px,5vw,72px)}
+  .why-rest > div{padding:22px 0 26px;border-top:2px solid var(--ink)}
+  .why-rest > div + div{border-top:1px solid var(--line)}
+  .why-rest h3{font:600 24px/1.15 var(--display);margin-bottom:8px}
+  .why-rest p{color:var(--muted);font-size:17px;text-wrap:pretty}
+
+  /* doctor: duotone portrait on a mint plate with a deep offset block */
+  .doc-photo{grid-column:1 / span 4;position:relative;padding:0 22px 22px 0}
+  .doc-photo::before{content:"";position:absolute;left:22px;right:0;top:22px;bottom:0;background:var(--accent-deep);border-radius:6px}
+  .frame{position:relative;background:var(--mint);border-radius:6px;overflow:hidden;aspect-ratio:4/5}
+  .frame img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;filter:grayscale(1) contrast(1.1) brightness(1.12);mix-blend-mode:multiply}
+  .doc-text{grid-column:6 / span 7;align-self:center}
+  .doc-text h2{margin-bottom:8px}
+  .role{font:600 22px/1.3 var(--display);color:var(--accent-deep);margin-bottom:24px}
+  .doc-text p.body{color:var(--muted);max-width:32em;text-wrap:pretty}
+  .lang{margin:20px 0 32px;font-weight:600;font-variant-numeric:tabular-nums}
+
+  /* smile */
+  .smile{background:var(--tint)}
+  .smile-in{align-items:center;row-gap:36px}
+  .smile-l{grid-column:1 / span 6;display:flex;flex-direction:column;gap:24px;align-items:flex-start}
+  .smile-l .h2{font-size:clamp(36px,5.2vw,76px)}
+  .smile-l p{color:var(--ink);text-wrap:pretty;max-width:30em}
+  .smile-r{grid-column:8 / span 5}
+  .ph{border:2px dashed var(--accent-deep);border-radius:6px;aspect-ratio:4/3;display:flex;flex-direction:column;justify-content:flex-end;padding:16px;gap:4px;background:repeating-linear-gradient(135deg,transparent 0 14px,rgba(8,89,76,.06) 14px 15px);color:var(--accent-deep);font-weight:600;font-size:15px}
+  .smile-l .disc{font-size:15px;color:var(--muted)}
+
+  /* reviews */
+  .rev-head{margin-bottom:clamp(36px,5vw,72px)}
+  .quotes{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;row-gap:40px}
+  .q{border-left:4px solid var(--accent);padding-left:24px}
+  .q blockquote{font:500 clamp(22px,2.2vw,30px)/1.25 var(--display);text-wrap:pretty}
+  .q figcaption{margin-top:14px;font-weight:600;color:var(--muted);font-size:16px}
+  .q1{grid-column:1 / span 7}.q1 blockquote{font-size:clamp(28px,3.6vw,52px);line-height:1.1}
+  .q2{grid-column:9 / span 4;margin-top:clamp(0px,6vw,88px)}
+  .q3{grid-column:3 / span 6}
+  .rev-cta{margin-top:24px}
+
+  /* coverage */
+  .cov{background:#fff;border-block:1px solid var(--line)}
+  .cov-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:0}
+  .cov-col{padding:clamp(8px,2vw,24px) clamp(0px,4vw,64px) clamp(8px,2vw,24px) 0}
+  .cov-col + .cov-col{border-left:2px solid var(--ink);padding-left:clamp(20px,4vw,64px);padding-right:0}
+  .cov-col h2{font:600 clamp(30px,3.6vw,52px)/1.04 var(--display);letter-spacing:-.005em;margin-bottom:16px}
+  .cov-col p{color:var(--muted);max-width:30em;margin-bottom:12px;text-wrap:pretty}
+
+  /* appointment */
+  .appt{background:var(--paper)}
+  .appt-top{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;row-gap:20px;align-items:end}
+  .appt-top h2{grid-column:1 / span 6}
+  .appt-top p{grid-column:8 / span 5;color:var(--muted);text-wrap:pretty}
+  form{margin-top:clamp(36px,5vw,64px)}
+  .fields{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+  .f{display:flex;flex-direction:column;gap:8px}
+  .f.w2{grid-column:span 2}.f.w4{grid-column:span 4}
+  label,legend{font-weight:600;font-size:16px}
+  input,select,textarea{font:400 18px/1.4 var(--text);color:var(--ink);background:#fff;border:2px solid var(--ink);border-radius:10px;padding:13px 14px;min-height:52px;width:100%;transition-property:box-shadow,border-color;transition-duration:.15s}
+  input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px rgba(11,122,104,.28)}
+  input:user-invalid,select:user-invalid,textarea:user-invalid{border-color:#9B1C1C;background:#FFF5F5}
+  textarea{min-height:120px;resize:vertical}
+  .consent{display:flex;gap:14px;align-items:center;font-weight:400;max-width:44em;min-height:52px;padding-block:4px;cursor:pointer}
+  .consent input{width:28px;min-height:28px;height:28px;flex:none;accent-color:var(--accent)}
+  .submit-row{display:flex;gap:24px;align-items:center;flex-wrap:wrap;margin-top:28px}
+  .status{margin-top:20px;padding:16px 20px;border-radius:10px;background:var(--tint);border-left:6px solid var(--accent);font-weight:500;max-width:46em}
+  .visit{margin-top:clamp(48px,6vw,88px);padding-top:28px;border-top:2px solid var(--ink);display:flex;gap:8px 32px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+  .visit h3{font:600 28px/1.1 var(--display)}
+  .visit address{font-style:normal;font-size:20px}
+
+  /* footer */
+  .ftr{background:var(--ink);color:#fff;padding-block:clamp(56px,8vw,112px) 36px}
+  .ftr :focus-visible{outline-color:#fff}
+  .ftr-big{font:600 clamp(40px,7.2vw,108px)/.98 var(--display);letter-spacing:-.012em;max-width:11em;text-wrap:balance}
+  .ftr-cols{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;row-gap:24px;margin-top:clamp(40px,6vw,88px)}
+  .ftr h3{font:600 18px/1.2 var(--display);margin-bottom:12px;color:#CFE0DC}
+  .ftr ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+  .ftr a{text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+  .ftr a:hover{text-decoration:underline;text-underline-offset:4px}
+  .ftr address{font-style:normal}
+  .ftr-contact{grid-column:1 / span 5}.ftr-links{grid-column:7 / span 3}.ftr-social{grid-column:10 / span 3}
+  .ftr-links,.ftr-social{padding-top:30px}
+  .ftr-legal{margin-top:56px;padding-top:20px;border-top:1px solid rgba(255,255,255,.25);display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;font-size:15px;color:#CFE0DC}
+
+  /* responsive */
+  @media (max-width:1180px){.hdr-phone{display:none}}
+  @media (max-width:960px){
+    .nav,.hdr-phone{display:none}
+    .menu{display:block}
+    .hdr .btn{min-height:48px;padding:0 20px;font-size:16px}
+    .svc-head,.svc-list,.doc-photo,.doc-text,.smile-l,.smile-r,.appt-top h2,.appt-top p,.ftr-contact,.ftr-links,.ftr-social,.why-main,.why-rest{grid-column:1 / -1}
+    .svc-head{margin-bottom:32px}
+    .why-rest{margin-top:32px}
+    .doc-photo{max-width:380px}
+    .doc-text{margin-top:40px}
+    .q1,.q2,.q3{grid-column:1 / -1;margin-top:0}
+    .cov-in{grid-template-columns:minmax(0,1fr)}
+    .cov-col + .cov-col{border-left:0;border-top:2px solid var(--ink);padding-left:0;margin-top:32px;padding-top:32px}
+    .fields{grid-template-columns:minmax(0,1fr)}.f.w2,.f.w4{grid-column:auto}
+    .row{grid-template-columns:minmax(0,1fr);row-gap:8px}
+    .ftr-links,.ftr-social{padding-top:0}
+  }
+  @media (max-width:520px){
+    body{font-size:17px}
+    .btn{width:100%}
+    .hero-cta{flex-direction:column;align-items:stretch}
+    .hdr{gap:12px}
+    .hdr .btn{display:none}
+    .logo{font-size:22px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}
+  }
+</style>
+</helmet>
+
+<div class="page">
+  <a class="skip" href="#main">Skip to main content</a>
+
+  <header class="wrap">
+    <div class="hdr">
+      <a class="logo" href="#top" aria-label="Luminous Dental, home">Luminous Dental</a>
+      <nav class="nav" aria-label="Main">
+        <a href="#top" aria-current="page">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#insurance">Insurance &amp; Financing</a>
+        <a href="#appointment">Contact</a>
+      </nav>
+      <a class="hdr-phone" href="tel:+17028058688">Call or text (702) 805-8688</a>
+      <a class="btn" href="#appointment">Request an appointment</a>
+      <details class="menu">
+        <summary aria-label="Menu">Menu</summary>
+        <nav aria-label="Main mobile">
+          <a href="#appointment" style="font-weight:700;color:#08594C">Request an appointment</a>
+          <a href="#top">Home</a>
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#insurance">Insurance &amp; Financing</a>
+          <a href="#appointment">Contact</a>
+          <a href="tel:+17028058688">Call or text (702) 805-8688</a>
+        </nav>
+      </details>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- 2. HERO -->
+    <section class="hero" id="top">
+      <div class="wrap">
+        <h1>Your teeth should last a lifetime</h1>
+        <div class="hero-row">
+          <p class="hero-support">Nothing can truly replace the function of your natural teeth, so keeping them for as long as possible is our priority. Dr. Christian Hahn and our team care for the whole family in Las Vegas.</p>
+          <div class="hero-cta">
+            <a class="btn" href="#appointment">Request an appointment</a>
+            <a class="btn btn-ghost" href="tel:+17028058688">Call or text (702) 805-8688</a>
+          </div>
+        </div>
+      </div>
+      <!-- SIGNATURE: a full set of natural teeth, upper and lower, lit up from the middle outward. -->
+      <div class="smilebar" aria-hidden="true">
+        <svg viewBox="0 0 1440 290" preserveAspectRatio="xMidYMid slice" focusable="false">
+          <defs>
+            <linearGradient id="gu" x1="0" y1="0" x2="0" y2="1"><stop offset=".55" stop-color="#FFFFFF"/><stop offset="1" stop-color="#D6E8E3"/></linearGradient>
+            <linearGradient id="gl" x1="0" y1="1" x2="0" y2="0"><stop offset=".55" stop-color="#FFFFFF"/><stop offset="1" stop-color="#D6E8E3"/></linearGradient>
+          </defs>
+      <rect class="t" style="--d:0.00s" x="722.0" y="-70" width="132" height="228" rx="38.0" fill="url(#gu)"/>
+      <rect class="t" style="--d:0.00s" x="722.0" y="178" width="132" height="182" rx="38.0" fill="url(#gl)"/>
+      <rect class="t" style="--d:0.07s" x="858.0" y="-70" width="110" height="218" rx="38.0" fill="url(#gu)"/>
+      <rect class="t" style="--d:0.07s" x="858.0" y="170" width="110" height="190" rx="38.0" fill="url(#gl)"/>
+      <rect class="t" style="--d:0.14s" x="972.0" y="-70" width="104" height="222" rx="37.4" fill="url(#gu)"/>
+      <rect class="t" style="--d:0.14s" x="972.0" y="168" width="104" height="192" rx="37.4" fill="url(#gl)"/>
+      <rect class="t" style="--d:0.21s" x="1080.0" y="-70" width="90" height="204" rx="32.4" fill="url(#gu)"/>
+      <rect class="t" style="--d:0.21s" x="1080.0" y="156" width="90" height="204" rx="32.4" fill="url(#gl)"/>
+      <rect class="t" style="--d:0.28s" x="1174.0" y="-70" width="84" height="196" rx="30.2" fill="url(#gu)"/>
+      <rect class="t" style="--d:0.28s" x="1174.0" y="150" width="84" height="210" rx="30.2" fill="url(#gl)"/>
+      <rect class="t" style="--d:0.35s" x="1262.0" y="-70" width="80" height="186" rx="28.8" fill="url(#gu)"/>
+      <rect class="t" style="--d:0.35s" x="1262.0" y="142" width="80" height="218" rx="28.8" fill="url(#gl)"/>
+      <rect class="t" style="--d:0.42s" x="1346.0" y="-70" width="76" height="180" rx="27.4" fill="url(#gu)"/>
+      <rect class="t" style="--d:0.42s" x="1346.0" y="138" width="76" height="222" rx="27.4" fill="url(#gl)"/>
+      <rect class="t" style="--d:0.49s" x="1426.0" y="-70" width="70" height="174" rx="25.2" fill="url(#gu)"/>
+      <rect class="t" style="--d:0.49s" x="1426.0" y="132" width="70" height="228" rx="25.2" fill="url(#gl)"/>
+      <rect class="t" style="--d:0.00s" x="586.0" y="-70" width="132" height="228" rx="38.0" fill="url(#gu)"/>
+      <rect class="t" style="--d:0.00s" x="586.0" y="178" width="132" height="182" rx="38.0" fill="url(#gl)"/>
+      <rect class="t" style="--d:0.07s" x="472.0" y="-70" width="110" height="218" rx="38.0" fill="url(#gu)"/>
+      <rect class="t" style="--d:0.07s" x="472.0" y="170" width="110" height="190" rx="38.0" fill="url(#gl)"/>
+      <rect class="t" style="--d:0.14s" x="364.0" y="-70" width="104" height="222" rx="37.4" fill="url(#gu)"/>
+      <rect class="t" style="--d:0.14s" x="364.0" y="168" width="104" height="192" rx="37.4" fill="url(#gl)"/>
+      <rect class="t" style="--d:0.21s" x="270.0" y="-70" width="90" height="204" rx="32.4" fill="url(#gu)"/>
+      <rect class="t" style="--d:0.21s" x="270.0" y="156" width="90" height="204" rx="32.4" fill="url(#gl)"/>
+      <rect class="t" style="--d:0.28s" x="182.0" y="-70" width="84" height="196" rx="30.2" fill="url(#gu)"/>
+      <rect class="t" style="--d:0.28s" x="182.0" y="150" width="84" height="210" rx="30.2" fill="url(#gl)"/>
+      <rect class="t" style="--d:0.35s" x="98.0" y="-70" width="80" height="186" rx="28.8" fill="url(#gu)"/>
+      <rect class="t" style="--d:0.35s" x="98.0" y="142" width="80" height="218" rx="28.8" fill="url(#gl)"/>
+      <rect class="t" style="--d:0.42s" x="18.0" y="-70" width="76" height="180" rx="27.4" fill="url(#gu)"/>
+      <rect class="t" style="--d:0.42s" x="18.0" y="138" width="76" height="222" rx="27.4" fill="url(#gl)"/>
+      <rect class="t" style="--d:0.49s" x="-56.0" y="-70" width="70" height="174" rx="25.2" fill="url(#gu)"/>
+      <rect class="t" style="--d:0.49s" x="-56.0" y="132" width="70" height="228" rx="25.2" fill="url(#gl)"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 3. SERVICES -->
+    <section class="sec wrap" id="services">
+      <div class="grid12">
+        <div class="svc-head">
+          <h2 class="h2">Dental care for the whole family</h2>
+        </div>
+        <div class="svc-list">
+          <a class="row" id="svc-general" href="#services">
+            <h3>General Dentistry</h3>
+            <p>Checkups, cleanings, fillings and preventive care to keep your smile healthy at every stage of life.</p>
+          </a>
+          <a class="row" id="svc-cosmetic" href="#services">
+            <h3>Cosmetic Dentistry</h3>
+            <p>Veneers, crowns, bonding, implants and whitening to improve how your smile looks and works.</p>
+          </a>
+          <a class="row" id="svc-ortho" href="#services">
+            <h3>Orthodontics</h3>
+            <p>Invisalign and braces for a straighter smile and a better bite, for children, teens and adults.</p>
+          </a>
+          <a class="row" id="svc-pediatric" href="#services">
+            <h3>Pediatric Dentistry</h3>
+            <p>Gentle exams, cleanings and tips for kids, in a comfortable setting.</p>
+          </a>
+          <div class="svc-cta"><a class="btn btn-ghost" href="#services">See all services</a></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. WHY -->
+    <section class="sec why" aria-labelledby="why-h">
+      <div class="wrap">
+        <h2 class="h2" id="why-h" style="max-width:14em">Why patients choose Luminous Dental</h2>
+        <div class="grid12">
+          <div class="why-main">
+            <h3>We help you keep your own teeth</h3>
+            <p>Nothing can truly replace the function of your natural teeth. Keeping them as long as possible comes first in every plan.</p>
+          </div>
+          <div class="why-rest">
+            <div><h3>Care that feels comfortable</h3><p>Our team is dedicated to personalized, comfortable, high-quality dental care for every patient.</p></div>
+            <div><h3>One office for the whole family</h3><p>General, cosmetic, orthodontic and pediatric care in the same place, so everyone at home can see the same team.</p></div>
+            <div><h3>We work with most private dental insurance</h3><p>Our providers are affiliated with most private dental insurance. Ask our team to confirm your plan.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. DOCTOR -->
+    <section class="sec wrap" id="about">
+      <div class="grid12">
+        <div class="doc-photo">
+          <div class="frame">
+            <img src="/_blob/f083a374d6191d67857e1e7615274e99" alt="Dr. Christian Hahn, general dentist, in a white coat" width="734" height="737">
+          </div>
+        </div>
+        <div class="doc-text">
+          <h2 class="h2">Meet Dr. Christian Hahn</h2>
+          <p class="role">General Dentist</p>
+          <p class="body">Dr. Christian Hahn is a general dentist with 4 years of experience. He completed his dental training at the University of Nevada, Las Vegas. He is committed to delivering quality care and a comfortable experience for his patients.</p>
+          <p class="lang">Language: English</p>
+          <a class="btn btn-ghost" href="#about">About Dr. Hahn</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. SMILE -->
+    <section class="sec smile">
+      <div class="wrap grid12 smile-in">
+        <div class="smile-l">
+          <h2 class="h2">Thinking about changing your smile?</h2>
+          <p>Veneers, crowns, bonding, whitening and implants can change the color, shape or fit of your teeth. Tell us what bothers you, and we will talk through the options that fit your teeth and your goals.</p>
+          <a class="btn" href="#appointment">Request an appointment</a>
+          <p class="disc">Individual results vary.</p>
+        </div>
+        <div class="smile-r">
+          <div class="ph" role="img" aria-label="Placeholder: real clinic photo, to be confirmed">Real clinic photo · POR CONFIRMAR</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. REVIEWS -->
+    <section class="sec wrap" aria-labelledby="rev-h">
+      <h2 class="h2 rev-head" id="rev-h">What our patients say</h2>
+      <div class="quotes">
+        <figure class="q q1"><blockquote>Dr Christian, Joshua and Anna have done a great job and made us feel very happy and satisfied.</blockquote><figcaption>Ashok R.</figcaption></figure>
+        <figure class="q q2"><blockquote>Amazing dental office amazing staff.</blockquote><figcaption>Ana B.</figcaption></figure>
+        <figure class="q q3"><blockquote>The staff and the specialist is all professional and very friendly.</blockquote><figcaption>Sandra P.</figcaption></figure>
+      </div>
+      <div class="rev-cta"><a class="tlink" href="#top">Read more patient reviews</a></div>
+    </section>
+
+    <!-- 8. COVERAGE -->
+    <section class="sec cov" id="insurance">
+      <div class="wrap cov-in">
+        <div class="cov-col">
+          <h2>Insurance</h2>
+          <p>We work with most private dental insurance. Check the list and ask our team to confirm your coverage before your visit.</p>
+          <a class="tlink" href="#insurance">See insurance and financing</a>
+        </div>
+        <div class="cov-col">
+          <h2>Coming from out of town?</h2>
+          <p>We've partnered with SAHARA Las Vegas to offer exclusive benefits for our patients.</p>
+          <a class="tlink" href="https://stay.saharalasvegas.com/promo?hotel=SLSLV&amp;accessCode=LUMI" rel="noopener">See SAHARA Las Vegas benefits</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. APPOINTMENT -->
+    <section class="sec appt" id="appointment">
+      <div class="wrap">
+        <div class="appt-top">
+          <h2 class="h2">Request an appointment</h2>
+          <p>Tell us who you are and what you need. Sending this form does not reserve a time. Our team will follow up to set your visit. You can also call or text (702) 805-8688.</p>
+        </div>
+        <form method="dialog">
+          <div class="fields">
+            <div class="f w2"><label for="a-name">Full name</label><input id="a-name" name="name" type="text" autocomplete="name" required=""></div>
+            <div class="f"><label for="a-phone">Phone</label><input id="a-phone" name="phone" type="tel" autocomplete="tel" required=""></div>
+            <div class="f"><label for="a-email">Email</label><input id="a-email" name="email" type="email" autocomplete="email" required=""></div>
+            <div class="f w2"><label for="a-need">What do you need?</label>
+              <select id="a-need" name="need"><option>General Dentistry</option><option>Cosmetic Dentistry</option><option>Orthodontics</option><option>Pediatric Dentistry</option></select></div>
+            <div class="f w2"><label for="a-msg">Anything else we should know</label><textarea id="a-msg" name="msg" rows="3"></textarea></div>
+            <div class="f w4"><label class="consent" for="a-consent"><input id="a-consent" name="consent" type="checkbox" required=""><span>I agree that Luminous Dental may contact me about this request.</span></label></div>
+          </div>
+          <div class="submit-row">
+            <button class="btn" type="submit">Send my request</button>
+            <a class="tlink" href="tel:+17028058688">Call or text (702) 805-8688</a>
+          </div>
+          <p class="status" role="status">This form is not connected yet, so your request was not sent. Please call or text (702) 805-8688 to book.</p>
+        </form>
+        <div class="visit">
+          <h3>Visit us</h3>
+          <address>1212 S Maryland Pkwy, Las Vegas, NV 89104</address>
+          <a class="tlink" href="https://www.google.com/maps/search/?api=1&amp;query=1212+S+Maryland+Pkwy+Las+Vegas+NV+89104" rel="noopener">Open in Google Maps</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 10. FOOTER -->
+  <footer class="ftr">
+    <div class="wrap">
+      <p class="ftr-big">Your teeth should last a lifetime.</p>
+      <div class="ftr-cols">
+        <div class="ftr-contact">
+          <h3>Contact</h3>
+          <address>1212 S Maryland Pkwy, Las Vegas, NV 89104<br>
+            <a href="tel:+17028058688">Call or text (702) 805-8688</a><br>
+            <a href="mailto:info@luminousdentallv.com">info@luminousdentallv.com</a></address>
+        </div>
+        <nav class="ftr-links" aria-label="Footer">
+          <ul>
+            <li><a href="#about">About</a></li><li><a href="#services">Services</a></li><li><a href="#insurance">Insurance &amp; Financing</a></li><li><a href="#appointment">Contact</a></li><li><a href="#top">Privacy Policy</a></li>
+          </ul>
+        </nav>
+        <nav class="ftr-social" aria-label="Social media">
+          <ul>
+            <li><a href="https://www.instagram.com/luminousdentalvegas" rel="noopener">Instagram</a></li>
+            <li><a href="https://www.facebook.com/profile.php?id=61554688456073" rel="noopener">Facebook</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="ftr-legal"><span>Luminous Dental, Las Vegas. All rights reserved. © 2026</span><span>Individual results vary.</span></div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":375,"height":6210}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

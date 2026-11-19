@@ -1,0 +1,144 @@
+{
+  "v": 3,
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-11-17T22:30:00Z"
+  },
+  "title": "Luminous Dental · estilos",
+  "launch": {
+    "view": "canvas"
+  },
+  "pages": [],
+  "boards": {
+    "Estilo-B3.dc.html": {
+      "x": -4270,
+      "y": 0,
+      "w": 1440,
+      "h": 7962,
+      "title": "B3 · Computadora",
+      "expand": "fill"
+    },
+    "Estilo-B3-movil.dc.html": {
+      "x": -2750,
+      "y": 0,
+      "w": 375,
+      "h": 8322,
+      "title": "B3 · Celular",
+      "expand": "fill"
+    },
+    "Estilo-B2.dc.html": {
+      "x": -2135,
+      "y": 0,
+      "w": 1440,
+      "h": 8169,
+      "title": "B2 · Computadora",
+      "expand": "fill"
+    },
+    "Estilo-B2-movil.dc.html": {
+      "x": -615,
+      "y": 0,
+      "w": 375,
+      "h": 9114,
+      "title": "B2 · Celular",
+      "expand": "fill"
+    },
+    "Estilo-A.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 7480,
+      "title": "A · Computadora",
+      "expand": "fill"
+    },
+    "Estilo-A-movil.dc.html": {
+      "x": 1520,
+      "y": 0,
+      "w": 375,
+      "h": 6210,
+      "title": "A · Celular",
+      "expand": "fill"
+    },
+    "Estilo-B.dc.html": {
+      "x": 2135,
+      "y": 0,
+      "w": 1440,
+      "h": 7610,
+      "title": "B · Computadora",
+      "expand": "fill"
+    },
+    "Estilo-B-movil.dc.html": {
+      "x": 3655,
+      "y": 0,
+      "w": 375,
+      "h": 6460,
+      "title": "B · Celular",
+      "expand": "fill"
+    },
+    "Estilo-C.dc.html": {
+      "x": 4270,
+      "y": 0,
+      "w": 1440,
+      "h": 8040,
+      "title": "C · Computadora",
+      "expand": "fill"
+    },
+    "Estilo-C-movil.dc.html": {
+      "x": 5790,
+      "y": 0,
+      "w": 375,
+      "h": 9100,
+      "title": "C · Celular",
+      "expand": "fill"
+    }
+  },
+  "order": [
+    "Estilo-B3.dc.html",
+    "Estilo-B3-movil.dc.html",
+    "Estilo-B2.dc.html",
+    "Estilo-B2-movil.dc.html",
+    "Estilo-A.dc.html",
+    "Estilo-A-movil.dc.html",
+    "Estilo-B.dc.html",
+    "Estilo-B-movil.dc.html",
+    "Estilo-C.dc.html",
+    "Estilo-C-movil.dc.html"
+  ],
+  "notes": {
+    "tA": {
+      "x": 0,
+      "y": -320,
+      "text": "A · Claro: «Todos tus dientes»",
+      "kind": "title1",
+      "maxW": 1895
+    },
+    "tB": {
+      "x": 2135,
+      "y": -320,
+      "text": "B · Noche: «El anillo»",
+      "kind": "title1",
+      "maxW": 1895
+    },
+    "tC": {
+      "x": 4270,
+      "y": -320,
+      "text": "C · Sol: «La línea de vida»",
+      "kind": "title1",
+      "maxW": 1895
+    },
+    "tB2": {
+      "x": -2135,
+      "y": -320,
+      "text": "B2 · Mezcla elegida: noche con estrellas",
+      "kind": "title1",
+      "maxW": 1895
+    },
+    "tB3": {
+      "x": -4270,
+      "y": -320,
+      "text": "B3 · Ronda 2: sin dientes, tu fondo, reseñas nuevas",
+      "kind": "title1",
+      "maxW": 1895
+    }
+  },
+  "designSystems": []
+}
