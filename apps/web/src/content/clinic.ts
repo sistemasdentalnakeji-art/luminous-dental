@@ -46,6 +46,6 @@ export const services = [
   { group: 'Pediatric Dentistry', name: 'Pediatric Dentistry', source: 'https://luminousdentallv.com/' },
 ] as const
 
-/** Address of a service inside the Services page ("Dental Implants" -> "/services#dental-implants"). */
+/** Address of a service page ("Dental Implants" -> "/services/dental-implants"). */
 export const serviceHref = (name: string) =>
-  '/services#' + name.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+  '/services/' + name.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')

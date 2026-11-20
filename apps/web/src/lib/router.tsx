@@ -1,4 +1,5 @@
 import { useEffect, useState, type AnchorHTMLAttributes, type MouseEvent } from 'react'
+import { prefetch } from '@/lib/pages'
 
 // Tiny router (no dependency): clean paths with the History API. The host must send every path to index.html.
 const EVENT = 'ld:navigate'
@@ -35,5 +36,6 @@ export function Link({ href, onClick, ...rest }: AnchorHTMLAttributes<HTMLAnchor
     e.preventDefault()
     navigate(href)
   }
-  return <a href={internal(href) ? BASE + href : href} onClick={go} {...rest} />
+  const warm = () => { if (internal(href)) prefetch(href) } // start loading the page before the click
+  return <a href={internal(href) ? BASE + href : href} onClick={go} onPointerEnter={warm} onFocus={warm} onTouchStart={warm} {...rest} />
 }

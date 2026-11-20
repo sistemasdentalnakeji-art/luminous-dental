@@ -1,0 +1,388 @@
+/* ==========================================================================
+   Expanding location card, copied as is from Dental Nakeji (styles/components/location-map.css); only colors and fonts are this site's.
+   Navy (--color-ink to --color-night) with sky-blue lines; the glow behind the closed card is the gold of the stars. */
+/* Registradas para poder interpolarlas: la inclinación (la pone LocationMap.tsx), el vaivén y su intensidad. */
+@property --loc-spin {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.loc {
+  --loc-w: min(260px, 100% - 64px); /* ficha cerrada: cuadrada (los % se resuelven contra el recuadro donde se usan) */
+  --loc-h: min(260px, 100% - 64px);
+  --loc-radius: 50%; /* cerrada es un círculo; al crecer, el 50% se vuelve óvalo y termina en 24px */
+  --loc-open: 0.95s cubic-bezier(0.32, 0.72, 0, 1); /* sin rebote: se abre y se asienta */
+  --loc-line: 123, 195, 235; /* celeste de la marca (--color-brand-light) en RGB */
+  --loc-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* defined here: Nakeji's file uses it without defining it */
+  --loc-pin: #ea4335; /* rojo del pin de ubicación */
+  --loc-pin-dot: #8f1d14;
+  position: absolute;
+  inset: 0;
+  perspective: 1000px;
+}
+
+/* Resplandor amarillo que respira detrás de la tarjeta contraída (mismo ritmo que el contorno .siri de las tarjetas de contacto).
+   Fuera de la tarjeta: el recorte la cortaría. */
+.loc::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: var(--loc-w);
+  height: var(--loc-h);
+  border-radius: var(--loc-radius);
+  background: linear-gradient(135deg, #ffd98a, var(--color-gold), #f2a93b);
+  filter: blur(16px);
+  opacity: 0.45;
+  animation: loc-glow 1.6s ease-in-out infinite alternate;
+  transition: opacity 250ms var(--ease) 0.7s;
+}
+
+.loc[data-expanded]::before {
+  opacity: 0;
+  transition-delay: 0s;
+  animation-play-state: paused;
+}
+
+.loc__card {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(155deg, var(--color-ink) 0%, var(--color-night) 100%);
+  color: #fff;
+  clip-path: inset(
+    max(0px, (100% - var(--loc-h)) / 2) max(0px, (100% - var(--loc-w)) / 2) round var(--loc-radius)
+  );
+  opacity: 0; /* closed: only the coin is seen; no map leaks around it */
+  /* Closing (mirror of opening): the window shrinks to a circle the size of the coin, the coin fades in on top facing front and
+     still, and only then this layer fades out behind it (no jump). */
+  transition: clip-path var(--loc-open), opacity 0.3s ease 0.95s;
+}
+
+/* Abierta: la ficha se pone de frente (el código deja --loc-spin en 0) y el recorte crece de círculo a ventana. */
+.loc[data-expanded] .loc__card {
+  clip-path: inset(0 round 24px);
+  opacity: 1;
+  /* Opening: first the coin turns to face front (0.5 s), then this circle grows into the map window (0.95 s) while the coin fades. */
+  transition: clip-path 0.95s cubic-bezier(0.32, 0.72, 0, 1) 0.5s, opacity 0s 0.5s;
+}
+
+/* Respiración del resplandor: solo escala (la opacidad la lleva el desvanecido al abrir). */
+@keyframes loc-glow {
+  from {
+    transform: scale(0.97);
+  }
+
+  to {
+    transform: scale(1.1);
+  }
+}
+
+/* Vaivén automático de lado a lado: un ciclo de ~2 s, el mismo tiempo que tarda en abrirse sola. */
+
+/* ---------- Cuadrícula tenue (solo contraída) ---------- */
+.loc__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(var(--loc-line), 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--loc-line), 0.12) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.6;
+  transition: opacity 250ms var(--ease);
+}
+
+.loc[data-expanded] .loc__grid {
+  opacity: 0;
+}
+
+/* ---------- Plano (aparece al expandir): ilustración propia de las calles de alrededor, ver data/locationMap.ts ---------- */
+.loc__map {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 450ms var(--ease);
+  pointer-events: none;
+}
+
+.loc[data-expanded] .loc__map {
+  opacity: 1;
+  transition-delay: 0.1s;
+}
+
+.loc__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.loc__park {
+  fill: rgba(var(--loc-line), 0.12);
+}
+
+/* Calles: se trazan una a una (stroke-dashoffset con pathLength=1). El grosor escala junto con el plano. */
+.loc__road {
+  fill: none;
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 1;
+  stroke-linecap: butt; /* round caps stacked their translucency where two ways meet (this map has 73 roads) */
+  stroke-linejoin: round;
+  transition: stroke-dashoffset 0.9s var(--ease) calc(0.15s + var(--i, 0) * 0.07s);
+}
+
+.loc__road--arterial {
+  stroke: rgba(var(--loc-line), 0.4);
+}
+
+.loc__road--primary {
+  stroke: rgba(var(--loc-line), 0.3);
+}
+
+.loc__road--minor {
+  stroke: rgba(var(--loc-line), 0.22);
+}
+
+.loc[data-expanded] .loc__road {
+  stroke-dashoffset: 0;
+}
+
+/* Nombres de las calles: aparecen cuando las calles ya están trazadas. */
+.loc__label {
+  fill: rgba(255, 255, 255, 0.66);
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-anchor: middle;
+  dominant-baseline: central;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease) 0.9s;
+}
+
+.loc[data-expanded] .loc__label {
+  opacity: 1;
+}
+
+/* Pin de la clínica (protagonista): cae con rebote, lleva un halo celeste y un anillo que se expande en su base. */
+.loc__pin {
+  color: var(--loc-pin);
+  filter: drop-shadow(0 0 12px rgba(234, 67, 53, 0.55));
+  opacity: 0;
+  scale: 0;
+  translate: 0 -40px;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition:
+    translate 0.6s var(--loc-spring) 0.7s,
+    scale 0.6s var(--loc-spring) 0.7s,
+    opacity 250ms var(--ease) 0.7s;
+}
+
+.loc[data-expanded] .loc__pin {
+  opacity: 1;
+  scale: 1;
+  translate: 0 0;
+}
+
+.loc__pin-label {
+  fill: #fff;
+  font-family: var(--font-serif);
+  text-anchor: end;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  paint-order: stroke;
+  stroke: var(--color-night);
+  stroke-linejoin: round;
+  stroke-width: 5px;
+  opacity: 0;
+  transition: opacity 450ms var(--ease) 1s;
+}
+
+.loc[data-expanded] .loc__pin-label {
+  opacity: 1;
+}
+
+.loc__halo {
+  fill: none;
+  stroke: var(--loc-pin);
+  stroke-width: 2;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.loc[data-expanded] .loc__halo {
+  animation: loc-halo 2.4s var(--ease) 1.2s infinite;
+}
+
+@keyframes loc-halo {
+  from {
+    opacity: 0.8;
+    scale: 0.4;
+  }
+
+  to {
+    opacity: 0;
+    scale: 3.4;
+  }
+}
+
+/* ---------- Ficha cerrada: moneda en 3D (LocationMap.tsx mueve --loc-spin) ---------- */
+.loc__coin {
+  position: absolute;
+  inset: 0;
+  width: var(--loc-w);
+  height: var(--loc-h);
+  margin: auto;
+  transform-style: preserve-3d;
+  transform: rotateY(var(--loc-spin));
+  transition: opacity 0.4s var(--ease) 0.55s; /* closing: it fades in, facing front, while the window finishes shrinking */
+  pointer-events: none;
+}
+
+.loc[data-expanded] .loc__coin {
+  opacity: 0;
+  transition:
+    --loc-spin 0.5s ease-in-out,
+    opacity 0.4s var(--ease) 0.6s;
+}
+
+.loc__coin > span {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+/* Edge: discs stacked in depth, with the same 8 blocks as the rim and a gold one in the middle. */
+.loc__edge {
+  background: repeating-conic-gradient(from -8.5deg, #f4f1ea 0 17deg, #2f63ad 17deg 45deg);
+  transform: translateZ(var(--z));
+}
+
+.loc__edge--gold {
+  background: #e0b65c;
+}
+
+.loc__side {
+  backface-visibility: hidden;
+}
+
+.loc__side--front {
+  transform: translateZ(7px);
+}
+
+.loc__side--back {
+  transform: translateZ(-7px) rotateY(180deg);
+}
+
+.loc__chip {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.loc__chip text {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  fill: #f3d79a;
+}
+
+/* ---------- Botón que alterna y botón de cierre ---------- */
+.loc__toggle {
+  position: absolute;
+  inset: 0;
+  width: var(--loc-w);
+  height: var(--loc-h);
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--loc-radius);
+  background: transparent;
+  cursor: pointer;
+}
+
+.loc[data-expanded] .loc__toggle {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  cursor: zoom-out;
+}
+
+.loc__toggle:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: -6px;
+  box-shadow: none;
+}
+
+/* Cierre decorativo (el botón entero lo hace): aparece al expandir. */
+.loc__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  opacity: 0;
+  scale: 0.8;
+  transition:
+    opacity 150ms var(--ease),
+    scale 150ms var(--ease);
+  pointer-events: none;
+}
+
+.loc[data-expanded] .loc__close {
+  opacity: 1;
+  scale: 1;
+  transition-delay: 1.3s;
+}
+
+/* Pista debajo de la tarjeta: con el cursor encima (o siempre en pantallas táctiles). */
+.loc__credit {
+  position: absolute;
+  left: 14px;
+  bottom: 10px;
+  font-size: 0.6875rem;
+  color: rgba(255, 255, 255, 0.7);
+  opacity: 0;
+  transition: opacity 150ms var(--ease);
+  pointer-events: none;
+}
+
+.loc[data-expanded] .loc__credit {
+  opacity: 1;
+  transition-delay: 1.2s;
+}
+
+.loc__hint {
+  position: absolute;
+  top: calc(50% + var(--loc-h) / 2 + 14px);
+  left: 50%;
+  color: var(--color-text2);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  opacity: 0;
+  translate: -50% 4px;
+  transition:
+    opacity 250ms var(--ease),
+    translate 250ms var(--ease);
+  pointer-events: none;
+}
+
+.loc:not([data-expanded]) .loc__hint {
+  opacity: 1;
+  translate: -50% 0;
+}
+
+.loc[data-expanded] .loc__hint {
+  opacity: 0;
+}

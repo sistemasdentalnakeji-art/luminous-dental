@@ -188,10 +188,6 @@ function extrude(ring, z, height, projection, options = {}) {
         bevel,
     };
 }
-const ringOf = (plan, steps = 8) => roundedPlan(plan, steps);
-function slabOf(plan, z, height, projection, steps = 8, bevel = 0) {
-    return extrude(ringOf(plan, steps), z, height, projection, { convex: true, bevel });
-}
 function circleRing(cx, cy, radius, steps = 40) {
     return Array.from({ length: steps }, (_, step) => {
         const angle = (step / steps) * Math.PI * 2;
@@ -201,14 +197,10 @@ function circleRing(cx, cy, radius, steps = 40) {
 function cylinder(cx, cy, radius, z, height, projection, steps = 32, bevel = 0) {
     return extrude(circleRing(cx, cy, radius, steps), z, height, projection, { convex: true, bevel });
 }
-const insetPlan = ({ x, y, w, d, r }, by) => ({ x: x + by, y: y + by, w: w - by * 2, d: d - by * 2, r: Math.max(0, r - by) });
 function onTop(points, z, projection, closed = false) {
     return pathOf(points.map(([x, y]) => iso([x, y, z], projection)), closed);
 }
-const lineOnTop = (from, to, z, projection) => onTop([from, to], z, projection);
 const segment = (from, to, projection) => pathOf([iso(from, projection), iso(to, projection)]);
-const ring = (cx, cy, radius, z, projection, steps = 40) => onTop(circleRing(cx, cy, radius, steps), z, projection, true);
-const pointsAt = (points, projection) => points.map((point) => iso(point, projection));
 function knurl(cx, cy, radius, z0, z1, count, projection, inset = 0.4) {
     const [vx, vy] = towardViewer(projection);
     const lines = [];
@@ -232,20 +224,6 @@ function sideArc(cx, cy, radius, z, projection, steps = 24) {
     }
     return pathOf(points);
 }
-function topTicks(from, to, step, every, edge, z, lengths, projection, axis = "x") {
-    const minor = [];
-    const major = [];
-    const first = Math.ceil(from / step) * step;
-    for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
-        const big = index % every === 0;
-        const length = big ? lengths[1] : lengths[0];
-        const a = axis === "x" ? [at, edge] : [edge, at];
-        const b = axis === "x" ? [at, edge + length] : [edge + length, at];
-        (big ? major : minor).push(lineOnTop(a, b, z, projection));
-    }
-    return { minor: minor.join(""), major: major.join("") };
-}
-const haloOf = (plan, z, height, projection) => slabOf(plan, z, height, projection).fill;
 function axisVector(projection, [dx, dy, dz]) {
     const origin = iso([0, 0, 0], projection);
     const moved = iso([dx, dy, dz], projection);
@@ -338,7 +316,6 @@ const CROOK = {
   "-1": [[0, 1.5, 18], [0, -5.5, -8], [-0.5, 5.5, 12], [0, 0, -7], [0, 1.5, 0], [0, 0, 0]],
   "1": [[0, -2, -10], [0, 3.5, 14], [0, -4.5, -12], [0, 0, 5], [0, 1.5, 0], [0, 0, 0]],
 };
-const FEED_FROM = -1; // the wire is threaded in from the left molar toward the right one
 
 function archPoint(theta) { return [ARCH.a * Math.sin(theta), ARCH.b * Math.cos(theta) + ARCH.w0]; }
 function archNormal(theta) { const n = [Math.sin(theta) / ARCH.a, Math.cos(theta) / ARCH.b]; const l = Math.hypot(n[0], n[1]); return [n[0] / l, n[1] / l]; }
@@ -479,7 +456,6 @@ function setView(P) {
 const W = (p) => [p[0] * VIEW.RT[0] + p[1] * VIEW.FR[0], p[0] * VIEW.RT[1] + p[1] * VIEW.FR[1]];
 const slabL = (ring, z, h, bevel = 0) => extrude(ring.map(W), z, h, VIEW.P, { convex: true, bevel });
 const plateRing = (x, y, w, d, r, steps = 6) => roundedPlan({ x, y, w, d, r }, steps);
-const lineL = (pts, z) => onTop(pts.map(W), z, VIEW.P);
 const S = (paths, style) => solidSvg(paths, style);
 const Ln = (d, style) => lineSvg(d, style);
 const dotsL = (pts, z, style) => dotsSvg(pts.map((p) => { const w = W(p); return iso([w[0], w[1], z], VIEW.P); }), style);
@@ -505,7 +481,8 @@ function gumRing(offOut, offIn) {
   return [...outer, ...cap(end, 1, false), ...inner.reverse(), ...cap(-end, -1, true)];
 }
 
-function staticSvg() {
+// Card variant (service pages): the model on its tabletop base with the control rail, as in B4/B5.
+function cardStaticSvg() {
   const P = VIEW.P, out = [];
   const plate = plateRing(PLATE.x, PLATE.y, PLATE.w, PLATE.d, PLATE.r);
   out.push(`<path class="iso-halo" d="${slabL(plate, -17, 17).fill}"/>`);
@@ -532,6 +509,22 @@ function staticSvg() {
   out.push(S(slabL(plateRing(-74, RAIL_W + 12, 148, 8, 1.4, 3), 0, 0.7), { tone: "lo", crease: "none" }));
   out.push(dotsL([[-70, RAIL_W + 16.5], [70, RAIL_W + 16.5]], 0.7, { size: 0.4 }));
   return out.join("");
+}
+
+
+// A small clear tray (like a preview of an acrylic mold) that floats; the gum sits in it. No tabletop, no rail.
+function staticSvg() {
+  const P = VIEW.P, out = [];
+  out.push(wrap("tray", S(extrude(gumRing(25, 22).map(W), -6, 6, P, { convex: false, bevel: 0.8 }), { tone: "hi", crease: "mid" })));
+  out.push(Ln(onTop(gumRing(22, 19).map(W), 0, P, true), { tone: "mid" }));
+  // gum: moulded base lip, then the ridge the teeth stand on
+  out.push(wrap("gum", S(extrude(gumRing(18.5, 15.5).map(W), 0, 2.2, P, { convex: false, bevel: 0.5 }), { tone: "lo" })));
+  out.push(wrap("gum", S(extrude(gumRing(16.5, 13.5).map(W), 2.2, ZG - 2.2, P, { convex: false, bevel: 0.6 }), { tone: "mid", crease: "lo" })));
+  return out.join("");
+}
+// soft shadow far below the tray, so it reads as floating
+function floatShadowSvg() {
+  return `<path class="brk-shadow" d="${onTop(gumRing(23, 20).map(W), -30, VIEW.P, true)}"/>`;
 }
 
 // the control: a carriage on the rail with a gold knurled knob; drawn at u = 0, moved with a translate
@@ -664,4 +657,4 @@ function rulerSvg(max) {
   return Ln(minor.join(""), { tone: "lo" }) + Ln(major.join(""), { tone: "mid" });
 }
 
-export { SERVICES, iso, fitProjection, setView, staticSvg, carriageSvg, carriageTransform, rulerSvg, dynSvg, sceneState, W, STEP_U, RAIL_W };
+export { SERVICES, iso, fitProjection, setView, staticSvg, cardStaticSvg, floatShadowSvg, carriageSvg, carriageTransform, rulerSvg, dynSvg, sceneState, W, STEP_U, RAIL_W };

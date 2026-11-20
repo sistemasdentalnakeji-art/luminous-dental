@@ -2,6 +2,11 @@
 // Rule: every fact comes from https://luminousdentallv.com (checked 2026-11-17) or says POR CONFIRMAR.
 // Not shown on purpose: opening hours, Google rating, prices, offers, "40 years", "top-rated", "free consultation".
 
+import { clinic } from '@/content/clinic'
+
+const tel = clinic.phone.label // the one place the number is written (content/clinic.ts)
+const callPhone = { label: `Call or text ${tel}`, href: clinic.phone.href }
+
 export const home = {
   seo: {
     title: 'Luminous Dental | General & Cosmetic Dentist in Las Vegas', // 57 characters
@@ -19,10 +24,11 @@ export const home = {
       { label: 'Insurance & Financing', href: '/insurance-financing' },
       { label: 'Contact', href: '/contact' },
       { label: 'About', href: '/about' },
+      { label: 'Blog', href: '/blog' },
     ],
     servicesOverview: 'View all services',
     cta: { label: 'Request an appointment', href: '#appointment' },
-    phone: { label: 'Call or text (702) 805-8688', href: 'tel:+17028058688' },
+    phone: callPhone,
   },
 
   // 2. Hero
@@ -30,9 +36,10 @@ export const home = {
     headline: 'Your teeth should last a lifetime',
     emphasis: 'last a lifetime', // the part of the headline shown in italic gold
     support:
-      'Nothing can truly replace the function of your natural teeth, so keeping them for as long as possible is our priority. Dr. Christian Hahn and our team care for the whole family in Las Vegas.',
+      // NEW, for approval (docs/mejoras-1-plan.md 1.2): the doctor's name leaves the headline; the first sentence no longer repeats "We help you keep your own teeth".
+      'Keeping your natural teeth for as long as possible is our priority. Our team cares for the whole family in Las Vegas.',
     primaryCta: { label: 'Request an appointment', href: '#appointment' },
-    secondaryCta: { label: 'Call or text (702) 805-8688', href: 'tel:+17028058688' },
+    secondaryCta: callPhone,
     image: { src: null, alt: 'POR CONFIRMAR: real photo of the clinic or Dr. Hahn' },
   },
 
@@ -80,10 +87,7 @@ export const home = {
         title: 'One office for the whole family',
         text: 'General, cosmetic, orthodontic and pediatric care in the same place, so everyone at home can see the same team.',
       },
-      {
-        title: 'We work with most private dental insurance',
-        text: 'Our providers are affiliated with most private dental insurance. Ask our team to confirm your plan.',
-      },
+      // Left out until the clinic confirms it (docs/datos.md): "We work with most private dental insurance".
     ],
   },
 
@@ -91,10 +95,14 @@ export const home = {
   doctor: {
     heading: 'Meet Dr. Christian Hahn',
     role: 'General Dentist',
-    text: 'Dr. Christian Hahn is a general dentist with 4 years of experience. He completed his dental training at the University of Nevada, Las Vegas. He is committed to delivering quality care and a comfortable experience for his patients.',
+    name: 'Dr. Christian Hahn',
+    // NEW, for approval: starts with "He is" so the name is not repeated under the title (About page only).
+    text: 'He is a general dentist with 4 years of experience. He completed his dental training at the University of Nevada, Las Vegas. He is committed to delivering quality care and a comfortable experience for his patients.',
     language: 'Language: English',
     photo: { src: null, alt: 'POR CONFIRMAR: photo of Dr. Hahn (the official site has one; confirm permission and quality)' },
-    cta: { label: 'About Dr. Hahn', href: '/about' },
+    // NEW, for approval: caption under the ring on the home page (the photo is the ring's center) and link to About.
+    meet: { label: 'Meet the doctor', href: '/about' },
+    photoAlt: 'Dr. Christian Hahn, general dentist, in a white coat',
   },
 
   // 6. Smile change (a section, no cases and no promises)
@@ -102,6 +110,7 @@ export const home = {
     heading: 'Thinking about changing your smile?',
     text: 'Veneers, crowns, bonding, whitening and implants can change the color, shape or fit of your teeth. Tell us what bothers you, and we will talk through the options that fit your teeth and your goals.',
     cta: { label: 'Request an appointment', href: '#appointment' },
+    more: { label: 'See cosmetic dentistry', href: '/services#cosmetic' }, // NEW, for approval
     disclaimer: 'Individual results vary.',
     // POR CONFIRMAR: no before/after photos or patient stories until the clinic has written permission.
     gallery: null,
@@ -135,7 +144,8 @@ export const home = {
   coverage: {
     insurance: {
       heading: 'Insurance',
-      text: 'We work with most private dental insurance. Check the list and ask our team to confirm your coverage before your visit.',
+      // NEW, for approval. Replaces "We work with most private dental insurance" (not confirmed by the clinic). Promises nothing about plans or financing.
+      text: 'Questions about insurance or payment? Ask our team.',
       cta: { label: 'See insurance and financing', href: '/insurance-financing' },
     },
     outOfTown: {
@@ -153,14 +163,17 @@ export const home = {
     id: 'appointment',
     heading: 'Request an appointment',
     intro:
-      'Tell us who you are and what you need. Sending this form does not reserve a time. Our team will follow up to set your visit. You can also call or text (702) 805-8688.',
+      `Tell us who you are and what you need. Sending this form does not reserve a time. Our team will follow up to set your visit. You can also call or text ${tel}.`,
     submitLabel: 'Send my request',
     consent: 'I agree that Luminous Dental may contact me about this request.',
     messages: {
       sending: 'Sending your request...',
-      success: 'Thank you. We received your request and will contact you to set a time. For anything urgent, call or text (702) 805-8688.',
-      preview: 'This form is not connected yet, so your request was not sent. Please call or text (702) 805-8688 to book.',
-      error: 'Something went wrong and your request was not sent. Please call or text (702) 805-8688.',
+      success: `Thank you. We received your request and will contact you to set a time. For anything urgent, call or text ${tel}.`,
+      preview: `This form is not connected yet, so your request was not sent. Please call or text ${tel} to book.`,
+      error: `Something went wrong and your request was not sent. Please call or text ${tel}.`, // server down or no answer
+      // NEW, for approval: one message per kind of failure.
+      errorInvalid: `We could not accept some of the details. Please check the form, or call or text ${tel}.`,
+      errorBusy: `Too many requests right now. Please wait a few minutes and try again, or call or text ${tel}.`,
       missingFields: 'Please complete the highlighted fields.',
     },
     // Per-field messages (written by the designer in B5, not from the official site).
@@ -168,6 +181,7 @@ export const home = {
       firstName: 'Enter your first name.',
       lastName: 'Enter your last name.',
       phone: 'Enter a phone number.',
+      phoneFormat: `Enter a phone number with at least 7 digits, like ${tel}.`, // NEW, for approval
       email: 'Enter a valid email, like name@example.com.',
       treatment: 'Choose a treatment.',
       consent: 'Check the box so we can contact you about this request.',
@@ -180,7 +194,7 @@ export const home = {
     tagline: 'Your teeth should last a lifetime.',
     contactHeading: 'Contact',
     address: '1212 S Maryland Pkwy, Las Vegas, NV 89104',
-    phone: { label: 'Call or text (702) 805-8688', href: 'tel:+17028058688' },
+    phone: callPhone,
     email: { label: 'info@luminousdentallv.com', href: 'mailto:info@luminousdentallv.com' },
     social: [
       { label: 'Instagram', href: 'https://www.instagram.com/luminousdentalvegas' },
@@ -195,10 +209,13 @@ export const home = {
       { label: 'About', href: '/about' },
       { label: 'Insurance & Financing', href: '/insurance-financing' },
       { label: 'Contact', href: '/contact' },
+      { label: 'Blog', href: '/blog' },
       { label: 'Request an appointment', href: '#appointment' },
     ],
     legal: 'Luminous Dental, Las Vegas. All rights reserved.', // the component adds the year
     note: 'Individual results vary.',
+    // NEW, for approval: stops every decorative animation on the page (WCAG 2.2.2).
+    motion: { pause: 'Pause decorative animations', play: 'Play decorative animations' },
   },
 } as const
 

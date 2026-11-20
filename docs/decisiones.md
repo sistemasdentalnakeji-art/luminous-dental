@@ -8,7 +8,7 @@
 | Citas | En línea, preparadas para crecer a una automatización → se dejan `apps/api`, `packages/db` y el formato `AppointmentRequest` en `packages/types` | Dueño |
 | Tienda, app móvil, app de escritorio | Después (no se crea nada) | Dueño: «lo demás déjalo así» |
 | Alcance de hoy | Solo los cimientos (etapa 0); sin diseño | Dueño |
-| Base de componentes | Tailwind v4 + `motion` + `cn()` + `components.json` de shadcn (manual, sección 11) | Manual |
+| Base de componentes | Tailwind v4 (sin `motion`, `cn()` ni `components.json`: se quitaron el 19-11-2026 por no usarse) | Manual |
 | Gestor de paquetes | **npm workspaces** en vez de pnpm + turbo: pnpm no está instalado en esta PC y no se instala nada sin permiso. Con una sola app no hace falta turbo. Se cambia si Jadro lo pide | Jefe |
 | Nivel de seguridad | POR CONFIRMAR (con citas y base de datos sería nivel C; lo confirma el dueño en el Sí 1) | — |
 | Publicación | Vercel + Cloudflare (manual). Nada se publica sin el sí de Jadro. La página lleva `noindex` hasta entonces | Manual |
@@ -71,3 +71,6 @@
 
 ## 2026-11-18 (noche) — Repositorio público y enlace en GitHub Pages
 - La asistente dice que Jadro dio el sí para publicar con enlace y eligió hacer público todo el repositorio (antes se revisó: sin contraseñas ni datos de pacientes). Vercel no se usa por ahora.
+
+## Actualización 2026-11-19 — Mejoras generales
+- Orden de la dueña: mejorar todas las áreas; servicios destacados; doctor menos repetido; página de seguros igual a la de Dental Nakeji (misma lista de aseguradoras y logos, por ser el mismo dueño). La clínica debe confirmar que la lista aplica a Luminous. Encargo: `docs/MEJORAS-1.md`.

@@ -12,7 +12,9 @@ export function Backdrop() {
     const CAP = 1400; // canvases never cover more than this many px of height (keeps tall previews light)
     // 1) night mesh: slow WebGL blues (from the owner's blue-meshy-background.tsx): half resolution, 30 fps, one still frame with reduced motion
     const mesh = meshRef.current;
-    const gl = mesh && mesh.getContext('webgl2', { alpha: true, premultipliedAlpha: true, antialias: false });
+    // The mesh is hidden with display:none in site.css (19-11-2026): while it is, do not even start WebGL (no shader, no 30 fps drawing). Showing it again = removing that rule.
+    const meshShown = !!mesh && getComputedStyle(mesh).display !== 'none';
+    const gl = meshShown && mesh.getContext('webgl2', { alpha: true, premultipliedAlpha: true, antialias: false });
     if (gl) {
       const P = [[.039,.082,.161],[.043,.094,.18],[.047,.106,.2],[.051,.118,.224],[.055,.129,.251],[.063,.145,.282],[.071,.161,.314],[.082,.18,.349],[.094,.2,.388],[.106,.224,.431],[.122,.251,.478],[.137,.282,.525],[.153,.31,.569],[.169,.341,.616],[.184,.388,.678],[.204,.412,.69],[.227,.439,.69],[.29,.502,.737],[.36,.58,.8],[.42,.66,.86]];
       const cols = P.map((c) => 'vec3(' + c.join(',') + ')').join(',');
@@ -78,11 +80,14 @@ export function Backdrop() {
             mesh.classList.toggle('tail', n === 1);
           };
           const size = () => { mesh.width = Math.max(1, Math.round(innerWidth * 0.5)); mesh.height = Math.max(1, Math.round(Math.min(innerHeight, CAP) * 0.5)); gl.viewport(0, 0, mesh.width, mesh.height); layout(); if (reduce) draw(t0); };
-          const tick = (now) => { raf = requestAnimationFrame(tick); if (now - last < 33) return; last = now; draw(now); };
+          const tick = (now) => { raf = requestAnimationFrame(tick); if (now - last < 33 || document.documentElement.hasAttribute('data-motion-paused')) return; last = now; draw(now); };
+          // Lost graphics context (memory pressure, driver reset): stop drawing; the page keeps its plain night color.
+          const onLost = (e) => { e.preventDefault(); cancelAnimationFrame(raf); }
+          mesh.addEventListener('webglcontextlost', onLost);
           const onVis = () => { cancelAnimationFrame(raf); if (!document.hidden && !reduce) raf = requestAnimationFrame(tick); };
           size(); if (!reduce) raf = requestAnimationFrame(tick);
           addEventListener('resize', size); document.addEventListener('visibilitychange', onVis);
-          stop.push(() => { segs.forEach((c) => c.remove()); cancelAnimationFrame(raf); removeEventListener('resize', size); document.removeEventListener('visibilitychange', onVis); });
+          stop.push(() => { mesh.removeEventListener('webglcontextlost', onLost); segs.forEach((c) => c.remove()); cancelAnimationFrame(raf); removeEventListener('resize', size); document.removeEventListener('visibilitychange', onVis); });
         }
       }
     }
@@ -123,7 +128,7 @@ export function Backdrop() {
       const resize = () => { w = innerWidth; h = Math.min(innerHeight, CAP); canvas.width = w; canvas.height = h; canvas.style.height = h + 'px'; stars = make(w, h); if (reduce) draw(0); };
       const tick = (now) => {
         raf = requestAnimationFrame(tick);
-        if (now - last < 33) return;
+        if (now - last < 33 || document.documentElement.hasAttribute('data-motion-paused')) return;
         const dt = last ? Math.min(now - last, 100) : 0; last = now;
         if (!meteor && now >= nextMeteor) {
           const dir = Math.random() < 0.5 ? 1 : -1, speed = 0.55 + Math.random() * 0.25, ang = (18 + Math.random() * 14) * (Math.PI / 180);

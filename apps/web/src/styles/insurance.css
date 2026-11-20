@@ -1,0 +1,45 @@
+/* /insurance-financing: steps card + the "board" of insurance logos (components/InsuranceGrid.tsx). Based on Dental Nakeji's insurance.css,
+   changed to Luminous: night surface cells, white title (here --color-ink is dark blue), the site's easing. */
+.ins-head{display:grid;gap:clamp(28px,4vw,56px);align-items:end}
+@media (min-width:960px){.ins-head{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}}
+.ins-lead{margin-top:20px;max-width:34em;font-size:clamp(18px,1.5vw,20px);color:var(--color-text);text-wrap:pretty}
+.ins-steps-card{display:grid;gap:22px;padding:clamp(22px,3vw,32px);border-radius:28px;border:1px solid var(--color-line);background:var(--color-surface)}
+.ins-steps{display:grid;gap:14px;counter-reset:step}
+.ins-steps li{display:flex;align-items:center;gap:14px;color:#fff;font-weight:600;counter-increment:step}
+.ins-steps li::before{content:counter(step);display:grid;flex:none;place-items:center;width:36px;height:36px;border:1.5px solid var(--color-gold);border-radius:50%;background:rgba(255,255,255,.06);color:var(--color-gold-soft);font:400 20px/1 var(--font-serif);font-variant-numeric:tabular-nums}
+.ins-actions{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center}
+
+.insurers{--cols:2;--line:rgba(123,195,235,.34);--logo-size:50px;margin-top:clamp(40px,6vw,72px)}
+.insurers__title{margin-bottom:18px;font:400 clamp(24px,2.6vw,34px)/1.15 var(--font-serif);letter-spacing:-.02em;color:#fff}
+.insurers__board{position:relative}
+/* The lines are the background showing through the 1 px gap between cells; overflow clips the rounded corners. */
+.insurers__grid{display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));gap:1px;overflow:hidden;border:1px solid var(--line);border-radius:24px;background:var(--line);box-shadow:0 24px 50px -30px rgba(0,8,24,.9)}
+.insurers__cell{position:relative;display:grid;place-items:center;min-height:clamp(92px,10vw,128px);padding:16px;background:var(--color-surface);transition-property:box-shadow;transition-duration:.15s;transition-timing-function:var(--ease)}
+.insurers__cell:hover{box-shadow:inset 0 0 0 999px rgba(255,255,255,.05)}
+/* Logos are transparent and mostly dark: a small light plate follows them so they read on the night surface. */
+.insurers__cell img{box-sizing:content-box;width:min(68%,calc(var(--logo-size) * sqrt(var(--ar,4))));height:auto;max-height:var(--logo-size);padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.94);object-fit:contain}
+.insurers__cell::after{content:"";position:absolute;right:-7px;bottom:-7px;z-index:1;width:13px;height:13px;background:linear-gradient(var(--color-gold),var(--color-gold)) center/100% 1.5px no-repeat,linear-gradient(var(--color-gold),var(--color-gold)) center/1.5px 100% no-repeat;pointer-events:none}
+.insurers__cell:nth-child(2n)::after,.insurers__cell:nth-last-child(-n+2)::after{display:none}
+.insurers__beams{position:absolute;inset:0;z-index:2;width:100%;height:100%;overflow:visible;pointer-events:none}
+.insurers__beam{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 2;stroke-dashoffset:1.02;filter:drop-shadow(0 0 3px rgba(63,181,200,.9));animation:insurers-beam 1.9s ease-in-out both}
+@keyframes insurers-beam{0%{stroke-dashoffset:1.02}45%{stroke-dashoffset:0}100%{stroke-dashoffset:-1.02}}
+.insurers__note{margin-top:16px;font-size:15px;color:var(--color-text2)}
+@media (prefers-reduced-motion:reduce){.insurers__beams{display:none}}
+/* The 24 cells fill whole rows in 2, 3, 4 and 6 columns. */
+@media (min-width:600px){
+  .insurers{--cols:3;--logo-size:56px}
+  .insurers__cell:nth-child(n)::after{display:block}
+  .insurers__cell:nth-child(3n)::after,.insurers__cell:nth-last-child(-n+3)::after{display:none}
+}
+@media (min-width:960px){
+  .insurers{--cols:4;--logo-size:60px}
+  .insurers__cell:nth-child(n)::after{display:block}
+  .insurers__cell:nth-child(4n)::after,.insurers__cell:nth-last-child(-n+4)::after{display:none}
+}
+@media (min-width:1280px){
+  .insurers{--cols:6}
+  .insurers__cell:nth-child(n)::after{display:block}
+  .insurers__cell:nth-child(6n)::after,.insurers__cell:nth-last-child(-n+6)::after{display:none}
+}
+.ins-sahara{margin-top:clamp(40px,6vw,72px)}
+.ins-pay{margin-top:24px;font-weight:600;color:#fff}

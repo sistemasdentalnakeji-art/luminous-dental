@@ -1,16 +1,17 @@
-// Texts of the services figure ("See how it works"). English only. All NEW texts wait for the owner's approval (docs/lienzo/hoja-b5.md).
+// Texts of the figures. English only. All NEW texts wait for the owner's approval.
 // Service tab names and step names live next to the drawing, in features/figure/engine.js (SERVICES).
 export const figureText = {
-  title: 'See how it works',
-  tabsLabel: 'Services',
-  hint: 'Pick a service, then drag the gold knob or pick a step',
-  note: 'Illustration. Individual results vary.',
   label: 'Treatment steps',
-  describe:
-    'Illustration of a model of the lower teeth. Choose a service with the tabs, then step through how it is done with the number buttons or the left and right arrow keys.',
+  cardTitles: { braces: 'How braces work', implants: 'Dental implants', bridges: 'Dentures & bridges', crowns: 'Veneers & crowns', whitening: 'Teeth whitening' }, // NEW
+  hintCard: 'Drag the gold knob or pick a step', // NEW
+  describeCard:
+    'Illustration of a model of the lower teeth. Step through how the treatment is done with the number buttons, by dragging the gold knob, or with the left and right arrow keys.', // NEW
+  note: 'Illustration. Individual results vary.',
   stepsLabel: 'Steps',
   pause: 'Pause animation',
   play: 'Play animation',
+  pauseNamed: 'Pause {name} animation', // NEW, for approval: each card of the home carousel has its own name
+  playNamed: 'Play {name} animation', // NEW, for approval
   stepOf: 'Step {n} of {total}', // {n} and {total} are filled in by the component
   stepLabel: 'Step {n}: {name}',
 } as const

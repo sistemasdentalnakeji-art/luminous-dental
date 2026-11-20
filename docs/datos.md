@@ -79,3 +79,82 @@ Alternativa más barata: quedarse en **B** (solo correo, sin guardar). Es más s
 - Permiso de pacientes para reseñas y fotos: lo gestiona la clínica.
 - Herramienta de citas, servicio de correo y quién recibe las solicitudes: Jadro.
 - Si la clínica debe cumplir HIPAA con este formulario: abogado de la clínica.
+
+## POR CONFIRMAR añadidos en la Etapa 3 (18-11-2026)
+- Foto del Dr. Hahn (`public/dr-hahn.jpg`, la del diseño B5): permiso y calidad. Es la única foto y sale una vez.
+- Reseñas de la página de inicio (3): permiso de cada paciente para mostrarlas.
+- Enlace «Read more patient reviews» y página de reseñas: no existen; se quitó el enlace.
+- Privacy Policy: la oficial tiene «Lorem ipsum»; sin texto revisado no hay ruta ni enlace.
+- Insurance & Financing: solo lleva el texto de la página de inicio; falta lista de seguros y financiamiento (ver tabla de datos).
+- Textos nuevos de la figura (`content/figure.ts`) y mensajes de error del formulario (`home.appointment.errors`): los aprueba la dueña.
+- Fuentes Newsreader y Figtree se cargan desde Google Fonts; para producción conviene alojarlas en el sitio.
+- Insurance & Financing: se quitó «Check the list» (no hay lista) y no se muestra financiamiento; falta la lista de aseguradoras (ortografía oficial con errores) y todo lo de financiamiento: POR CONFIRMAR con la clínica.
+
+## Etapa 3 · páginas de servicio y blog (18-11-2026) · PARA REVISIÓN DE LA CLÍNICA
+**Páginas de servicio** (`content/services.ts`, 11 páginas, `/services/<nombre>`): textos tomados de las páginas oficiales luminousdentallv.com. La página oficial tiene restos de plantilla que NO se copiaron: otro nombre de clínica («Somerset Dental»), un nombre de doctor distinto («Dr. Palluck»), «Lorem ipsum», «Implants 15% off» y afirmaciones de precio («affordable»). Con `placeholder: true` (texto de relleno Lorem ipsum): **Dental Appliances** (todo) e **Invisalign & Braces** (tercer punto y el párrafo «About»). Los demás tienen texto real pero corto: la clínica debe confirmarlos.
+
+**Blog** (`content/blog.en.json`, copiado del blog en inglés de Dental Nakeji, con la marca cambiada a Luminous Dental). Todo el blog queda POR REVISAR por la clínica: las frases del tipo «Luminous Dental explains / recommends / offers…» son del texto de Nakeji, no de Luminous.
+- Artículos que se copiaron (10): implantes, dentaduras, coronas, carillas, blanqueamiento, ortodoncia, alineadores, primera visita pediátrica, limpieza profesional, extracciones y muelas del juicio.
+- NO se copiaron (4), porque Luminous no anuncia ese servicio: All-on-4, All-on-6, periodoncia (encías que sangran) y endodoncia. Si Luminous los hace: POR CONFIRMAR.
+- Se quitaron las menciones propias de Nakeji: enlaces a nakejidental.com (en «Sources» solo quedan ADA, FDA, NHS, AAO y NIDCR), «dentaduras inmediatas en su catálogo», «extracciones simples y quirúrgicas», «el servicio incluye pulido de manchas», «ofrece alineadores» y «incluye esa evaluación en su descripción». Quitamos la fecha de publicación y las fotos (Luminous no tiene).
+- Se juntaron en un solo tema «Cleanings and extractions» (texto nuevo, por aprobar) las categorías de limpieza y extracciones; la de implantes quedó con 2 artículos (texto de introducción nuevo).
+- Blog va en el menú como enlace directo (Nakeji lo tiene dentro de «Más» junto a Términos y Privacidad, que aquí aún no existen).
+- Las fuentes externas (ADA, FDA, NHS, AAO, NIDCR) no se revisaron de nuevo: sin verificar que los enlaces sigan vigentes.
+
+## Etapa 3 · sección de reseñas de Google y mapa (18-11-2026)
+- **Reseñas** (`components/Reviews.tsx`, `content/reviews.ts`): mismo diseño que Dental Nakeji (letras «Google» animadas, ventana de navegador, dos filas de tarjetas). Hoy muestra las 3 reseñas reales de `home.ts` (cada una con 5 estrellas, como en el widget de la página oficial). **Permiso de cada paciente: POR CONFIRMAR.**
+- **No se muestra** el número de la calificación de Google ni el total de reseñas (se vieron dos valores: 4.3 con 17 y 4.6 con 51), ni la fecha de cada reseña (no se tiene). Se quitaron las estrellas de resumen del diseño de Nakeji para no insinuar una calificación.
+- **Enlace «See on Google»: no está.** En el proyecto solo existe el enlace de Google Maps de la dirección (`clinic.mapsUrl`, una búsqueda), no el de la ficha de la clínica. Hace falta el enlace de la ficha de Google: `config/reviews.ts` → `profileUrl`.
+- **Para conectar reseñas en vivo (lo hace Jadro, la llave nunca va en el sitio):** un servicio en el servidor que lea Google Places (o la herramienta que se elija) y responda `{ reviews: [{ author, rating, text, relativeTime, authorUrl?, photoUrl?, googleUrl? }] }`; su dirección se pone en `config/reviews.ts` → `endpoint`. El código ya la usa (`lib/useGoogleReviews.ts`) y, si falla, deja la lista corta. Google exige mostrar el nombre del autor y su logo (ya se muestran).
+- **Ubicación** (`components/ContactLocation.tsx`, al final del inicio como en Nakeji): contacto a la izquierda y mapa de Google Maps incrustado **sin llave** con la dirección de `clinic.ts` (`content/location.ts`). Sin horario. No se copió la tarjeta que se expande con el plano dibujado a mano de Nakeji (es de sus calles). El mapa carga desde google.com: al cargarlo Google recibe la IP del visitante (privacidad; decide la clínica). Título y texto de la sección son nuevos (por aprobar).
+
+## Etapa 3 · letrero y mapa dibujado de la sección «Visit us» (19-11-2026)
+- **Mapa dibujado** (`components/LocationMap.tsx` + `styles/location-map.css`): copia tal cual del de Dental Nakeji (ventana, plano dibujado, tarjeta que se mece y se abre sola al ver la sección, calles que se trazan, pin que cae). Solo cambian colores y letra; se definió la curva `--loc-spring`, que el archivo de Nakeji usa sin definir (por eso allá el pin no rebotaba).
+- **Calles reales:** el dibujo (`content/locationMap.ts`) sale de **OpenStreetMap** (datos leídos el 19-11-2026 con la API Overpass; el punto de 1212 S Maryland Pkwy lo dio Nominatim): calles, nombres, edificios y parques alrededor. Los nombres son los que OSM da a cada calle (abreviados: Pkwy, Ave, St); una calle sin nombre claro queda sin etiqueta. No se copió ninguna calle de Nakeji. **Licencia ODbL: hay que mostrar «© OpenStreetMap contributors»** (está en la tarjeta abierta). Es un dibujo de la zona, no un mapa de navegación: el botón «Get directions» abre `clinic.mapsUrl`. Sin verificar contra el terreno: OSM puede tener calles o edificios desactualizados.
+- **Se quitó el mapa de Google incrustado** (Nakeji tampoco lo usa); ya no se pide nada a google.com al cargar la sección.
+- **Letrero tipo Las Vegas** (`components/VegasSign.tsx`): dibujo propio y original (no copia el letrero famoso ni ninguna marca): poste, estrella dorada arriba y foquitos que se encienden en cadena; quieto con «reducir movimiento». Es decorativo (oculto a lectores de pantalla). **Textos nuevos por aprobar:** «Visit us», «Luminous Dental», «Las Vegas, NV»; la línea «1212 S Maryland Pkwy» sale de `clinic.ts`. También por aprobar: etiqueta «Las Vegas, NV» y pista «Tap to see the location» de la tarjeta, y el texto de la sección.
+
+### Ajustes pedidos por la dueña a «Visit us» (19-11-2026)
+- Sección compacta en dos columnas alineadas. El **letrero es ahora el título** (dibujo propio, estilo Las Vegas clásico: letras rojas de neón, foquitos cálidos, estrella; con la paleta propia del letrero, no la del sitio): «Visit us» grande, «Luminous Dental», la dirección (de `clinic.ts`) y «Las Vegas, NV»; el `<h2>` «Visit us» sigue existiendo, oculto visualmente.
+- **Mapa:** más zonas alrededor (unos 1.15 km de ancho, antes 0.7 km), **solo calles y parques** (se quitaron edificios y negocios), con datos de OpenStreetMap leídos el 19-11-2026 (73 calles antes, 163 ahora). La tarjeta cerrada queda centrada a lo alto de la columna y, al abrirse, ocupa toda la columna. «© OpenStreetMap contributors» sigue visible. Texto «Luminous Dental» más chico (tarjeta y pin).
+
+### Letrero réplica del clásico y tarjeta de contacto (19-11-2026)
+- **Letrero** (`components/VegasSign.tsx`): réplica de la disposición del clásico «Welcome to Fabulous Las Vegas, Nevada» (1959, diseño de Betty Willis, que nunca lo registró: su diseño es de dominio público; dato del encargo, no verificado por mí con una fuente legal): rombo crema con borde rojo y foquitos que se encienden en cadena, «WELCOME» con cada letra roja en un círculo blanco, «TO FABULOUS» en azul, el nombre grande en rojo, línea pequeña en azul, estrella roja y amarilla arriba y dos postes. Estático y todo encendido con «reducir movimiento». El `<h2>` «Visit us» sigue, oculto. **Textos nuevos por aprobar:** «WELCOME», «TO FABULOUS», «LUMINOUS DENTAL», «LAS VEGAS, NEVADA». Es un dibujo propio hecho con formas, no una copia de imagen.
+- **Dirección, teléfono y correo** van dentro de una tarjeta con fondo (mismo estilo de las tarjetas del sitio).
+- **Redes** (`components/SocialLinks.tsx`, `components/BrandIcon.tsx`): copiadas de Dental Nakeji (logos oficiales de Instagram y Facebook en sus colores, botón de 44 px, nombre accesible «Luminous Dental on Instagram / Facebook»); enlaces de `clinic.ts`. Dentro de la tarjeta, al pie.
+
+### Letrero con las proporciones de la foto (19-11-2026)
+- Se quitó el párrafo «Find us on S Maryland Pkwy…» bajo el letrero.
+- `components/VegasSign.tsx` rehecho con las proporciones de la foto de referencia: rombo ancho y estirado, borde dorado con foquitos alrededor (se encienden en cadena; quietos y encendidos con «reducir movimiento»), siete monedas plateadas grandes con letras rojas sobre el borde de arriba, «TO» en mayúsculas azules y «Fabulous» en cursiva azul con sus rayitas, el nombre grande en rojo, «LAS VEGAS, NEVADA» en azul, estrella naranja con puntas amarillas sobre marco y postes azules. Dibujo con formas, no una imagen. Textos nuevos por aprobar: «WELCOME», «TO», «Fabulous», «LUMINOUS DENTAL», «LAS VEGAS, NEVADA».
+- Mapa abierto: mide lo mismo que la columna izquierda (letrero + tarjeta de contacto, que se compactó); tarjeta cerrada más grande (440 × 270 px, antes 340 × 200).
+
+## Servicios destacados y portada sin figura (19-11-2026)
+- **Servicios destacados** (`components/FeaturedServices.tsx`, `components/Carousel.tsx`, `styles/featured.css`): copia de la estructura de Dental Nakeji (título, carrusel de tarjetas con scroll-snap: 1 por vista en celular, 2 desde 768 px, 3 desde 1080 px; botones abajo; sin reproducción automática; botón «View all services»). Va antes de la sección de seguros, como en Nakeji. Los 5 servicios, en este orden: Invisalign & Braces, Dental Implants, Dentures & Bridges, Porcelain Veneers & Crowns, Teeth Whitening.
+- **La diferencia:** en vez de foto, cada tarjeta muestra el resultado terminado de ese servicio (la figura flotando sobre su molde transparente, sin tarjeta ni controles) con un vaivén suave que solo corre mientras está a la vista; quieta con «reducir movimiento». El motor de la figura se carga una sola vez para las 5 tarjetas. No se quitó la «Most requested» de Nakeji por ser una afirmación sin confirmar: no se muestra insignia. Textos: de `content/services.ts` (página oficial). **Texto nuevo por aprobar:** «Some of the treatments we offer at our clinic in Las Vegas.» (adaptado de Nakeji). La tarjeta de Invisalign & Braces muestra su tercera frase de relleno (Lorem ipsum, `placeholder: true`) hasta que haya texto oficial.
+- **Portada:** sin figura; titular, párrafo y botones centrados como en B3. La figura con pestañas de la portada se eliminó; la figura de las páginas de servicio no cambió.
+- **Limpieza:** se quitó el CSS sin usar (`.svc-group`, `.rev`, `.feat`, `.quotes`, `.ph`, `.sr`, terreno, río y bloques del mapa viejo, y las reglas de pestañas y portada de la figura) y el código de la figura que solo usaba la portada.
+
+## Textos nuevos por aprobar (19-11-2026, arreglos IT ronda 1)
+- Insurance: «Questions about insurance or payment? Ask our team.» (reemplaza la frase de seguros, que sigue POR CONFIRMAR).
+- Pausa: «Pause/Play patient reviews animation», «Pause/Play {servicio} animation», «Pause/Play decorative animations».
+- Formulario: «We could not accept some of the details. Please check the form, or call or text (702) 805-8688.»; «Too many requests right now. Please wait a few minutes and try again, or call or text (702) 805-8688.»; «Enter a phone number with at least 7 digits, like (702) 805-8688.»
+- Página de error: botón «Request an appointment».
+- POR CONFIRMAR con la clínica: texto real de Dental Appliances (todo) e Invisalign & Braces (tercer punto y párrafo «About»); frase de seguros.
+
+## Textos nuevos por aprobar (19-11-2026, Mejoras 1, paso 2)
+- **Inicio:** frase bajo el titular «Keeping your natural teeth for as long as possible is our priority. Our team cares for the whole family in Las Vegas.» · pie del anillo «Dr. Christian Hahn, General Dentist» + enlace «Meet the doctor» · enlace «See cosmetic dentistry» (en «Thinking about changing your smile?»).
+- **About:** «He is a general dentist with 4 years of experience.» (el resto del párrafo es el oficial).
+- **Servicios destacados, pestañas:** «Braces & Invisalign», «Implants», «Dentures & bridges», «Veneers & crowns», «Whitening». Las tarjetas ya no muestran una viñeta que repite la frase de arriba (máximo 2).
+- **Insurance & Financing:** eyebrow «Insurance» · «Not sure if your plan is on the list? Call or text us before your visit and we will go over it with you.» · pasos «Tell us your plan» / «Our team goes over it with you» / «Request your appointment» · «Insurance plans on our list» · «Logos belong to their owners. Ask us to confirm your plan.» · «Questions about payment? Ask our team.» (ya aprobada).
+- **Services y servicio sin texto (Dental Appliances):** «Call us to learn more about this service.»
+- **Página de error:** «Try one of these pages.»
+- **Barra fija del celular:** sin textos nuevos («Call or text», «Request an appointment»).
+
+## Seguros: lista de 24 aseguradoras (POR CONFIRMAR)
+- La lista y los logos son **los mismos que Dental Nakeji, por decisión de la dueña el 19-11-2026**; la clínica debe confirmar que aplica a Luminous Dental (`content/insurers.ts`, logos en `apps/web/public/insurers/`).
+- **Diferencia con la lista oficial de Luminous (15 nombres) — POR CONFIRMAR, no resuelta:** la oficial trae **GEHA** y **Blue Cross and Blue Shield**, que la de Nakeji no trae; la de Nakeji trae Anthem, Premera Blue Cross, Regence y otras que la oficial no nombra. La clínica debe decir cuál es la real.
+- La página no dice «aceptamos» ni promete financiamiento.
+
+## Textos nuevos por aprobar (19-11-2026, ficha del mapa)
+- Texto en arco de la ficha: arriba «LUMINOUS DENTAL», abajo «1212 S MARYLAND PKWY» (dirección real, `clinic.ts`).
+- Nombre del botón del mapa: «Open map of our location» / «Close the map». La pista «Tap to see the location» sigue igual.

@@ -12,3 +12,5 @@ export function carriageTransform(t: number, max?: number): string
 export function rulerSvg(max: number): string
 export function dynSvg(state: unknown): string
 export function sceneState(svc: number, t: number): unknown
+export function floatShadowSvg(): string
+export function cardStaticSvg(): string

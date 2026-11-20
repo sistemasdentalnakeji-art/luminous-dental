@@ -1,22 +1,16 @@
 import { Appointment } from '@/components/Appointment'
-import { clinic } from '@/content/clinic'
+import { ContactLocation } from '@/components/ContactLocation'
 import { home } from '@/content/home'
 
-const { footer } = home
-
+// Same sign, contact card and map as the home page, then the form (without its own "Visit us" block).
 export default function Contact() {
   return (
     <>
       <section className="sec wrap pg">
-        <h1 className="h2">{footer.contactHeading}</h1>
-        <address className="contact-card">
-          <p>{footer.address}</p>
-          <p><a className="tlink" href={footer.phone.href}>{footer.phone.label}</a></p>
-          <p><a className="tlink" href={footer.email.href}>{footer.email.label}</a></p>
-          <p><a className="tlink" href={clinic.mapsUrl} rel="noopener">{home.appointment.location.mapLabel}</a></p>
-        </address>
+        <h1 className="h2">{home.footer.contactHeading}</h1>
       </section>
-      <Appointment />
+      <ContactLocation />
+      <Appointment hideVisit />
     </>
   )
 }
