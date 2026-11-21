@@ -1,4 +1,4 @@
-// Blog data (copied from Dental Nakeji's blog and adapted; see docs/datos.md). English only.
+// Datos del blog (copiados del blog de Dental Nakeji y adaptados; ver docs/datos.md). Solo en inglés.
 import data from '@/content/blog.en.json'
 
 export type Article = (typeof data.articles)[number]
@@ -10,13 +10,13 @@ export const articleOf = (key: string) => data.articles.find((a) => a.key === ke
 export const articlesIn = (category: Category) => data.articles.filter((a) => a.category === category.key)
 export const blogPath = (key?: string) => (key ? `/blog/${key}` : '/blog')
 
-/** Minutes of reading at 200 words per minute, at least 1. */
+/** Minutos de lectura a 200 palabras por minuto, mínimo 1. */
 export function readingMinutes(article: Article) {
   const words = [article.lead, article.answer, ...article.sections.flatMap((s) => [s.title, ...s.paragraphs])].join(' ').split(/\s+/).length
   return Math.max(1, Math.ceil(words / 200))
 }
 
-/** "[text](url)" links of the sources line. */
+/** Enlaces "[texto](url)" de la línea de fuentes. */
 export const linksIn = (text: string) => [...text.matchAll(/\[([^\]]+)\]\(([^)]+)\)/g)].map((m) => ({ label: m[1], href: m[2] }))
 
 export const blogText = {

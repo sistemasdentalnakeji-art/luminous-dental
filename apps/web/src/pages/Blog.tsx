@@ -1,6 +1,6 @@
-// Blog, same three views as Dental Nakeji's: hub (index of topics, shelves of articles, closing call), category, and article
-// ("topic path": the articles of the topic, the sheet with the short answer and sections, and the next article).
-// English only. No photos yet, so cards carry a colored band with the topic icon instead.
+// Blog, las mismas tres vistas que el de Dental Nakeji: portada (índice de temas, estantes de artículos, llamada final), categoría y artículo
+// ("camino del tema": los artículos del tema, la hoja con la respuesta corta y las secciones, y el siguiente artículo).
+// Solo en inglés. Aún no hay fotos, así que las tarjetas llevan una franja de color con el ícono del tema.
 import { Appointment } from '@/components/Appointment'
 import { Icon, type IconName } from '@/components/Icon'
 import { type Article, type Category, articlesIn, blog, blogPath, blogText as T, categoryOf, linksIn, readingMinutes } from '@/lib/blog'

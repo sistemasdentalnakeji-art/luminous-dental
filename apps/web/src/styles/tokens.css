@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Colors, fonts and measures of the site (design B5, "night sky"). Real brand source: the owner's DESIGN.md (Newsreader + Figtree, night blue, star gold, sky blue). */
+/* Colores, fuentes y medidas del sitio (diseño B5, "cielo nocturno"). Fuente real de la marca: el DESIGN.md del dueño (Newsreader + Figtree, azul noche, dorado estrella, azul cielo). */
 @theme {
   --color-night: #0a1529;
   --color-surface: #0d1c37;
@@ -11,6 +11,8 @@
   --color-sky: #7bc3eb;
   --color-gold: #e0b65c;
   --color-gold-soft: #f3d79a;
+  --color-mint: #3fcfae; /* acento de palabras y títulos (C1; 9.33:1 sobre noche, 8.68 sobre tarjeta) */
+  --color-mint-ink: #0f766e; /* menta para fondos blancos o claros (5.47:1 sobre blanco) */
   --color-title: #fff;
   --color-text: #f4f9ff;
   --color-text2: #f2f8fe;
@@ -19,6 +21,14 @@
   --color-field-text: #1d3152;
   --color-field-border: #8592a7;
   --color-error: #e0715f;
+  /* Formulario de cita sobre la noche: tarjeta y campos azul noche translúcidos, borde celeste (≥ 3:1 sobre el fondo). */
+  --color-glass: rgb(13 28 55 / 0.72);
+  --color-input-bg: rgb(7 16 33 / 0.62);
+  --color-input-bg-hover: rgb(18 38 72 / 0.7);
+  --color-input-border: #5f8fbd;
+  --color-input-text: var(--color-text);
+  --color-input-muted: #a9bdd6;
+  --color-error-text: #ffb3a7;
   --font-serif: "Newsreader", "Georgia", "Times New Roman", serif;
   --font-sans: "Figtree", "Arial", "Helvetica", sans-serif;
 }

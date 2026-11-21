@@ -1,12 +1,12 @@
-// Drawing of the map for the location card (components/LocationMap.tsx). Same format as Dental Nakeji's data/locationMap.ts.
-// SOURCE: OpenStreetMap contributors (ODbL, https://www.openstreetmap.org/copyright), data read on 2026-11-19: roads, street names
-// and parks around 1212 S Maryland Pkwy, Las Vegas, NV 89104 (OSM point 36.15588, -115.13754). Drawn as simple shapes, not a map image.
-// Street labels are the names OpenStreetMap gives each street (shortened: Blvd, Pkwy, Ave, St); a street without a clear name has no label.
-// Canvas 767 x 866 at about 1.5 m per unit, north up. `MAP_VIEW` is the visible crop. To move the clinic change `PIN`.
+// Dibujo del mapa para la tarjeta de ubicación (components/LocationMap.tsx). Mismo formato que data/locationMap.ts de Dental Nakeji.
+// FUENTE: colaboradores de OpenStreetMap (ODbL, https://www.openstreetmap.org/copyright), datos leídos el 2026-11-19: calles, nombres de calles
+// y parques alrededor de 1212 S Maryland Pkwy, Las Vegas, NV 89104 (punto OSM 36.15588, -115.13754). Dibujado con formas simples, no con una imagen de mapa.
+// Las etiquetas de calles son los nombres que OpenStreetMap da a cada calle (abreviados: Blvd, Pkwy, Ave, St); una calle sin nombre claro no tiene etiqueta.
+// Lienzo de 767 x 866 a unos 1.5 m por unidad, norte arriba. `MAP_VIEW` es el recorte visible. Para mover la clínica cambia `PIN`.
 
 export const MAP_VIEW = '0 0 767 866'
 
-/** Tip of the clinic pin (the OSM point of 1212 S Maryland Pkwy). */
+/** Punta del marcador de la clínica (el punto OSM de 1212 S Maryland Pkwy). */
 export const PIN = { x: 430, y: 400 }
 
 export type RoadKind = 'arterial' | 'primary' | 'minor'
@@ -175,9 +175,9 @@ export const ROADS: Road[] = [{"d":"M225.2 186.1 L225.1 191 L225 193.3 L225 196.
   {"d":"M447.1 184.9 L453.3 184.8 L455.7 184.8 L460.3 184.7","kind":"arterial","width":18},
   {"d":"M460.4 174.3 L456 174.3 L430 174.4 L416.1 174.5 L398.4 174.6","kind":"arterial","width":18}]
 
-/** Parks and green areas (OSM leisure=park). Streets only: no buildings or businesses. */
+/** Parques y áreas verdes (OSM leisure=park). Solo calles: sin edificios ni negocios. */
 
-/** Parks (kept) and green areas (OSM leisure=park, garden, pitch). */
+/** Parques (se conservan) y áreas verdes (OSM leisure=park, garden, pitch). */
 export const PARKS: string[] = ["467.6,438.3 479.1,416.7 486,402.8 490.5,391.2 492.7,380 494,360.5 493.3,348.8 490.1,332.7 484,316.9 479.5,306.8 475.4,299.5 471.7,296 467.4,294.9 463.9,295 460.7,296.1 458.2,298.1 452.5,305.6 445.3,319.2 441.8,328.3 436.9,342.4 435.4,355.6 435.3,370.6 437.3,385.9 441.5,399.5 446.8,413.6 461.8,438.5 467.6,438.3","154.2,502.7 160.4,502.7 160.3,506.4 206.6,506.7 206.6,491.6 206.6,487.7 225.2,487.7 225.1,512.1 225,524.2 176.5,524 176.5,524.8 170.9,524.8 169.1,524.8 169.1,529.6 170.8,529.6 170.8,532.1 167.6,532.1 167.6,536.5 166.1,536.5 166.1,527.5 160.6,527.4 160.6,540.8 154.6,540.7 154.6,531.3 148.5,531.3 148.4,546.9 141,546.8 141.2,511.8 151.9,511.8 152,506.4 152,504.1 154.2,504.1 154.2,503.6 154.2,502.7","84.7,196.9 82.5,192.5 64.5,192.9 63,229.4 34.9,228.6 33.5,266.3 55.9,266.3 61.1,253.7 68.9,238.4 85,199.3 84.7,196.9","94.8,467.8 92.8,546.5 139.9,546.7 140.1,515.1 139.2,510.5 138.9,507.5 136.4,503.6 136.5,498.4 132.1,489.6 132.4,466.8 130.3,465.7 120.5,466.9 103.2,467.9 94.8,467.8"]
 
 export interface MapLabel { text: string; x: number; y: number; angle: number }

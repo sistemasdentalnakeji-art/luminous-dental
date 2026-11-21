@@ -1,6 +1,6 @@
 // @ts-nocheck
-// Behaviour of the service-page figure (from docs/lienzo/anatomy/servicios/live.js). One number t is the state of one service:
-// it loops through the steps while nobody touches it, and the gold knob, the step buttons and the arrow keys take over.
+// Comportamiento de la figura de la página de servicio (de docs/lienzo/anatomy/servicios/live.js). Un número t es el estado de un servicio:
+// recorre los pasos en bucle mientras nadie lo toca, y la perilla dorada, los botones de paso y las flechas del teclado toman el control.
 import { SERVICES, iso, setView, dynSvg, carriageTransform, sceneState, W, STEP_U, RAIL_W } from "./engine.js";
 export function mountServices(root, P, TXT) {
   setView(P);
@@ -11,7 +11,7 @@ export function mountServices(root, P, TXT) {
   const svc = SERVICES.findIndex((s) => s.id === root.dataset.only);
   const steps = SERVICES[svc].steps, max = steps.length - 1;
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
-  const s0 = iso(W([STEP_U(0), RAIL_W]).concat(10), P)[0] / P.width, s1 = iso(W([STEP_U(4), RAIL_W]).concat(10), P)[0] / P.width; // the gold knob's own travel
+  const s0 = iso(W([STEP_U(0), RAIL_W]).concat(10), P)[0] / P.width, s1 = iso(W([STEP_U(4), RAIL_W]).concat(10), P)[0] / P.width; // el recorrido propio de la perilla dorada
   let t = 0, target = 0, last = 0, frame = 0, visible = false, touring = false, clock = 0, idle = 0, pressed = false, shown = -1, shownStep = -1;
   let paused = false, hovering = false, focused = false;
   const dwell = (i) => (i === max ? 3.2 : 1.8), total = steps.reduce((a, _, i) => a + dwell(i), 0);
@@ -33,7 +33,7 @@ export function mountServices(root, P, TXT) {
     }
   }
   function tick(now) {
-    if (last && now - last < 30) { frame = requestAnimationFrame(tick); return; } // 30 fps is plenty for a calm figure
+    if (last && now - last < 30) { frame = requestAnimationFrame(tick); return; } // 30 fps bastan para una figura tranquila
     const dt = last ? Math.min((now - last) / 1000, 1 / 30) : 1 / 60;
     last = now;
     if (touring && allPaused()) touring = false;
@@ -44,7 +44,7 @@ export function mountServices(root, P, TXT) {
     frame = visible && (touring || t !== target) ? requestAnimationFrame(tick) : 0;
   }
   const run = () => { if (!frame && visible) { last = 0; frame = requestAnimationFrame(tick); } };
-  const allPaused = () => document.documentElement.hasAttribute("data-motion-paused"); // the footer switch (lib/motion.ts)
+  const allPaused = () => document.documentElement.hasAttribute("data-motion-paused"); // el interruptor del pie de página (lib/motion.ts)
   const canTour = () => !allPaused() && !still.matches && !paused && !hovering && !focused && !pressed;
   const resume = (ms) => { clearTimeout(idle); idle = setTimeout(() => { if (canTour()) { touring = true; clock = 0; run(); } }, ms); };
   const hold = () => { touring = false; resume(8000); };
@@ -53,11 +53,11 @@ export function mountServices(root, P, TXT) {
   const setPaused = (value) => { paused = value; pauseBtn.setAttribute("aria-label", value ? PLAY : PAUSE); pauseBtn.innerHTML = value ? PLAY_ICON : PAUSE_ICON; if (value) { touring = false; clearTimeout(idle); } else resume(300); };
   new MutationObserver(() => { if (allPaused()) touring = false; else resume(300); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-motion-paused"] });
   pauseBtn.hidden = still.matches;
-  still.addEventListener("change", () => { pauseBtn.hidden = still.matches; if (still.matches) { touring = false; target = max; run(); } }); // reduced motion switched on while the page is open: stop moving, hide Pause
+  still.addEventListener("change", () => { pauseBtn.hidden = still.matches; if (still.matches) { touring = false; target = max; run(); } }); // se activó el movimiento reducido con la página abierta: se detiene el movimiento y se oculta Pausa
   pauseBtn.addEventListener("click", () => setPaused(!paused));
   root.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") { hovering = true; touring = false; } });
   root.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") { hovering = false; resume(1500); } });
-  root.addEventListener("focusin", (e) => { if (e.target !== pauseBtn && e.target.matches(":focus-visible")) { focused = true; touring = false; } }); // keyboard focus on a step or the figure pauses the loop
+  root.addEventListener("focusin", (e) => { if (e.target !== pauseBtn && e.target.matches(":focus-visible")) { focused = true; touring = false; } }); // el foco de teclado en un paso o en la figura pausa el bucle
   root.addEventListener("focusout", () => { focused = false; resume(3000); });
   new IntersectionObserver((entries) => { visible = entries[entries.length - 1].isIntersecting; if (visible) run(); }, { rootMargin: "120px 0px" }).observe(stage);
   const at = (e) => { const b = svg.getBoundingClientRect(); return clamp(((((e.clientX - b.left) / b.width) - s0) / (s1 - s0)) * max, 0, max); };

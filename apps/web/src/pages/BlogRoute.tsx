@@ -4,10 +4,10 @@ import { articleOf, blogPath, categoryOf } from '@/lib/blog'
 import { BlogArticle, BlogCategory, BlogHub } from '@/pages/Blog'
 import NotFound from '@/pages/NotFound'
 
-// Everything under /blog, in one file apart from the rest of the site (the blog texts are the heaviest data).
+// Todo lo que está bajo /blog, en un archivo aparte del resto del sitio (los textos del blog son los datos más pesados).
 const name = 'Luminous Dental'
 
-/** `onMissing` tells the page frame when the address is not a real blog page, so its appointment buttons point to Contact like on any error page. */
+/** `onMissing` avisa al marco de la página cuando la dirección no es una página real del blog, para que sus botones de cita apunten a Contact como en cualquier página de error. */
 export default function BlogRoute({ path, onMissing }: { path: string; onMissing: (path: string) => void }) {
   const key = path.startsWith('/blog/') ? path.slice('/blog/'.length) : ''
   const category = categoryOf(key)

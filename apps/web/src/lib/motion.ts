@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from 'react'
 
-// One "pause decorative animations" switch for the whole page (WCAG 2.2.2). The CSS side is `html[data-motion-paused]` in site.css;
-// the moving rows and figures read it with useMotionPaused().
+// Un solo interruptor de "pausar animaciones decorativas" para toda la página (WCAG 2.2.2). La parte de CSS es `html[data-motion-paused]` en site.css;
+// las filas y figuras en movimiento lo leen con useMotionPaused().
 let paused = false
 const listeners = new Set<() => void>()
 

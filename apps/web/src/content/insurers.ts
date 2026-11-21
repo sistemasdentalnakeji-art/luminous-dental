@@ -1,41 +1,54 @@
-// Insurance plans shown on /insurance-financing. Same 24 logos and order as Dental Nakeji, by the owner's decision (19-11-2026).
-// The clinic must still confirm that this list applies to Luminous Dental (docs/datos.md, POR CONFIRMAR). The official Luminous list differs.
-// Files live in public/insurers/ (some file names have typos; they are internal). Each row: [name, file, width, height].
-export const insurers: [string, string, number, number][] = [
-  ['Aetna', 'aetna', 480, 124],
-  ['AlwaysCare', 'alwayscare', 480, 115],
-  ['Ameritas', 'ameritas', 480, 99],
-  ['Anthem', 'anthem', 480, 109],
-  ['BeneSys', 'benesys', 480, 113],
-  ['Cigna', 'cigna', 480, 161],
-  ['Delta Dental', 'delta-dental', 480, 54],
-  ['Dental Health Services', 'dental-health-services', 480, 76],
-  ['Guardian', 'guardian', 480, 89],
-  ['HealthSCOPE Benefits', 'healt-scope-benefits', 365, 138],
-  ['HealthComp', 'health-comp', 480, 78],
-  ['Horizon', 'horizon', 480, 119],
-  ['Humana', 'humana', 480, 99],
-  ['Lincoln Financial Group', 'lincon-financial-group', 480, 154],
-  ['MetLife', 'metlife', 480, 104],
-  ['Premera Blue Cross', 'premera-blue-cross', 480, 128],
-  ['Premier Insurance Company', 'premier-insurance-company', 480, 100],
-  ['Principal', 'principal', 480, 135],
-  ['Regence', 'regence', 480, 113],
-  ['Renaissance', 'renaissance', 480, 90],
-  ['Summit', 'summit', 480, 146],
-  ['UFCW', 'ufcw', 480, 131],
-  ['UnitedHealthcare', 'united-healthcare', 480, 151],
-  ['Unum', 'unum', 480, 144],
+// Planes de seguro que se muestran en /insurance-financing. Los mismos 24 logos y orden que Dental Nakeji, por decisión del dueño (19-11-2026).
+// La clínica aún debe confirmar que esta lista aplica a Luminous Dental (docs/datos.md, POR CONFIRMAR). La lista oficial de Luminous es distinta.
+// Los archivos están en public/insurers/ (algunos nombres tienen errores de ortografía; son internos). Cada fila: [nombre, archivo, ancho, alto, accent].
+// accent = color dominante del logo real (medido en los píxeles de public/insurers/). HealthComp (negro) y Dental Health Services (multicolor) no tienen uno claro: usan el celeste del sitio.
+export const insurers: [string, string, number, number, string][] = [
+  ['Aetna', 'aetna', 480, 124, '#754099'],
+  ['AlwaysCare', 'alwayscare', 480, 115, '#012454'],
+  ['Ameritas', 'ameritas', 480, 99, '#d42229'],
+  ['Anthem', 'anthem', 480, 109, '#0062a6'],
+  ['BeneSys', 'benesys', 480, 113, '#024932'],
+  ['Cigna', 'cigna', 480, 161, '#0383cd'],
+  ['Delta Dental', 'delta-dental', 480, 54, '#33aa14'],
+  ['Dental Health Services', 'dental-health-services', 480, 76, 'var(--color-sky)'],
+  ['Guardian', 'guardian', 480, 89, '#0b4161'],
+  ['HealthSCOPE Benefits', 'healt-scope-benefits', 365, 138, '#5aa94b'],
+  ['HealthComp', 'health-comp', 480, 78, 'var(--color-sky)'],
+  ['Horizon', 'horizon', 480, 119, '#0162b3'],
+  ['Humana', 'humana', 480, 99, '#66af03'],
+  ['Lincoln Financial Group', 'lincon-financial-group', 480, 154, '#970a2c'],
+  ['MetLife', 'metlife', 480, 104, '#0085ce'],
+  ['Premera Blue Cross', 'premera-blue-cross', 480, 128, '#0195d9'],
+  ['Premier Insurance Company', 'premier-insurance-company', 480, 100, '#fbaa0a'],
+  ['Principal', 'principal', 480, 135, '#31b1d8'],
+  ['Regence', 'regence', 480, 113, '#0289e3'],
+  ['Renaissance', 'renaissance', 480, 90, '#064b8b'],
+  ['Summit', 'summit', 480, 146, '#004778'],
+  ['UFCW', 'ufcw', 480, 131, '#014990'],
+  ['UnitedHealthcare', 'united-healthcare', 480, 151, '#012678'],
+  ['Unum', 'unum', 480, 144, '#005197'],
 ]
 
-// Texts NEW, for approval (docs/datos.md). They do not say "we accept": the clinic has not confirmed it.
+// Textos NUEVOS, para aprobación (docs/datos.md). No dicen «we accept»: la clínica no lo ha confirmado.
 export const insuranceText = {
   eyebrow: 'Insurance',
   title: 'Insurance & Financing',
   lead: 'Not sure if your plan is on the list? Call or text us before your visit and we will go over it with you.',
   steps: ['Tell us your plan', 'Our team goes over it with you', 'Request your appointment'],
   book: 'Request an appointment',
-  gridTitle: 'Insurance plans on our list',
+  // POR CONFIRMAR con la clínica: este texto es nuevo («bring your insurance card» sale de A Great Smile, no de Luminous).
+  step2: 'Bring your insurance card to your visit. We check your plan with you and explain what to expect before any treatment.',
+  // Texto de la maqueta aprobada por la dueña.
+  step3: 'Prefer to talk first? Call or text us and we will find a time with you.',
   note: 'Logos belong to their owners. Ask us to confirm your plan.',
   payment: 'Questions about payment? Ask our team.',
+  // Buscador «Find your plan» (components/InsurancePlans.tsx)
+  findLabel: 'Find your plan',
+  findPlaceholder: 'Type your plan, e.g. Cigna',
+  countAll: (n: number) => `${n} plans on our list`,
+  countSome: (n: number, q: string) => `${n} ${n === 1 ? 'plan matches' : 'plans match'} “${q}”`,
+  countNone: (q: string) => `No plans match “${q}”`,
+  emptyTitle: (q: string) => `We do not see “${q}” on our list yet.`,
+  emptyText: 'Call or text us and we will check it with you.',
+  showAll: 'Show all plans',
 } as const

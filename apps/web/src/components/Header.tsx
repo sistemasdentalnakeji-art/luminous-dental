@@ -1,6 +1,6 @@
-// Header: same structure as Dental Nakeji's (components/layout/Header.tsx): logo, main menu with a "Services" submenu,
-// and on phones a panel that opens below the bar (menu button, accordion submenu). Keyboard: Enter/Space opens,
-// arrows move, Escape closes. Styles: styles/site.css ("header menu" block).
+// Header: misma estructura que el de Dental Nakeji (components/layout/Header.tsx): logo, menú principal con un submenú "Services",
+// y en celulares un panel que se abre debajo de la barra (botón de menú, submenú tipo acordeón). Teclado: Enter/Espacio abre,
+// las flechas mueven, Escape cierra. Estilos: styles/site.css (bloque "header menu").
 import { useEffect, useRef, useState, type FocusEvent, type KeyboardEvent, type PointerEvent as ReactPointerEvent } from 'react'
 import { flushSync } from 'react-dom'
 import { Icon } from '@/components/Icon'
@@ -22,7 +22,7 @@ export function Header({ path, appointmentHref }: { path: string; appointmentHre
   const ref = useRef<HTMLElement>(null)
   const toggle = useRef<HTMLButtonElement>(null)
 
-  // A new page closes the menu (state adjusted while drawing, not in an effect).
+  // Una página nueva cierra el menú (el estado se ajusta al dibujar, no en un effect).
   const [menuPath, setMenuPath] = useState(path)
   if (menuPath !== path) {
     setMenuPath(path)
@@ -30,7 +30,7 @@ export function Header({ path, appointmentHref }: { path: string; appointmentHre
     setOpenId(null)
   }
 
-  // Escape closes (submenu first, then the phone panel); a tap outside the header closes both.
+  // Escape cierra (primero el submenú, luego el panel del celular); un toque fuera del header cierra ambos.
   useEffect(() => {
     if (!openId && !menuOpen) return
     const onKey = (e: globalThis.KeyboardEvent) => {
@@ -56,7 +56,7 @@ export function Header({ path, appointmentHref }: { path: string; appointmentHre
     }
   }, [openId, menuOpen])
 
-  // Phone panel: lock the page behind it, keep Tab inside, close when the window becomes wide.
+  // Panel del celular: bloquea la página de atrás, mantiene Tab adentro, se cierra cuando la ventana se ensancha.
   useEffect(() => {
     if (!menuOpen) return
     const before = document.body.style.overflow
@@ -144,7 +144,7 @@ interface DropdownProps {
 
 function NavDropdown({ id, label, href, path, open, onToggle, onOpen, onClose }: DropdownProps) {
   const active = path === href || path.startsWith(href + '/')
-  // Desktop with a mouse: opens on hover, closes after 150 ms (there is a 10 px gap between button and panel). Touch and keyboard: click.
+  // Escritorio con mouse: abre al pasar el cursor, cierra tras 150 ms (hay un hueco de 10 px entre el botón y el panel). Táctil y teclado: clic.
   const hovering = useRef(false)
   const timer = useRef<number | undefined>(undefined)
   useEffect(() => () => window.clearTimeout(timer.current), [])

@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prototype · Smile constellation (before / after) · Luminous Dental</title>
+<style>
+:root{--night:#050b1a;--night2:#0a1a3a;--ice:#cfe3ff;--ice-dim:rgba(207,227,255,.72);--ink:#eaf2ff}
+*{box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--night);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.hero{position:relative;overflow:hidden;min-height:100svh;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:center;gap:24px;padding:96px clamp(24px,5vw,72px) 56px;
+  background:radial-gradient(120% 90% at 78% 45%,#0f2a5c 0%,var(--night2) 38%,var(--night) 78%)}
+#sky{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+/* columna izquierda simulada (la hace otro agente) */
+.left{position:relative;z-index:3;max-width:34rem}
+.left .sim{font-size:12px;letter-spacing:.04em;color:var(--ice-dim);border:1px dashed rgba(207,227,255,.35);border-radius:8px;display:inline-block;padding:2px 8px;margin-bottom:18px}
+h1{margin:0 0 18px;font:500 clamp(2.4rem,5.2vw,4.4rem)/1.04 ui-serif,Georgia,"Times New Roman",serif;text-wrap:balance}
+.left p{margin:0 0 28px;color:var(--ice-dim);max-width:30rem;text-wrap:pretty}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{min-height:46px;padding:0 22px;border-radius:999px;border:1px solid rgba(207,227,255,.4);background:transparent;color:var(--ink);font:600 15px system-ui;display:inline-flex;align-items:center;cursor:pointer;text-decoration:none;transition:background-color .2s,border-color .2s,transform .15s}
+.btn.main{background:var(--ice);color:#06122b;border-color:var(--ice)}
+.btn:hover{border-color:#fff}.btn:active{transform:scale(.97)}
+:focus-visible{outline:2px solid #fff;outline-offset:3px}
+
+/* pieza nueva */
+.smile{position:relative;z-index:2;display:flex;flex-direction:column;gap:14px;align-items:center;min-width:0}
+.stage{--pos:100%;position:relative;width:100%;max-width:760px;aspect-ratio:960/450;touch-action:pan-y}
+.photo{position:absolute;inset:0;--r:90;transition:opacity .35s ease;
+  -webkit-mask-image:radial-gradient(closest-side ellipse,#000 calc(var(--r)*1%),transparent calc(var(--r)*1% + 34%));
+  mask-image:radial-gradient(closest-side ellipse,#000 calc(var(--r)*1%),transparent calc(var(--r)*1% + 34%))}
+.photo.swap{opacity:0}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.92) contrast(1.03) brightness(.97);user-select:none;-webkit-user-drag:none}
+.photo .after{clip-path:inset(0 0 0 var(--pos))}
+.photo::after{content:"";position:absolute;inset:0;background:radial-gradient(closest-side ellipse,transparent 55%,rgba(5,11,26,.55));pointer-events:none}
+.ui{position:absolute;inset:0;opacity:var(--ui,0);transition:opacity .4s;pointer-events:none}
+.bar{position:absolute;top:6%;bottom:6%;left:var(--pos);width:2px;margin-left:-1px;background:linear-gradient(180deg,transparent,var(--ice) 18%,#fff 50%,var(--ice) 82%,transparent);box-shadow:0 0 14px rgba(160,200,255,.9)}
+.knob{position:absolute;top:50%;left:var(--pos);width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:rgba(8,20,48,.78);border:1px solid var(--ice);color:var(--ice);display:grid;place-items:center;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);box-shadow:0 0 0 5px rgba(160,200,255,.14),0 0 24px rgba(120,170,255,.5)}
+.tag{position:absolute;bottom:9%;padding:4px 12px;border-radius:999px;background:rgba(5,11,26,.7);border:1px solid rgba(207,227,255,.3);font-size:12.5px;font-weight:700;letter-spacing:.06em;transition:opacity .3s}
+.tag.b{left:8%}.tag.a{right:8%}
+.range{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;z-index:3;-webkit-appearance:none;appearance:none}
+.range:focus-visible ~ .focusring{opacity:1}
+.focusring{position:absolute;inset:4%;border:2px solid #fff;border-radius:18px;opacity:0;pointer-events:none;z-index:2}
+.controls{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center}
+.seg{display:inline-flex;border:1px solid rgba(207,227,255,.35);border-radius:999px;padding:3px;background:rgba(5,11,26,.5)}
+.seg button,.ctl{min-height:44px;min-width:44px;padding:0 16px;border:0;border-radius:999px;background:transparent;color:var(--ink);font:600 14px system-ui;cursor:pointer;transition:background-color .2s,color .2s}
+.seg button[aria-pressed=true]{background:var(--ice);color:#06122b}
+.ctl{border:1px solid rgba(207,227,255,.35)}
+.cases{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.cases button{min-height:44px;padding:0 14px;border-radius:12px;border:1px solid transparent;background:transparent;color:var(--ice-dim);font:500 14px system-ui;cursor:pointer}
+.cases button[aria-selected=true]{color:#fff;border-color:rgba(207,227,255,.35);background:rgba(207,227,255,.08)}
+.cap{margin:0;text-align:center;font-size:13.5px;color:var(--ice-dim);max-width:34rem}
+.cap strong{color:#fff;font-weight:600}
+.proto{position:relative;z-index:3;grid-column:1/-1;margin-top:8px;font-size:12px;color:rgba(207,227,255,.6);border-top:1px dashed rgba(207,227,255,.25);padding-top:10px;text-align:center}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:minmax(0,1fr);padding:84px 16px 36px;min-height:0;gap:20px}
+  .smile{margin:0 -8px}
+  .seg button,.ctl{padding:0 12px}
+}
+</style>
+</head>
+<body>
+<main class="hero" id="hero">
+  <canvas id="sky" aria-hidden="true"></canvas>
+
+  <div class="left">
+    <span class="sim">Simulated column: built by another agent</span>
+    <h1>A smile that feels more like you.</h1>
+    <p>Gentle, personal cosmetic and general dentistry in Las Vegas.</p>
+    <div class="btns"><a class="btn main" href="#">Book a visit</a><a class="btn" href="#">See our work</a></div>
+  </div>
+
+  <section class="smile" aria-label="Smile gallery: before and after">
+    <div class="stage" id="stage">
+      <div class="photo" id="photo">
+        <img class="before" id="imgB" width="960" height="450" decoding="async" alt="">
+        <img class="after" id="imgA" width="960" height="450" decoding="async" alt="">
+      </div>
+      <div class="ui" id="ui">
+          <span class="bar"></span>
+          <span class="knob" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span>
+          <span class="tag b" id="tagB">Before</span><span class="tag a" id="tagA">After</span>
+      </div>
+      <input class="range" id="range" type="range" min="0" max="100" step="1" value="100" aria-label="Compare before and after" aria-describedby="hint">
+      <span class="focusring"></span>
+    </div>
+    <p class="vh" id="hint">Use the left and right arrow keys, or drag, to compare the smile before and after treatment.</p>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Show">
+        <button type="button" id="bBefore" aria-pressed="false">Before</button>
+        <button type="button" id="bAfter" aria-pressed="false">After</button>
+      </div>
+      <button type="button" class="ctl" id="play" aria-pressed="false">Pause animation</button>
+    </div>
+    <div class="cases" role="tablist" aria-label="Cases">
+      <button role="tab" id="t0" aria-selected="true" type="button">A different future</button>
+      <button role="tab" id="t1" aria-selected="false" type="button" tabindex="-1">No longer hidden</button>
+    </div>
+    <p class="cap"><strong id="capTitle">A different future.</strong> Individual results vary.</p>
+  </section>
+
+  <p class="proto">Prototype note, not site text: the sample photos come from the owner's reference file. Using patient photos on the site requires consent confirmed by the clinic.</p>
+</main>
+
+<script>
+(() => {
+'use strict';
+const $ = (id) => document.getElementById(id);
+const hero = $('hero'), cv = $('sky'), ctx = cv.getContext('2d'), stage = $('stage'), photo = $('photo'), ui = $('ui');
+const range = $('range'), imgB = $('imgB'), imgA = $('imgA');
+const CASES = [
+  { title: 'A different future.', before: 'caso1-antes.jpg', after: 'caso1-despues.jpg',
+    altB: 'Close-up of a smile before treatment: worn, short, uneven front teeth with stained, chipped edges.',
+    altA: 'The same smile after treatment: bright, even, smoothly shaped front teeth.',
+    up: [238, 100], lo: [300, 34] },
+  { title: 'No longer hidden.', before: 'caso2-antes.jpg', after: 'caso2-despues.jpg',
+    altB: 'Close-up of a smile before treatment: chipped, uneven teeth with gaps and dark spots.',
+    altA: 'The same smile after treatment: bright, evenly aligned, natural-looking front teeth.',
+    up: [245, 70], lo: [285, 40] }
+];
+let cur = 0;
+const mqReduce = matchMedia('(prefers-reduced-motion: reduce)');
+const pausedAttr = () => document.documentElement.hasAttribute('data-motion-paused');
+const ease = (x) => x < 0 ? 0 : x > 1 ? 1 : x * x * (3 - 2 * x);
+const clamp01 = (x) => Math.max(0, Math.min(1, x));
+
+// estado visible: g = estrellas reunidas, ig = la constelación se enciende, pos = % de "antes"
+const st = { g: 0, ig: 0, pos: 100 };
+let auto = true, userPaused = false, hidden = document.hidden, onScreen = true, raf = 0, last = 0, tAuto = 0, lastNow = 0;
+const staticMode = () => mqReduce.matches || pausedAttr();
+
+// ---- fotos ----
+function loadCase(i, instant) {
+  const c = CASES[i];
+  const apply = () => {
+    imgB.src = c.before; imgB.alt = c.altB; imgA.src = c.after; imgA.alt = c.altA;
+    $('capTitle').textContent = c.title; buildNodes();
+    photo.classList.remove('swap');
+  };
+  if (instant) return apply();
+  photo.classList.add('swap'); setTimeout(apply, 260);
+}
+
+// ---- constelación: puntos en coordenadas de foto 960x450 ----
+let nodes = [], edges = [], stars = [], W = 0, H = 0, rect = { x: 0, y: 0, w: 1, h: 1 }, dpr = 1;
+function rnd(a, b) { return a + Math.random() * (b - a); }
+function buildNodes() {
+  const c = CASES[cur], pts = [];
+  for (let i = 0; i < 13; i++) { const u = i / 6 - 1; pts.push([480 + u * 420, c.up[0] - c.up[1] * Math.pow(Math.abs(u), 2)]); }
+  for (let i = 0; i < 11; i++) { const u = i / 5 - 1; pts.push([480 + u * 370, c.lo[0] + c.lo[1] * u * u]); }
+  edges = [];
+  for (let i = 0; i < 12; i++) edges.push([i, i + 1]);
+  for (let i = 13; i < 23; i++) edges.push([i, i + 1]);
+  for (let i = 1; i < 13; i += 2) { const j = 13 + Math.round((i / 12) * 10); edges.push([i, j]); }
+  nodes = pts.map((p) => ({ tx: p[0] / 960, ty: p[1] / 450, hx: Math.random(), hy: Math.random(), ph: rnd(0, 6.3), sp: rnd(.5, 1.1) }));
+  layout();
+}
+function layout() {
+  const hr = hero.getBoundingClientRect(), sr = stage.getBoundingClientRect();
+  dpr = Math.min(devicePixelRatio || 1, 2);
+  W = hr.width; H = hr.height;
+  cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+  rect = { x: sr.left - hr.left, y: sr.top - hr.top, w: sr.width, h: sr.height };
+  const n = Math.round(Math.min(150, W * H / 7000));
+  stars = Array.from({ length: n }, () => ({ x: Math.random(), y: Math.random(), r: rnd(.4, 1.3), a: rnd(.25, .8), ph: rnd(0, 6.3), sp: rnd(.4, 1.2) }));
+  frame(performance.now() / 1000);
+}
+const px = (n, t) => { // posición de un nodo: del cielo a su sitio en la sonrisa
+  const e = ease(st.g);
+  const hx = n.hx * W + Math.sin(t * .15 * n.sp + n.ph) * 14, hy = n.hy * H + Math.cos(t * .13 * n.sp + n.ph) * 14;
+  const tx = rect.x + n.tx * rect.w, ty = rect.y + n.ty * rect.h;
+  return [hx + (tx - hx) * e, hy + (ty - hy) * e];
+};
+
+// ---- dibujo ----
+function frame(t) {
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+  const ig = ease(st.ig), e = ease(st.g);
+  for (const s of stars) { // estrellas que respiran (más tenues sobre la foto encendida)
+    const x = s.x * W, y = s.y * H;
+    let a = s.a * (.6 + .4 * Math.sin(t * s.sp + s.ph));
+    if (x > rect.x && x < rect.x + rect.w && y > rect.y && y < rect.y + rect.h) a *= 1 - .9 * ig;
+    ctx.fillStyle = `rgba(207,227,255,${a})`; ctx.beginPath(); ctx.arc(x, y, s.r, 0, 6.283); ctx.fill();
+  }
+  const P = nodes.map((n) => px(n, t));
+  const lineA = (.06 + .5 * e) * (1 - .5 * ig);
+  ctx.lineWidth = .9; ctx.strokeStyle = `rgba(190,215,255,${lineA})`; ctx.beginPath();
+  for (const [a, b] of edges) { ctx.moveTo(P[a][0], P[a][1]); ctx.lineTo(P[b][0], P[b][1]); }
+  ctx.stroke();
+  if (ig > 0 && ig < 1) { // anillo de luz en el borde de la galaxia que se abre
+    const cx = rect.x + rect.w / 2, cy = rect.y + rect.h / 2, R = Math.max(rect.w, rect.h) * (.12 + .5 * ig);
+    const g = ctx.createRadialGradient(cx, cy, R * .8, cx, cy, R * 1.12);
+    g.addColorStop(0, 'rgba(160,200,255,0)'); g.addColorStop(.6, `rgba(190,220,255,${.16 * Math.sin(Math.PI * ig)})`); g.addColorStop(1, 'rgba(160,200,255,0)');
+    ctx.fillStyle = g; ctx.fillRect(rect.x - rect.w * .2, rect.y - rect.h * .4, rect.w * 1.4, rect.h * 1.8);
+  }
+  const na = (.55 + .45 * e) * (1 - .4 * ig);
+  for (let i = 0; i < P.length; i++) {
+    const n = nodes[i], b = .7 + .3 * Math.sin(t * n.sp * 1.4 + n.ph), r = 1.3 + 1.1 * e * b;
+    const gr = ctx.createRadialGradient(P[i][0], P[i][1], 0, P[i][0], P[i][1], r * 5);
+    gr.addColorStop(0, `rgba(220,236,255,${.35 * na})`); gr.addColorStop(1, 'rgba(220,236,255,0)');
+    ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(P[i][0], P[i][1], r * 5, 0, 6.283); ctx.fill();
+    ctx.fillStyle = `rgba(240,247,255,${na})`; ctx.beginPath(); ctx.arc(P[i][0], P[i][1], r, 0, 6.283); ctx.fill();
+  }
+  // DOM: máscara radial y controles
+  photo.style.setProperty('--r', (-34 + 124 * ig).toFixed(2));
+  ui.style.setProperty('--ui', clamp01((ig - .7) / .3).toFixed(2));
+}
+function setPos(p) {
+  st.pos = p; const v = Math.round(p);
+  stage.style.setProperty('--pos', p + '%');
+  range.value = v;
+  range.setAttribute('aria-valuetext', v >= 98 ? 'Showing before' : v <= 2 ? 'Showing after' : `Before ${v}% on the left, after ${100 - v}% on the right`);
+  $('tagB').style.opacity = v < 14 ? 0 : 1; $('tagA').style.opacity = v > 86 ? 0 : 1;
+  $('bBefore').setAttribute('aria-pressed', v >= 98); $('bAfter').setAttribute('aria-pressed', v <= 2);
+}
+
+// ---- línea de tiempo automática: reunir, encender, barrer, sostener, dispersar ----
+const CYCLE = 15;
+function timeline(s) {
+  st.g = clamp01(s / 2.6) - clamp01((s - 13.2) / 1.6);
+  st.ig = clamp01((s - 2.2) / 2.6) - clamp01((s - 12.6) / 1.6);
+  setPos(100 - 100 * ease((s - 5.4) / 4));
+}
+function tick(now) {
+  raf = requestAnimationFrame(tick);
+  if (now - last < 33) return; last = now;
+  const dt = lastNow ? Math.min((now - lastNow) / 1000, .1) : 0; lastNow = now;
+  if (auto) {
+    tAuto += dt;
+    if (tAuto >= CYCLE) { tAuto = 0; cur = (cur + 1) % 2; select(cur, true); }
+    timeline(tAuto);
+  } else { // manual: la constelación queda encendida y la foto abierta
+    st.g += (1 - st.g) * .08; st.ig += (1 - st.ig) * .06;
+  }
+  frame(now / 1000);
+}
+const shouldRun = () => !hidden && onScreen && !userPaused && !staticMode();
+function sync() {
+  if (staticMode()) { // estático comparable: constelación completa, foto abierta, divisor al centro
+    cancelAnimationFrame(raf); raf = 0; st.g = 1; st.ig = 1; if (auto) setPos(50); frame(0); return;
+  }
+  if (shouldRun() && !raf) { lastNow = 0; raf = requestAnimationFrame(tick); }
+  else if (!shouldRun() && raf) { cancelAnimationFrame(raf); raf = 0; }
+}
+
+// ---- interacción ----
+function manual() { auto = false; $('play').textContent = userPaused ? 'Play animation' : 'Pause animation'; sync(); }
+function toPos(target) { // desliza el divisor con suavidad
+  const from = st.pos, t0 = performance.now(); manual();
+  if (staticMode()) return setPos(target);
+  (function step(n) { const k = ease((n - t0) / 600); setPos(from + (target - from) * k); if (k < 1) requestAnimationFrame(step); })(t0);
+}
+range.addEventListener('input', () => { st.g = Math.max(st.g, .9); manual(); setPos(+range.value); if (staticMode()) frame(0); });
+$('bBefore').onclick = () => toPos(100);
+$('bAfter').onclick = () => toPos(0);
+$('play').onclick = () => {
+  userPaused = !userPaused; $('play').setAttribute('aria-pressed', userPaused);
+  $('play').textContent = userPaused ? 'Play animation' : 'Pause animation'; sync();
+};
+function select(i, fromAuto) {
+  cur = i; for (const k of [0, 1]) { $('t' + k).setAttribute('aria-selected', k === i); $('t' + k).tabIndex = k === i ? 0 : -1; }
+  loadCase(i, false);
+  if (!fromAuto) { auto = auto && false; st.g = Math.max(st.g, .5); manual(); }
+}
+[0, 1].forEach((k) => {
+  $('t' + k).onclick = () => select(k);
+  $('t' + k).onkeydown = (e) => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { const n = 1 - k; select(n); $('t' + n).focus(); } };
+});
+document.addEventListener('visibilitychange', () => { hidden = document.hidden; sync(); });
+new IntersectionObserver((e) => { onScreen = e[0].isIntersecting; sync(); }).observe(hero);
+new ResizeObserver(() => { layout(); }).observe(hero);
+mqReduce.addEventListener('change', sync);
+new MutationObserver(sync).observe(document.documentElement, { attributes: true, attributeFilter: ['data-motion-paused'] });
+
+// ---- arranque: el texto ya está en pantalla; la foto se carga después ----
+loadCase(0, true); setPos(100);
+(window.requestIdleCallback || ((f) => setTimeout(f, 200)))(() => { layout(); sync(); });
+window.__ld = { st, setPos, frame }; // solo para pruebas del prototipo
+})();
+</script>
+</body>
+</html>

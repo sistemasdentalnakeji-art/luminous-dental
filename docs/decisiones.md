@@ -74,3 +74,5 @@
 
 ## Actualización 2026-11-19 — Mejoras generales
 - Orden de la dueña: mejorar todas las áreas; servicios destacados; doctor menos repetido; página de seguros igual a la de Dental Nakeji (misma lista de aseguradoras y logos, por ser el mismo dueño). La clínica debe confirmar que la lista aplica a Luminous. Encargo: `docs/MEJORAS-1.md`.
+
+- 20-11-2026 · Tercer color de acento: la dueña eligió **menta C1 `#3fcfae`** (antes C2 `#1fb89a`, cambiada por contraste sobre el resplandor del fondo; docs/tercer-color.md, sección 6). Convive con el dorado: menta para palabras y títulos destacados; dorado para estrellas, foco y rayas. Sobre fondo blanco se usa `#0f766e`. Aplicado en `tokens.css` (`--color-mint`).

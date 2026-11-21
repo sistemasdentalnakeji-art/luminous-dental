@@ -1,18 +1,18 @@
 import type { CSSProperties } from 'react'
 import { locationText as T } from '@/content/location'
 
-// Replica of the proportions and layout of the classic "Welcome to Fabulous Las Vegas, Nevada" sign (1959, Betty Willis, who never copyrighted it),
-// with this clinic's words: a wide, stretched diamond with a gold border and bulbs all around, seven big silver "coins" with red letters over the
-// top edge, "TO Fabulous" in blue, the name large in red, a spaced blue line, and an orange star with yellow points on a blue frame and posts.
-// Drawn with SVG shapes (not an image). The bulbs light up in a chain; with reduced motion they all stay lit.
-// It is the visual title of the section; the real <h2> "Visit us" sits next to it (visually hidden), so the drawing is hidden from screen readers.
+// Réplica de las proporciones y el diseño del clásico letrero "Welcome to Fabulous Las Vegas, Nevada" (1959, Betty Willis, quien nunca lo registró),
+// con las palabras de esta clínica: un rombo ancho y estirado con borde dorado y focos por todo el contorno, siete "monedas" grandes de plata con letras rojas sobre el
+// borde superior, "TO Fabulous" en azul, el nombre grande en rojo, una línea azul espaciada y una estrella naranja con puntas amarillas sobre un marco azul y postes.
+// Dibujado con formas SVG (no es una imagen). Los focos se encienden en cadena; con movimiento reducido todos quedan encendidos.
+// Es el título visual de la sección; el <h2> real "Visit us" está a su lado (oculto visualmente), así que el dibujo se oculta a los lectores de pantalla.
 const SHAPE: [number, number][] = [[48, 336], [338, 192], [405, 178], [472, 192], [748, 336], [405, 560]]
 const POINTS = SHAPE.map((p) => p.join(',')).join(' ')
 const LENS = SHAPE.map((p, i) => Math.hypot(SHAPE[(i + 1) % SHAPE.length][0] - p[0], SHAPE[(i + 1) % SHAPE.length][1] - p[1]))
 const PERIM = LENS.reduce((a, b) => a + b, 0)
 const BULBS = 58
 
-/** Point i of n along the outline, clockwise from the left point. */
+/** Punto i de n a lo largo del contorno, en sentido horario desde el punto izquierdo. */
 function along(i: number, n: number): [number, number] {
   let d = (i / n) * PERIM
   for (let k = 0; k < SHAPE.length; k++) {
@@ -25,7 +25,7 @@ function along(i: number, n: number): [number, number] {
   return SHAPE[0]
 }
 
-/** Eight-pointed star: long spikes up, down, left, right and shorter diagonal ones. */
+/** Estrella de ocho puntas: puntas largas arriba, abajo, izquierda y derecha, y otras más cortas en diagonal. */
 function star(cx: number, cy: number, long: number, short: number, valley: number) {
   return Array.from({ length: 16 }, (_, i) => {
     const a = (i * Math.PI) / 8 - Math.PI / 2
@@ -36,7 +36,7 @@ function star(cx: number, cy: number, long: number, short: number, valley: numbe
 
 const letters = T.sign.welcome.split('')
 const COIN_X = (i: number) => 170 + i * 75.8
-// Each coin sits just inside the top border, following its slope, so no coin covers the gold edge or the bulbs (and none touches the words).
+// Cada moneda queda justo dentro del borde superior, siguiendo su pendiente, para que ninguna cubra el borde dorado ni los focos (y ninguna toque las palabras).
 const edgeY = (x: number) => (x < 338 ? 336 - (144 * (x - 48)) / 290 : x <= 472 ? 192 - 14 * (1 - Math.abs(x - 405) / 67) : 192 + (144 * (x - 472)) / 276)
 const COIN_R = 24
 const GOLD = '#e9b824', RED = '#e63a2a', BLUE = '#1f7fe0'
@@ -51,20 +51,20 @@ export function VegasSign() {
           <stop offset="1" stopColor="#aeb3bb" />
         </radialGradient>
       </defs>
-      {/* blue posts and frame behind the sign */}
+      {/* postes y marco azules detrás del letrero */}
       <ellipse cx="400" cy="600" rx="190" ry="10" fill="#02040a" opacity=".5" />
       <rect x="258" y="420" width="34" height="178" fill={BLUE} stroke="#0f4f9c" strokeWidth="2" />
       <rect x="508" y="420" width="34" height="178" fill={BLUE} stroke="#0f4f9c" strokeWidth="2" />
       <path fillRule="evenodd" fill={BLUE} stroke="#0f4f9c" strokeWidth="2" d="M338 22h124v190H338zM360 44v146h80V44z" />
-      {/* star with yellow points */}
+      {/* estrella con puntas amarillas */}
       <g className="vsign__star">
         <polygon points={star(400, 108, 104, 70, 20)} fill="#ee5a1c" stroke="#ffd23f" strokeWidth="4" strokeLinejoin="round" />
         <polygon points={star(400, 108, 62, 40, 12)} fill="none" stroke="#ffd23f" strokeWidth="3" strokeLinejoin="round" />
       </g>
-      {/* body, gold border */}
+      {/* cuerpo, borde dorado */}
       <polygon points={POINTS} fill="#ffffff" stroke={GOLD} strokeWidth="14" strokeLinejoin="round" />
       <polygon points={POINTS} fill="none" stroke="#fff3b8" strokeWidth="2.500" strokeLinejoin="round" transform="translate(405 340) scale(.965) translate(-405 -340)" />
-      {/* bulbs all around, lit one after another */}
+      {/* focos por todo el contorno, encendidos uno tras otro */}
       {Array.from({ length: BULBS }, (_, i) => {
         const [x, y] = along(i, BULBS)
         return (
@@ -74,13 +74,13 @@ export function VegasSign() {
           </g>
         )
       })}
-      {/* words: "TO" and "Fabulous" in blue with their little underlines, name in red, spaced line in blue (each in its own band, nothing overlaps) */}
+      {/* palabras: "TO" y "Fabulous" en azul con sus subrayados pequeños, nombre en rojo, línea espaciada en azul (cada una en su propia franja, nada se superpone) */}
       <text x="246" y="346" textAnchor="middle" className="vsign__to">{T.sign.to}</text>
       <text x="432" y="346" textAnchor="middle" className="vsign__fab">{T.sign.fabulous}</text>
       <path d="M226 356h40M290 360q150 10 300 0" fill="none" stroke={BLUE} strokeWidth="3" strokeLinecap="round" />
       <text x="405" y="428" textAnchor="middle" className="vsign__name" textLength="380" lengthAdjust="spacingAndGlyphs">{T.sign.name}</text>
       <text x="405" y="480" textAnchor="middle" className="vsign__place" textLength="190" lengthAdjust="spacing">{T.sign.place}</text>
-      {/* seven big silver coins with a dark rim, inside the top edge */}
+      {/* siete monedas grandes de plata con borde oscuro, dentro del borde superior */}
       {letters.map((l, i) => {
         const cy = edgeY(COIN_X(i)) + COIN_R + 20
         return (

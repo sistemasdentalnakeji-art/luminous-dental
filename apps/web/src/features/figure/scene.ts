@@ -1,5 +1,5 @@
-// Shared by the service-page figure (Figure.tsx) and the home's "result" figures (ResultFigure.tsx): the fixed camera of the model
-// and the markup of one finished scene. The engine (engine.js) is one module, loaded once for every figure on the page.
+// Compartido por la figura de la página de servicio (Figure.tsx) y las figuras de «resultado» de la home (ResultFigure.tsx): la cámara fija del modelo
+// y el marcado de una escena terminada. El motor (engine.js) es un solo módulo, cargado una vez para todas las figuras de la página.
 import { SERVICES, W, dynSvg, fitProjection, floatShadowSvg, iso, sceneState, setView, staticSvg } from './engine.js'
 
 export type ServiceId = 'braces' | 'implants' | 'bridges' | 'crowns' | 'whitening'
@@ -9,12 +9,12 @@ export const indexOf = (id: ServiceId) => Math.max(0, services.findIndex((s) => 
 export const WIDTH = 640
 const PAD = 8
 const AZ = 40
-// Result figures: the model floating on its transparent mold. Service pages: the tray-less tabletop.
+// Figuras de resultado: el modelo flotando sobre su molde transparente. Páginas de servicio: el tablero sin bandeja.
 const TRAY = [[-78, -34, -6], [78, -34, -6], [-78, 52, -6], [78, 52, -6], [-62, 10, 40], [62, 10, 40], [0, 52, 40]]
 const TABLE = [[-80, -42, -17], [80, -42, -17], [-80, 84, -17], [80, 84, -17], [-80, -42, 0], [80, -42, 0], [-80, 84, 0], [80, 84, 0], [-62, 10, 40], [62, 10, 40], [0, 40, 40]]
 
 const caches: Record<string, { P: object; height: number }> = {}
-/** Width decides the scale, height is cut to the drawing. */
+/** El ancho decide la escala; el alto se recorta al dibujo. */
 export function projection(card: boolean) {
   const key = card ? 'card' : 'result'
   if (caches[key]) return caches[key]
@@ -28,7 +28,7 @@ export function projection(card: boolean) {
   return caches[key]
 }
 
-/** The finished (last step) scene of a service, floating on its mold, with a soft shadow; no controls. The [data-dyn] group is what changes while it plays. */
+/** La escena terminada (último paso) de un servicio, flotando sobre su molde, con una sombra suave y sin controles. El grupo [data-dyn] es lo que cambia mientras se reproduce. */
 export function resultSvg(id: ServiceId) {
   const { P, height } = projection(false)
   setView(P)

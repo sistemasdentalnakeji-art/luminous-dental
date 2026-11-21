@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Icon } from '@/components/Icon'
 
-// Based on Dental Nakeji's components/ui/Carousel.tsx: scroll-snap track that can be swiped, scrolled, moved with the arrow keys (when the
-// track has focus), with the buttons underneath or with the dots (or, when `tabs` is given, with one named tab per slide). One slide per view. No autoplay (so no pause control is needed).
+// Basado en components/ui/Carousel.tsx de Dental Nakeji: pista con scroll-snap que se puede deslizar, desplazar, mover con las flechas del teclado (cuando la
+// pista tiene el foco), con los botones de abajo o con los puntos (o, si se da `tabs`, con una pestaña con nombre por diapositiva). Una diapositiva por vista. Sin autoplay (así no hace falta control de pausa).
 export function Carousel({ label, items, className, tabs }: { label: string; items: ReactNode[]; className?: string; tabs?: readonly string[] }) {
   const trackRef = useRef<HTMLUListElement>(null)
   const tabsRef = useRef<HTMLUListElement>(null)
@@ -30,7 +30,7 @@ export function Carousel({ label, items, className, tabs }: { label: string; ite
     }
   }, [items.length])
 
-  // With named tabs on a narrow screen the row scrolls sideways: keep the current tab in view (the row only, never the page).
+  // Con pestañas con nombre en pantalla angosta la fila se desplaza de lado: mantiene a la vista la pestaña actual (solo la fila, nunca la página).
   useEffect(() => {
     const row = tabsRef.current
     const tab = row?.children[current] as HTMLElement | undefined
@@ -46,14 +46,14 @@ export function Carousel({ label, items, className, tabs }: { label: string; ite
 
   return (
     <div className={`carousel${className ? ` ${className}` : ''}`} role="region" aria-roledescription="carousel" aria-label={label}>
-      {/* Only in the Tab order when there is something to scroll. */}
+      {/* Solo entra en el orden de Tab cuando hay algo que desplazar. */}
       <ul ref={trackRef} className="carousel__track" tabIndex={canPrev || canNext ? 0 : undefined} aria-label={`List: ${label}`}>
         {items.map((item, index) => (
           <li key={index} className="carousel__item" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${items.length}`}>{item}</li>
         ))}
       </ul>
       <div className="carousel__controls" hidden={!canPrev && !canNext && !tabs}>
-        {/* aria-disabled (not disabled): the pressed button keeps focus when it reaches the end. */}
+        {/* aria-disabled (no disabled): el botón presionado conserva el foco cuando llega al final. */}
         <button type="button" className="carousel__button" onClick={() => canPrev && goTo(current - 1)} aria-disabled={!canPrev}>
           <Icon name="chevronLeft" size={20} />
           <span className="sr-only">{`Previous: ${label}`}</span>

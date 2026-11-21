@@ -1,13 +1,13 @@
-/* Google reviews and location sections. Layout and animations as in Dental Nakeji (reviews.css, marquee.css, contact.css), with this site's colors and fonts. */
+/* Secciones de reseñas de Google y ubicación. Diseño y animaciones como en Dental Nakeji (reviews.css, marquee.css, contact.css), con los colores y fuentes de este sitio. */
 
-/* ---------- animated "Google" ---------- */
+/* ---------- "Google" animado ---------- */
 .google-brand{display:inline-flex;align-items:baseline;gap:1px;font-family:var(--font-sans);font-size:clamp(3.5rem,1.5rem + 9vw,7.5rem);font-weight:700;line-height:1;letter-spacing:-.02em}
 .google-brand__letter{color:var(--gc);opacity:0;animation:google-bounce 1.6s cubic-bezier(.22,1,.36,1) both,google-hop 2.8s ease-in-out infinite;animation-delay:calc(var(--i)*.13s + .2s),calc(var(--i)*.09s + 3.2s);animation-play-state:paused}
 .google-brand--play .google-brand__letter{animation-play-state:running}
 @keyframes google-bounce{0%{opacity:0;transform:translateY(-48px) scaleY(.9)}22%{opacity:1;transform:translateY(4px) scaleY(1.04)}34%{transform:translateY(-18px)}48%{transform:translateY(2px)}57%{transform:translateY(-7px)}66%{transform:translateY(0)}71%{transform:translateY(-2.5px)}76%{transform:translateY(0)}100%{opacity:1;transform:translateY(0)}}
 @keyframes google-hop{0%,60%,100%{transform:translateY(0)}12%{transform:translateY(-16px)}24%{transform:translateY(0)}34%{transform:translateY(-6px)}44%{transform:translateY(0)}}
 
-/* ---------- intro: Google (left) + browser window (right) ---------- */
+/* ---------- introducción: Google (izquierda) + ventana de navegador (derecha) ---------- */
 .reviews{padding-block:clamp(56px,7vw,104px)}
 .reviews-intro{display:grid;grid-template-columns:minmax(0,1fr);gap:36px;align-items:center}
 .reviews-intro__google{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
@@ -32,7 +32,7 @@
   .mac-window__body{padding:52px 40px 44px}
 }
 
-/* ---------- two rows of cards that run ---------- */
+/* ---------- dos filas de tarjetas que corren ---------- */
 .marquee{--marquee-gap:20px;padding-block:12px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;touch-action:pan-x pan-y;overscroll-behavior-x:contain;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
 .marquee::-webkit-scrollbar{display:none}
 .marquee__track{display:flex;width:max-content}
@@ -47,7 +47,7 @@
   .reviews-rows .review-card{width:clamp(270px,calc(25vw - 45px),440px)}
 }
 
-/* ---------- card: frame, author box with a light that runs around its outline ---------- */
+/* ---------- tarjeta: marco, caja del autor con una luz que recorre su contorno ---------- */
 .review-card{--card-r:22px;position:relative;display:flex;flex-direction:column;gap:18px;width:clamp(320px,84vw,460px);padding:26px 26px 22px;border:1px solid rgba(255,255,255,.16);border-radius:var(--card-r);background:radial-gradient(120% 90% at 100% 0%,rgba(63,127,214,.28),transparent 60%),linear-gradient(165deg,#12254d,#070f1e);box-shadow:0 22px 44px -26px rgba(7,15,30,.8),inset 0 1px 0 rgba(255,255,255,.07);color:#fff}
 .review-card__author::before{content:"";position:absolute;inset:-1px;border-radius:calc(var(--box-r) + 1px);padding:1px;background:linear-gradient(90deg,transparent 0%,transparent 20%,rgba(224,182,92,.3) 35%,var(--color-gold) 48%,#fff 52%,var(--color-gold) 56%,rgba(224,182,92,.3) 70%,transparent 85%,transparent 100%);background-size:300% 100%;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;animation:neon-sweep 10s linear infinite;animation-delay:calc(var(--i,0)*-2.5s)}
 @keyframes neon-sweep{0%{background-position:200% 0}100%{background-position:-100% 0}}
@@ -78,7 +78,7 @@
   .review-card__author::before{display:none}
 }
 
-/* ---------- location: contact on the left, map on the right ---------- */
+/* ---------- ubicación: contacto a la izquierda, mapa a la derecha ---------- */
 .loc-sec{padding-block:clamp(40px,5vw,72px) clamp(56px,8vw,104px)}
 .loc-grid{display:grid;grid-template-columns:minmax(300px,380px) minmax(0,1fr);grid-template-areas:"head map" "contact map";column-gap:clamp(24px,3vw,48px);row-gap:12px;align-items:start}
 .loc-head{grid-area:head}
@@ -110,7 +110,7 @@
 .contact-item{display:flex;gap:14px;align-items:flex-start}
 .contact-item>div{display:flex;flex-direction:column;gap:2px;align-items:flex-start}
 .contact-item__icon{display:grid;flex:none;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--color-glow);color:#fff;box-shadow:0 0 0 1px var(--color-sky),0 0 20px rgba(123,195,235,.3)}
-.contact-item__label{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--color-gold-soft)}
+.contact-item__label{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--color-mint)}
 .contact-item__value{font-size:16px;color:#fff;text-decoration:none}
 a.contact-item__value{display:inline-flex;align-items:center;min-height:44px}
 a.contact-item__value:hover{color:var(--color-sky)}

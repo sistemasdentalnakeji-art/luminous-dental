@@ -19,7 +19,7 @@ const fixed: Record<string, ComponentType> = {
 
 const isBlog = (path: string) => path === '/blog' || path.startsWith('/blog/')
 
-/** The page for an address, or null when there is none. (Blog addresses are handled by BlogRoute, which knows the articles.) */
+/** La página de una dirección, o null si no hay ninguna. (Las direcciones del blog las maneja BlogRoute, que conoce los artículos.) */
 function pageFor(path: string) {
   const Fixed = fixed[path]
   if (Fixed) return <Fixed />
@@ -28,16 +28,16 @@ function pageFor(path: string) {
   return null
 }
 
-/** Scroll to the anchor if there is one, else to the top. */
+/** Va al ancla si hay una; si no, al inicio. */
 function scrollToHash(hash: string) {
   let id = hash.slice(1)
-  try { id = decodeURIComponent(id) } catch { /* a broken address such as #%E0: use it as written */ }
+  try { id = decodeURIComponent(id) } catch { /* una dirección rota como #%E0: se usa tal cual */ }
   const target = id && document.getElementById(id)
   if (target) target.scrollIntoView()
   else if (!hash) scrollTo({ top: 0, behavior: 'instant' })
 }
 
-/** Sits beside a page that loads apart: it only mounts once the page is drawn, and then goes to the anchor (e.g. /services#cosmetic). */
+/** Va junto a una página que carga aparte: solo se monta cuando la página ya está dibujada y entonces va al ancla (p. ej. /services#cosmetic). */
 function AnchorWhenReady({ hash }: { hash: string }) {
   useEffect(() => { if (hash) scrollToHash(hash) }, [hash])
   return null
@@ -50,15 +50,15 @@ export default function App() {
   const page = route ? pageFor(path) : null
   const [missingBlog, setMissingBlog] = useState('')
   useEffect(() => {
-    if (!blog) document.title = route?.title ?? notFoundTitle // blog pages set their own title
+    if (!blog) document.title = route?.title ?? notFoundTitle // las páginas del blog ponen su propio título
   }, [route, blog])
   useEffect(() => {
-    // Scroll after the new page is drawn.
+    // Se hace scroll después de dibujar la página nueva.
     const frame = requestAnimationFrame(() => scrollToHash(hash))
     return () => cancelAnimationFrame(frame)
   }, [path, hash])
-  // A page without the form (the error page) sends the appointment buttons to the Contact page, which has it.
-  // key={path}: each address starts clean, so the form never keeps another page's treatment, errors or messages.
+  // Una página sin el formulario (la de error) manda los botones de cita a la página Contact, que sí lo tiene.
+  // key={path}: cada dirección empieza limpia, así el formulario nunca conserva el tratamiento, los errores o los mensajes de otra página.
   const hasForm = blog ? missingBlog !== path : !!page
   return (
     <Layout path={path} appointmentHref={hasForm ? '#appointment' : '/contact#appointment'}>

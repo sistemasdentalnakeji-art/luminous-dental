@@ -1,5 +1,5 @@
-// Source: https://luminousdentallv.com (home, menu, footer and contact page), checked 2026-11-17.
-// Only real data from the official site. Missing items are null and marked "POR CONFIRMAR" in docs/decisiones.md.
+// Fuente: https://luminousdentallv.com (inicio, menú, pie de página y página de contacto), revisado el 2026-11-17.
+// Solo datos reales del sitio oficial. Lo que falta es null y está marcado «POR CONFIRMAR» en docs/decisiones.md.
 export const clinic = {
   name: 'Luminous Dental',
   tagline: 'Dentist in Las Vegas, NV – General & Cosmetic Dentistry',
@@ -7,7 +7,7 @@ export const clinic = {
   mapsUrl: 'https://www.google.com/maps/search/?api=1&query=1212+S+Maryland+Pkwy+Las+Vegas+NV',
   phone: { label: '(702) 805-8688', href: 'tel:+17028058688' },
   email: 'info@luminousdentallv.com',
-  // Three conflicting versions (checked 2026-11-17), so hours are NOT shown until the clinic confirms. POR CONFIRMAR.
+  // Tres versiones que se contradicen (revisado el 2026-11-17), así que el horario NO se muestra hasta que la clínica lo confirme. POR CONFIRMAR.
   hours: {
     confirmed: false,
     officialTopBar: 'Tue–Sat 8am–5pm, Sun–Mon closed',
@@ -19,7 +19,7 @@ export const clinic = {
     facebook: 'https://www.facebook.com/profile.php?id=61554688456073',
     instagram: 'https://www.instagram.com/luminousdentalvegas',
   },
-  googleRating: { score: 4.3, reviews: 17, checked: '2026-11-17' },
+  whatsapp: null as string | null, // POR CONFIRMAR: número de WhatsApp de la clínica (solo dígitos con código de país)
   doctor: {
     name: 'Dr. Christian Hahn',
     role: 'General Dentist',
@@ -46,6 +46,6 @@ export const services = [
   { group: 'Pediatric Dentistry', name: 'Pediatric Dentistry', source: 'https://luminousdentallv.com/' },
 ] as const
 
-/** Address of a service page ("Dental Implants" -> "/services/dental-implants"). */
+/** Dirección de una página de servicio («Dental Implants» -> «/services/dental-implants»). */
 export const serviceHref = (name: string) =>
   '/services/' + name.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')

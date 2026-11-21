@@ -2,7 +2,7 @@ import { serviceHref } from '@/content/clinic'
 import { home } from '@/content/home'
 import { servicePages } from '@/content/services'
 
-// One address per page (the blog's own pages are in pages/BlogRoute.tsx, so this file does not pull in the blog texts). A page only gets a route when it has real content; "Privacy Policy" has none yet (docs/datos.md), so it is not linked.
+// Una dirección por página (las páginas propias del blog están en pages/BlogRoute.tsx, así este archivo no arrastra los textos del blog). Una página solo tiene ruta cuando tiene contenido real; «Privacy Policy» aún no lo tiene (docs/datos.md), por eso no se enlaza.
 const name = 'Luminous Dental'
 export const routes: { path: string; title: string }[] = [
   { path: '/', title: home.seo.title },

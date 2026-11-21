@@ -1,5 +1,5 @@
-// Services hub, same order of sections as Dental Nakeji's /servicios/: hero (eyebrow, title, lead, category index) →
-// one block per category (title and intro on the left, a card per service on the right: icon, title, 3 points, "View service").
+// Portada de servicios, mismo orden de secciones que /servicios/ de Dental Nakeji: hero (antetítulo, título, entrada, índice de categorías) →
+// un bloque por categoría (título e introducción a la izquierda, una tarjeta por servicio a la derecha: ícono, título, 3 puntos, "View service").
 import { Appointment } from '@/components/Appointment'
 import { Icon } from '@/components/Icon'
 import { serviceHref } from '@/content/clinic'

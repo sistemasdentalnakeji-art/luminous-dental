@@ -1,7 +1,7 @@
 import { BrandIcon, type BrandName } from '@/components/BrandIcon'
 import { clinic } from '@/content/clinic'
 
-// Same component as Dental Nakeji's (components/ui/SocialLinks.tsx): official logos, 44 px target, accessible name on each link.
+// Mismo componente que el de Dental Nakeji (components/ui/SocialLinks.tsx): logos oficiales, área táctil de 44 px, nombre accesible en cada enlace.
 const links: { id: BrandName; label: string; href: string }[] = [
   { id: 'instagram', label: 'Instagram', href: clinic.social.instagram },
   { id: 'facebook', label: 'Facebook', href: clinic.social.facebook },

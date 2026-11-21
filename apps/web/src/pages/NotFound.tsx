@@ -12,7 +12,7 @@ export default function NotFound() {
         <Link className="btn" href="/">Back to Home</Link>
         <Link className="btn btn-ghost" href="/contact#appointment">Request an appointment</Link>
       </div>
-      {/* NEW, for approval: "Try one of these pages." */}
+      {/* NUEVO, para aprobación: "Try one of these pages." */}
       <nav className="nf-pages" aria-label="Try one of these pages.">
         <p>Try one of these pages.</p>
         <ul>{pages.map((n) => <li key={n.href}><Link href={n.href}>{n.label}</Link></li>)}</ul>

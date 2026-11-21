@@ -6,7 +6,7 @@ import { clinic } from '@/content/clinic'
 import { home } from '@/content/home'
 import { locationText as T } from '@/content/location'
 
-// The map (drawing data + coin card) loads apart, only once its place is about a screen and a half from view; its box keeps its height meanwhile (.loc-map min-height).
+// El mapa (datos del dibujo + tarjeta moneda) carga aparte, solo cuando su lugar está a una pantalla y media de verse; mientras tanto su caja mantiene la altura (.loc-map min-height).
 const LocationMap = lazy(() => import('@/components/LocationMap').then((m) => ({ default: m.LocationMap })))
 
 function NearScreen({ children }: { children: ReactNode }) {
@@ -34,7 +34,7 @@ function Item({ icon, label, children }: { icon: IconName; label: string; childr
   )
 }
 
-/** Same layout as Dental Nakeji's home: intro, expanding map card and contact cards (on a phone the map sits between the text and the contacts). */
+/** Mismo diseño que el inicio de Dental Nakeji: introducción, tarjeta de mapa que se expande y tarjetas de contacto (en celular el mapa queda entre el texto y los contactos). */
 export function ContactLocation() {
   const { footer } = home
   return (

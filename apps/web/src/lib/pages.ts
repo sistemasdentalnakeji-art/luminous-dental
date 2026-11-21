@@ -1,7 +1,7 @@
 import { lazy } from 'react'
 
-// Pages that are not the home page load apart (own file), so the first visit does not download them.
-// prefetch() starts the download when the pointer, a finger or the keyboard reaches a link to the page, so the click feels instant.
+// Las páginas que no son el inicio cargan aparte (en su propio archivo), así la primera visita no las descarga.
+// prefetch() inicia la descarga cuando el cursor, un dedo o el teclado llega a un enlace a la página, así el clic se siente instantáneo.
 const load = {
   about: () => import('@/pages/About'),
   services: () => import('@/pages/Services'),

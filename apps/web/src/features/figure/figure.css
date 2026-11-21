@@ -1,4 +1,4 @@
-/* Services figure. Brand colors come from tokens.css; the illustration palette below (tooth, metal, gum, wire) is the Anatomy kit tones for this drawing. */
+/* Figura de servicios. Los colores de marca vienen de tokens.css; la paleta de la ilustración de abajo (diente, metal, encía, alambre) son los tonos del kit Anatomy para este dibujo. */
 .iso-svg{display:block;width:100%;height:auto;overflow:visible}
 .iso-svg path,.iso-svg circle{vector-effect:non-scaling-stroke}
 .iso-fill{fill:var(--anatomy-paper);stroke:none}
@@ -53,13 +53,13 @@
 .brk-card .tray{--anatomy-paper:rgba(150,200,235,.12);--anatomy-top:rgba(190,225,248,.2);--anatomy-shade-0:rgba(110,170,215,.16);--anatomy-shade-1:rgba(120,180,222,.14);--anatomy-shade-2:rgba(140,195,232,.12);--anatomy-shade-3:rgba(160,208,240,.1);--anatomy-hi:rgba(200,230,250,.8);--anatomy-mid:rgba(160,205,238,.6);--anatomy-lo:rgba(150,200,235,.45)}
 .brk-shadow{fill:rgba(0,6,20,.42);filter:blur(9px)}
 
-/* Card variant (service pages): title, model on its tabletop with the gold knob, step name, buttons, note. */
+/* Variante de tarjeta (páginas de servicio): título, modelo sobre su tablero con la perilla dorada, nombre del paso, botones y nota. */
 .brk-card--box{border-radius:22px;background:linear-gradient(180deg,rgba(18,38,76,.92),rgba(11,26,54,.94));box-shadow:0 0 0 1px rgba(123,195,235,.32),0 40px 80px -40px rgba(0,8,24,.9),0 0 80px -20px rgba(123,195,235,.22);padding:clamp(12px,1.5vw,18px) clamp(8px,1.6vw,20px) clamp(14px,1.6vw,20px)}
 .bx-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:15px;line-height:1.3;padding-inline:6px}
 .bx-title{font-family:var(--font-serif);font-size:clamp(19px,1.6vw,23px);color:#fff}
 .bx-count{color:var(--color-text2);font-variant-numeric:tabular-nums;font-size:15px}
 .brk-card--box .brk-stage{margin:6px auto 2px}
-.bx-name{margin:4px 0 10px;text-align:center;font-family:var(--font-serif);font-style:italic;font-weight:300;font-size:clamp(20px,1.9vw,26px);line-height:1.2;color:var(--color-gold-soft);min-height:1.3em}
+.bx-name{margin:4px 0 10px;text-align:center;font-family:var(--font-serif);font-style:italic;font-weight:300;font-size:clamp(20px,1.9vw,26px);line-height:1.2;color:var(--color-mint);min-height:1.3em}
 .bx-controls{display:flex;justify-content:center;align-items:center;gap:8px}
 .bx-steps{display:flex;gap:10px}
 .bx-controls button{width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.05);color:#fff;font:600 16px/1 var(--font-sans);cursor:pointer;transition:background-color .2s ease-out,border-color .2s ease-out,color .2s ease-out,transform .15s ease-out}
@@ -72,14 +72,14 @@
 .bx-foot{display:flex;justify-content:space-between;gap:6px 18px;flex-wrap:wrap;margin-top:12px;font-size:15px;line-height:1.4;color:var(--color-text2);padding-inline:6px}
 @media (max-width:520px){.bx-foot{justify-content:center;text-align:center}.bx-steps{gap:8px}}
 
-/* Layout */
+/* Distribución */
 .brk{margin:0;width:100%}
 .brk-card{position:relative;color:var(--color-text);font-family:var(--font-sans)}
 .brk-stage{display:block;margin:0 auto;outline:none;touch-action:pan-y;cursor:grab;border-radius:14px;-webkit-tap-highlight-color:transparent}
 .brk-stage:active{cursor:grabbing}
 .brk-stage:focus-visible{outline:3px solid var(--color-gold);outline-offset:2px}
 .brk-bob{animation:brk-bob 7s ease-in-out infinite;animation-play-state:paused}
-.result-fig[data-live] .brk-bob{animation-play-state:running} /* the gentle loop only runs while the figure is on screen */
+.result-fig[data-live] .brk-bob{animation-play-state:running} /* el bucle suave solo corre mientras la figura está en pantalla */
 .result-fig{display:block;width:100%}
 .result-wrap{position:relative;width:100%}
 .result-pause{position:absolute;top:0;right:0;display:grid;place-items:center;width:44px;height:44px;padding:0;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:rgba(10,21,41,.45);cursor:pointer}

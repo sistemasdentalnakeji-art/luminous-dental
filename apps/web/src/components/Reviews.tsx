@@ -1,6 +1,6 @@
-// "Google reviews" section, same structure as Dental Nakeji's home (pages/home/sections/Reviews.tsx):
-// animated Google name + a browser-style window with the slogan, then two rows of review cards that run in opposite directions.
-// Rating number, review dates and the "See on Google" link are not shown until confirmed (docs/datos.md).
+// Sección "Google reviews", misma estructura que el inicio de Dental Nakeji (pages/home/sections/Reviews.tsx):
+// nombre de Google animado + una ventana estilo navegador con el eslogan, luego dos filas de tarjetas de reseñas que corren en direcciones opuestas.
+// El número de calificación, las fechas de las reseñas y el enlace "See on Google" no se muestran hasta que se confirmen (docs/datos.md).
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Marquee } from '@/components/Marquee'
 import { Stars } from '@/components/Stars'
@@ -28,7 +28,7 @@ function GoogleBrand() {
   )
 }
 
-/** The official Google "G" in its four colors. */
+/** La "G" oficial de Google en sus cuatro colores. */
 function GoogleG({ size }: { size: number }) {
   return (
     <svg className="google-g" width={size} height={size} viewBox="0 0 48 48" aria-hidden="true">
@@ -68,7 +68,7 @@ export function Reviews() {
   const allPaused = useMotionPaused()
   const stopped = paused || allPaused
   const cards = reviews.map((r, i) => <ReviewCard key={`${r.author}-${i}`} review={r} index={i} />)
-  // The second row starts at another card so that, with few reviews, the two rows do not look the same.
+  // La segunda fila empieza en otra tarjeta para que, con pocas reseñas, las dos filas no se vean iguales.
   const shift = Math.ceil(cards.length / 2)
   const bottom = [...cards.slice(shift), ...cards.slice(0, shift)]
   return (
@@ -103,7 +103,7 @@ export function Reviews() {
       </div>
       <div className="reviews-rows">
         <Marquee label={`${T.carousel}, first row`} items={cards} direction="ltr" secondsPerCard={22} paused={stopped} />
-        {/* One row until there are 6 or more real reviews: two rows of 3 repeat the same cards (docs/mejoras-1-plan.md 2.1). */}
+        {/* Una sola fila hasta que haya 6 o más reseñas reales: dos filas de 3 repiten las mismas tarjetas (docs/mejoras-1-plan.md 2.1). */}
         {cards.length >= 6 && <Marquee label={`${T.carousel}, second row`} items={bottom} direction="rtl" secondsPerCard={26} paused={stopped} />}
       </div>
     </section>

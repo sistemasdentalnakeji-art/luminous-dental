@@ -1,18 +1,18 @@
-// @ts-nocheck (ported as is from the approved, tested design; plain canvas code)
+// @ts-nocheck (portado tal cual desde el diseño aprobado y probado; código de canvas simple)
 import { useEffect, useRef } from 'react'
 
-// Night backdrop from the owner's design: slow WebGL blues (mesh) + breathing stars with a shooting star about every 10 s (2D canvas).
-// Half resolution, 30 fps, paused when the tab is hidden; one still frame with reduced motion.
+// Fondo nocturno del diseño del dueño: azules lentos en WebGL (malla) + estrellas que respiran con una estrella fugaz cada 10 s aprox. (canvas 2D).
+// Media resolución, 30 fps, en pausa cuando la pestaña está oculta; un solo cuadro quieto con movimiento reducido.
 export function Backdrop() {
   const meshRef = useRef<HTMLCanvasElement>(null)
   const skyRef = useRef<HTMLCanvasElement>(null)
   useEffect(() => {
     const stop: Array<() => void> = []
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const CAP = 1400; // canvases never cover more than this many px of height (keeps tall previews light)
-    // 1) night mesh: slow WebGL blues (from the owner's blue-meshy-background.tsx): half resolution, 30 fps, one still frame with reduced motion
+    const CAP = 1400; // los canvas nunca cubren más de estos px de alto (mantiene ligeras las vistas altas)
+    // 1) malla nocturna: azules lentos en WebGL (de blue-meshy-background.tsx del dueño): media resolución, 30 fps, un solo cuadro quieto con movimiento reducido
     const mesh = meshRef.current;
-    // The mesh is hidden with display:none in site.css (19-11-2026): while it is, do not even start WebGL (no shader, no 30 fps drawing). Showing it again = removing that rule.
+    // La malla está oculta con display:none en site.css (19-11-2026): mientras lo esté, ni siquiera se inicia WebGL (sin shader, sin dibujar a 30 fps). Mostrarla de nuevo = quitar esa regla.
     const meshShown = !!mesh && getComputedStyle(mesh).display !== 'none';
     const gl = meshShown && mesh.getContext('webgl2', { alpha: true, premultipliedAlpha: true, antialias: false });
     if (gl) {
@@ -69,7 +69,7 @@ export function Backdrop() {
           const a = gl.getAttribLocation(prog, 'aPosition'); gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
           const uRes = gl.getUniformLocation(prog, 'uResolution'), uTime = gl.getUniformLocation(prog, 'uTime');
           const offset = Math.random() * 1000, t0 = performance.now(); let raf = 0, last = 0;
-          const segs = []; // extra canvases that repeat the (mirrored) mesh down a tall page, so the whole page has the same night
+          const segs = []; // canvas extra que repiten la malla (en espejo) a lo largo de una página alta, para que toda la página tenga la misma noche
           const draw = (now) => { gl.clear(gl.COLOR_BUFFER_BIT); gl.uniform2f(uRes, mesh.width, mesh.height); gl.uniform1f(uTime, offset + (now - t0) / 1000); gl.drawArrays(gl.TRIANGLES, 0, 6); for (const c of segs) c.getContext('2d').drawImage(mesh, 0, 0); };
           const layout = () => {
             const n = Math.max(1, Math.ceil(innerHeight / CAP));
@@ -81,7 +81,7 @@ export function Backdrop() {
           };
           const size = () => { mesh.width = Math.max(1, Math.round(innerWidth * 0.5)); mesh.height = Math.max(1, Math.round(Math.min(innerHeight, CAP) * 0.5)); gl.viewport(0, 0, mesh.width, mesh.height); layout(); if (reduce) draw(t0); };
           const tick = (now) => { raf = requestAnimationFrame(tick); if (now - last < 33 || document.documentElement.hasAttribute('data-motion-paused')) return; last = now; draw(now); };
-          // Lost graphics context (memory pressure, driver reset): stop drawing; the page keeps its plain night color.
+          // Contexto gráfico perdido (poca memoria, reinicio del controlador): se deja de dibujar; la página conserva su color de noche liso.
           const onLost = (e) => { e.preventDefault(); cancelAnimationFrame(raf); }
           mesh.addEventListener('webglcontextlost', onLost);
           const onVis = () => { cancelAnimationFrame(raf); if (!document.hidden && !reduce) raf = requestAnimationFrame(tick); };
@@ -91,7 +91,7 @@ export function Backdrop() {
         }
       }
     }
-    // 2) stars that breathe + one shooting star about every 10 s (from the owner's NightSky.tsx; one still frame with reduced motion)
+    // 2) estrellas que respiran + una estrella fugaz cada 10 s aprox. (de NightSky.tsx del dueño; un solo cuadro quieto con movimiento reducido)
     const canvas = skyRef.current;
     const ctx = canvas && canvas.getContext('2d');
     if (ctx) {

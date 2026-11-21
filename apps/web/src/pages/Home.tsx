@@ -1,13 +1,13 @@
 import { Appointment } from '@/components/Appointment'
 import { ContactLocation } from '@/components/ContactLocation'
 import { FeaturedServices } from '@/components/FeaturedServices'
+import { Hero } from '@/components/Hero'
 import { Reviews } from '@/components/Reviews'
 import { home } from '@/content/home'
 import { Link } from '@/lib/router'
 
-const { hero, services, why, doctor, smile, coverage } = home
-const [before, after] = hero.headline.split(hero.emphasis)
-const arcs = ['gen', 'cos', 'ort', 'ped'] as const // same order as services.groups
+const { services, why, doctor, smile, coverage } = home
+const arcs = ['gen', 'cos', 'ort', 'ped'] as const // mismo orden que services.groups
 const whyIcons = [
   <><circle cx="12" cy="12" r="9" /><path d="M8 14c1 1.5 2.3 2.2 4 2.2s3-.7 4-2.2M9 9.5h.01M15 9.5h.01" /></>,
   <><circle cx="8" cy="8" r="2.5" /><circle cx="17" cy="9.5" r="2" /><path d="M3 19c0-3 2.2-5 5-5s5 2 5 5M14.5 14.5c.8-.4 1.5-.5 2.5-.5 2.2 0 4 1.6 4 4.5" /></>,
@@ -17,16 +17,9 @@ const whyIcons = [
 export default function Home() {
   return (
     <>
-      <section className="hero wrap" id="top">
-        <h1>{before}<em>{hero.emphasis}</em>{after}</h1>
-        <p className="hero-support">{hero.support}</p>
-        <div className="hero-cta">
-          <a className="btn" href={hero.primaryCta.href}>{hero.primaryCta.label}</a>
-          <a className="btn btn-ghost" href={hero.secondaryCta.href}>{hero.secondaryCta.label}</a>
-        </div>
-      </section>
+      <Hero />
 
-      <section className="wrap ringsec">
+      <section className="wrap ringsec" id="doctor">
         <div className="stage">
           <div className="ringbox">
             <div className="glow" aria-hidden="true" />

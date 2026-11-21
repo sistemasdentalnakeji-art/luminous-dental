@@ -1,9 +1,9 @@
 import { useEffect, useState, type AnchorHTMLAttributes, type MouseEvent } from 'react'
 import { prefetch } from '@/lib/pages'
 
-// Tiny router (no dependency): clean paths with the History API. The host must send every path to index.html.
+// Router mínimo (sin dependencias): rutas limpias con la History API. El servidor debe enviar cada ruta a index.html.
 const EVENT = 'ld:navigate'
-const BASE = import.meta.env.BASE_URL.replace(/\/$/, '') // '' locally, '/luminous-dental' on GitHub Pages
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '') // '' en local, '/luminous-dental' en GitHub Pages
 const strip = (p: string) => (BASE && p.startsWith(BASE) ? p.slice(BASE.length) || '/' : p)
 const read = () => ({ path: strip(location.pathname).replace(/(.)\/$/, '$1'), hash: location.hash })
 
@@ -28,7 +28,7 @@ export function navigate(to: string) {
 
 const internal = (href: string) => href.startsWith('/') && !href.startsWith('//')
 
-/** Link that stays inside the site when the address is a path ("/about", "/services#cosmetic"); anchors and outside links work as usual. */
+/** Enlace que se queda dentro del sitio cuando la dirección es una ruta ("/about", "/services#cosmetic"); las anclas y los enlaces externos funcionan como siempre. */
 export function Link({ href, onClick, ...rest }: AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }) {
   const go = (e: MouseEvent<HTMLAnchorElement>) => {
     onClick?.(e)
@@ -36,6 +36,6 @@ export function Link({ href, onClick, ...rest }: AnchorHTMLAttributes<HTMLAnchor
     e.preventDefault()
     navigate(href)
   }
-  const warm = () => { if (internal(href)) prefetch(href) } // start loading the page before the click
+  const warm = () => { if (internal(href)) prefetch(href) } // empieza a cargar la página antes del clic
   return <a href={internal(href) ? BASE + href : href} onClick={go} onPointerEnter={warm} onFocus={warm} onTouchStart={warm} {...rest} />
 }

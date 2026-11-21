@@ -1,4 +1,4 @@
-// Row of cards that runs by itself and can be swiped (copied from Dental Nakeji's components/ui/Marquee.tsx).
+// Fila de tarjetas que corre sola y se puede deslizar (copiada de components/ui/Marquee.tsx de Dental Nakeji).
 import { useEffect, useRef } from 'react'
 import type { ReactNode } from 'react'
 const cx = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(' ')
@@ -12,7 +12,7 @@ interface MarqueeProps {
   /** Segundos que tarda cada tarjeta en recorrer su propio ancho: más alto = más lento. */
   secondsPerCard?: number
   className?: string
-  /** Stops the automatic movement (the row can still be swiped). */
+  /** Detiene el movimiento automático (la fila aún se puede deslizar). */
   paused?: boolean
 }
 

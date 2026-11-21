@@ -2,7 +2,7 @@ import { Appointment } from '@/components/Appointment'
 import { ContactLocation } from '@/components/ContactLocation'
 import { home } from '@/content/home'
 
-// Same sign, contact card and map as the home page, then the form (without its own "Visit us" block).
+// Mismo letrero, tarjeta de contacto y mapa que el inicio, luego el formulario (sin su propio bloque "Visit us").
 export default function Contact() {
   return (
     <>

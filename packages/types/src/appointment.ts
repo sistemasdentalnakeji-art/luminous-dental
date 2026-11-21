@@ -1,7 +1,7 @@
 /**
- * Appointment request contract shared by the web page, the future API and automations.
- * Fields mirror the official contact form at luminousdentallv.com/contact-us (checked 2026-11-17).
- * Keep it free of medical history: only what is needed to call the patient back.
+ * Contrato de la solicitud de cita, compartido por la página web, la futura API y las automatizaciones.
+ * Los campos replican el formulario de contacto oficial en luminousdentallv.com/contact-us (revisado el 2026-11-17).
+ * Sin historial médico: solo lo necesario para devolver la llamada al paciente.
  */
 export interface AppointmentRequest {
   firstName: string
@@ -10,13 +10,13 @@ export interface AppointmentRequest {
   phone: string
   treatment: string
   message: string
-  /** Patient accepted the privacy notice before sending. */
+  /** El paciente aceptó el aviso de privacidad antes de enviar. */
   consent: boolean
-  /** Preferred day/time in Las Vegas time, free text until real availability exists. */
+  /** Día y hora preferidos en hora de Las Vegas, texto libre hasta que exista disponibilidad real. */
   preferredTime?: string
-  /** Where the request came from, so automations can route it. */
+  /** De dónde vino la solicitud, para que las automatizaciones puedan enrutarla. */
   source: 'website'
 }
 
-/** Lifecycle an automation can move a request through. */
+/** Ciclo de vida por el que una automatización puede mover una solicitud. */
 export type AppointmentStatus = 'received' | 'contacted' | 'scheduled' | 'cancelled'

@@ -1,4 +1,4 @@
-// Small line icons (24 x 24, stroke = currentColor). Same idea as Dental Nakeji's Icon component, only the ones this site uses.
+// Íconos pequeños de línea (24 x 24, stroke = currentColor). Misma idea que el componente Icon de Dental Nakeji, solo los que usa este sitio.
 const PATHS = {
   check: 'M5 12.5l4.5 4.5L19 7.5',
   clock: 'M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z',

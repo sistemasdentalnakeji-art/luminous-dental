@@ -1,0 +1,42 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><title>Menta · 3 tonos</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--night:#0a1529;--gold:#e0b65c;--sky:#7bc3eb}
+*{box-sizing:border-box}body{margin:0;background:#050b17;color:#f4f9ff;font:17px/1.5 Figtree,Arial,sans-serif;padding:24px}
+h1.top{font:400 22px Newsreader,Georgia,serif;margin:0 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.col{background:var(--night);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:26px}
+.col>h2{margin:0 0 20px;font:600 14px Figtree,sans-serif;color:#9fb4d3}
+.pill{display:inline-block;margin:0 0 16px;padding:6px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.34);background:rgba(255,255,255,.05);font-size:15px;font-weight:600;color:var(--a)}
+h3.h{font:400 38px/1.1 Newsreader,Georgia,serif;margin:0 0 6px;color:#fff}
+h3.h em{display:block;font-style:italic;font-weight:300;color:var(--a)}
+p{margin:12px 0 20px}
+.h2{font:400 26px/1.2 Newsreader,Georgia,serif;margin:28px 0 8px}
+.h2 .accent{font-style:italic;font-weight:300;color:var(--a)}
+.h2::after{content:"";display:block;width:88px;height:3px;margin-top:14px;border-radius:2px;background:linear-gradient(90deg,var(--gold),rgba(224,182,92,.5))}
+.btn{display:inline-block;text-decoration:none;padding:12px 22px;border-radius:999px;background:var(--sky);color:var(--night);font-weight:700;outline:3px solid var(--gold);outline-offset:3px}
+.tag{margin-top:22px;font-size:14px;font-weight:600;color:var(--a)}
+.cmp{margin-top:28px;background:var(--night);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:22px}
+.cmp h2{margin:0 0 14px;font:600 14px Figtree,sans-serif;color:#9fb4d3}
+.row{display:flex;flex-wrap:wrap;gap:22px;align-items:baseline;margin:6px 0}
+.row b{width:120px;font-size:13px;color:#9fb4d3;font-weight:600}
+.row i{font:italic 300 30px Newsreader,Georgia,serif}
+.row .l{font-size:15px;font-weight:600}
+</style>
+<h1 class="top">Menta más profunda: tres tonos (del más claro al más oscuro)</h1>
+<div class="grid">
+<script>
+[["C1 · Menta suave","#3fcfae","9.33"],["C2 · Menta media (recomendado)","#1fb89a","7.27"],["C3 · Menta profunda","#0fa088","5.56"]].forEach(([n,c,r])=>document.write(`
+<section class="col" style="--a:${c}"><h2>${n} · ${c} · ${r}:1 sobre noche</h2>
+<span class="pill">Las Vegas · Family dentistry</span>
+<h3 class="h">Your teeth should<em>last a lifetime.</em></h3>
+<p>We create a space that's comfortable and welcoming for all our patients.</p>
+<a class="btn" href="#">Request an appointment</a>
+<div class="h2">Care that keeps your <span class="accent">natural teeth</span></div>
+<div class="tag">General dentistry</div></section>`));
+</script>
+</div>
+<div class="cmp"><h2>Comparación con el celeste actual (#7bc3eb), mismo texto, en fila</h2>
+<script>
+[["Celeste","#7bc3eb"],["C1","#3fcfae"],["C2","#1fb89a"],["C3","#0fa088"],["Menta clara (antes)","#6fdcc4"]].forEach(([n,c])=>document.write(`<div class="row"><b>${n}</b><i style="color:${c}">last a lifetime.</i><span class="l" style="color:${c}">Las Vegas · Family dentistry</span><span style="width:46px;height:18px;border-radius:4px;background:${c}"></span></div>`));
+</script></div></html>

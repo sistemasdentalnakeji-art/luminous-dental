@@ -1,14 +1,14 @@
-// Google reviews section (structure copied from Dental Nakeji's home). English only.
-// Reviews: the 3 real quotes of home.ts (public on the official site; permission to show them is POR CONFIRMAR, docs/datos.md).
-// NOT shown on purpose: the Google rating number and the count (two different values were seen: 4.3 / 17 and 4.6 / 51), and the date of each review.
+// Sección de reseñas de Google (estructura copiada de la home de Dental Nakeji). Solo en inglés.
+// Reseñas: las 3 citas reales de home.ts (públicas en el sitio oficial; el permiso para mostrarlas es POR CONFIRMAR, docs/datos.md).
+// NO se muestra a propósito: la calificación de Google ni el conteo (se vieron dos valores distintos: 4.3 / 17 y 4.6 / 51), ni la fecha de cada reseña.
 import { home } from '@/content/home'
 
 export interface Review {
   author: string
-  /** 1 to 5, as written on the official site's widget. */
+  /** De 1 a 5, como aparece en el widget del sitio oficial. */
   rating: number
   text: string
-  /** "2 weeks ago", only when a live source provides it. */
+  /** «2 weeks ago», solo cuando una fuente en vivo lo da. */
   relativeTime?: string
   authorUrl?: string
   photoUrl?: string
@@ -22,8 +22,8 @@ export const reviewsText = {
   slogan: "Don't just take our word for it. Our patients speak for us.",
   sloganSub: 'Words from our patients on Google.',
   carousel: 'Patient reviews',
-  pause: 'Pause patient reviews animation', // NEW, for approval
-  play: 'Play patient reviews animation', // NEW, for approval
+  pause: 'Pause patient reviews animation', // NUEVO, para aprobación
+  play: 'Play patient reviews animation', // NUEVO, para aprobación
   domain: 'luminousdentallv.com',
-  // "See on Google" is left out until the clinic's Google listing link is confirmed (docs/datos.md).
+  // «See on Google» se omite hasta que se confirme el enlace de la clínica en Google (docs/datos.md).
 }

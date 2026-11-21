@@ -1,8 +1,8 @@
-// "Featured services": same structure as Dental Nakeji's home section (heading, carousel, button to all services). The carousel shows ONE wide card
-// per slide. Where Nakeji shows a photo, the right side of the card plays the whole animation of that service, floating, in a loop
-// (features/figure/ResultFigure.tsx; only while its slide is in view; still with reduced motion). The left side has the name, hook,
-// 3 sentences and the "View service" button. Texts come from content/services.ts (official site).
-// The figure code loads once (its own file), for the five cards, so it never blocks the first paint.
+// "Featured services": misma estructura que la sección del inicio de Dental Nakeji (título, carrusel, botón a todos los servicios). El carrusel muestra UNA tarjeta ancha
+// por diapositiva. Donde Nakeji muestra una foto, el lado derecho de la tarjeta reproduce la animación completa de ese servicio, flotando, en bucle
+// (features/figure/ResultFigure.tsx; solo mientras su diapositiva está a la vista; quieta con movimiento reducido). El lado izquierdo tiene el nombre, el gancho,
+// 3 frases y el botón "View service". Los textos vienen de content/services.ts (sitio oficial).
+// El código de la figura carga una sola vez (en su propio archivo), para las cinco tarjetas, así nunca bloquea el primer dibujo.
 import { lazy, Suspense } from 'react'
 import { Carousel } from '@/components/Carousel'
 import { Icon } from '@/components/Icon'
@@ -17,7 +17,7 @@ const items = featuredNames.map((name) => {
   return page
 })
 
-// At most 2 points, and none that repeats the sentence above it (docs/mejoras-1-plan.md 1.1).
+// Máximo 2 puntos, y ninguno que repita la frase de arriba (docs/mejoras-1-plan.md 1.1).
 const bullets = (sentence: string, points: string[]) =>
   points.filter((h) => !sentence.toLowerCase().includes(h.toLowerCase().replace(/\.$/, ''))).slice(0, 2)
 

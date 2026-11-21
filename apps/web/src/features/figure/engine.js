@@ -1,7 +1,7 @@
 // @ts-nocheck
-// Figure engine (Anatomy skill): trimmed kit + model + drawing, copied from docs/lienzo/anatomy/servicios (model.js, draw.js) on 2026-11-18.
-// Plain JS on purpose: it is vendored, audited code (audit.mjs: no collisions, line ends 0). Do not hand-edit; regenerate from the lienzo folder.
-// Service and step names live in model.js (SERVICES). Card texts live in src/content/figure.ts.
+// Motor de la figura (skill Anatomy): kit recortado + modelo + dibujo, copiado de docs/lienzo/anatomy/servicios (model.js, draw.js) el 2026-11-18.
+// JS plano a propósito: es código incluido tal cual y auditado (audit.mjs: sin colisiones, finales de línea 0). No lo edites a mano; regéneralo desde la carpeta lienzo.
+// Los nombres de servicios y pasos están en model.js (SERVICES). Los textos de la tarjeta están en src/content/figure.ts.
 const AZIMUTH = 45;
 const ELEVATION = 30;
 const SHADES = 4;
@@ -296,13 +296,13 @@ function dotsSvg(points, { size = 0.5, tone = "mid", pulse = false } = {}) {
         .join("");
     return `<g class="iso-dots" data-tone="${tone}">${dots}</g>`;
 }
-// Brackets figure: the model. Plain JS (no imports) so the same text runs in the build, the audit and the page.
-// Local frame: u = to the right, w = toward the viewer (front of the arch). Units ~ 1 px of the real model.
+// Figura de brackets: el modelo. JS plano (sin imports) para que el mismo texto corra en el build, la auditoría y la página.
+// Marco local: u = hacia la derecha, w = hacia el espectador (frente del arco). Unidades ~ 1 px del modelo real.
 const STEPS = ["Crooked teeth", "Brackets bonded", "Archwire threaded in", "Teeth start to move", "Teeth move into line"];
-const ZG = 7;            // top of the gum ridge (teeth stand here)
-const ZS = 14;           // height of the bracket slot, same on every tooth
+const ZG = 7;            // parte alta del reborde de la encía (aquí se apoyan los dientes)
+const ZS = 14;           // altura de la ranura del bracket, igual en todos los dientes
 const ARCH = { a: 52, b: 44, w0: -22 };
-// slot width, crown width, crown depth, crown height, kind  (order from the midline outward)
+// ancho de ranura, ancho de corona, profundidad de corona, altura de corona, tipo  (orden desde la línea media hacia afuera)
 const KINDS = [
   { name: "central", slot: 14, tw: 12.4, td: 9, h: 15, r: 4.4, cap: 2.6, groove: 0 },
   { name: "lateral", slot: 11.5, tw: 10.2, td: 8.4, h: 14, r: 4.1, cap: 2.4, groove: 0 },
@@ -311,7 +311,7 @@ const KINDS = [
   { name: "premolar 2", slot: 12, tw: 9.8, td: 11.6, h: 12, r: 4.9, cap: 0.9, groove: 1 },
   { name: "molar", slot: 17, tw: 14, td: 15, h: 11, r: 6.2, cap: 0.9, groove: 1 },
 ];
-// crooked start: [along the arch, out from the arch, turn in degrees], one row per kind, per side
+// inicio chueco: [a lo largo del arco, hacia afuera del arco, giro en grados], una fila por tipo, por lado
 const CROOK = {
   "-1": [[0, 1.5, 18], [0, -5.5, -8], [-0.5, 5.5, 12], [0, 0, -7], [0, 1.5, 0], [0, 0, 0]],
   "1": [[0, -2, -10], [0, 3.5, 14], [0, -4.5, -12], [0, 0, 5], [0, 1.5, 0], [0, 0, 0]],
@@ -319,7 +319,7 @@ const CROOK = {
 
 function archPoint(theta) { return [ARCH.a * Math.sin(theta), ARCH.b * Math.cos(theta) + ARCH.w0]; }
 function archNormal(theta) { const n = [Math.sin(theta) / ARCH.a, Math.cos(theta) / ARCH.b]; const l = Math.hypot(n[0], n[1]); return [n[0] / l, n[1] / l]; }
-function thetaAtLength(s) { // arc length -> angle (numeric)
+function thetaAtLength(s) { // longitud de arco -> ángulo (numérico)
   let theta = 0, run = 0; const step = 0.0005;
   while (run < s) { const p = archPoint(theta), q = archPoint(theta + step); run += Math.hypot(q[0] - p[0], q[1] - p[1]); theta += step; }
   return theta;
@@ -336,7 +336,7 @@ function buildTeeth() {
       teeth.push({ side, k, kind, c, n, T, du, dn, rot, theta });
     });
   }
-  // order left molar -> right molar
+  // orden molar izquierdo -> molar derecho
   teeth.sort((p, q) => p.c[0] - q.c[0]);
   teeth.forEach((tooth, o) => { tooth.o = o; });
   return teeth;
@@ -344,11 +344,11 @@ function buildTeeth() {
 const TEETH = buildTeeth();
 const clamp01 = (x) => Math.min(1, Math.max(0, x));
 const ease = (x) => { x = clamp01(x); return x * x * (3 - 2 * x); };
-// the whole state comes from one number t (0..4): the control the visitor moves
+// todo el estado sale de un solo número t (0..4): el control que mueve el visitante
 function stateOf(t) {
-  const a = clamp01(t);                 // brackets landing
-  const w = clamp01(t - 1);             // archwire threaded in
-  const m = clamp01((t - 2) / 2);       // teeth moving
+  const a = clamp01(t);                 // los brackets se posan
+  const w = clamp01(t - 1);             // el arco de alambre se enhebra
+  const m = clamp01((t - 2) / 2);       // los dientes se mueven
   const step = Math.min(4, Math.max(0, Math.round(t)));
   const moves = TEETH.map((tooth) => ease(m * 1.35 - 0.35 * ((tooth.k % 3) / 2 + (tooth.side > 0 ? 0.15 : 0))));
   const land = TEETH.map((tooth) => ease(a * 1.7 - 0.7 * (tooth.o / 11)));
@@ -362,14 +362,14 @@ function poseOf(tooth, q) {
   const rot = (v) => [v[0] * cs - v[1] * sn, v[0] * sn + v[1] * cs];
   return { c, T: rot(tooth.T), n: rot(tooth.n) };
 }
-// plan of a rounded rectangle in a tooth's own frame, returned as local (u,w) points
+// planta de un rectángulo redondeado en el marco propio del diente, devuelta como puntos locales (u,w)
 function frameRing(pose, x0, y0, w, d, r, steps) {
   return roundedPlan({ x: x0, y: y0, w, d, r }, steps).map(([x, y]) => [pose.c[0] + x * pose.T[0] + y * pose.n[0], pose.c[1] + x * pose.T[1] + y * pose.n[1]]);
 }
 function framePoint(pose, x, y) { return [pose.c[0] + x * pose.T[0] + y * pose.n[0], pose.c[1] + x * pose.T[1] + y * pose.n[1]]; }
-// where the wire sits on a tooth (in the slot, in front of the bracket), in local coordinates
+// dónde se apoya el alambre en un diente (en la ranura, delante del bracket), en coordenadas locales
 function slotPoint(tooth, pose) { return framePoint(pose, 0, tooth.kind.td / 2 + 4); }
-// smooth wire through the slots (Catmull-Rom), then cut at the fed length
+// alambre suave por las ranuras (Catmull-Rom), luego cortado a la longitud alimentada
 function wirePath(poses) {
   const pts = TEETH.map((tooth, i) => slotPoint(tooth, poses[i]));
   const head = pts[0], tail = pts[pts.length - 1];
@@ -377,7 +377,7 @@ function wirePath(poses) {
   const d0 = dir(pts[1], head), d1 = dir(pts[pts.length - 2], tail);
   const all = [[head[0] + d0[0] * 6, head[1] + d0[1] * 6], ...pts, [tail[0] + d1[0] * 6, tail[1] + d1[1] * 6]];
   const at = (i) => all[Math.max(0, Math.min(all.length - 1, i))];
-  const out = []; // {p:[u,w], gap:int (0..10 between tooth gap and gap+1, -1 head, 11 tail), len}
+  const out = []; // {p:[u,w], gap:int (0..10 entre el diente gap y gap+1, -1 cabeza, 11 cola), len}
   let len = 0; const toothLen = [];
   for (let i = 0; i < all.length - 1; i++) {
     const [p0, p1, p2, p3] = [at(i - 1), at(i), at(i + 1), at(i + 2)];
@@ -386,7 +386,7 @@ function wirePath(poses) {
       const p = [0, 1].map((j) => 0.5 * (2 * p1[j] + (-p0[j] + p2[j]) * u + (2 * p0[j] - 5 * p1[j] + 4 * p2[j] - p3[j]) * u2 + (-p0[j] + 3 * p1[j] - 3 * p2[j] + p3[j]) * u3));
       if (s === 0 && i >= 1 && i <= TEETH.length) toothLen[i - 1] = len + (out.length ? Math.hypot(p[0] - out[out.length - 1].p[0], p[1] - out[out.length - 1].p[1]) : 0);
       if (out.length) len += Math.hypot(p[0] - out[out.length - 1].p[0], p[1] - out[out.length - 1].p[1]);
-      out.push({ p, seg: i - 1, len }); // seg: -1 head stub, 0..10 gaps between teeth, 11 tail stub
+      out.push({ p, seg: i - 1, len }); // seg: -1 tramo de cabeza, 0..10 huecos entre dientes, 11 tramo de cola
     }
   }
   const last = all[all.length - 1];
@@ -394,8 +394,8 @@ function wirePath(poses) {
   out.push({ p: last, seg: 11, len });
   return { samples: out, total: len, toothLen };
 }
-// Painter's order for the teeth: for every pair, the plane that separates their footprints says which one is nearer the viewer
-// (look = viewer direction in the local frame); a topological sort over those pairs, depth of the centre only breaks ties.
+// Orden del pintor para los dientes: en cada par, el plano que separa sus huellas dice cuál está más cerca del espectador
+// (look = dirección del espectador en el marco local); un orden topológico sobre esos pares, y la profundidad del centro solo desempata.
 function teethOrder(st, look, key) {
   const n = TEETH.length, feet = TEETH.map((tooth, i) => frameRing(st.poses[i], -tooth.kind.tw / 2, -tooth.kind.td / 2, tooth.kind.tw, tooth.kind.td, 0.01, 1));
   const after = Array.from({ length: n }, () => []), need = new Array(n).fill(0);
@@ -411,17 +411,17 @@ function teethOrder(st, look, key) {
     if (!best) continue;
     const d = best.ax[0] * look[0] + best.ax[1] * look[1];
     if (Math.abs(d) < 0.05) continue;
-    const iNearer = best.iLow ? d < 0 : d > 0; // nearer one is drawn later
+    const iNearer = best.iLow ? d < 0 : d > 0; // el más cercano se dibuja después
     const [far, near] = iNearer ? [j, i] : [i, j];
     after[far].push(near); need[near]++;
   }
   const out = [], ready = []; for (let i = 0; i < n; i++) if (!need[i]) ready.push(i);
   while (ready.length) { ready.sort((a, b) => key(a) - key(b)); const i = ready.shift(); out.push(i); for (const j of after[i]) if (!--need[j]) ready.push(j); }
-  if (out.length < n) for (let i = 0; i < n; i++) if (!out.includes(i)) out.push(i); // a cycle cannot happen with disjoint convex footprints
+  if (out.length < n) for (let i = 0; i < n; i++) if (!out.includes(i)) out.push(i); // no puede haber un ciclo con huellas convexas disjuntas
   return out;
 }
 
-// ---- the five services share the same teeth, gum and base; only the part that is being treated changes
+// ---- los cinco servicios comparten los mismos dientes, encía y base; solo cambia la parte que se trata
 const SERVICES = [
   { id: "braces", tab: "Braces & Invisalign", steps: STEPS },
   { id: "implants", tab: "Dental implants", steps: ["Missing tooth", "Post placed in the jaw", "Abutment attached", "Crown placed"] },
@@ -444,7 +444,7 @@ function sceneState(svc, t) {
   return st;
 }
 
-// Brackets figure: drawing. Uses the Anatomy kit functions and model.js (all in the same scope).
+// Figura de brackets: dibujo. Usa las funciones del kit Anatomy y model.js (todo en el mismo ámbito).
 const YAW = 14;
 let VIEW = null;
 function setView(P) {
@@ -462,7 +462,7 @@ const dotsL = (pts, z, style) => dotsSvg(pts.map((p) => { const w = W(p); return
 const ringL = (c, r, z, steps = 28) => onTop(circleRing(0, 0, r, steps).map(([x, y]) => W([c[0] + x, c[1] + y])), z, VIEW.P, true);
 const wrap = (cls, inner, extra = "") => `<g class="${cls}"${extra}>${inner}</g>`;
 const PLATE = { x: -80, y: -42, w: 160, d: 126, r: 9 };
-const RAIL_W = 56; // the control rail runs along u at this w
+const RAIL_W = 56; // el riel de control corre a lo largo de u en este w
 const STEP_U = (i, max = 4) => -46 + (92 * i) / max;
 
 function gumRing(offOut, offIn) {
@@ -473,7 +473,7 @@ function gumRing(offOut, offIn) {
     outer.push([p[0] + n[0] * offOut, p[1] + n[1] * offOut]);
     inner.push([p[0] - n[0] * offIn, p[1] - n[1] * offIn]);
   }
-  const cap = (th, sign, flip) => { // half circle that closes one end; sign = which way is "out of the arch"
+  const cap = (th, sign, flip) => { // semicírculo que cierra un extremo; sign = hacia dónde queda «fuera del arco»
     const p = archPoint(th), n = archNormal(th), tg = [n[1] * sign, -n[0] * sign], c = [p[0] + n[0] * mid, p[1] + n[1] * mid], pts = [];
     for (let k = 1; k < 10; k++) { const f = (k / 10) * Math.PI, a = flip ? -Math.cos(f) : Math.cos(f); pts.push([c[0] + rr * (n[0] * a + tg[0] * Math.sin(f)), c[1] + rr * (n[1] * a + tg[1] * Math.sin(f))]); }
     return pts;
@@ -481,25 +481,25 @@ function gumRing(offOut, offIn) {
   return [...outer, ...cap(end, 1, false), ...inner.reverse(), ...cap(-end, -1, true)];
 }
 
-// Card variant (service pages): the model on its tabletop base with the control rail, as in B4/B5.
+// Variante de tarjeta (páginas de servicio): el modelo sobre su base de tablero con el riel de control, como en B4/B5.
 function cardStaticSvg() {
   const P = VIEW.P, out = [];
   const plate = plateRing(PLATE.x, PLATE.y, PLATE.w, PLATE.d, PLATE.r);
   out.push(`<path class="iso-halo" d="${slabL(plate, -17, 17).fill}"/>`);
-  // feet
+  // patas
   const feet = [[-66, -30], [66, -30], [-66, 68], [66, 68]].sort((a, b) => depthOf([...W(a), 0], P) - depthOf([...W(b), 0], P));
   for (const f of feet) { const w = W(f); out.push(S(cylinder(w[0], w[1], 7, -17, 1.6, P, 24), { tone: "lo" }), S(cylinder(w[0], w[1], 5.4, -15.4, 3.4, P, 24), { tone: "mid" })); }
   out.push(S(slabL(plate, -12, 12, 0.8), { tone: "mid" }));
   out.push(Ln(onTop(plateRing(PLATE.x + 5, PLATE.y + 5, PLATE.w - 10, PLATE.d - 10, 5).map(W), 0, P, true), { tone: "lo" }));
   const screws = [[-72, -36], [72, -36], [-72, 72], [72, 72]];
   out.push(Ln(screws.map((c) => ringL(c, 2.2, 0, 16)).join(""), { tone: "lo" }), dotsL(screws, 0, { size: 0.5 }));
-  // label plate (back left) with three rules
+  // placa de etiqueta (atrás a la izquierda) con tres rayas
   out.push(S(slabL(plateRing(-20, -38, 40, 12, 1.5, 3), 0, 0.7, 0), { tone: "lo", crease: "none" }));
   out.push(Ln([-1, 0, 1].map((i) => onTop([[-16, -32 + i * 3], [-16 + (i === 1 ? 22 : 30), -32 + i * 3]].map(W), 0.7, P)).join(""), { tone: "lo", free: true }));
-  // gum: moulded base lip, then the ridge the teeth stand on
+  // encía: labio moldeado de la base, luego el reborde donde se apoyan los dientes
   out.push(wrap("gum", S(extrude(gumRing(18.5, 15.5).map(W), 0, 2.2, P, { convex: false, bevel: 0.5 }), { tone: "lo" })));
   out.push(wrap("gum", S(extrude(gumRing(16.5, 13.5).map(W), 2.2, ZG - 2.2, P, { convex: false, bevel: 0.6 }), { tone: "mid", crease: "lo" })));
-  // control rail: channel, two guide rails, end stops, ruler strip
+  // riel de control: canal, dos rieles guía, topes de extremo, tira de regla
   out.push(S(slabL(plateRing(-74, RAIL_W - 7, 148, 14, 3, 4), 0, 2, 0.4), { tone: "mid" }));
   for (const y of [RAIL_W - 4.6, RAIL_W + 2.2]) out.push(S(slabL(plateRing(-70, y, 140, 2.4, 0.8, 3), 2, 2.4, 0.3), { tone: "lo" }));
   for (const x of [-74, 68]) {
@@ -512,22 +512,22 @@ function cardStaticSvg() {
 }
 
 
-// A small clear tray (like a preview of an acrylic mold) that floats; the gum sits in it. No tabletop, no rail.
+// Una bandeja pequeña y transparente (como una vista previa de un molde de acrílico) que flota; la encía va dentro. Sin tablero ni riel.
 function staticSvg() {
   const P = VIEW.P, out = [];
   out.push(wrap("tray", S(extrude(gumRing(25, 22).map(W), -6, 6, P, { convex: false, bevel: 0.8 }), { tone: "hi", crease: "mid" })));
   out.push(Ln(onTop(gumRing(22, 19).map(W), 0, P, true), { tone: "mid" }));
-  // gum: moulded base lip, then the ridge the teeth stand on
+  // encía: labio moldeado de la base, luego el reborde donde se apoyan los dientes
   out.push(wrap("gum", S(extrude(gumRing(18.5, 15.5).map(W), 0, 2.2, P, { convex: false, bevel: 0.5 }), { tone: "lo" })));
   out.push(wrap("gum", S(extrude(gumRing(16.5, 13.5).map(W), 2.2, ZG - 2.2, P, { convex: false, bevel: 0.6 }), { tone: "mid", crease: "lo" })));
   return out.join("");
 }
-// soft shadow far below the tray, so it reads as floating
+// sombra suave muy por debajo de la bandeja, para que se vea flotando
 function floatShadowSvg() {
   return `<path class="brk-shadow" d="${onTop(gumRing(23, 20).map(W), -30, VIEW.P, true)}"/>`;
 }
 
-// the control: a carriage on the rail with a gold knurled knob; drawn at u = 0, moved with a translate
+// el control: un carro sobre el riel con una perilla dorada moleteada; se dibuja en u = 0 y se mueve con un translate
 function carriageSvg() {
   const P = VIEW.P, out = [];
   const c = [0, RAIL_W - 1.2];
@@ -542,12 +542,12 @@ function carriageSvg() {
 }
 const carriageTransform = (t, max = 4) => { const d = STEP_U(Math.min(max, Math.max(0, t)), max); return translateAlong(VIEW.P, [VIEW.RT[0] * d, VIEW.RT[1] * d, 0]); };
 
-// palettes (paper, top, shade 0..3) so a tooth can shift tone: natural, shaped (prepared) tooth, yellowed, light
+// paletas (papel, tapa, sombra 0..3) para que un diente pueda cambiar de tono: natural, diente tallado (preparado), amarillento, claro
 const PAL = { natural: ["#e6e0d1", "#faf6ea", "#aaa593", "#c1bca9", "#d6d0be", "#e9e3d3"], prep: ["#cdb48a", "#e0cba2", "#9a8560", "#ae9870", "#bfa97e", "#cdb48a"], yellow: ["#d8c070", "#ecd98f", "#a28c4a", "#b89f58", "#cdb264", "#dcc272"], light: ["#f2f0e9", "#ffffff", "#c4c1b6", "#d9d6cb", "#e8e5db", "#f4f2ea"] };
 const hex = (s) => [1, 3, 5].map((i) => parseInt(s.slice(i, i + 2), 16));
 const mixPal = (A, B, x) => A.map((c, i) => { const p = hex(c), q = hex(B[i]); return "#" + [0, 1, 2].map((k) => Math.round(p[k] + (q[k] - p[k]) * x).toString(16).padStart(2, "0")).join(""); });
 const palStyle = (p) => `--anatomy-paper:${p[0]};--anatomy-top:${p[1]};--anatomy-shade-0:${p[2]};--anatomy-shade-1:${p[3]};--anatomy-shade-2:${p[4]};--anatomy-shade-3:${p[5]}`;
-// o: trim (0..1 shaped down), lift (z), grow (wider), alpha, pal (palette), gel (0..1 coat)
+// o: trim (0..1 tallado), lift (z), grow (más ancho), alpha, pal (paleta), gel (0..1 capa)
 function toothSvg(tooth, pose, o = {}) {
   const P = VIEW.P, k = tooth.kind, out = [], trim = o.trim || 0, lift = o.lift || 0;
   const tw = (k.tw + (o.grow || 0)) * (1 - 0.26 * trim), td = (k.td + (o.grow || 0)) * (1 - 0.26 * trim), H = k.h * (1 - 0.3 * trim), z0 = ZG + lift;
@@ -580,7 +580,7 @@ function bracketSvg(tooth, pose, land, tie) {
   return html;
 }
 
-// one wire piece: the samples of a segment, cut at the fed length
+// una pieza de alambre: las muestras de un segmento, cortadas a la longitud alimentada
 function wireD(samples, from, to, limit) {
   const pts = [];
   for (let i = from; i <= to && i < samples.length; i++) {
@@ -594,7 +594,7 @@ function wireD(samples, from, to, limit) {
 const wireSvg2 = (d) => (d ? `<path class="wire-d" d="${d}"/><path class="wire-l" d="${d}"/>` : "");
 
 const alphaOf = (v) => (v < 1 ? ` opacity="${v.toFixed(2)}"` : "");
-// implant: socket in the gum, titanium post, abutment, porcelain crown, each one landing in turn
+// implante: alvéolo en la encía, poste de titanio, pilar, corona de porcelana, cada uno se posa por turno
 function implantSvg(tooth, pose, st) {
   const P = VIEW.P, c = W(pose.c), out = [];
   out.push(wrap("socket", S(slabL(frameRing(pose, -3.6, -3.6, 7.2, 7.2, 3.6, 8), ZG - 0.2, 0.3, 0), { tone: "lo", crease: "none" })));
@@ -607,7 +607,7 @@ function implantSvg(tooth, pose, st) {
   if (st.crown > 0.01) out.push(toothSvg(tooth, pose, { lift: (1 - st.crown) * 22, alpha: st.crown }));
   return out.join("");
 }
-// a shaped (prepared) tooth: smaller and a little darker, then the porcelain crown comes down over it
+// un diente tallado (preparado): más pequeño y un poco más oscuro, luego la corona de porcelana baja sobre él
 function crownOver(tooth, pose, prep, show, seat, grow) {
   const stump = toothSvg(tooth, pose, { trim: prep, pal: mixPal(PAL.natural, PAL.prep, prep) });
   return show > 0.01 ? stump + toothSvg(tooth, pose, { lift: (1 - seat) * 24, alpha: show, grow }) : stump;
@@ -634,7 +634,7 @@ function dynSvg(st) {
     items.push({ key: depthOf([w3[0], w3[1], ZG + 6], P), html, i });
   });
   if (wire) {
-    // wire pieces: attach each to the nearer of the two teeth it joins, so it is painted with them
+    // piezas de alambre: se une cada una al más cercano de los dos dientes que une, para pintarla con ellos
     const bySeg = new Map();
     wire.samples.forEach((s, idx) => { if (!bySeg.has(s.seg)) bySeg.set(s.seg, [idx, idx]); bySeg.get(s.seg)[1] = idx; });
     for (const [seg, [from, to]] of bySeg) {
@@ -650,7 +650,7 @@ function dynSvg(st) {
   return order.map((it) => it.html).join("");
 }
 
-// ruler marks for a service with `max` + 1 steps: a long mark at each step, three short ones between
+// marcas de regla para un servicio con `max` + 1 pasos: una marca larga en cada paso, tres cortas entre ellas
 function rulerSvg(max) {
   const P = VIEW.P, minor = [], major = [], n = max * 4;
   for (let i = 0; i <= n; i++) { const u = -46 + (92 * i) / n, big = i % 4 === 0; (big ? major : minor).push(onTop([[u, RAIL_W + 12.3], [u, RAIL_W + 12.3 + (big ? 2.7 : 1.7)]].map(W), 0.7, P)); }

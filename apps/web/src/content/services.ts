@@ -1,9 +1,9 @@
-// Service pages (one per service in clinic.ts). English only. Structure copied from Dental Nakeji's service template
-// (hero: title, subtitle, 3 highlights · about: question title + paragraph · appointment form); the texts are NOT Nakeji's.
-// Source: the official pages https://luminousdentallv.com/<service>/ (checked 2026-11-18); the official site has template leftovers
-// ("Lorem ipsum", another practice's name, a doctor's name, "15% off"), which are NOT copied.
-// `placeholder: true` = the official site has no usable text for part of this page. That part is left OUT (hidden), never filled with
-// stand-in text, until the clinic gives the real one (POR CONFIRMAR, docs/datos.md).
+// Páginas de servicio (una por servicio de clinic.ts). Solo en inglés. Estructura copiada de la plantilla de servicios de Dental Nakeji
+// (portada: título, subtítulo, 3 destacados · acerca de: título en forma de pregunta + párrafo · formulario de cita); los textos NO son de Nakeji.
+// Fuente: las páginas oficiales https://luminousdentallv.com/<service>/ (revisadas el 2026-11-18); el sitio oficial tiene restos de plantilla
+// («Lorem ipsum», el nombre de otra clínica, el nombre de un doctor, «15% off»), que NO se copian.
+// `placeholder: true` = el sitio oficial no tiene texto útil para una parte de esta página. Esa parte se deja FUERA (oculta), nunca se rellena con
+// texto de relleno, hasta que la clínica dé el real (POR CONFIRMAR, docs/datos.md).
 import { clinic, services as clinicServices } from '@/content/clinic'
 
 export type FigureId = 'braces' | 'implants' | 'bridges' | 'crowns' | 'whitening'
@@ -11,15 +11,15 @@ export type IconId = 'tooth' | 'sparkle' | 'braces' | 'child' | 'implant' | 'bri
 
 export interface ServicePage {
   slug: string
-  name: string // same as in clinic.ts
+  name: string // igual que en clinic.ts
   group: string
   icon: IconId
-  figure?: FigureId // the 5 services drawn by the figure
+  figure?: FigureId // los 5 servicios que dibuja la figura
   title: string
-  subtitle: string // '' = none (hidden)
-  highlights: string[] // 0 to 3 points; none = hidden
-  about?: { title: string; text: string } // missing = the "About the treatment" text is hidden
-  blogKey?: string // blog article about this service (content/blog.en.json)
+  subtitle: string // '' = ninguno (oculto)
+  highlights: string[] // de 0 a 3 puntos; ninguno = oculto
+  about?: { title: string; text: string } // si falta, el texto «About the treatment» se oculta
+  blogKey?: string // artículo del blog sobre este servicio (content/blog.en.json)
   placeholder?: boolean
 }
 
@@ -144,13 +144,13 @@ export const serviceText = {
   book: 'Request an appointment',
   call: `Call or text ${clinic.phone.label}`,
   aboutEyebrow: 'About the treatment',
-  noText: 'Call us to learn more about this service.', // NEW, for approval: shown where the official site has no text yet
+  noText: 'Call us to learn more about this service.', // NUEVO, para aprobación: se muestra donde el sitio oficial aún no tiene texto
   blogCta: 'Learn more about this treatment',
   featured: {
     title: 'Featured services',
-    text: 'Some of the treatments we offer at our clinic in Las Vegas.', // NEW (adapted from Dental Nakeji), for approval
+    text: 'Some of the treatments we offer at our clinic in Las Vegas.', // NUEVO (adaptado de Dental Nakeji), para aprobación
     cta: 'View all services',
-    // NEW, for approval: short names of the 5 tabs under the carousel, same order as featuredNames
+    // NUEVO, para aprobación: nombres cortos de las 5 pestañas bajo el carrusel, en el mismo orden que featuredNames
     tabs: ['Braces & Invisalign', 'Implants', 'Dentures & bridges', 'Veneers & crowns', 'Whitening'],
     card: 'View service',
     carousel: 'Featured services',
@@ -164,5 +164,5 @@ export const serviceText = {
   },
 } as const
 
-/** The five services of the home's "Featured services" section, in this order (names as in clinic.ts). Each has its own figure. */
+/** Los cinco servicios de la sección «Featured services» de la home, en este orden (nombres como en clinic.ts). Cada uno tiene su propia figura. */
 export const featuredNames = ['Invisalign & Braces', 'Dental Implants', 'Dentures & Bridges', 'Porcelain Veneers & Crowns', 'Teeth Whitening'] as const

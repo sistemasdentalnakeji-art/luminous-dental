@@ -1,6 +1,6 @@
-// Service page, same sections in the same order as Dental Nakeji's template:
-// 1. Hero (breadcrumb, title, subtitle, 3 points, buttons) · 2. About the treatment (question title, paragraph, blog button,
-// and on the right the figure of that service when it has one; no figure = no empty box) · 3. Appointment form with the service chosen.
+// Página de servicio, las mismas secciones en el mismo orden que la plantilla de Dental Nakeji:
+// 1. Hero (migas de pan, título, subtítulo, 3 puntos, botones) · 2. Sobre el tratamiento (título en forma de pregunta, párrafo, botón al blog,
+// y a la derecha la figura de ese servicio si la tiene; sin figura = sin caja vacía) · 3. Formulario de cita con el servicio elegido.
 import { lazy, Suspense } from 'react'
 import { Appointment } from '@/components/Appointment'
 import { Icon } from '@/components/Icon'

@@ -1,23 +1,23 @@
-// Home page text for Luminous Dental. English only. Data only: no components, no styles.
-// Rule: every fact comes from https://luminousdentallv.com (checked 2026-11-17) or says POR CONFIRMAR.
-// Not shown on purpose: opening hours, Google rating, prices, offers, "40 years", "top-rated", "free consultation".
+// Texto de la página de inicio de Luminous Dental. Solo en inglés. Solo datos: sin componentes ni estilos.
+// Regla: cada dato viene de https://luminousdentallv.com (revisado el 2026-11-17) o dice POR CONFIRMAR.
+// No se muestra a propósito: horario, calificación de Google, precios, ofertas, «40 years», «top-rated», «free consultation».
 
 import { clinic } from '@/content/clinic'
 
-const tel = clinic.phone.label // the one place the number is written (content/clinic.ts)
+const tel = clinic.phone.label // el único lugar donde se escribe el número (content/clinic.ts)
 const callPhone = { label: `Call or text ${tel}`, href: clinic.phone.href }
 
 export const home = {
   seo: {
-    title: 'Luminous Dental | General & Cosmetic Dentist in Las Vegas', // 57 characters
+    title: 'Luminous Dental | General & Cosmetic Dentist in Las Vegas', // 57 caracteres
     description:
-      "Luminous Dental in Las Vegas: general, cosmetic, orthodontic and children's dental care with Dr. Christian Hahn. Request an appointment today.", // 142 characters
+      "Luminous Dental in Las Vegas: general, cosmetic, orthodontic and children's dental care with Dr. Christian Hahn. Request an appointment today.", // 142 caracteres
   },
 
-  // 1. Header and menu
+  // 1. Encabezado y menú
   header: {
     skipLink: 'Skip to main content',
-    // Same order as the Dental Nakeji menu (same owner). "Services" opens a panel with every service.
+    // Mismo orden que el menú de Dental Nakeji (mismo dueño). «Services» abre un panel con todos los servicios.
     nav: [
       { label: 'Home', href: '/' },
       { label: 'Services', href: '/services', menu: true },
@@ -31,19 +31,21 @@ export const home = {
     phone: callPhone,
   },
 
-  // 2. Hero
+  // 2. Portada (hero)
   hero: {
-    headline: 'Your teeth should last a lifetime',
-    emphasis: 'last a lifetime', // the part of the headline shown in italic gold
-    support:
-      // NEW, for approval (docs/mejoras-1-plan.md 1.2): the doctor's name leaves the headline; the first sentence no longer repeats "We help you keep your own teeth".
-      'Keeping your natural teeth for as long as possible is our priority. Our team cares for the whole family in Las Vegas.',
-    primaryCta: { label: 'Request an appointment', href: '#appointment' },
+    // CAMBIO PEDIDO POR LA DUEÑA (20-11-2026): titular del archivo «Luminous Dental - Smile Makeover.html». Reemplaza al aprobado en «Sí 1»
+    // («Your teeth should last a lifetime»); el dueño lo debe confirmar. Si no lo confirma, volver a ese titular.
+    pill: 'Smile makeovers · Las Vegas',
+    lines: ['A smile that', 'feels more'], // primeras líneas del titular
+    emphasis: 'like you.', // última línea, en cursiva con el color de acento
+    support: 'Explore the possibilities for color, shape and balance, with a smile plan built around you.',
+    primaryCta: { label: 'Book an in-office consultation', href: '#appointment' },
     secondaryCta: callPhone,
-    image: { src: null, alt: 'POR CONFIRMAR: real photo of the clinic or Dr. Hahn' },
+    // POR CONFIRMAR: «Free virtual consultation» (no existe en docs/datos.md ni en clinic.ts) y el texto «start the conversation from home». No se muestran.
+    more: { label: 'See the thinking behind a makeover', href: '#doctor' },
   },
 
-  // 3. Services in 4 groups
+  // 3. Servicios en 4 grupos
   services: {
     heading: 'Dental care for the whole family',
     groups: [
@@ -71,7 +73,7 @@ export const home = {
     cta: { label: 'See all services', href: '/services' },
   },
 
-  // 4. Why Luminous
+  // 4. Por qué Luminous
   why: {
     heading: 'Why patients choose Luminous Dental',
     points: [
@@ -87,7 +89,7 @@ export const home = {
         title: 'One office for the whole family',
         text: 'General, cosmetic, orthodontic and pediatric care in the same place, so everyone at home can see the same team.',
       },
-      // Left out until the clinic confirms it (docs/datos.md): "We work with most private dental insurance".
+      // Se omite hasta que la clínica lo confirme (docs/datos.md): «We work with most private dental insurance».
     ],
   },
 
@@ -96,27 +98,27 @@ export const home = {
     heading: 'Meet Dr. Christian Hahn',
     role: 'General Dentist',
     name: 'Dr. Christian Hahn',
-    // NEW, for approval: starts with "He is" so the name is not repeated under the title (About page only).
+    // NUEVO, para aprobación: empieza con «He is» para no repetir el nombre bajo el título (solo en la página About).
     text: 'He is a general dentist with 4 years of experience. He completed his dental training at the University of Nevada, Las Vegas. He is committed to delivering quality care and a comfortable experience for his patients.',
     language: 'Language: English',
     photo: { src: null, alt: 'POR CONFIRMAR: photo of Dr. Hahn (the official site has one; confirm permission and quality)' },
-    // NEW, for approval: caption under the ring on the home page (the photo is the ring's center) and link to About.
+    // NUEVO, para aprobación: pie de foto bajo el anillo en la home (la foto es el centro del anillo) y enlace a About.
     meet: { label: 'Meet the doctor', href: '/about' },
     photoAlt: 'Dr. Christian Hahn, general dentist, in a white coat',
   },
 
-  // 6. Smile change (a section, no cases and no promises)
+  // 6. Cambio de sonrisa (una sección, sin casos y sin promesas)
   smile: {
     heading: 'Thinking about changing your smile?',
     text: 'Veneers, crowns, bonding, whitening and implants can change the color, shape or fit of your teeth. Tell us what bothers you, and we will talk through the options that fit your teeth and your goals.',
     cta: { label: 'Request an appointment', href: '#appointment' },
-    more: { label: 'See cosmetic dentistry', href: '/services#cosmetic' }, // NEW, for approval
+    more: { label: 'See cosmetic dentistry', href: '/services#cosmetic' }, // NUEVO, para aprobación
     disclaimer: 'Individual results vary.',
-    // POR CONFIRMAR: no before/after photos or patient stories until the clinic has written permission.
+    // POR CONFIRMAR: sin fotos de antes y después ni historias de pacientes hasta que la clínica dé permiso por escrito.
     gallery: null,
   },
 
-  // 7. Reviews (no rating shown; POR CONFIRMAR permission to publish each one)
+  // 7. Reseñas (sin calificación; POR CONFIRMAR el permiso para publicar cada una)
   reviews: {
     heading: 'What our patients say',
     note: 'POR CONFIRMAR permission: each quote is public on the official site; the clinic must approve using it here.',
@@ -140,11 +142,11 @@ export const home = {
     cta: { label: 'Read more patient reviews', href: '/patient-reviews' },
   },
 
-  // 8. Insurance and patients from out of town
+  // 8. Seguros y pacientes de fuera de la ciudad
   coverage: {
     insurance: {
       heading: 'Insurance',
-      // NEW, for approval. Replaces "We work with most private dental insurance" (not confirmed by the clinic). Promises nothing about plans or financing.
+      // NUEVO, para aprobación. Reemplaza «We work with most private dental insurance» (la clínica no lo ha confirmado). No promete nada sobre planes ni financiamiento.
       text: 'Questions about insurance or payment? Ask our team.',
       cta: { label: 'See insurance and financing', href: '/insurance-financing' },
     },
@@ -158,7 +160,7 @@ export const home = {
     },
   },
 
-  // 9. Request an appointment
+  // 9. Solicitar una cita
   appointment: {
     id: 'appointment',
     heading: 'Request an appointment',
@@ -170,28 +172,31 @@ export const home = {
       sending: 'Sending your request...',
       success: `Thank you. We received your request and will contact you to set a time. For anything urgent, call or text ${tel}.`,
       preview: `This form is not connected yet, so your request was not sent. Please call or text ${tel} to book.`,
-      error: `Something went wrong and your request was not sent. Please call or text ${tel}.`, // server down or no answer
-      // NEW, for approval: one message per kind of failure.
+      error: `Something went wrong and your request was not sent. Please call or text ${tel}.`, // servidor caído o sin respuesta
+      // NUEVO, para aprobación: un mensaje por tipo de falla.
       errorInvalid: `We could not accept some of the details. Please check the form, or call or text ${tel}.`,
       errorBusy: `Too many requests right now. Please wait a few minutes and try again, or call or text ${tel}.`,
       missingFields: 'Please complete the highlighted fields.',
     },
-    // Per-field messages (written by the designer in B5, not from the official site).
+    // Mensajes por campo (escritos por el diseñador en B5, no vienen del sitio oficial).
     errors: {
-      firstName: 'Enter your first name.',
-      lastName: 'Enter your last name.',
-      phone: 'Enter a phone number.',
-      phoneFormat: `Enter a phone number with at least 7 digits, like ${tel}.`, // NEW, for approval
+      firstName: 'Enter your first name (letters only, at least 2).',
+      lastName: 'Enter your last name (letters only, at least 2).',
+      phone: `Enter your phone number, like ${tel}.`,
+      phoneFormat: `Enter a 10-digit US phone number, like ${tel}.`,
       email: 'Enter a valid email, like name@example.com.',
       treatment: 'Choose a treatment.',
+      message: 'Please remove web links from this field.',
       consent: 'Check the box so we can contact you about this request.',
     },
     location: { heading: 'Visit us', address: '1212 S Maryland Pkwy, Las Vegas, NV 89104', mapLabel: 'Open in Google Maps' },
   },
 
-  // 10. Footer
+  // 10. Pie de página
   footer: {
     tagline: 'Your teeth should last a lifetime.',
+    // Franja de cierre arriba del pie; el botón de cita usa header.cta.label.
+    closing: { title: 'Ready for a smile that lasts?', callLabel: 'Call or text' },
     contactHeading: 'Contact',
     address: '1212 S Maryland Pkwy, Las Vegas, NV 89104',
     phone: callPhone,
@@ -200,9 +205,9 @@ export const home = {
       { label: 'Instagram', href: 'https://www.instagram.com/luminousdentalvegas' },
       { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61554688456073' },
     ],
-    // Columns like the Dental Nakeji footer. Privacy Policy and Terms join when their pages have real content (docs/datos.md).
+    // Columnas como el pie de Dental Nakeji. Privacy Policy y Terms se suman cuando sus páginas tengan contenido real (docs/datos.md).
     servicesHeading: 'Services',
-    services: ['Porcelain Veneers & Crowns', 'Dental Implants', 'Invisalign & Braces', 'Teeth Whitening'], // names from clinic.ts
+    services: ['Porcelain Veneers & Crowns', 'Dental Implants', 'Invisalign & Braces', 'Teeth Whitening'], // nombres de clinic.ts
     clinicHeading: 'Clinic',
     links: [
       { label: 'Home', href: '/' },
@@ -212,48 +217,48 @@ export const home = {
       { label: 'Blog', href: '/blog' },
       { label: 'Request an appointment', href: '#appointment' },
     ],
-    legal: 'Luminous Dental, Las Vegas. All rights reserved.', // the component adds the year
+    legal: 'Luminous Dental, Las Vegas. All rights reserved.', // el componente agrega el año
     note: 'Individual results vary.',
-    // NEW, for approval: stops every decorative animation on the page (WCAG 2.2.2).
+    // NUEVO, para aprobación: detiene toda animación decorativa de la página (WCAG 2.2.2).
     motion: { pause: 'Pause decorative animations', play: 'Play decorative animations' },
   },
 } as const
 
 /*
- * SOURCES: which phrase came from which official page (luminousdentallv.com, checked 2026-11-17)
+ * FUENTES: qué frase salió de qué página oficial (luminousdentallv.com, revisado el 2026-11-17)
  *
- * Approved by the owner (docs/decisiones.md, "Sí 1"): headline "Your teeth should last a lifetime"; single button
- *   "Request an appointment"; "Call or text (702) 805-8688".
- * Home (/) footer and hero: "Your teeth should last a lifetime." / "Nothing can truly replace the function of your
- *   natural teeth, so preserving them for as long as possible is our priority." -> hero.support, why.points[0], footer.tagline.
- *   Contact block "Request an Appointment Today"; SAHARA block "Coming from out of town?" / "...partnered with SAHARA Las Vegas
- *   to offer exclusive benefits for our patients." -> coverage.outOfTown.
- * Home (/) services blocks: "Comprehensive dental care for the whole family." "From routine checkups and professional cleanings
- *   to fillings and preventive treatments, we help keep your smile healthy at every stage of life." -> services.groups[0].
- *   "Achieve a straighter, healthier smile... improve your smile, bite, and confidence... for children, teens, and adults."
- *   -> services.groups[2] (orthodontics text is POR CONFIRMAR in the mapa; the official page for it is missing).
- *   "Gentle dental care designed for children... exams, cleanings, and education" -> services.groups[3].
- *   Whitening, veneers ("natural-looking veneers"), bonding, crowns and implants -> services.groups[1] and smile.text
- *   (also /porcelain-veneers-crowns/, /cosmetic-bonding/, /dental-implants/, /teeth-whitening/ as listed in clinic.ts).
- * /about-us/: "Our team is dedicated to providing personalized, comfortable, and high-quality dental care for every patient."
- *   -> why.points[1]. "Nothing can truly replace..." -> why.points[0].
- * /insurance-financing/: "Our providers are affiliated with most private dental insurance, including:" -> why.points[3],
- *   coverage.insurance. The "confirm your coverage" advice comes from docs/mapa-de-paginas.md (not from the official page).
- * Home (/) team block and clinic.ts doctor.bio: "Dr. Christian Hahn is a general dentist with 4 years of experience. He completed
+ * Aprobado por el dueño (docs/decisiones.md, «Sí 1»): titular «Your teeth should last a lifetime»; un solo botón
+ *   «Request an appointment»; «Call or text (702) 805-8688».
+ * Home (/), pie y portada: «Your teeth should last a lifetime.» / «Nothing can truly replace the function of your
+ *   natural teeth, so preserving them for as long as possible is our priority.» -> hero.support, why.points[0], footer.tagline.
+ *   Bloque de contacto «Request an Appointment Today»; bloque SAHARA «Coming from out of town?» / «...partnered with SAHARA Las Vegas
+ *   to offer exclusive benefits for our patients.» -> coverage.outOfTown.
+ * Bloques de servicios de la home (/): «Comprehensive dental care for the whole family.» «From routine checkups and professional cleanings
+ *   to fillings and preventive treatments, we help keep your smile healthy at every stage of life.» -> services.groups[0].
+ *   «Achieve a straighter, healthier smile... improve your smile, bite, and confidence... for children, teens, and adults.»
+ *   -> services.groups[2] (el texto de ortodoncia es POR CONFIRMAR en el mapa; falta la página oficial).
+ *   «Gentle dental care designed for children... exams, cleanings, and education» -> services.groups[3].
+ *   Blanqueamiento, carillas («natural-looking veneers»), resinas, coronas e implantes -> services.groups[1] y smile.text
+ *   (también /porcelain-veneers-crowns/, /cosmetic-bonding/, /dental-implants/, /teeth-whitening/ como figuran en clinic.ts).
+ * /about-us/: «Our team is dedicated to providing personalized, comfortable, and high-quality dental care for every patient.»
+ *   -> why.points[1]. «Nothing can truly replace...» -> why.points[0].
+ * /insurance-financing/: «Our providers are affiliated with most private dental insurance, including:» -> why.points[3],
+ *   coverage.insurance. El consejo «confirm your coverage» sale de docs/mapa-de-paginas.md (no de la página oficial).
+ * Bloque del equipo de la home (/) y clinic.ts doctor.bio: «Dr. Christian Hahn is a general dentist with 4 years of experience. He completed
  *   his dental training at the University of Nevada, Las Vegas... committed to delivering quality care and ensuring a comfortable
- *   experience for his patients." "Language: English." -> doctor.
- * Reviews (Home, Google reviews widget): Ana Bravo "Amazing dental office amazing staff."; Sandra Paredes "The staff and the specialist
- *   is all professional and very friendly." /about-us/: Ashok Redkar "Dr Christian, Joshua and Anna have done a great job and made us
- *   feel very happy and satisfied." Quoted word for word (including "Dr" without the period). Names shortened to first name + initial.
- *   All POR CONFIRMAR permission.
- * Footer: address, phone, email, Instagram, Facebook from clinic.ts (home, menu, footer and /contact-us/).
+ *   experience for his patients.» «Language: English.» -> doctor.
+ * Reseñas (Home, widget de reseñas de Google): Ana Bravo «Amazing dental office amazing staff.»; Sandra Paredes «The staff and the specialist
+ *   is all professional and very friendly.» /about-us/: Ashok Redkar «Dr Christian, Joshua and Anna have done a great job and made us
+ *   feel very happy and satisfied.» Citadas palabra por palabra (incluido «Dr» sin punto). Nombres acortados a nombre + inicial.
+ *   Todas con permiso POR CONFIRMAR.
+ * Pie de página: dirección, teléfono, correo, Instagram y Facebook de clinic.ts (home, menú, pie y /contact-us/).
  *
- * Written by the team, NOT on the official site (needs the clinic's OK):
- *   hero.support second sentence ("Dr. Christian Hahn and our team care for the whole family in Las Vegas"),
- *   why.points[2] text ("same team"), smile.text ("we will talk through the options..."), appointment.intro and messages
- *   ("will follow up", "will contact you"; the follow-up process is POR CONFIRMAR), services.groups[2].line ("Invisalign and braces").
+ * Escrito por el equipo, NO está en el sitio oficial (necesita el visto bueno de la clínica):
+ *   hero.support segunda frase («Dr. Christian Hahn and our team care for the whole family in Las Vegas»),
+ *   why.points[2] texto («same team»), smile.text («we will talk through the options...»), appointment.intro y mensajes
+ *   («will follow up», «will contact you»; el proceso de seguimiento es POR CONFIRMAR), services.groups[2].line («Invisalign and braces»).
  *
- * Left out on purpose: "TOP-RATED", "over 40 years", "free consultation", ADIT, "Implants 15% off", "most advanced technology",
- *   "Transform your smile", Google rating, hours, prices, photos, cases, the insurance name list (the official spelling has
- *   mistakes and "Principle" needs checking), the phone (725) 291-5588.
+ * Omitido a propósito: «TOP-RATED», «over 40 years», «free consultation», ADIT, «Implants 15% off», «most advanced technology»,
+ *   «Transform your smile», calificación de Google, horario, precios, fotos, casos, la lista de nombres de seguros (la ortografía oficial tiene
+ *   errores y «Principle» hay que revisarlo), el teléfono (725) 291-5588.
  */

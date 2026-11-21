@@ -4,7 +4,7 @@ import { BookingForm } from '@/features/booking/BookingForm'
 
 const { heading, intro, location } = home.appointment
 
-/** `hideVisit`: leaves out the address block, for the page that already shows it (Contact). */
+/** `hideVisit`: omite el bloque de la dirección, para la página que ya lo muestra (Contact). */
 export function Appointment({ service, hideVisit = false }: { service?: string; hideVisit?: boolean }) {
   return (
     <section className="wrap appt-sec" id={home.appointment.id} aria-labelledby="appt-h">

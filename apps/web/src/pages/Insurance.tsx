@@ -1,37 +1,59 @@
-// Insurance & Financing, same structure as Dental Nakeji's insurance page (eyebrow, title, lead, 3-step card, board of logos), adapted to
-// Luminous: the button asks for an appointment (the form is on this page), no WhatsApp, no "Back to Benefits". SAHARA card goes under the board.
+// Insurance & Financing, «El camino» (docs/diseno-aseguranzas-fuentes.md): una lista ordenada de 3 pasos unidos por una línea celeste.
+// Paso 1 = buscador + muro de logos (components/InsurancePlans.tsx), paso 2 = el equipo lo revisa, paso 3 = pedir cita. Sin WhatsApp.
+// La barra fija «Request / Call» del celular ya existe en todo el sitio (ActionBar de Layout.tsx); aquí no se repite.
 import { Appointment } from '@/components/Appointment'
-import { InsuranceGrid } from '@/components/InsuranceGrid'
+import { InsurancePlans } from '@/components/InsurancePlans'
 import { clinic } from '@/content/clinic'
 import { home } from '@/content/home'
 import { insuranceText as T } from '@/content/insurers'
 
 const { outOfTown } = home.coverage
 
+function Actions() {
+  return (
+    <div className="ins-actions">
+      <a className="btn" href="#appointment">{T.book}</a>
+      <a className="tlink" href={clinic.phone.href}>{home.footer.phone.label}</a>
+    </div>
+  )
+}
+
 export default function Insurance() {
   return (
     <>
       <section className="sec wrap pg" aria-labelledby="ins-h">
         <div className="ins-head">
-          <div>
-            <p className="pill">{T.eyebrow}</p>
-            <h1 className="h2" id="ins-h">{T.title}</h1>
-            <p className="ins-lead">{T.lead}</p>
-          </div>
-          <div className="ins-steps-card">
-            <ol className="ins-steps">{T.steps.map((s) => <li key={s}>{s}</li>)}</ol>
-            <div className="ins-actions">
-              <a className="btn" href="#appointment">{T.book}</a>
-              <a className="tlink" href={clinic.phone.href}>{home.footer.phone.label}</a>
-            </div>
-          </div>
+          <p className="pill">{T.eyebrow}</p>
+          <h1 className="h2" id="ins-h">{T.title}</h1>
+          <p className="ins-lead">{T.lead}</p>
+          <Actions />
         </div>
-        <section className="insurers" aria-labelledby="ins-grid-h">
-          <h2 className="insurers__title" id="ins-grid-h">{T.gridTitle}</h2>
-          <InsuranceGrid />
-          <p className="insurers__note">{T.note}</p>
-          <p className="ins-pay">{T.payment}</p>
-        </section>
+        <ol className="ins-path">
+          <li className="ins-step">
+            <span className="ins-dot" aria-hidden="true">1</span>
+            <div>
+              <h2 id="ins-grid-h">{T.steps[0]}</h2>
+              <InsurancePlans />
+              <p className="ins-small">{T.note}</p>
+            </div>
+          </li>
+          <li className="ins-step">
+            <span className="ins-dot" aria-hidden="true">2</span>
+            <div>
+              <h2>{T.steps[1]}</h2>
+              <p className="ins-text">{T.step2}</p>
+              <p className="ins-small">{T.payment}</p>
+            </div>
+          </li>
+          <li className="ins-step">
+            <span className="ins-dot" aria-hidden="true">3</span>
+            <div>
+              <h2>{T.steps[2]}</h2>
+              <p className="ins-text">{T.step3}</p>
+              <Actions />
+            </div>
+          </li>
+        </ol>
         <div className="cov-out ins-sahara">
           <h2>{outOfTown.heading}</h2>
           <p>{outOfTown.text}</p>

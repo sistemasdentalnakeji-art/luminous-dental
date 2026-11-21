@@ -9,13 +9,13 @@ export type { ServiceId }
 const fill = (s: string, v: Record<string, string | number>) => s.replace(/\{(\w+)\}/g, (_, k) => String(v[k]))
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
 
-/** The service-page card: title, model on its tabletop with the gold knob, step name, buttons 1-N, Pause/Play, note. */
+/** La tarjeta de la página de servicio: título, modelo sobre su tablero con la perilla dorada, nombre del paso, botones 1-N, Pausa/Reproducir y nota. */
 function cardHtml(uid: string, only: ServiceId) {
   const { P, height } = projection(true)
   setView(P)
   const idx = indexOf(only)
   const sv = services[idx], last = sv.steps.length - 1
-  // The first picture is the last step of the service, so the figure never shows up empty.
+  // La primera imagen es el último paso del servicio, así la figura nunca aparece vacía.
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" class="iso-svg" viewBox="0 0 ${WIDTH} ${height}" aria-hidden="true" focusable="false"><g data-static>${cardStaticSvg()}</g><g data-ruler>${rulerSvg(last)}</g><g data-dyn>${dynSvg(sceneState(idx, last))}</g><g data-car transform="${carriageTransform(last, last)}">${carriageSvg()}</g></svg>`
   const stepOf = fill(T.stepOf, { n: last + 1, total: last + 1 })
   return `<div class="brk-card brk-card--box">
@@ -30,14 +30,14 @@ function cardHtml(uid: string, only: ServiceId) {
 </div>`
 }
 
-/** The step-by-step figure of one service, for its service page. */
+/** La figura paso a paso de un servicio, para su página de servicio. */
 export default function Figure({ only }: { only: ServiceId }) {
   const ref = useRef<HTMLElement>(null)
   const uid = 'fig' + useId().replace(/:/g, '')
   useEffect(() => {
     const host = ref.current
     if (!host) return
-    host.innerHTML = cardHtml(uid, only) // rebuilt on every mount, so a StrictMode remount never doubles the listeners
+    host.innerHTML = cardHtml(uid, only) // se reconstruye en cada montaje, así un remontaje de StrictMode nunca duplica los listeners
     host.dataset.only = only
     const txt = {
       play: T.play,

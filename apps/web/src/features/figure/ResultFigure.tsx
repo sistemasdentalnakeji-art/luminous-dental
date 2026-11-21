@@ -5,20 +5,20 @@ import { useMotionPaused } from '@/lib/motion'
 import { type ServiceId, indexOf, projection, resultSvg, services } from './scene'
 import './figure.css'
 
-const DWELL = 1.8 // seconds on each step
-const DWELL_LAST = 3.2 // seconds on the finished result
+const DWELL = 1.8 // segundos en cada paso
+const DWELL_LAST = 3.2 // segundos en el resultado terminado
 
 /**
- * One service floating on its transparent mold, playing its whole animation in a loop (every step, from the start to the result),
- * with no step controls and no card. It only runs while it is on screen (and, in a carousel, while its slide is the one in view);
- * with reduced motion it stays still on the final step. A Pause/Play button stops the loop (WCAG 2.2.2).
+ * Un servicio flotando sobre su molde transparente, que reproduce toda su animación en bucle (cada paso, del inicio al resultado),
+ * sin controles de pasos y sin tarjeta. Solo corre mientras está en pantalla (y, en un carrusel, mientras su diapositiva es la visible);
+ * con movimiento reducido se queda quieta en el último paso. Un botón Pausa/Reproducir detiene el bucle (WCAG 2.2.2).
  */
 export default function ResultFigure({ id, name }: { id: ServiceId; name: string }) {
   const ref = useRef<HTMLDivElement>(null)
   const [paused, setPaused] = useState(false)
   const pausedRef = useRef(false)
   const allPaused = useMotionPaused()
-  useEffect(() => { pausedRef.current = paused || allPaused }, [paused, allPaused]) // read by the animation loop; not written while drawing
+  useEffect(() => { pausedRef.current = paused || allPaused }, [paused, allPaused]) // lo lee el bucle de animación; no se escribe mientras se dibuja
   const [still, setStill] = useState(false)
 
   useEffect(() => {
@@ -43,12 +43,12 @@ export default function ResultFigure({ id, name }: { id: ServiceId; name: string
     const P = projection(false).P
     let t = last, clock = 0, prev = 0, frame = 0, visible = false
     const draw = () => {
-      setView(P) // the engine keeps one camera; every figure of the home uses this one
+      setView(P) // el motor tiene una sola cámara; todas las figuras de la home usan esta
       dyn.innerHTML = dynSvg(sceneState(idx, t))
     }
     const tick = (now: number) => {
       frame = requestAnimationFrame(tick)
-      if (now - prev < 33) return // about 30 fps is plenty for a calm figure
+      if (now - prev < 33) return // unos 30 fps bastan para una figura tranquila
       const dt = prev ? Math.min((now - prev) / 1000, 0.1) : 0
       prev = now
       if (pausedRef.current) return
@@ -84,7 +84,7 @@ export default function ResultFigure({ id, name }: { id: ServiceId; name: string
         else {
           stop()
           t = last
-          draw() // out of sight it rests on the result
+          draw() // fuera de vista descansa en el resultado
         }
       },
       { threshold: 0.5 },
