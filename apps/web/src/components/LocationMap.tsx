@@ -14,8 +14,6 @@ import { Icon } from '@/components/Icon'
 import { LABELS, MAP_VIEW, PARKS, PIN, ROADS } from '@/content/locationMap'
 import { locationText } from '@/content/location'
 
-/** Espera (ms) desde que la sección es visible hasta que la tarjeta se abre sola. */
-const OPEN_DELAY = 2000
 
 interface LocationMapProps {
   name: string
@@ -73,44 +71,12 @@ export function LocationMap({ name }: LocationMapProps) {
   const [expanded, setExpanded] = useState(false)
   const stageRef = useRef<HTMLDivElement>(null)
   const toggleRef = useRef<HTMLButtonElement>(null)
-  const timerRef = useRef<number | undefined>(undefined)
   const expandedRef = useRef(false)
   const hotRef = useRef(false) // cursor o foco de teclado sobre la ficha: gira más rápido
   const visibleRef = useRef(false)
   const wasOpenRef = useRef(false)
   const resumeRef = useRef(0) // después de cerrar, la moneda queda quieta y de frente hasta este momento (ms, performance.now)
   const movedRef = useRef(false) // el último gesto sobre la ficha fue un arrastre (no un toque)
-  const manualRef = useRef(false) // la persona la abrió o cerró a mano: no se automatiza hasta que salga de la zona
-
-  // Automática: al llegar a la sección (≥ 35 % visible) espera OPEN_DELAY y se abre; al salir de la zona (< 35 %) se cierra.
-  // Se repite cada vez que se vuelve a entrar, salvo que la persona la haya usado a mano mientras estaba en la zona.
-  useEffect(() => {
-    const stage = stageRef.current
-    if (!stage || typeof IntersectionObserver === 'undefined') return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        window.clearTimeout(timerRef.current)
-        if (entry.intersectionRatio >= 0.35) {
-          if (manualRef.current) return
-          timerRef.current = window.setTimeout(() => {
-            // Si la persona ya está con el foco dentro, no se le mueve nada.
-            // Solo el foco de teclado lo frena: tras un clic con el mouse el botón queda enfocado y nunca volvería a abrirse solo.
-            if (stage.querySelector(':focus-visible')) return
-            setExpanded(true)
-          }, OPEN_DELAY)
-        } else {
-          manualRef.current = false
-          setExpanded(false)
-        }
-      },
-      { threshold: 0.35 },
-    )
-    observer.observe(stage)
-    return () => {
-      observer.disconnect()
-      window.clearTimeout(timerRef.current)
-    }
-  }, [])
 
   // La moneda gira moviendo --loc-spin (30°/s, 75°/s con el cursor o el foco, suavizado). Quieta con movimiento reducido y con
   // "Pause decorative animations"; de frente mientras está abierta. Es una moneda 3D real: dos caras y una pila de discos para el canto.
@@ -241,14 +207,11 @@ export function LocationMap({ name }: LocationMapProps) {
 
   const toggle = () => {
     if (movedRef.current) { movedRef.current = false; return } // fue un arrastre: no abre
-    manualRef.current = true
-    window.clearTimeout(timerRef.current)
     setExpanded((value) => !value)
   }
 
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key !== 'Escape' || !expanded) return
-    manualRef.current = true
     setExpanded(false)
     toggleRef.current?.focus() // el foco no se pierde: la capa de información queda inerte
   }

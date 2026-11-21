@@ -1,6 +1,7 @@
 import type { AppointmentRequest } from '@luminous/types'
 import { services } from '@/content/clinic'
 import { home } from '@/content/home'
+import { checkSlot } from '@/config/schedule'
 
 /**
  * A dónde envía las solicitudes el formulario de citas.
@@ -23,7 +24,7 @@ export class BookingError extends Error {
 // --- Reglas de los campos (las usan el formulario y el armado del envío; el navegador nunca es la única defensa) ---
 
 /** Texto más largo aceptado por campo. */
-export const MAX = { firstName: 60, lastName: 60, phone: 14, email: 254, preferredTime: 100, message: 1000 }
+export const MAX = { firstName: 60, lastName: 60, phone: 14, email: 254, preferredDate: 10, preferredTime: 5, message: 1000 }
 /** Caracteres de nombre permitidos al teclear o pegar: letras (con acentos), espacio, guion y apóstrofo. */
 export const NAME_JUNK = /[^\p{L}\p{M} '’-]/gu
 /** Nombre completo válido: empieza y termina en letra; cada separador va seguido de letra (O'Brien, Mary-Jane, Ana María). */
@@ -34,7 +35,7 @@ const LINK = /https?:\/\/|www\./i
 const CONTROL = /[\u0000-\u0008\u000b-\u001f\u007f]/g
 
 /** Deja solo los 10 dígitos de un teléfono de EE. UU. (quita un 1 inicial: ningún código de área empieza con 1). */
-export const phoneDigits = (v: string) => v.replace(/\D/g, '').replace(/^1/, '').slice(0, 10)
+export const phoneDigits = (v: string) => { const d = v.replace(/[^0-9]/g, ''); return (d.length > 10 && d[0] === '1' ? d.slice(1) : d).slice(0, 10) } // el 1 de país solo se quita con 11 dígitos
 /** (702) 555-0123, mientras se escribe también a medias. */
 export function formatPhone(v: string) {
   const d = phoneDigits(v)
@@ -42,7 +43,7 @@ export function formatPhone(v: string) {
   return d.length <= 6 ? `(${d.slice(0, 3)}) ${d.slice(3)}` : `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`
 }
 
-type Field = 'firstName' | 'lastName' | 'phone' | 'email' | 'treatment' | 'message' | 'preferredTime' | 'consent'
+type Field = 'firstName' | 'lastName' | 'phone' | 'email' | 'treatment' | 'message' | 'preferredDate' | 'preferredTime' | 'consent'
 export type AppointmentErrors = Partial<Record<Field, string>>
 
 const msg = home.appointment.errors
@@ -58,7 +59,8 @@ export function checkAppointment(raw: AppointmentRequest): { clean: AppointmentR
     phone: formatPhone(String(raw.phone ?? '')),
     treatment: tidy(raw.treatment, 100),
     message,
-    preferredTime: tidy(raw.preferredTime, MAX.preferredTime) || undefined,
+    preferredDate: tidy(raw.preferredDate, MAX.preferredDate),
+    preferredTime: tidy(raw.preferredTime, MAX.preferredTime),
     consent: raw.consent === true,
     source: 'website',
   }
@@ -70,7 +72,9 @@ export function checkAppointment(raw: AppointmentRequest): { clean: AppointmentR
   if (!EMAIL_OK.test(clean.email)) errors.email = msg.email
   if (!clean.treatment || (clean.treatment !== 'Not sure yet' && !services.some((s) => s.name === clean.treatment))) errors.treatment = msg.treatment
   if (LINK.test(clean.message)) errors.message = msg.message
-  if (clean.preferredTime && LINK.test(clean.preferredTime)) errors.preferredTime = msg.message
+  // Fecha y hora: dentro del rango, día abierto y hora que existe ese día (config/schedule.ts).
+  const slot = checkSlot(clean.preferredDate, clean.preferredTime)
+  if (slot) errors[slot.startsWith('date') ? 'preferredDate' : 'preferredTime'] = msg[slot]
   if (!clean.consent) errors.consent = msg.consent
   return { clean, errors }
 }

@@ -1,16 +1,17 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react'
 import { Backdrop } from '@/components/Backdrop'
 import { BrandIcon } from '@/components/BrandIcon'
 import { Header } from '@/components/Header'
 import { Icon } from '@/components/Icon'
 import { FloatingContact } from '@/components/FloatingContact'
 import { WhatsAppLink } from '@/components/WhatsAppLink'
-import { Logo } from '@/components/Logo'
+import { NeonLogo } from '@/components/NeonLogo'
 import { clinic, serviceHref } from '@/content/clinic'
 import { home } from '@/content/home'
 import { setMotionPaused, useMotionPaused } from '@/lib/motion'
 import { Link } from '@/lib/router'
 
+const FooterCity = lazy(() => import('@/components/FooterCity')) // carga aparte: no pesa en la primera pantalla
 const { header, footer } = home
 const year = new Date().getFullYear()
 
@@ -87,6 +88,8 @@ export function Layout({ path, appointmentHref, children }: { path: string; appo
         />
         {/* Pie de página armado como el de Dental Nakeji: marca, columnas de enlaces, contacto y una línea final. */}
         <footer className="ftr">
+          {/* la ciudad es el fondo del pie: va detrás de todo el contenido */}
+          <Suspense fallback={<div className="fcity-slot" />}><FooterCity /></Suspense>
           <div className="wrap ftr-cta">
             <h2 className="ftr-cta__title">{footer.closing.title}</h2>
             <div className="ftr-cta__actions">
@@ -96,7 +99,7 @@ export function Layout({ path, appointmentHref, children }: { path: string; appo
           </div>
           <div className="wrap ftr-grid">
             <div className="ftr-brand">
-              <Logo large />
+              <NeonLogo />
               <p>{footer.tagline}</p>
               <ul className="ftr-social" aria-label="Social media">
                 {footer.social.map((s) => (

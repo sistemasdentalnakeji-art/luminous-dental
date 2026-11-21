@@ -179,6 +179,13 @@ export const home = {
       missingFields: 'Please complete the highlighted fields.',
     },
     // Mensajes por campo (escritos por el diseñador en B5, no vienen del sitio oficial).
+    // Selector de fecha y hora: solo etiquetas (sección limpia pedida por la dueña, 21-11-2026).
+    when: {
+      legend: 'Preferred day',
+      pickTime: 'Preferred time (we’ll confirm)', // aviso de preferencia mínimo, como etiqueta del grupo de horas
+      prev: 'Previous month',
+      next: 'Next month',
+    },
     errors: {
       firstName: 'Enter your first name (letters only, at least 2).',
       lastName: 'Enter your last name (letters only, at least 2).',
@@ -187,6 +194,10 @@ export const home = {
       email: 'Enter a valid email, like name@example.com.',
       treatment: 'Choose a treatment.',
       message: 'Please remove web links from this field.',
+      dateMissing: 'Choose a day for your visit.',
+      dateInvalid: 'That day isn’t available. Please choose another.',
+      timeMissing: 'Choose a time.',
+      timeInvalid: 'That time isn’t available on this day. Please choose another.',
       consent: 'Check the box so we can contact you about this request.',
     },
     location: { heading: 'Visit us', address: '1212 S Maryland Pkwy, Las Vegas, NV 89104', mapLabel: 'Open in Google Maps' },

@@ -13,6 +13,7 @@
   --color-gold-soft: #f3d79a;
   --color-mint: #3fcfae; /* acento de palabras y títulos (C1; 9.33:1 sobre noche, 8.68 sobre tarjeta) */
   --color-mint-ink: #0f766e; /* menta para fondos blancos o claros (5.47:1 sobre blanco) */
+  --mint-halo: 0 0 5px rgb(6 14 30/.95),0 0 14px rgb(6 14 30/.9),0 2px 30px rgb(6 14 30/.8); /* halo oscuro tras la menta de los titulares: sube el contraste sobre el resplandor azul del fondo (21-11-2026) */
   --color-title: #fff;
   --color-text: #f4f9ff;
   --color-text2: #f2f8fe;

@@ -12,8 +12,10 @@ export interface AppointmentRequest {
   message: string
   /** El paciente aceptó el aviso de privacidad antes de enviar. */
   consent: boolean
-  /** Día y hora preferidos en hora de Las Vegas, texto libre hasta que exista disponibilidad real. */
-  preferredTime?: string
+  /** Día preferido «AAAA-MM-DD» (hora de Las Vegas). Es una preferencia: la clínica confirma. */
+  preferredDate: string
+  /** Hora preferida «HH:MM», 24 h, hora de Las Vegas. */
+  preferredTime: string
   /** De dónde vino la solicitud, para que las automatizaciones puedan enrutarla. */
   source: 'website'
 }

@@ -1,0 +1,23 @@
+/* Entrada de títulos (components/RevealText.tsx). Solo transform / opacity / filter; una vez; todo visible con movimiento reducido o pausa. */
+.rv__mask{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.14em;margin-bottom:-.14em}
+.rv__w{display:inline-block}
+.rv--words:not(.rv--in) .rv__w{transform:translateY(110%);opacity:0}
+.rv--words.rv--in .rv__w{transition:transform .7s var(--ease) calc(var(--i)*70ms),opacity .5s ease calc(var(--i)*70ms)}
+.rv--blur:not(.rv--in){opacity:0;filter:blur(8px);transform:translateY(12px)}
+.rv--blur.rv--in{transition:opacity .8s ease .35s,filter .8s ease .35s,transform .8s var(--ease) .35s}
+
+/* Brillo menta: el color sigue siendo menta (contraste ya medido); una franja clara lo recorre una vez, después de subir. */
+.rv__shine{color:var(--color-mint);background:linear-gradient(100deg,transparent 35%,#d8fff4 50%,transparent 65%) no-repeat -120% 0/220% 100%,linear-gradient(var(--color-mint),var(--color-mint));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.rv--in .rv__shine{animation:rv-shine 1.3s ease .9s 1 both}
+@keyframes rv-shine{to{background-position:140% 0,0 0}}
+
+/* Raya dorada: se dibuja de izquierda a derecha (reemplaza la que ya existe en site.css). */
+.rv--line::after{transform-origin:left;transition:transform .9s var(--ease) .5s}
+.rv--line:not(.rv--in)::after{transform:scaleX(0)}
+
+@media (prefers-reduced-motion:reduce){
+  .rv--words .rv__w,.rv--blur,.rv--line::after{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
+  .rv--in .rv__shine{animation:none}
+}
+html[data-motion-paused] .rv--words .rv__w,html[data-motion-paused] .rv--blur,html[data-motion-paused] .rv--line::after{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
+html[data-motion-paused] .rv__shine{animation:none}

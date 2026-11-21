@@ -1,0 +1,40 @@
+/* Ciudad de Las Vegas del pie (abajo) y letrero de neón (arriba, en el bloque de marca). Prototipo: public/_maquetas/recorrido/index.html. */
+@property --p { syntax: '<number>'; inherits: true; initial-value: 0; }
+
+/* La ciudad es el fondo del pie: pegada abajo, detrás del contenido, sin recibir clics. El velo oscuro (::after) protege la lectura del texto. */
+.fcity, .fcity-slot { --warm: #ffcf7a; position: absolute; left: 0; right: 0; bottom: 0; height: clamp(440px, 42vw, 760px); overflow: hidden; pointer-events: none; z-index: 0; }
+.fcity::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, var(--color-night) 0, rgb(8 18 40 / .7) 35%, rgb(8 18 40 / .6) 100%); }
+.ftr > .wrap { position: relative; z-index: 1; }
+.fcity-art, .fcity-art svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+/* dibujo de líneas: --p va de 0 a 1 una sola vez */
+.fcity.is-drawn { animation: fc-draw 5s cubic-bezier(.45, .1, .35, 1) both; }
+@keyframes fc-draw { from { --p: 0; } to { --p: 1; } }
+.fcity .ln { fill: none; stroke: var(--c, #7fa6e0); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; opacity: var(--o, .5);
+  stroke-dasharray: 1; stroke-dashoffset: calc(1 - clamp(0, (var(--p) - var(--s)) / var(--w, .2), 1)); }
+.fcity .ln.warm { --c: var(--warm); --o: .8; }
+.fcity .ln.far { --c: #5f86c4; --o: .4; }
+.fcity .rfill { stroke: none; opacity: clamp(0, (var(--p) - var(--s)) * 6, 1); }
+.fcity .win { fill: none; stroke: var(--warm); stroke-width: 3; stroke-linecap: round; opacity: calc(.8 * clamp(0, (var(--p) - var(--s)) * 10, 1)); }
+.fcity .lamp { fill: #fff3c8; opacity: clamp(0, (var(--p) - var(--s)) * 10, 1); }
+
+/* letrero de neón en el bloque de marca: el logo oficial, apagado (vidrio gris) hasta entrar en pantalla y luego encendido con parpadeo corto de ~2 s */
+.neon { position: relative; width: clamp(190px, 17vw, 240px); aspect-ratio: 640 / 365; margin: 0 0 clamp(16px, 2vw, 24px); }
+.neon a { position: absolute; inset: 0; display: block; min-height: 44px; }
+.neon img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.neon-off { filter: brightness(.5) saturate(.45); }
+.neon-on { filter: drop-shadow(0 0 1.5px #fff) drop-shadow(0 0 7px #4aa8f5) drop-shadow(0 0 22px #2f86e0); }
+.neon.unlit .neon-on { opacity: 0; }
+.neon.lit .neon-on { animation: fc-ignite 2s linear both; }
+@keyframes fc-ignite { 0% { opacity: 0; } 6% { opacity: .95; } 10% { opacity: .15; } 18% { opacity: .85; } 22% { opacity: .25; } 34% { opacity: 1; } 100% { opacity: 1; } }
+
+/* reducir movimiento o pausa: ciudad dibujada y neón encendido, sin parpadeo */
+@media (prefers-reduced-motion: reduce) {
+  .fcity { --p: 1; animation: none; }
+  .neon .neon-on { opacity: 1; animation: none; }
+}
+html[data-motion-paused] .fcity { --p: 1; animation: none; }
+html[data-motion-paused] .neon .neon-on { opacity: 1; animation: none; }
+
+/* Margen derecho de la línea legal = fichas flotantes (44 px de toque) + su separación del borde + aire, para que nunca queden encima del texto ni de la pausa */
+.ftr .ftr-legal { padding-right: calc(clamp(14px, 2vw, 26px) + 44px + 16px); }
+@media (max-width: 767px) { .ftr .ftr-legal { padding-right: calc(4px + 46px + 12px); } }

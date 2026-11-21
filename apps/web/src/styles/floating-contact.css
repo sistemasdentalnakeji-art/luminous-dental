@@ -1,43 +1,39 @@
 /* Botones flotantes (components/FloatingContact.tsx): pausa, orbe con progreso de lectura y WhatsApp, abajo a la derecha. */
-.float-contact{position:fixed;right:clamp(14px,2vw,26px);bottom:clamp(14px,2vw,26px);z-index:25;display:grid;justify-items:end;gap:12px;pointer-events:none}
+.float-contact{position:fixed;right:clamp(14px,2vw,26px);bottom:clamp(14px,2vw,26px);z-index:25;display:grid;justify-items:end;gap:14px;pointer-events:none}
 .float-contact>*{pointer-events:auto}
 
-/* Monedas 3D (misma familia que la ficha del mapa, location-map.css): canto de discos apilados, dos caras con filete dorado y brillo, giro lento.
-   Cada botón mantiene su caja fija (44/52 px): solo el disco interior gira, así el área táctil no cambia. */
-@property --fc-spin{syntax:'<angle>';inherits:false;initial-value:0deg}
-@keyframes fc-spin{to{--fc-spin:360deg}}
-.fcoin{--d:100%;display:block;position:absolute;inset:0;perspective:420px;pointer-events:none}
-.fcoin__disc{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateY(var(--fc-spin));animation:fc-spin 14s linear infinite}
-.float-contact>*:nth-child(2) .fcoin__disc{animation-duration:11s;animation-delay:-4s}
-.float-contact__wa-wrap .fcoin__disc{animation-duration:17s;animation-delay:-9s}
-.fcoin__disc>span{position:absolute;inset:0;border-radius:50%}
-.fcoin__edge{background:linear-gradient(90deg,#9c7a2e,#f3d79a 45%,#e0b65c 60%,#8a6a25)}
-.fcoin__face{backface-visibility:hidden;display:grid;place-items:center;color:#fff;border:2px solid #e0b65c;box-shadow:inset 0 0 0 2px #2f63ad,inset 0 0 0 3px rgba(243,215,154,.7),inset 0 -5px 8px -3px rgba(0,8,24,.45)}
-.fcoin__face::after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.42),rgba(255,255,255,0) 38%,rgba(255,255,255,0) 70%,rgba(255,255,255,.14));pointer-events:none}
-.fcoin__face--front{transform:translateZ(3px)}
-.fcoin__face--back{transform:translateZ(-3px) rotateY(180deg)}
-.fcoin[data-tone=navy] .fcoin__face{background:radial-gradient(circle at 50% 38%,#18305a,#070f1e 72%)}
-.fcoin[data-tone=green] .fcoin__face{background:#25d366}
-.fcoin svg{position:relative;display:block;filter:drop-shadow(0 1px 2px rgba(0,8,24,.5))}
+/* Fichas de casino ESTÁTICAS (misma familia que la ficha del mapa, location-map.css): canto de 8 bloques porcelana/azul, filete dorado,
+   cara con anillo interior punteado y relieve sutil. Nada gira ni se mueve solo; el hover solo eleva y da brillo. */
+.fcoin{display:block;position:absolute;inset:0;border-radius:50%;pointer-events:none;
+  background:repeating-conic-gradient(from -8.5deg,#f4f1ea 0 17deg,#2f63ad 17deg 45deg);
+  box-shadow:0 0 0 1.5px #e0b65c,0 0 0 2.5px rgba(0,8,24,.55),inset 0 1.5px 1px rgba(255,255,255,.55),inset 0 -2px 3px rgba(0,8,24,.4)}
+.fcoin__face{position:absolute;inset:4.5px;border-radius:50%;display:grid;place-items:center;color:#fff;border:1.5px solid #e0b65c;
+  box-shadow:inset 0 0 0 1.5px #0b1a33,inset 0 0 0 2.5px rgba(243,215,154,.55),inset 0 -4px 6px -2px rgba(0,8,24,.5),0 1px 2px rgba(0,8,24,.6)}
+.fcoin__face::before{content:"";position:absolute;inset:2.5px;border-radius:50%;border:1px dashed rgba(243,215,154,.5);pointer-events:none}
+.fcoin__face::after{content:"";position:absolute;inset:0;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.34),rgba(255,255,255,0) 42%,rgba(255,255,255,0) 72%,rgba(255,255,255,.1));pointer-events:none}
+.fcoin__face{background:radial-gradient(circle at 50% 38%,#18305a,#070f1e 72%)}
+.fcoin svg{position:relative;z-index:1;display:block;filter:drop-shadow(0 1px 1.5px rgba(0,8,24,.55))}
 .float-contact__pause[data-paused]{color:var(--color-gold)}
 .float-contact__pause[data-paused] .fcoin__face{color:var(--color-gold)}
 
-/* Pausa: moneda de 44 px, centrada sobre las otras (52 px). */
-.float-contact__pause{position:relative;display:block;width:44px;height:44px;margin:0 4px 0 0;padding:0;border:0;border-radius:50%;background:none;box-shadow:0 8px 18px -8px rgba(0,8,24,.75);cursor:pointer;transition:scale .25s var(--ease)}
-.float-contact__pause:hover{scale:1.08}
+/* Tamaños visibles chicos; el área de toque llega a ≥ 44 px con el ::before invisible (inset -7px). */
+.float-contact__pause::before,.float-contact__top::before,.float-contact__wa::before{content:"";position:absolute;inset:-7px;border-radius:50%}
+/* Pausa: ficha de 32 px, centrada sobre las otras (38 px). */
+.float-contact__pause{position:relative;display:block;width:32px;height:32px;margin:0 3px 0 0;padding:0;border:0;border-radius:50%;background:none;box-shadow:0 8px 18px -8px rgba(0,8,24,.75);cursor:pointer;transition:translate .2s var(--ease),filter .2s}
+.float-contact__pause:hover,.float-contact__pause:focus-visible{translate:0 -2px;filter:brightness(1.12) drop-shadow(0 0 6px rgba(224,182,92,.55))}
 
-/* Moneda con la estrella del logo; el aro de progreso (azul→oro) va como borde, fuera del giro. */
-.float-contact__top{position:relative;display:block;width:52px;height:52px;padding:0;border:0;border-radius:50%;background:none;box-shadow:0 10px 24px -10px rgba(0,8,24,.8);cursor:pointer;transition:scale .25s var(--ease)}
-.float-contact__top:hover{scale:1.06}
-.float-contact__ring{position:absolute;inset:-4px;width:calc(100% + 8px);height:calc(100% + 8px);rotate:-90deg;pointer-events:none}
+/* Ficha con la estrella del logo; el aro de progreso (azul→oro) va como borde, fuera del giro. */
+.float-contact__top{position:relative;display:block;width:38px;height:38px;padding:0;border:0;border-radius:50%;background:none;box-shadow:0 10px 24px -10px rgba(0,8,24,.8);cursor:pointer;transition:translate .2s var(--ease),filter .2s}
+.float-contact__top:hover,.float-contact__top:focus-visible{translate:0 -2px;filter:brightness(1.12) drop-shadow(0 0 6px rgba(224,182,92,.55))}
+.float-contact__ring{position:absolute;inset:-3px;width:calc(100% + 6px);height:calc(100% + 6px);rotate:-90deg;pointer-events:none}
 .float-contact__track{fill:none;stroke:rgba(123,195,235,.2);stroke-width:2.5}
 .float-contact__fill{fill:none;stroke:url(#float-progress);stroke-width:2.5;stroke-linecap:round;filter:drop-shadow(0 0 3px rgba(224,182,92,.6));transition:stroke-dashoffset .12s linear}
 
-/* WhatsApp: moneda verde con el glifo oficial. */
+/* WhatsApp: misma ficha azul con el logo en verde. */
 .float-contact__wa-wrap{position:relative;display:grid;justify-items:end}
-.float-contact__wa{position:relative;display:block;width:52px;height:52px;border-radius:50%;box-shadow:0 14px 30px -12px rgba(18,178,76,.75);transition:scale .25s var(--ease)}
-a.float-contact__wa:hover{scale:1.07}
-.float-contact__wa.wa-soon{opacity:.7;box-shadow:none}
+.float-contact__wa{position:relative;display:block;width:38px;height:38px;border-radius:50%;box-shadow:0 8px 18px -8px rgba(0,8,24,.75);transition:translate .2s var(--ease),filter .2s}
+a.float-contact__wa:hover,a.float-contact__wa:focus-visible{translate:0 -2px;filter:brightness(1.12) drop-shadow(0 0 6px rgba(224,182,92,.55))}
+.float-contact__wa.wa-soon{opacity:.9}
 .float-contact button:focus-visible,.float-contact a:focus-visible{outline:2px solid var(--color-gold);outline-offset:5px;border-radius:50%}
 
 /* Globito de aviso (solo con número de WhatsApp). */
@@ -47,19 +43,19 @@ a.float-contact__wa:hover{scale:1.07}
 .float-contact__close{position:absolute;top:2px;right:2px;display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;background:none;color:rgba(255,255,255,.8);cursor:pointer}
 
 @media (max-width:599px){
-  .float-contact__top,.float-contact__wa{width:46px;height:46px}
-  .float-contact__pause{margin-right:1px}
+  .float-contact{right:4px}
+  .float-contact__top,.float-contact__wa{width:34px;height:34px}
+  .float-contact__pause{width:30px;height:30px;margin-right:2px}
   .float-contact__bubble{right:58px;font-size:.8rem}
 }
-/* Con el formulario de cita a la vista los botones se esconden (no tapan campos); con la barra fija de celular visible, suben por encima de ella. */
-html[data-actionbar=form] .float-contact{display:none}
+/* Nunca se esconden. Con la barra fija de celular visible suben por encima de ella. */
 @media (max-width:767px){
   html[data-actionbar=on] .float-contact{bottom:calc(65px + 12px + env(safe-area-inset-bottom))}
 }
 @media (prefers-reduced-motion:reduce){
-  .fcoin__disc,.float-contact__bubble{animation:none}
+  .float-contact__bubble{animation:none}
   .float-contact__fill,.float-contact__top,.float-contact__wa,.float-contact__pause{transition:none}
 }
-html[data-motion-paused] .fcoin__disc,html[data-motion-paused] .float-contact__bubble{animation:none}
+html[data-motion-paused] .float-contact__bubble{animation:none}
 html[data-motion-paused] .float-contact__fill{transition:none}
-.float-contact[data-overlap]{opacity:0;visibility:hidden}
+

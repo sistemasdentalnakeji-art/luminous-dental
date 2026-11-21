@@ -1,5 +1,8 @@
+import { lazy, Suspense } from 'react'
 import { Icon } from '@/components/Icon'
 import { home } from '@/content/home'
+
+const BeforeAfter = lazy(() => import('@/components/BeforeAfter')) // carga aparte: lo pesado no frena el titular
 
 // Héroe del inicio: columna izquierda replicada de «Luminous Dental - Smile Makeover.html».
 const { hero } = home
@@ -21,8 +24,7 @@ export function Hero() {
           </div>
           <a className="hx-more" href={hero.more.href}>{hero.more.label}<Icon name="chevronDown" size={18} /></a>
         </div>
-        {/* aquí va el antes/después de fondo (lo diseña otro diseñador, estilo constelación) */}
-        <div className="hx-slot" aria-hidden="true" />
+        <div className="hx-slot"><Suspense fallback={null}><BeforeAfter /></Suspense></div>
       </div>
     </section>
   )

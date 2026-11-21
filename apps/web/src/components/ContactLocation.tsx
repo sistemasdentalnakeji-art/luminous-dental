@@ -34,7 +34,7 @@ function Item({ icon, label, children }: { icon: IconName; label: string; childr
   )
 }
 
-/** Mismo diseño que el inicio de Dental Nakeji: introducción, tarjeta de mapa que se expande y tarjetas de contacto (en celular el mapa queda entre el texto y los contactos). */
+/** Mismo diseño que el inicio de Dental Nakeji: introducción, tarjeta de mapa que se expande y tarjetas de contacto (en celular: letrero, tarjeta de contacto y al final la ficha del mapa). */
 export function ContactLocation() {
   const { footer } = home
   return (

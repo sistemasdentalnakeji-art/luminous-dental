@@ -2,6 +2,7 @@ import { useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { BookingError, MAX, NAME_JUNK, checkAppointment, formatPhone, sendAppointment, type AppointmentRequest } from '@/config/booking'
 import { services } from '@/content/clinic'
 import { home } from '@/content/home'
+import { BookingSchedule } from './BookingSchedule'
 
 type Status = 'idle' | 'sending' | 'sent' | 'preview' | 'error' | 'invalid' | 'busy'
 
@@ -9,15 +10,27 @@ type Status = 'idle' | 'sending' | 'sent' | 'preview' | 'error' | 'invalid' | 'b
 const onName = (e: FormEvent<HTMLInputElement>) => { e.currentTarget.value = e.currentTarget.value.replace(NAME_JUNK, '') }
 const onPhone = (e: FormEvent<HTMLInputElement>) => { e.currentTarget.value = formatPhone(e.currentTarget.value) }
 // Orden de los campos en pantalla: el primero con error recibe el foco.
-const ORDER = ['firstName', 'lastName', 'phone', 'email', 'treatment', 'preferredTime', 'message', 'consent']
+const ORDER = ['firstName', 'lastName', 'phone', 'email', 'treatment', 'preferredDate', 'preferredTime', 'message', 'consent']
 
 const { submitLabel, consent, messages, errors } = home.appointment
 const phone = home.footer.phone
+
+// Sección del formulario: fieldset con leyenda numerada (agrupa los campos para lectores de pantalla).
+function Group({ step, title, children }: { step: number; title: string; children: ReactNode }) {
+  return (
+    <fieldset className="fgroup">
+      <legend><span className="fgroup-num" aria-hidden="true">{step}</span>{title}</legend>
+      <div className="fields">{children}</div>
+    </fieldset>
+  )
+}
 
 // Los campos replican el formulario de contacto oficial; su forma es AppointmentRequest en packages/types.
 export function BookingForm({ defaultTreatment = '' }: { defaultTreatment?: string }) {
   const [status, setStatus] = useState<Status>('idle')
   const [bad, setBad] = useState<Record<string, string>>({}) // nombre del campo -> su mensaje
+  const [date, setDate] = useState('')
+  const [time, setTime] = useState('')
   const form = useRef<HTMLFormElement>(null)
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
@@ -35,7 +48,8 @@ export function BookingForm({ defaultTreatment = '' }: { defaultTreatment?: stri
       phone: s('phone'),
       treatment: s('treatment'),
       message: s('message'),
-      preferredTime: s('preferredTime') || undefined,
+      preferredDate: date,
+      preferredTime: time,
       consent: data.get('consent') === 'on',
       source: 'website',
     })
@@ -43,14 +57,14 @@ export function BookingForm({ defaultTreatment = '' }: { defaultTreatment?: stri
     const first = ORDER.find((k) => k in found)
     if (first) {
       setStatus('idle')
-      el.querySelector<HTMLElement>(`[name="${first}"]`)?.focus()
+      el.querySelector<HTMLElement>(`[name="${first}"],[data-focus="${first}"]`)?.focus()
       return
     }
     const request: AppointmentRequest = clean
     setStatus('sending')
     try {
       const result = await sendAppointment(request)
-      if (result === 'sent') el.reset() // los datos enviados no se quedan en pantalla
+      if (result === 'sent') { el.reset(); setDate(''); setTime('') } // los datos enviados no se quedan en pantalla
       setStatus(result)
     } catch (err) {
       setStatus(err instanceof BookingError && err.kind !== 'down' ? err.kind : 'error')
@@ -59,7 +73,7 @@ export function BookingForm({ defaultTreatment = '' }: { defaultTreatment?: stri
 
   // Un campo: etiqueta, control y su propio mensaje enlazado con aria-describedby.
   // `wide`: ocupa las dos columnas; `required: false`: campo opcional (sin atributo required).
-  const field = (name: keyof typeof errors | 'preferredTime', label: string, control: (p: object) => ReactNode, wide = false, required = true) => (
+  const field = (name: keyof typeof errors, label: string, control: (p: object) => ReactNode, wide = false, required = true) => (
     <div className={`f${wide ? ' w2' : ''}${bad[name] ? ' bad' : ''}`}>
       <label htmlFor={`b-${name}`}>{label}</label>
       {control({ id: `b-${name}`, name, required, maxLength: MAX[name as keyof typeof MAX], 'aria-describedby': `e-${name}`, 'aria-invalid': bad[name] ? true : undefined })}
@@ -69,11 +83,13 @@ export function BookingForm({ defaultTreatment = '' }: { defaultTreatment?: stri
 
   return (
     <form ref={form} onSubmit={onSubmit} noValidate>
-      <div className="fields">
+      <Group step={1} title="Your details">
         {field('firstName', 'First name', (p) => <input type="text" autoComplete="given-name" onInput={onName} {...p} />)}
         {field('lastName', 'Last name', (p) => <input type="text" autoComplete="family-name" onInput={onName} {...p} />)}
         {field('phone', 'Phone', (p) => <input type="tel" inputMode="tel" autoComplete="tel-national" placeholder="(702) 555-0123" onInput={onPhone} {...p} />)}
         {field('email', 'Email', (p) => <input type="email" autoComplete="email" {...p} />)}
+      </Group>
+      <Group step={2} title="Your visit">
         {field('treatment', 'What do you need?', (p) => (
           <select defaultValue={defaultTreatment} {...p}>
             <option value="" disabled>Choose a treatment</option>
@@ -81,9 +97,10 @@ export function BookingForm({ defaultTreatment = '' }: { defaultTreatment?: stri
             <option>Not sure yet</option>
           </select>
         ), true)}
-        {field('preferredTime', 'Preferred day and time (optional, Las Vegas time)', (p) => <input type="text" {...p} />, true, false)}
-        {field('message', 'Anything else we should know (optional)', (p) => <textarea rows={3} {...p} />, true, false)}
-        <p className="hint f w2">Please don’t include medical history or payment information.</p>
+        <BookingSchedule date={date} time={time} onDate={setDate} onTime={setTime} errDate={bad.preferredDate} errTime={bad.preferredTime} />
+      </Group>
+      <Group step={3} title="Message and consent">
+        {field('message', 'Anything else we should know (optional)', (p) => <textarea rows={3} placeholder="No medical history or payment info, please." {...p} />, true, false)}
         <label className="hidden" aria-hidden="true">Company<input name="company" tabIndex={-1} autoComplete="off" /></label>
         <div className={`f w2${bad.consent ? ' bad' : ''}`}>
           <label className="consent" htmlFor="b-consent">
@@ -92,7 +109,7 @@ export function BookingForm({ defaultTreatment = '' }: { defaultTreatment?: stri
           </label>
           <p className="err" id="e-consent">{errors.consent}</p>
         </div>
-      </div>
+      </Group>
       <div className="submit-row">
         <button className="btn" type="submit" disabled={status === 'sending' || status === 'sent'}>{status === 'sending' ? messages.sending : submitLabel}</button>
         <a className="tlink" href={phone.href}>{phone.label}</a>

@@ -115,7 +115,7 @@
 a.contact-item__value{display:inline-flex;align-items:center;min-height:44px}
 a.contact-item__value:hover{color:var(--color-sky)}
 .loc-btn{min-height:44px;padding:0 20px;font-size:15px}
-@media (max-width:1000px){.loc-grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "map" "contact"}.loc-map{min-height:420px}}
+@media (max-width:1000px){.loc-grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "contact" "map"}.loc-map{min-height:420px}}
 @media (min-width:600px) and (max-width:1000px){.loc-map{min-height:520px}}
 @media (max-width:600px){.vsign__place{display:none}}
 .pg:has(+ .loc-sec){padding-block:28px 0}

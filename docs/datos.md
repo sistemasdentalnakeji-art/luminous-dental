@@ -158,3 +158,17 @@ Alternativa más barata: quedarse en **B** (solo correo, sin guardar). Es más s
 ## Textos nuevos por aprobar (19-11-2026, ficha del mapa)
 - Texto en arco de la ficha: arriba «LUMINOUS DENTAL», abajo «1212 S MARYLAND PKWY» (dirección real, `clinic.ts`).
 - Nombre del botón del mapa: «Open map of our location» / «Close the map». La pista «Tap to see the location» sigue igual.
+
+## Textos nuevos por aprobar (20-11-2026, ciudad y neón del pie)
+- Nombre accesible del logo en neón del pie (lo lee el lector de pantalla): «Luminous Dental neon sign». Sin otros textos nuevos.
+
+## Héroe «Casos en órbita» (20-11-2026) · PARA APROBAR
+- **Fotos de antes/después (`public/smiles/caso1-*.jpg`, `caso2-*.jpg`): permiso de pacientes POR CONFIRMAR; no publicar en la página pública sin ese permiso.** Salen del archivo de referencia de la dueña. Hasta tener el permiso, no subir la página pública (gh-pages) con estas fotos.
+- Textos nuevos por aprobar (`content/smileCases.ts`): «A different future.» · «No longer hidden.» · «Before» · «After» · «Pause animation» / «Play animation» · «Individual results vary.» · «Smile gallery: before and after» · «Compare before and after» · «Show case: …» · descripciones de las 4 fotos (`alt`, no identifican a nadie).
+- La burbuja «Patient reviews» del prototipo NO se pasó (era un lugar reservado). Si se quiere, solo con reseñas reales de `content/reviews.ts`.
+
+- Formulario de cita, títulos de sección nuevos (2026-11-21, POR APROBAR): «Your details», «Your visit», «Message and consent».
+
+## Héroe: comparador quieto (21-11-2026) · PARA APROBAR
+- Se quitaron los textos «Pause animation» / «Play animation» del héroe (ya no hay animación). Los demás textos de `content/smileCases.ts` siguen por aprobar. Los casos ahora son botones «A different future» / «No longer hidden». «Individual results vary.» se mantiene.
+- Fotos de antes/después: permiso de pacientes sigue **POR CONFIRMAR**.

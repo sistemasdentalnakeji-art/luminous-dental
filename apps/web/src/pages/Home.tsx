@@ -2,6 +2,7 @@ import { Appointment } from '@/components/Appointment'
 import { ContactLocation } from '@/components/ContactLocation'
 import { FeaturedServices } from '@/components/FeaturedServices'
 import { Hero } from '@/components/Hero'
+import { RevealText } from '@/components/RevealText'
 import { Reviews } from '@/components/Reviews'
 import { home } from '@/content/home'
 import { Link } from '@/lib/router'
@@ -38,6 +39,8 @@ export default function Home() {
         <p className="ring-cap"><strong>{doctor.name}, {doctor.role}</strong><Link className="tlink" href={doctor.meet.href}>{doctor.meet.label}</Link></p>
       </section>
 
+      <Appointment />
+
       <svg className="ridge" viewBox="0 30 1440 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
         <defs>
           <linearGradient id="rf" x1="0" y1="0" x2="0" y2="1"><stop offset=".3" stopColor="#0e1d38" /><stop offset="1" stopColor="#0e1d38" stopOpacity="0" /></linearGradient>
@@ -49,7 +52,7 @@ export default function Home() {
       </svg>
 
       <section className="sec wrap" id="services" aria-labelledby="svc-h">
-        <h2 className="h2" id="svc-h" style={{ maxWidth: '14em' }}>{services.heading}</h2>
+        <RevealText className="h2" id="svc-h" style={{ maxWidth: '14em' }} accent="whole family">{services.heading}</RevealText>
         <ul className="svc-list">
           {services.groups.map((g) => (
             <li key={g.name}><Link className="row" href={g.href}><h3>{g.name}</h3><p>{g.line}</p></Link></li>
@@ -61,7 +64,7 @@ export default function Home() {
       <FeaturedServices />
 
       <section className="sec wrap" aria-labelledby="why-h">
-        <h2 className="why-head" id="why-h">{why.heading}</h2>
+        <RevealText className="why-head" id="why-h" accent="Luminous Dental">{why.heading}</RevealText>
         <div className="why-big">
           <h3>{why.points[0].title}</h3>
           <p>{why.points[0].text}</p>
@@ -79,7 +82,7 @@ export default function Home() {
 
       <section className="wrap smile-sec">
         <div className="smile">
-          <h2 className="h2">{smile.heading}</h2>
+          <RevealText className="h2" accent="smile?">{smile.heading}</RevealText>
           <div className="smile-r">
             <p>{smile.text}</p>
             <div className="smile-cta">
@@ -94,12 +97,12 @@ export default function Home() {
       <section className="wrap cov-sec" id="insurance">
         <div className="cov">
           <div className="cov-ins">
-            <h2>{coverage.insurance.heading}</h2>
+            <RevealText>{coverage.insurance.heading}</RevealText>
             <p>{coverage.insurance.text}</p>
             <Link className="tlink" href={coverage.insurance.cta.href}>{coverage.insurance.cta.label}</Link>
           </div>
           <div className="cov-out">
-            <h2>{coverage.outOfTown.heading}</h2>
+            <RevealText accent="out of town?">{coverage.outOfTown.heading}</RevealText>
             <p>{coverage.outOfTown.text}</p>
             <div><a className="tlink" href={coverage.outOfTown.cta.href} target="_blank" rel="noopener noreferrer">{coverage.outOfTown.cta.label}</a></div>
           </div>
@@ -107,8 +110,6 @@ export default function Home() {
       </section>
 
       <Reviews />
-
-      <Appointment />
 
       <ContactLocation />
     </>

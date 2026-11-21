@@ -18,6 +18,8 @@ export function Carousel({ label, items, className, tabs }: { label: string; ite
       const second = track.children[1] as HTMLElement | undefined
       const step = first && second ? second.offsetLeft - first.offsetLeft : track.clientWidth
       setCurrent(Math.min(items.length - 1, Math.max(0, Math.round(track.scrollLeft / step))))
+      const max = track.scrollWidth - track.clientWidth
+      track.parentElement?.style.setProperty('--p', String(max > 0 ? Math.min(1, Math.max(0, track.scrollLeft / max)) : 0))
       setCanPrev(track.scrollLeft > 2)
       setCanNext(track.scrollLeft < track.scrollWidth - track.clientWidth - 2)
     }
@@ -52,6 +54,9 @@ export function Carousel({ label, items, className, tabs }: { label: string; ite
           <li key={index} className="carousel__item" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${items.length}`}>{item}</li>
         ))}
       </ul>
+      {tabs && (
+        <div className="carousel__progress" aria-hidden="true"><span /><b>{current + 1} / {items.length}</b></div>
+      )}
       <div className="carousel__controls" hidden={!canPrev && !canNext && !tabs}>
         {/* aria-disabled (no disabled): el botón presionado conserva el foco cuando llega al final. */}
         <button type="button" className="carousel__button" onClick={() => canPrev && goTo(current - 1)} aria-disabled={!canPrev}>
