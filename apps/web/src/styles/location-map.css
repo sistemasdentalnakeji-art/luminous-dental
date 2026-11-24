@@ -1,6 +1,6 @@
 /* ==========================================================================
    Tarjeta de ubicación que se expande, copiada tal cual de Dental Nakeji (styles/components/location-map.css); solo los colores y las fuentes son de este sitio.
-   Azul marino (--color-ink a --color-night) con líneas celestes; el resplandor detrás de la tarjeta cerrada es el dorado de las estrellas. */
+   Azul marino (--color-ink a --color-night) con líneas celestes. */
 /* Registradas para poder interpolarlas: la inclinación (la pone LocationMap.tsx), el vaivén y su intensidad. */
 @property --loc-spin {
   syntax: '<angle>';
@@ -22,29 +22,6 @@
   position: absolute;
   inset: 0;
   perspective: 1000px;
-}
-
-/* Resplandor amarillo que respira detrás de la tarjeta contraída (mismo ritmo que el contorno .siri de las tarjetas de contacto).
-   Fuera de la tarjeta: el recorte la cortaría. */
-.loc::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: var(--loc-w);
-  height: var(--loc-h);
-  border-radius: var(--loc-radius);
-  background: linear-gradient(135deg, #ffd98a, var(--color-gold), #f2a93b);
-  filter: blur(16px);
-  opacity: 0.45;
-  animation: loc-glow 1.6s ease-in-out infinite alternate;
-  transition: opacity 250ms var(--ease) 0.95s; /* al cerrar, el resplandor vuelve cuando la ventana ya es un disco */
-}
-
-.loc[data-expanded]::before {
-  opacity: 0;
-  transition-delay: 0s;
-  animation-play-state: paused;
 }
 
 .loc__card {
@@ -71,17 +48,6 @@
   transition:
     clip-path var(--loc-open) var(--loc-curve) var(--loc-turn),
     opacity 0.2s ease var(--loc-turn);
-}
-
-/* Respiración del resplandor: solo escala (la opacidad la lleva el desvanecido al abrir). */
-@keyframes loc-glow {
-  from {
-    transform: scale(0.97);
-  }
-
-  to {
-    transform: scale(1.1);
-  }
 }
 
 /* Vaivén automático de lado a lado: un ciclo de ~2 s, el mismo tiempo que tarda en abrirse sola. */
@@ -264,6 +230,45 @@
 
 .loc__side {
   backface-visibility: hidden;
+  overflow: hidden; /* el brillo se recorta a la forma de la moneda */
+}
+
+/* Brillo de la moneda: una franja clara que recorre la cara (solo transform), recortada al círculo; no hay resplandor fuera de la ficha. */
+.loc__side::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 45%;
+  background: linear-gradient(105deg, transparent 0, rgb(255 255 255 / 0.22) 50%, transparent 100%);
+  transform: translateX(-120%);
+  animation: loc-sheen 5.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.loc__side--back::after {
+  animation-delay: 2.75s;
+}
+
+@keyframes loc-sheen {
+  0%, 55% {
+    transform: translateX(-120%);
+  }
+
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loc__side::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+html[data-motion-paused] .loc__side::after {
+  animation: none;
+  opacity: 0;
 }
 
 .loc__side--front {

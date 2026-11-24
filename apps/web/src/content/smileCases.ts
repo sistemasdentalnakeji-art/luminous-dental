@@ -1,12 +1,13 @@
-// Casos del antes/después del héroe («Casos en órbita»). Fotos del archivo de referencia de la dueña:
+// Casos del antes/después del héroe. Fotos del archivo de referencia de la dueña:
 // permiso de pacientes POR CONFIRMAR; no publicar en la página pública sin ese permiso (docs/datos.md).
+const base = import.meta.env.BASE_URL
 export interface SmileCase { title: string; before: string; after: string; altBefore: string; altAfter: string }
 
 export const smileCases: SmileCase[] = [
-  { title: 'A different future.', before: '/smiles/caso1-antes.jpg', after: '/smiles/caso1-despues.jpg',
+  { title: 'A different future.', before: `${base}smiles/caso1-antes.jpg`, after: `${base}smiles/caso1-despues.jpg`,
     altBefore: 'Close-up of a smile before treatment: worn, short, uneven front teeth with stained, chipped edges.',
     altAfter: 'The same smile after treatment: bright, even, smoothly shaped front teeth.' },
-  { title: 'No longer hidden.', before: '/smiles/caso2-antes.jpg', after: '/smiles/caso2-despues.jpg',
+  { title: 'No longer hidden.', before: `${base}smiles/caso2-antes.jpg`, after: `${base}smiles/caso2-despues.jpg`,
     altBefore: 'Close-up of a smile before treatment: chipped, uneven teeth with gaps and dark spots.',
     altAfter: 'The same smile after treatment: bright, evenly aligned, natural-looking front teeth.' },
 ]

@@ -136,7 +136,6 @@ export const servicePages: ServicePage[] = clinicServices.map((s) => {
   return { ...page, slug: slugOf(s.name), group: s.group }
 })
 
-export const serviceBySlug = (slug: string) => servicePages.find((p) => p.slug === slug)
 
 export const serviceText = {
   eyebrow: 'Our services',
@@ -152,7 +151,7 @@ export const serviceText = {
     cta: 'View all services',
     // NUEVO, para aprobación: nombres cortos de las 5 pestañas bajo el carrusel, en el mismo orden que featuredNames
     tabs: ['Braces & Invisalign', 'Implants', 'Dentures & bridges', 'Veneers & crowns', 'Whitening'],
-    card: 'View service',
+    card: 'Learn more about this service', // como el botón de la tarjeta de Dental Nakeji («Conocer más del servicio»)
     carousel: 'Featured services',
   },
   hub: {

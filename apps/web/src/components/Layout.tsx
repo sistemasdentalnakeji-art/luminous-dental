@@ -9,6 +9,7 @@ import { NeonLogo } from '@/components/NeonLogo'
 import { clinic, serviceHref } from '@/content/clinic'
 import { home } from '@/content/home'
 import { setMotionPaused, useMotionPaused } from '@/lib/motion'
+import { legalText } from '@/content/legal'
 import { Link } from '@/lib/router'
 
 const FooterCity = lazy(() => import('@/components/FooterCity')) // carga aparte: no pesa en la primera pantalla
@@ -47,7 +48,8 @@ function ActionBar({ path, appointmentHref }: { path: string; appointmentHref: s
     const mo = new MutationObserver(find)
     mo.observe(document.body, { childList: true, subtree: true })
     find()
-    return () => { mo.disconnect(); io?.disconnect() }
+    const stop = setTimeout(() => mo.disconnect(), 10000) // páginas sin formulario (404): no vigilar el DOM para siempre
+    return () => { clearTimeout(stop); mo.disconnect(); io?.disconnect() }
   }, [path])
   const hidden = !past || formInView
   // Avisa a los botones flotantes (floating-contact.css): suben sobre la barra, o se esconden si el formulario está a la vista.
@@ -90,13 +92,6 @@ export function Layout({ path, appointmentHref, children }: { path: string; appo
         <footer className="ftr">
           {/* la ciudad es el fondo del pie: va detrás de todo el contenido */}
           <Suspense fallback={<div className="fcity-slot" />}><FooterCity /></Suspense>
-          <div className="wrap ftr-cta">
-            <h2 className="ftr-cta__title">{footer.closing.title}</h2>
-            <div className="ftr-cta__actions">
-              <a className="btn" href={appointmentHref}>{header.cta.label}</a>
-              <a className="btn btn-ghost" href={clinic.phone.href}>{footer.closing.callLabel} {clinic.phone.label}</a>
-            </div>
-          </div>
           <div className="wrap ftr-grid">
             <div className="ftr-brand">
               <NeonLogo />
@@ -135,6 +130,10 @@ export function Layout({ path, appointmentHref, children }: { path: string; appo
           <div className="wrap ftr-legal">
             <span>© {year} {footer.legal}</span>
             <span>{footer.note}</span>
+            <nav className="ftr-legal__links" aria-label={legalText.footerNav}>
+              <Link href="/privacy-policy" aria-current={current('/privacy-policy', path)}>{legalText.privacyLabel}</Link>
+              <Link href="/terms-and-conditions" aria-current={current('/terms-and-conditions', path)}>{legalText.termsLabel}</Link>
+            </nav>
             <button type="button" className="motion-toggle" onClick={() => setMotionPaused(!motionPaused)}>{motionPaused ? footer.motion.play : footer.motion.pause}</button>
           </div>
         </footer>

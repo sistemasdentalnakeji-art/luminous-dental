@@ -11,69 +11,105 @@
 .carousel__item{min-width:0;scroll-snap-align:start}
 .carousel__controls{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:8px}
 .carousel__controls[hidden]{display:none}
-.carousel__button{display:inline-grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid var(--color-line-ui);border-radius:50%;background:rgba(255,255,255,.06);color:#fff;cursor:pointer;transition:background-color .15s var(--ease),border-color .15s var(--ease),opacity .15s var(--ease)}
+.carousel__button{flex:none;display:inline-grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid var(--color-line-ui);border-radius:50%;background:rgba(255,255,255,.06);color:#fff;cursor:pointer;transition:background-color .15s var(--ease),border-color .15s var(--ease),opacity .15s var(--ease)}
 .carousel__button:hover:not([aria-disabled="true"]){background:rgba(255,255,255,.14);border-color:var(--color-sky)}
 .carousel__button[aria-disabled="true"]{opacity:.4;cursor:default}
 .carousel__dots{display:flex;align-items:center}
 .carousel__dot{position:relative;width:32px;height:44px;padding:0;border:0;background:transparent;cursor:pointer}
 .carousel__dot::before{content:"";position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:rgba(255,255,255,.35);transition:background-color .2s var(--ease),transform .2s var(--ease)}
 .carousel__dot:hover::before{background:rgba(255,255,255,.7)}
-.carousel__dot[aria-current="true"]::before{background:var(--color-gold);transform:scale(1.3)}
+.carousel__dot[aria-current="true"]::before{background:var(--color-medic);transform:scale(1.3)}
 
-/* Tarjeta: una diapositiva ancha. Información a la izquierda, el modelo flotante a la derecha (en celular: modelo arriba, información abajo). */
-.service-card{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);grid-template-areas:"body media";align-items:center;gap:clamp(8px,3vw,48px);height:100%;overflow:hidden;border-radius:28px;border:1px solid var(--color-line);background:linear-gradient(180deg,rgba(18,38,76,.78),rgba(11,26,54,.9));box-shadow:0 24px 50px -30px rgba(0,8,24,.9),inset 0 1px 0 rgba(255,255,255,.07)}
-.service-card__media{grid-area:media;position:relative;display:grid;place-items:center;min-height:clamp(260px,29vw,420px);padding:12px;background:radial-gradient(70% 80% at 50% 55%,rgba(47,99,173,.5),transparent 72%)}
-.service-card__body{grid-area:body;display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:clamp(24px,3.4vw,56px)}
-.service-card__title{font:400 clamp(28px,3.2vw,44px)/1.1 var(--font-serif);letter-spacing:-.02em}
-.service-card__text{font-size:clamp(18px,1.4vw,20px);color:var(--color-text);line-height:1.5;text-wrap:pretty}
-.service-card__list{display:grid;gap:10px;margin-block:4px 10px}
-.service-card__list li{display:flex;align-items:flex-start;gap:12px;color:var(--color-text);font-weight:500;line-height:1.45}
-.service-card__check{display:inline-grid;flex:none;place-items:center;width:24px;height:24px;margin-top:1px;border-radius:50%;background:var(--color-glow);box-shadow:inset 0 0 0 1.5px var(--color-gold);color:var(--color-gold)}
-.service-card__cta{min-height:52px;padding:0 30px}
+/* ── Servicios destacados · tarjeta con riel (23-11-2026, r3; maqueta docs/lienzo/tercera-ronda-23nov/servicios-destacados.html) ────────────────────────────────────────── */
+.sc{--stride:54px;display:grid;grid-template-columns:clamp(200px,16.5vw,232px) minmax(0,1fr);min-height:clamp(540px,41vw,600px);overflow:hidden;border-radius:28px;border:1px solid transparent;
+ background:linear-gradient(115deg,rgba(255,255,255,.07) 0%,rgba(255,255,255,.015) 34%,transparent 58%) padding-box,linear-gradient(150deg,rgba(30,70,125,.55),rgba(8,20,42,.68)) padding-box,linear-gradient(135deg,rgba(255,255,255,.55),rgba(52,191,204,.28) 45%,rgba(123,195,235,.12) 72%,rgba(255,255,255,.3)) border-box;
+ -webkit-backdrop-filter:blur(18px) saturate(1.35);backdrop-filter:blur(18px) saturate(1.35);box-shadow:0 30px 60px -32px rgba(0,8,24,.95),inset 0 1px 0 rgba(255,255,255,.18)}
+.sc__rail{display:flex;flex-direction:column;padding:clamp(16px,1.6vw,22px) clamp(12px,1.1vw,14px);border-right:1px solid var(--color-line);background:linear-gradient(180deg,rgba(255,255,255,.05),transparent)}
+.sc__tabs{position:relative;display:grid;gap:6px;list-style:none;padding:0}
+/* indicador de vidrio: baja o sube con la pestaña (solo transform) */
+.sc__tabs::before{content:"";position:absolute;left:0;right:0;top:0;height:48px;border-radius:14px;background:rgba(52,191,204,.14);border:1px solid rgba(52,191,204,.6);box-shadow:0 10px 24px -14px rgba(52,191,204,.8);transform:translateY(calc(var(--i,0) * var(--stride)));transition:transform .35s var(--ease)}
+.sc__tab{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;height:48px;padding:0 12px 0 16px;border:0;border-radius:14px;background:transparent;color:var(--color-text2);opacity:.86;text-align:left;font:600 clamp(15px,1.1vw,16.5px)/1.2 var(--font-sans);letter-spacing:.012em;cursor:pointer;transition:opacity .15s ease,color .15s ease,transform .15s ease}
+.sc__tab:hover{opacity:1}
+.sc__tab:active{transform:scale(.98)}
+.sc__tab[aria-current="true"]{color:#fff;opacity:1}
+.sc__tab svg{flex:none;opacity:0;transform:translateX(-6px);transition:opacity .25s ease,transform .25s var(--ease)}
+.sc__tab[aria-current="true"] svg{opacity:1;transform:none}
+.sc__count{display:flex;align-items:center;gap:12px;margin-top:auto;padding:20px 6px 0}
+.sc__count span{position:relative;flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.14);overflow:hidden}
+.sc__count span::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(90deg,var(--color-medic),var(--color-medic-soft));transform-origin:left;transform:scaleX(calc((var(--i,0) + 1) / 5));transition:transform .35s var(--ease)}
+.sc__count b{font:600 14px/1 var(--font-sans);font-variant-numeric:tabular-nums;color:var(--color-text2)}
+.sc__view{min-width:0;display:flex}
+.sc__track{flex:1;min-width:0;display:grid;grid-auto-flow:column;grid-auto-columns:100%;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;list-style:none;padding:0}
+.sc__track::-webkit-scrollbar{display:none}
+.sc__slide{min-width:0;scroll-snap-align:start;display:block}
+.sc__article{height:100%;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);grid-template-areas:"body fig"}
+/* cuerpo: el nombre del grupo queda arriba y separado; la tarjeta (con su ícono) queda centrada en vertical (filas 1fr / auto / 1fr); el grupo va fijo arriba */
+.sc__body{grid-area:body;display:grid;grid-template-columns:min(100%,380px);grid-template-rows:minmax(0,1fr) auto minmax(0,1fr);justify-content:center;padding:clamp(20px,2.4vw,32px) clamp(8px,1vw,16px) clamp(20px,2.4vw,32px) clamp(20px,2.4vw,36px)}
+.sc__eyebrow{grid-row:1;align-self:start;margin:0 0 16px;padding-left:4px;font:600 15px/1.2 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--color-medic-soft)}
+/* Tarjeta de servicios de Dental Nakeji (home/services.css y card-blue.css), sin foto ni etiqueta: mismas medidas (relleno 24, separación 12, título 22/500, texto 16, frases 16/500 con separación 9, botón 14×26 de 15 px)
+   con los colores de Luminous (vidrio azul, check y relleno del botón en azul medicina). */
+.sc__card{grid-row:2;display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:24px;border:1px solid transparent;border-radius:24px;color:rgba(239,247,255,.8);
+ background:linear-gradient(115deg,rgba(255,255,255,.1) 0%,rgba(255,255,255,.02) 32%,transparent 55%) padding-box,linear-gradient(145deg,rgba(30,62,108,.58),rgba(9,24,46,.64)) padding-box,linear-gradient(135deg,rgba(255,255,255,.55),rgba(123,195,235,.18) 45%,rgba(123,195,235,.1) 70%,rgba(52,191,204,.35)) border-box;
+ box-shadow:0 22px 50px -26px rgba(10,40,90,.7),0 2px 10px -4px rgba(58,112,176,.25),inset 0 1px rgba(255,255,255,.12);isolation:isolate}
+.sc__title{font:500 22px/1.15 var(--font-sans);letter-spacing:-.03em;color:#fff;text-wrap:balance}
+.sc__text{font-size:16px;line-height:1.5;color:rgba(239,247,255,.8);text-wrap:pretty}
+.sc__chips{display:grid;gap:9px;margin:0;padding:0;list-style:none}
+.sc__chips li{display:flex;align-items:center;gap:12px;font-size:16px;font-weight:500;line-height:1.55;color:rgba(239,247,255,.8)}
+.sc__check{display:inline-grid;flex:none;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--color-glow);box-shadow:inset 0 0 0 1.5px var(--color-medic);color:var(--color-medic)}
+.sc__cta{position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;margin-top:4px;padding:14px 26px;border:1px solid rgba(123,195,235,.32);border-radius:999px;background:linear-gradient(135deg,var(--color-glow),var(--color-ink));box-shadow:0 14px 26px -14px rgba(42,66,105,.8);color:#fff;font:500 15px/1.55 var(--font-sans);text-decoration:none;transition:transform .18s var(--ease)}
+.sc__cta:hover{transform:translateY(-2px)}
+.sc__cta:active{transform:translateY(1px)}
+.sc__lab{position:relative;padding-inline:12px;transition:transform .3s var(--ease),opacity .3s var(--ease)}
+.sc__dot{position:absolute;inset:0;z-index:-1;border-radius:inherit;background:var(--color-medic);clip-path:circle(0 at 15px 50%);transition:clip-path .5s var(--ease)}
+.sc__over{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--color-night);opacity:0;transform:translateX(-24px);transition:transform .3s var(--ease),opacity .3s var(--ease);pointer-events:none}
+.sc__cta::after{content:"";position:absolute;top:50%;left:12.5px;z-index:0;width:5px;height:5px;border-radius:1.6px;background:linear-gradient(135deg,#bff3f6,var(--color-medic));box-shadow:0 0 6px rgba(52,191,204,.55);translate:0 -50%;rotate:45deg;pointer-events:none;transition:opacity .25s var(--ease),scale .25s var(--ease)}
+.sc__cta:is(:hover,:focus-visible)::after{opacity:0;scale:.4}
+.sc__cta:is(:hover,:focus-visible) .sc__dot{clip-path:circle(150% at 15px 50%)}
+.sc__cta:is(:hover,:focus-visible) .sc__lab{transform:translateX(24px);opacity:0}
+.sc__cta:is(:hover,:focus-visible) .sc__over{transform:none;opacity:1}
+html[data-motion-paused] .sc__cta,html[data-motion-paused] .sc__cta *{transition:none}
+html[data-motion-paused] .sc__over{display:none}
+@media (prefers-reduced-motion:reduce){.sc__cta,.sc__cta *{transition:none}.sc__over{display:none}.sc__lab{opacity:1!important;transform:none!important}.sc__dot{clip-path:circle(0 at 15px 50%)!important}}
+@media (forced-colors:active){.sc__dot,.sc__cta::after{display:none}.sc__over{color:ButtonText}}
+/* ventana de la figura: borde de luz, fondo azul y sombra de apoyo bajo el modelo; el botón de pausa es su esquina */
+.sc__fig{grid-area:fig;position:relative;display:grid;place-items:center;margin:clamp(14px,1.6vw,24px);border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:radial-gradient(70% 70% at 50% 52%,rgba(47,99,173,.6),rgba(10,21,41,.4) 78%);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 -40px 70px -40px rgba(0,8,24,.7)}
+.sc__fig::after{content:"";position:absolute;left:22%;right:22%;bottom:11%;height:26px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,8,24,.6),transparent);filter:blur(4px);pointer-events:none}
+.sc__fig .result-wrap{position:static}
+.sc__fig .result-pause{top:12px;right:12px;z-index:2;border-color:var(--color-line-ui);background:rgba(10,21,41,.55)}
+.sc__tab:focus-visible{outline:3px solid var(--color-medic);outline-offset:-3px}
+.sc__track:focus-visible{outline:3px solid var(--color-medic);outline-offset:-3px;border-radius:24px}
+.sc__cta:focus-visible{outline:3px solid var(--color-medic);outline-offset:3px}
+/* tableta: la figura pasa arriba del texto */
+@media (max-width:1023px){.sc{min-height:0;grid-template-columns:190px minmax(0,1fr)}.sc__article{grid-template-columns:minmax(0,1fr);grid-template-areas:"fig" "body"}.sc__fig{min-height:300px}.sc__body{display:block;width:min(100%,380px);margin-inline:auto;padding:8px 0 32px}.sc__eyebrow{margin:0 0 16px}}
+/* celular: pestañas en fila arriba (se desliza de lado), figura, texto */
 @media (max-width:767px){
-  .service-card{grid-template-columns:minmax(0,1fr);grid-template-areas:"media" "body";gap:0}
-  .service-card__body{padding:8px 20px 24px}
+ .sc{display:block;border-radius:24px}
+ .sc__rail{flex-direction:row;padding:10px 0 10px 10px;border-right:0;border-bottom:1px solid var(--color-line)}
+ .sc__tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-right:36px;-webkit-mask:linear-gradient(90deg,#000 calc(100% - 44px),transparent);mask:linear-gradient(90deg,#000 calc(100% - 44px),transparent)}
+ .sc__tabs::-webkit-scrollbar{display:none}
+ .sc__tabs::before,.sc__count,.sc__tab svg{display:none}
+ .sc__tab{flex:none;width:auto;height:40px;padding:0 16px;border:1px solid transparent;border-radius:999px;font-size:15px;white-space:nowrap}
+ .sc__tab[aria-current="true"]{background:rgba(52,191,204,.14);border-color:rgba(52,191,204,.6)}
+ .sc__fig{min-height:0;aspect-ratio:4/3;margin:12px}
+ .sc__body{width:auto;margin:0;padding:8px 12px 16px}
+ .sc__eyebrow{font-size:14px;padding-left:16px}
+ .sc__cta{width:100%;padding-inline:18px}
+ .sc__lab{padding-inline:8px}
+ .sc__slide{align-content:start}
 }
+html[data-motion-paused] .sc__tabs::before,html[data-motion-paused] .sc__count span::after{transition:none}
+@media (prefers-reduced-motion:reduce){.sc__tabs::before,.sc__count span::after,.sc__tab,.sc__tab svg{transition:none}}
 
-/* Pestañas con nombre bajo el carrusel (reemplazan los puntos): una por diapositiva, la fila se desplaza de lado en celular. */
-.carousel--services .carousel__controls{gap:8px}
-.carousel__tabs{display:flex;gap:8px;min-width:0;overflow-x:auto;scrollbar-width:none;padding-inline:4px}
-.carousel__tabs::-webkit-scrollbar{display:none}
-.carousel__tab{min-height:44px;padding:0 16px;border:0;border-bottom:2px solid transparent;background:transparent;color:var(--color-text2);opacity:.8;font:600 15px/1 var(--font-sans);white-space:nowrap;cursor:pointer;transition-property:color,opacity,border-color,transform;transition-duration:.15s;transition-timing-function:ease}
-.carousel__tab:hover{opacity:1}
-.carousel__tab:active{transform:scale(.97)}
-.carousel__tab[aria-current="true"]{color:#fff;opacity:1;border-bottom-color:var(--color-gold)}
-@media (min-width:1001px){.carousel--services .carousel__controls{margin-top:12px}}
-
-/* ── Más producción (21-11-2026) ─────────────────────────────────────────────────────────────────────────────────────────────────── */
-/* Tarjeta: borde con luz que sigue al mouse (idea Aceternity «Card Spotlight» / Magic UI «Magic Card») e inclinación 3D sutil. Sin mouse queda un borde dorado tenue fijo. */
-.service-card{--mx:30%;--my:20%;--rx:0deg;--ry:0deg;position:relative;transform:perspective(1100px) rotateX(var(--rx)) rotateY(var(--ry));transition:transform .35s var(--ease),border-color .25s ease;will-change:transform}
-.service-card::before{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit;padding:1.5px;pointer-events:none;background:radial-gradient(260px circle at var(--mx) var(--my),var(--color-gold-soft),rgba(224,182,92,.18) 45%,transparent 70%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.55;transition:opacity .25s ease}
-.service-card:hover::before,.service-card:focus-within::before{opacity:1}
-.service-card__body,.service-card__media{position:relative;z-index:2}
-.service-card__eyebrow{display:inline-flex;align-items:center;gap:10px;font:600 13px/1 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--color-gold-soft)}
-.service-card__icon{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:10px;background:var(--color-glow);box-shadow:inset 0 0 0 1px rgba(224,182,92,.5);color:var(--color-gold)}
-/* Beneficios como chips */
-.service-card__list{display:flex;flex-wrap:wrap;gap:8px;margin-block:6px 14px}
-.service-card__list li{align-items:center;gap:8px;padding:8px 14px 8px 8px;border-radius:999px;border:1px solid var(--color-line);background:rgba(255,255,255,.05);font-size:15px;font-weight:500;line-height:1.3}
-/* Botón: flecha que se desliza y destello dorado al pasar o enfocar */
-.service-card__cta{position:relative;overflow:hidden;gap:10px;box-shadow:0 10px 30px -12px rgba(224,182,92,.7);transition:transform .2s var(--ease),box-shadow .2s ease}
-.service-card__cta::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(224,182,92,.55) 50%,transparent 65%);transform:translateX(-120%);transition:transform .6s var(--ease)}
-.service-card__cta:hover::after,.service-card__cta:focus-visible::after{transform:translateX(120%)}
-.service-card__cta svg{transition:transform .25s var(--ease)}
-.service-card__cta:hover svg,.service-card__cta:focus-visible svg{transform:translateX(4px)}
-.service-card__cta:active{transform:scale(.97)}
-.service-card__cta:focus-visible,.carousel__tab:focus-visible,.carousel__button:focus-visible{outline:3px solid var(--color-gold);outline-offset:3px}
-
-/* Progreso del carrusel: barra que sigue al deslizar + contador */
-.carousel__progress{display:flex;align-items:center;gap:14px;margin:14px 8px 0}
-.carousel__progress span{position:relative;flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.14);overflow:hidden}
-.carousel__progress span::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(90deg,var(--color-gold),var(--color-gold-soft));transform-origin:left;transform:scaleX(max(.2,var(--p,0)))}
-.carousel__progress b{font:600 14px/1 var(--font-sans);font-variant-numeric:tabular-nums;color:var(--color-text2)}
-/* Pestañas como píldoras */
-.carousel__tab{border:1px solid transparent;border-radius:999px;transition-property:color,opacity,background-color,border-color,transform}
-.carousel__tab[aria-current="true"]{background:rgba(224,182,92,.14);border-color:rgba(224,182,92,.6)}
-@media (max-width:767px){.service-card__list li{font-size:14.5px}.service-card{transform:none}}
-@media (prefers-reduced-motion:reduce),(hover:none){.service-card{transform:none!important;transition:none}.service-card__cta::after{display:none}}
-html[data-motion-paused] .service-card{transform:none!important;transition:none}
-html[data-motion-paused] .service-card__cta::after{display:none}
+/* ── Ícono de servicio, copiado de Dental Nakeji (24-11-2026, r4): baldosa de vidrio esmerilado de 56 px con contorno luminoso «.siri» (styles/components/siri.css y
+   services.css de Nakeji) con los colores de Luminous (azul medicina en lugar del dorado/azul de Nakeji). El contorno gira solo con el cursor o el foco dentro de la diapositiva; quieto con reducir movimiento y con la pausa. ── */
+@property --siri-angle{syntax:'<angle>';inherits:false;initial-value:0deg}
+.siri{--siri-width:2.5px;--siri-blur:9px;--siri-a:var(--color-sky);--siri-b:var(--color-medic);--siri-c:var(--color-glow);--siri-d:var(--color-medic-soft);position:relative}
+.siri::before,.siri::after{content:"";position:absolute;inset:calc(var(--siri-width) * -1);border-radius:inherit;background:conic-gradient(from var(--siri-angle),var(--siri-a),var(--siri-b),var(--siri-c),var(--siri-d),var(--siri-a));pointer-events:none;animation-play-state:paused}
+.siri::before{z-index:-1;filter:blur(var(--siri-blur));opacity:.85;animation:siri-pulse 1.6s ease-in-out infinite alternate}
+.siri::after{padding:var(--siri-width);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;animation:siri-spin 2.2s linear infinite;animation-play-state:paused}
+.sc__card:hover .siri::before,.sc__card:hover .siri::after,.sc__card:focus-within .siri::before,.sc__card:focus-within .siri::after{animation-play-state:running}
+@keyframes siri-spin{to{--siri-angle:360deg}}
+@keyframes siri-pulse{from{opacity:.55;transform:scale(1)}to{opacity:1;transform:scale(1.08)}}
+@media (prefers-reduced-motion:reduce){.siri::before,.siri::after{animation:none!important}}
+html[data-motion-paused] .siri::before,html[data-motion-paused] .siri::after{animation:none!important}
+.icon-badge{display:inline-grid;flex:none;place-items:center;width:56px;height:56px;border-radius:18px;background:rgba(255,255,255,.14);color:#fff;-webkit-backdrop-filter:blur(10px) saturate(1.2);backdrop-filter:blur(10px) saturate(1.2)}

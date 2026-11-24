@@ -11,6 +11,7 @@ import '@/styles/reviews.css'
 import '@/styles/location-map.css'
 import '@/styles/floating-contact.css'
 import '@/styles/footer-city.css'
+import '@/styles/legal.css'
 import App from '@/app/App'
 
 createRoot(document.getElementById('root')!).render(

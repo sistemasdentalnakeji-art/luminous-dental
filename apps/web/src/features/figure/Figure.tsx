@@ -9,7 +9,7 @@ export type { ServiceId }
 const fill = (s: string, v: Record<string, string | number>) => s.replace(/\{(\w+)\}/g, (_, k) => String(v[k]))
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
 
-/** La tarjeta de la página de servicio: título, modelo sobre su tablero con la perilla dorada, nombre del paso, botones 1-N, Pausa/Reproducir y nota. */
+/** La tarjeta de la página de servicio: título, modelo sobre su tablero con la perilla azul medicina, nombre del paso, botones 1-N, Pausa/Reproducir y nota. */
 function cardHtml(uid: string, only: ServiceId) {
   const { P, height } = projection(true)
   setView(P)

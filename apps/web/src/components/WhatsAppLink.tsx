@@ -5,7 +5,7 @@ import { clinic } from '@/content/clinic'
 export function WhatsAppLink({ className, size }: { className?: string; size: number }) {
   const number = clinic.whatsapp?.replace(/\D/g, '')
   if (!number) {
-    return <span className={`${className} wa-soon`} role="img" aria-label="WhatsApp (coming soon)"><BrandIcon name="whatsapp" size={size} /></span>
+    return <span className={className ? `${className} wa-soon` : 'wa-soon'} role="img" aria-label="WhatsApp (coming soon)"><BrandIcon name="whatsapp" size={size} /></span>
   }
   return (
     <a className={className} href={`https://wa.me/${number}`} target="_blank" rel="noopener noreferrer" aria-label={`${clinic.name} on WhatsApp`}>

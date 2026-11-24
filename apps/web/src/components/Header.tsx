@@ -4,7 +4,8 @@
 import { useEffect, useRef, useState, type FocusEvent, type KeyboardEvent, type PointerEvent as ReactPointerEvent } from 'react'
 import { flushSync } from 'react-dom'
 import { Icon } from '@/components/Icon'
-import { Logo } from '@/components/Logo'
+import { NeonLogo } from '@/components/NeonLogo'
+import { SocialLinks } from '@/components/SocialLinks'
 import { serviceHref } from '@/content/clinic'
 import { home } from '@/content/home'
 import { servicePages } from '@/content/services'
@@ -12,7 +13,7 @@ import { Link } from '@/lib/router'
 
 const { header } = home
 const MENU_ID = 'main-menu'
-const DESKTOP = '(min-width: 1001px)'
+const DESKTOP = '(min-width: 1280px)'
 const cx = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(' ')
 const current = (href: string, path: string) => (href === path ? 'page' : undefined)
 
@@ -61,7 +62,7 @@ export function Header({ path, appointmentHref }: { path: string; appointmentHre
     if (!menuOpen) return
     const before = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    const covered = document.querySelectorAll<HTMLElement>('main, footer, .skip')
+    const covered = document.querySelectorAll<HTMLElement>('main, footer, .skip, .actionbar, .float-contact')
     covered.forEach((el) => { el.inert = true })
     document.getElementById(MENU_ID)?.querySelector<HTMLElement>('a, button')?.focus()
     const wide = matchMedia(DESKTOP)
@@ -78,7 +79,7 @@ export function Header({ path, appointmentHref }: { path: string; appointmentHre
     <header ref={ref} className={cx('hbar', menuOpen && 'menu-open')}>
       <div className="wrap">
         <div className="hdr">
-          <Logo />
+          <NeonLogo />
           <div id={MENU_ID} className={cx('site-menu', menuOpen && 'is-open')}>
             <nav className="nav" aria-label="Main">
               <ul className="nav-list">
@@ -107,8 +108,10 @@ export function Header({ path, appointmentHref }: { path: string; appointmentHre
               <Link className="btn site-menu__cta" href={appointmentHref} onClick={() => setMenuOpen(false)}>{header.cta.label}</Link>
               <a className="tlink" href={header.phone.href}>{header.phone.label}</a>
             </div>
+            <div className="site-menu__social"><SocialLinks /></div>
           </div>
           <div className="hdr-r">
+            <div className="hdr-social"><SocialLinks iconSize={28} /></div>
             <a className="hdr-phone" href={header.phone.href} aria-label={header.phone.label}>
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" /></svg>
             </a>
@@ -193,7 +196,7 @@ function NavDropdown({ id, label, href, path, open, onToggle, onOpen, onClose }:
         className={cx('nav-link nav-button', active && 'is-active')}
         aria-expanded={open}
         aria-controls={`nav-${id}-panel`}
-        onClick={() => { if (!hovering.current) onToggle() }}
+        onClick={() => { if (!hovering.current || !matchMedia(DESKTOP).matches) onToggle() }}
       >
         {label}
         <Icon name="chevronDown" size={16} className="nav-chevron" />

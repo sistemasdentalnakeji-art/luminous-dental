@@ -76,3 +76,18 @@
 - Orden de la dueña: mejorar todas las áreas; servicios destacados; doctor menos repetido; página de seguros igual a la de Dental Nakeji (misma lista de aseguradoras y logos, por ser el mismo dueño). La clínica debe confirmar que la lista aplica a Luminous. Encargo: `docs/MEJORAS-1.md`.
 
 - 20-11-2026 · Tercer color de acento: la dueña eligió **menta C1 `#3fcfae`** (antes C2 `#1fb89a`, cambiada por contraste sobre el resplandor del fondo; docs/tercer-color.md, sección 6). Convive con el dorado: menta para palabras y títulos destacados; dorado para estrellas, foco y rayas. Sobre fondo blanco se usa `#0f766e`. Aplicado en `tokens.css` (`--color-mint`).
+
+## 2026-11-23 · Pruebas en pausa (decisión de la dueña)
+- Hasta nuevo aviso, en este sitio no se lanzan QA (`ld-qa-*`) ni revisiones de rendimiento o pruebas aparte. Solo se trabaja el frontend (diseño). Las pruebas vuelven cuando la dueña dé el visto bueno.
+- Los programadores siguen corriendo typecheck y build y revisando su propio cambio en el navegador antes de entregar.
+- 2026-11-23 (tarde): la dueña reactiva las pruebas: «ahora sí corres todas las pruebas», rendimiento y limpieza de código, al final de la segunda ronda.
+
+## 2026-11-23 · Envío real de citas APAGADO (decisión de la dueña)
+- El formulario completo de cita (BookingForm, BookingSchedule, TimePicker, config/booking.ts) queda en el proyecto pero ya no se usa en ninguna página; se retoma después.
+- `components/Appointment.tsx` es ahora un contacto rápido PROVISIONAL (nombre, teléfono, correo) que valida en el navegador y no envía nada. Al validar muestra el aviso ya existente «This form is not connected yet, so your request was not sent. Please call or text…» (no se promete un contacto que no ocurre).
+- About no lleva formulario (se rediseña); sus botones de cita van a /contact#appointment.
+
+## 2026-11-23 · Reglas de la dueña (quinta ronda)
+- No se agrega nada que la dueña no haya pedido (ej. formulario repetido al final de cada página).
+- Ya no se usan fichas de casino ni temática de Las Vegas en piezas nuevas, salvo que ella lo pida.
+- La dueña autorizó al Jefe a resolver las dudas 1–10 del 23-11 (ver bitácora).

@@ -1,0 +1,73 @@
+/* Selector de hora del formulario de citas (features/booking/TimePicker.tsx). Mismo aspecto que los demás campos del formulario noche (site.css). */
+.tp { position: relative; }
+
+.tp-trigger {
+  display: block;
+  width: 100%;
+  min-height: 52px;
+  padding: 13px 46px 13px 16px;
+  border: 1.5px solid var(--color-input-border);
+  border-radius: 12px;
+  background: var(--color-input-bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23cddaee' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9.5l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 16px center;
+  color: var(--color-input-text);
+  font: 400 17px/1.4 var(--font-sans);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .2s, background-color .2s, box-shadow .2s;
+}
+
+.tp-trigger.is-empty { color: var(--color-input-muted); }
+.tp-trigger:hover:not(:disabled) { background-color: var(--color-input-bg-hover); border-color: var(--color-sky); }
+.tp-trigger:disabled { opacity: .55; cursor: not-allowed; }
+.tp.is-open .tp-trigger,
+.tp-trigger:focus-visible { outline: none; background-color: var(--color-input-bg-hover); border-color: var(--color-sky); box-shadow: 0 0 0 4px rgb(123 195 235 / .4); }
+.tp.is-open .tp-trigger { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23cddaee' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 14.5l6-6 6 6'/%3E%3C/svg%3E"); }
+.f.bad .tp-trigger { border-color: var(--color-error); box-shadow: 0 0 0 3px rgb(224 113 95 / .35); }
+
+/* Se abre siempre debajo del campo */
+.tp-list {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  max-height: min(360px, 60vh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 10px;
+  border: 1.5px solid var(--color-input-border);
+  border-radius: 16px;
+  background: var(--color-surface);
+  box-shadow: 0 18px 40px rgb(0 0 0 / .45);
+  animation: tp-in .18s var(--ease);
+}
+.tp-list:focus { outline: none; }
+@keyframes tp-in { from { opacity: 0; transform: translateY(-6px); } }
+@media (prefers-reduced-motion: reduce) { .tp-list { animation: none; } }
+html[data-motion-paused] .tp-list { animation: none; }
+
+.tp-group + .tp-group { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--color-line); }
+.tp-group-title { margin: 4px 6px 8px; color: var(--color-medic-soft); font: 700 12.5px/1.2 var(--font-sans); letter-spacing: .12em; text-transform: uppercase; }
+
+/* Horarios: cuadrícula de 3 columnas (las flechas arriba y abajo saltan de 3 en 3) */
+.tp-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.tp-option {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  padding: 8px 6px;
+  border: 1.5px solid var(--color-input-border);
+  border-radius: 12px;
+  background: var(--color-input-bg);
+  color: var(--color-input-text);
+  font: 500 16px/1.2 var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.tp-option.is-active { background: var(--color-input-bg-hover); border-color: var(--color-sky); }
+.tp-option[aria-selected='true'] { background: var(--color-medic); border-color: var(--color-medic); color: var(--color-night); font-weight: 700; }
+
+@media (forced-colors: active) {
+  .tp-option.is-active, .tp-option[aria-selected='true'] { outline: 2px solid Highlight; }
+}

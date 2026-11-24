@@ -1,18 +1,18 @@
 // Insurance & Financing, «El camino» (docs/diseno-aseguranzas-fuentes.md): una lista ordenada de 3 pasos unidos por una línea celeste.
 // Paso 1 = buscador + muro de logos (components/InsurancePlans.tsx), paso 2 = el equipo lo revisa, paso 3 = pedir cita. Sin WhatsApp.
 // La barra fija «Request / Call» del celular ya existe en todo el sitio (ActionBar de Layout.tsx); aquí no se repite.
-import { Appointment } from '@/components/Appointment'
 import { InsurancePlans } from '@/components/InsurancePlans'
 import { clinic } from '@/content/clinic'
 import { home } from '@/content/home'
 import { insuranceText as T } from '@/content/insurers'
+import { Link } from '@/lib/router'
 
 const { outOfTown } = home.coverage
 
 function Actions() {
   return (
     <div className="ins-actions">
-      <a className="btn" href="#appointment">{T.book}</a>
+      <Link className="btn" href="/contact#appointment">{T.book}</Link>
       <a className="tlink" href={clinic.phone.href}>{home.footer.phone.label}</a>
     </div>
   )
@@ -33,7 +33,7 @@ export default function Insurance() {
             <span className="ins-dot" aria-hidden="true">1</span>
             <div>
               <h2 id="ins-grid-h">{T.steps[0]}</h2>
-              <InsurancePlans />
+              <InsurancePlans variant="full" />
               <p className="ins-small">{T.note}</p>
             </div>
           </li>
@@ -60,7 +60,6 @@ export default function Insurance() {
           <div><a className="tlink" href={outOfTown.cta.href} target="_blank" rel="noopener noreferrer">{outOfTown.cta.label}</a></div>
         </div>
       </section>
-      <Appointment />
     </>
   )
 }

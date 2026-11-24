@@ -134,14 +134,14 @@ Alternativa más barata: quedarse en **B** (solo correo, sin guardar). Es más s
 - **Portada:** sin figura; titular, párrafo y botones centrados como en B3. La figura con pestañas de la portada se eliminó; la figura de las páginas de servicio no cambió.
 - **Limpieza:** se quitó el CSS sin usar (`.svc-group`, `.rev`, `.feat`, `.quotes`, `.ph`, `.sr`, terreno, río y bloques del mapa viejo, y las reglas de pestañas y portada de la figura) y el código de la figura que solo usaba la portada.
 
-## Textos nuevos por aprobar (19-11-2026, arreglos IT ronda 1)
+## Textos nuevos APROBADOS por la dueña 23-11 (19-11-2026, arreglos IT ronda 1)
 - Insurance: «Questions about insurance or payment? Ask our team.» (reemplaza la frase de seguros, que sigue POR CONFIRMAR).
 - Pausa: «Pause/Play patient reviews animation», «Pause/Play {servicio} animation», «Pause/Play decorative animations».
 - Formulario: «We could not accept some of the details. Please check the form, or call or text (702) 805-8688.»; «Too many requests right now. Please wait a few minutes and try again, or call or text (702) 805-8688.»; «Enter a phone number with at least 7 digits, like (702) 805-8688.»
 - Página de error: botón «Request an appointment».
 - POR CONFIRMAR con la clínica: texto real de Dental Appliances (todo) e Invisalign & Braces (tercer punto y párrafo «About»); frase de seguros.
 
-## Textos nuevos por aprobar (19-11-2026, Mejoras 1, paso 2)
+## Textos nuevos APROBADOS por la dueña 23-11 (19-11-2026, Mejoras 1, paso 2)
 - **Inicio:** frase bajo el titular «Keeping your natural teeth for as long as possible is our priority. Our team cares for the whole family in Las Vegas.» · pie del anillo «Dr. Christian Hahn, General Dentist» + enlace «Meet the doctor» · enlace «See cosmetic dentistry» (en «Thinking about changing your smile?»).
 - **About:** «He is a general dentist with 4 years of experience.» (el resto del párrafo es el oficial).
 - **Servicios destacados, pestañas:** «Braces & Invisalign», «Implants», «Dentures & bridges», «Veneers & crowns», «Whitening». Las tarjetas ya no muestran una viñeta que repite la frase de arriba (máximo 2).
@@ -155,20 +155,51 @@ Alternativa más barata: quedarse en **B** (solo correo, sin guardar). Es más s
 - **Diferencia con la lista oficial de Luminous (15 nombres) — POR CONFIRMAR, no resuelta:** la oficial trae **GEHA** y **Blue Cross and Blue Shield**, que la de Nakeji no trae; la de Nakeji trae Anthem, Premera Blue Cross, Regence y otras que la oficial no nombra. La clínica debe decir cuál es la real.
 - La página no dice «aceptamos» ni promete financiamiento.
 
-## Textos nuevos por aprobar (19-11-2026, ficha del mapa)
+## Textos nuevos APROBADOS por la dueña 23-11 (19-11-2026, ficha del mapa)
 - Texto en arco de la ficha: arriba «LUMINOUS DENTAL», abajo «1212 S MARYLAND PKWY» (dirección real, `clinic.ts`).
 - Nombre del botón del mapa: «Open map of our location» / «Close the map». La pista «Tap to see the location» sigue igual.
 
-## Textos nuevos por aprobar (20-11-2026, ciudad y neón del pie)
+## Textos nuevos APROBADOS por la dueña 23-11 (20-11-2026, ciudad y neón del pie)
 - Nombre accesible del logo en neón del pie (lo lee el lector de pantalla): «Luminous Dental neon sign». Sin otros textos nuevos.
 
-## Héroe «Casos en órbita» (20-11-2026) · PARA APROBAR
+## Héroe «Casos en órbita» (20-11-2026) · APROBADO por la dueña 23-11
 - **Fotos de antes/después (`public/smiles/caso1-*.jpg`, `caso2-*.jpg`): permiso de pacientes POR CONFIRMAR; no publicar en la página pública sin ese permiso.** Salen del archivo de referencia de la dueña. Hasta tener el permiso, no subir la página pública (gh-pages) con estas fotos.
 - Textos nuevos por aprobar (`content/smileCases.ts`): «A different future.» · «No longer hidden.» · «Before» · «After» · «Pause animation» / «Play animation» · «Individual results vary.» · «Smile gallery: before and after» · «Compare before and after» · «Show case: …» · descripciones de las 4 fotos (`alt`, no identifican a nadie).
 - La burbuja «Patient reviews» del prototipo NO se pasó (era un lugar reservado). Si se quiere, solo con reseñas reales de `content/reviews.ts`.
 
 - Formulario de cita, títulos de sección nuevos (2026-11-21, POR APROBAR): «Your details», «Your visit», «Message and consent».
 
-## Héroe: comparador quieto (21-11-2026) · PARA APROBAR
+## Héroe: comparador quieto (21-11-2026) · APROBADO por la dueña 23-11
 - Se quitaron los textos «Pause animation» / «Play animation» del héroe (ya no hay animación). Los demás textos de `content/smileCases.ts` siguen por aprobar. Los casos ahora son botones «A different future» / «No longer hidden». «Individual results vary.» se mantiene.
 - Fotos de antes/después: permiso de pacientes sigue **POR CONFIRMAR**.
+
+## Textos nuevos APROBADOS por la dueña 23-11 (23-11-2026, calendario y formulario de cita)
+- Selector de hora (como el de Dental Nakeji): «Choose a time», «Choose a day first» (hora bloqueada hasta elegir día), «Morning», «Afternoon».
+- Texto de ejemplo en las casillas: «Your first name», «Your last name», «(000) 000-0000», «you@example.com» (sin nombres de persona, 23-11 r3) y, en el mensaje, «Tell us how we can help.» (sustituye a «No medical history or payment info, please.»; si se quiere conservar ese aviso de privacidad, va como etiqueta, no como ejemplo).
+- El horario del selector sigue siendo de ejemplo (POR CONFIRMAR, `config/schedule.ts`).
+
+## Textos nuevos APROBADOS por la dueña 23-11 (23-11-2026, segunda ronda, seguros «La tarjeta»)
+- POR APROBAR: «Show all 24 plans» (el 24 sale de `insurers.length`) y «Show fewer plans», botón que abre y cierra el muro de logos de la home. «Insurance plans on our list» es solo el nombre accesible del muro (no se ve). El resto de los textos de seguros ya estaban aprobados.
+
+## Páginas legales (23-11-2026, tercera ronda) · POR CONFIRMAR (revisión legal)
+- **AVISO: el texto de `/privacy-policy` y `/terms-and-conditions` (`content/legal.ts`) necesita revisión de un abogado antes de publicar. No se muestra este aviso en la página.** No hay página de «mensajes/SMS» aparte porque Dental Nakeji tampoco la tiene: el consentimiento de mensajes de texto va como sección «Text messages» en Terms (y un resumen en Privacy).
+- Estructura copiada de Dental Nakeji; el contenido NO copia obligaciones mexicanas (LFPDPPP, ARCO, Profeco, tribunales de Tijuana, SSN por teléfono, plazo de 20 días). Datos reales usados: nombre, dirección, teléfono y correo de `content/clinic.ts`.
+- POR CONFIRMAR con la clínica: fecha de vigencia (`updated` está vacío: la página no muestra fecha), responsable de privacidad (nombre/cargo) y si hay un correo solo de privacidad (hoy `info@luminousdentallv.com`), proveedores reales (alojamiento, formulario, correo, mensajes de texto), si el sitio usa cookies o analítica, cancelación/depósitos/garantías (el texto dice solo «avísenos con tiempo» y «se explica por escrito»), si entregan un Aviso de Prácticas de Privacidad (HIPAA) en la primera visita.
+- POR CONFIRMAR con el abogado: que sea correcto decir que la clínica es entidad cubierta por HIPAA y que este resumen basta junto al aviso formal (45 CFR 164.520); texto de mensajes (TCPA/CTIA: «Message frequency varies», «Message and data rates may apply», STOP/HELP, «Consent is not a condition», «no compartimos el número con terceros para su marketing»; si el envío es automatizado); conservación del expediente en Nevada; ley aplicable (Nevada) y foro; límite de responsabilidad; ley de datos de salud del consumidor de Nevada; texto de menores.
+- Textos nuevos por aprobar: «Privacy policy», «Terms and conditions», «Legal» (nombre accesible del grupo de enlaces del pie) y, bajo la casilla de consentimiento del formulario, «Read our Privacy policy and Terms and conditions.» (abren en otra pestaña para no perder lo escrito). El texto de la casilla no cambió.
+
+## About nuevo (2026-11-23, ronda 4) · APROBADO por la dueña 23-11 (los datos que faltan siguen POR CONFIRMAR)
+- Frase de la intro (texto nuevo, armado con la dirección de `clinic.ts` y `home.why.points[0]`): «A general and cosmetic dental office at 1212 S Maryland Pkwy in Las Vegas, with care built around keeping your natural teeth.»
+- Títulos y etiquetas nuevos: «Our story», «What we believe», «Where to find us», «Our mission», «Our vision», «What we stand for», «Meet the team», «Experience», «Training», «Language»; frase de la historia «One idea runs through every visit: your teeth should last a lifetime.»; frase del doctor «He is committed to delivering quality care and a comfortable experience for his patients.» (recorte de `home.doctor.text`).
+- La misión usa el texto del punto 2 de «Why patients choose»; no es una declaración oficial.
+- POR CONFIRMAR (no se dibujan en la página; en `content/about.ts` están en `null`): «How it began» (año de apertura, quién la fundó, primeros pacientes), «Our vision» y más integrantes del equipo (nombre, rol, foto).
+
+## Quinta ronda (23-11-2026) · textos y cambios
+- Estado: la dueña aprobó (23-11) los textos nuevos antes «por aprobar», salvo las páginas legales (revisión legal pendiente) y los datos de About que faltan (cómo empezó, visión, más integrantes), que siguen POR CONFIRMAR.
+- **Sección estrella (2.ª del inicio), título nuevo: «Everyday dental care for the whole family»** (antes «Dental care for the whole family»; variante propuesta por Frontend 2, APROBADA junto con el resto el 23-11 por la regla de la dueña; si prefiere otra, se cambia `home.services.heading`). El acento sigue en «whole family».
+- Servicios de la estrella (de `content/services.ts`, nombre y subtítulo tal cual, sin textos nuevos): Routine Dental Care, Dental Cleaning, Wisdom Tooth Removal, Cosmetic Bonding, Pediatric Dentistry. No repiten los destacados (Braces & Invisalign, Implants, Dentures & bridges, Veneers & crowns, Whitening). Dental Appliances queda fuera porque aún no tiene texto real.
+- Formulario rápido (inicio y Contact): sin la frase «call or text» ni el teléfono. Al enviar con datos válidos: «This form is not connected yet, so your request was not sent.» (texto nuevo).
+- «No medical history or payment info, please.» vuelve como ayuda fija bajo el mensaje del BookingForm guardado (`home.appointment.messageHint`); hoy ese formulario no se usa.
+- Pie: se quitó la franja «Ready for a smile that lasts?» y sus botones. About: sin textos nuevos (solo cambió el diseño de «Our story» y «What we stand for»).
+
+- 2026-11-23 · Aprobados por el Jefe con permiso de la dueña: «Learn more about this service», «Explore our services».

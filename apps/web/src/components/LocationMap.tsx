@@ -54,7 +54,7 @@ function ChipFace({ top, bottom, id }: { top: string; bottom: string; id: string
       <circle cx="100" cy="100" r="54" fill="none" stroke="#f3d79a" strokeOpacity=".75" strokeWidth="1" />
       <text><textPath href={`#chip-top-${id}`} startOffset="50%" textAnchor="middle">{top}</textPath></text>
       <text><textPath href={`#chip-bottom-${id}`} startOffset="50%" textAnchor="middle">{bottom}</textPath></text>
-      {/* El swoosh y la estrella de 4 puntas del logo, redibujados a partir del logo real (public/logo.png) y centrados. */}
+      {/* El swoosh y la estrella de 4 puntas del logo, redibujados a partir del logo real (public/logo.webp) y centrados. */}
       <g transform="translate(100 101) scale(.16) translate(-320 -182)" fill="#5eaee0">
         <path d="M8 202C90 300 230 345 330 340C450 332 540 250 560 105L572 105C565 190 520 270 430 300C330 330 150 300 8 202Z" />
         <path d="M565 20L576 85L632 98L576 110L565 175L554 110L498 98L554 85Z" />

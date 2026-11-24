@@ -42,12 +42,12 @@ export const home = {
     primaryCta: { label: 'Book an in-office consultation', href: '#appointment' },
     secondaryCta: callPhone,
     // POR CONFIRMAR: «Free virtual consultation» (no existe en docs/datos.md ni en clinic.ts) y el texto «start the conversation from home». No se muestran.
-    more: { label: 'See the thinking behind a makeover', href: '#doctor' },
+    more: { label: 'Explore our services', href: '#services' },
   },
 
   // 3. Servicios en 4 grupos
   services: {
-    heading: 'Dental care for the whole family',
+    heading: 'Everyday dental care for the whole family',
     groups: [
       {
         name: 'General Dentistry',
@@ -97,13 +97,9 @@ export const home = {
   doctor: {
     heading: 'Meet Dr. Christian Hahn',
     role: 'General Dentist',
-    name: 'Dr. Christian Hahn',
     // NUEVO, para aprobación: empieza con «He is» para no repetir el nombre bajo el título (solo en la página About).
     text: 'He is a general dentist with 4 years of experience. He completed his dental training at the University of Nevada, Las Vegas. He is committed to delivering quality care and a comfortable experience for his patients.',
     language: 'Language: English',
-    photo: { src: null, alt: 'POR CONFIRMAR: photo of Dr. Hahn (the official site has one; confirm permission and quality)' },
-    // NUEVO, para aprobación: pie de foto bajo el anillo en la home (la foto es el centro del anillo) y enlace a About.
-    meet: { label: 'Meet the doctor', href: '/about' },
     photoAlt: 'Dr. Christian Hahn, general dentist, in a white coat',
   },
 
@@ -114,14 +110,10 @@ export const home = {
     cta: { label: 'Request an appointment', href: '#appointment' },
     more: { label: 'See cosmetic dentistry', href: '/services#cosmetic' }, // NUEVO, para aprobación
     disclaimer: 'Individual results vary.',
-    // POR CONFIRMAR: sin fotos de antes y después ni historias de pacientes hasta que la clínica dé permiso por escrito.
-    gallery: null,
   },
 
   // 7. Reseñas (sin calificación; POR CONFIRMAR el permiso para publicar cada una)
   reviews: {
-    heading: 'What our patients say',
-    note: 'POR CONFIRMAR permission: each quote is public on the official site; the clinic must approve using it here.',
     items: [
       {
         quote: 'Dr Christian, Joshua and Anna have done a great job and made us feel very happy and satisfied.',
@@ -139,7 +131,6 @@ export const home = {
         confirmed: false,
       },
     ],
-    cta: { label: 'Read more patient reviews', href: '/patient-reviews' },
   },
 
   // 8. Seguros y pacientes de fuera de la ciudad
@@ -164,14 +155,13 @@ export const home = {
   appointment: {
     id: 'appointment',
     heading: 'Request an appointment',
-    intro:
-      `Tell us who you are and what you need. Sending this form does not reserve a time. Our team will follow up to set your visit. You can also call or text ${tel}.`,
     submitLabel: 'Send my request',
+    messageHint: 'No medical history or payment info, please.', // ayuda fija bajo el mensaje del formulario completo (guardado, hoy sin usar)
     consent: 'I agree that Luminous Dental may contact me about this request.',
     messages: {
       sending: 'Sending your request...',
       success: `Thank you. We received your request and will contact you to set a time. For anything urgent, call or text ${tel}.`,
-      preview: `This form is not connected yet, so your request was not sent. Please call or text ${tel} to book.`,
+      preview: 'This form is not connected yet, so your request was not sent.',
       error: `Something went wrong and your request was not sent. Please call or text ${tel}.`, // servidor caído o sin respuesta
       // NUEVO, para aprobación: un mensaje por tipo de falla.
       errorInvalid: `We could not accept some of the details. Please check the form, or call or text ${tel}.`,
@@ -183,8 +173,11 @@ export const home = {
     when: {
       legend: 'Preferred day',
       pickTime: 'Preferred time (we’ll confirm)', // aviso de preferencia mínimo, como etiqueta del grupo de horas
-      prev: 'Previous month',
-      next: 'Next month',
+      // NUEVOS, por aprobar (23-11-2026): selector de hora como el de Dental Nakeji.
+      chooseTime: 'Choose a time',
+      chooseDayFirst: 'Choose a day first',
+      morning: 'Morning',
+      afternoon: 'Afternoon',
     },
     errors: {
       firstName: 'Enter your first name (letters only, at least 2).',
@@ -206,8 +199,6 @@ export const home = {
   // 10. Pie de página
   footer: {
     tagline: 'Your teeth should last a lifetime.',
-    // Franja de cierre arriba del pie; el botón de cita usa header.cta.label.
-    closing: { title: 'Ready for a smile that lasts?', callLabel: 'Call or text' },
     contactHeading: 'Contact',
     address: '1212 S Maryland Pkwy, Las Vegas, NV 89104',
     phone: callPhone,

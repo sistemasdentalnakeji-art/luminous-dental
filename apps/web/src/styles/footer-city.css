@@ -1,39 +1,63 @@
-/* Ciudad de Las Vegas del pie (abajo) y letrero de neón (arriba, en el bloque de marca). Prototipo: public/_maquetas/recorrido/index.html. */
+/* Ciudad de Las Vegas del pie (abajo) y letrero de neón (arriba, en el bloque de marca). La ciudad viene de components/footer-city/city.svg. */
 @property --p { syntax: '<number>'; inherits: true; initial-value: 0; }
 
 /* La ciudad es el fondo del pie: pegada abajo, detrás del contenido, sin recibir clics. El velo oscuro (::after) protege la lectura del texto. */
-.fcity, .fcity-slot { --warm: #ffcf7a; position: absolute; left: 0; right: 0; bottom: 0; height: clamp(440px, 42vw, 760px); overflow: hidden; pointer-events: none; z-index: 0; }
-.fcity::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, var(--color-night) 0, rgb(8 18 40 / .7) 35%, rgb(8 18 40 / .6) 100%); }
+/* El alto nunca pasa del alto del pie (min con 100 %): en pantallas anchas la ciudad era más alta que el pie y sus torres asomaban sobre el borde superior (el «piquito»). */
+.fcity, .fcity-slot { --warm: var(--color-medic-soft); position: absolute; left: 0; right: 0; bottom: 0; height: min(clamp(440px, 42vw, 760px), 100%); overflow: hidden; pointer-events: none; z-index: 0; }
+.fcity::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, var(--color-night) 0, color-mix(in srgb, var(--color-night) 70%, transparent) 35%, color-mix(in srgb, var(--color-night) 60%, transparent) 100%); }
 .ftr > .wrap { position: relative; z-index: 1; }
 .fcity-art, .fcity-art svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 /* dibujo de líneas: --p va de 0 a 1 una sola vez */
 .fcity.is-drawn { animation: fc-draw 5s cubic-bezier(.45, .1, .35, 1) both; }
 @keyframes fc-draw { from { --p: 0; } to { --p: 1; } }
-.fcity .ln { fill: none; stroke: var(--c, #7fa6e0); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; opacity: var(--o, .5);
+.fcity .ln { fill: none; stroke: var(--c, var(--color-sky)); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; opacity: var(--o, .5);
   stroke-dasharray: 1; stroke-dashoffset: calc(1 - clamp(0, (var(--p) - var(--s)) / var(--w, .2), 1)); }
 .fcity .ln.warm { --c: var(--warm); --o: .8; }
-.fcity .ln.far { --c: #5f86c4; --o: .4; }
+.fcity .ln.far { --c: color-mix(in srgb, var(--color-sky) 55%, var(--color-glow)); --o: .4; }
+.fcity .rfill-far { fill: color-mix(in srgb, var(--color-ridge-far) 45%, var(--color-night)); }
+.fcity .rfill-near { fill: color-mix(in srgb, var(--color-surface-deep) 70%, black); }
 .fcity .rfill { stroke: none; opacity: clamp(0, (var(--p) - var(--s)) * 6, 1); }
 .fcity .win { fill: none; stroke: var(--warm); stroke-width: 3; stroke-linecap: round; opacity: calc(.8 * clamp(0, (var(--p) - var(--s)) * 10, 1)); }
-.fcity .lamp { fill: #fff3c8; opacity: clamp(0, (var(--p) - var(--s)) * 10, 1); }
+.fcity .lamp { fill: var(--color-medic-soft); opacity: clamp(0, (var(--p) - var(--s)) * 10, 1); }
+
+/* Vida continua (solo opacity y transform; la clase la pone FooterCity cuando el dibujo terminó y el pie está a la vista):
+   las ventanas titilan por grupos con tiempos distintos, las farolas respiran. */
+.fcity.is-live .fc-l { will-change: opacity; } /* ventanas y farolas van en capas propias (.fc-l0 a .fc-l3, ver FooterCity.tsx): se animan como capa y no repintan la ciudad */
+.fcity.is-live .fc-l0 { animation: fc-twinkle 8.5s ease-in-out -2s infinite; }
+.fcity.is-live .fc-l1 { animation: fc-twinkle 4.8s ease-in-out -3.4s infinite; }
+.fcity.is-live .fc-l2 { animation: fc-twinkle 6s ease-in-out infinite; }
+.fcity.is-live .fc-l3 { animation: fc-lamp 5s ease-in-out infinite; }
+@keyframes fc-twinkle { 0%, 100% { opacity: 1; } 35% { opacity: .375; } 55% { opacity: 1; } 75% { opacity: .625; } } /* relativo al .8 de las ventanas: 1 = .8, .375 = .3, .625 = .5 */
+@keyframes fc-lamp { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
 
 /* letrero de neón en el bloque de marca: el logo oficial, apagado (vidrio gris) hasta entrar en pantalla y luego encendido con parpadeo corto de ~2 s */
 .neon { position: relative; width: clamp(190px, 17vw, 240px); aspect-ratio: 640 / 365; margin: 0 0 clamp(16px, 2vw, 24px); }
 .neon a { position: absolute; inset: 0; display: block; min-height: 44px; }
 .neon img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .neon-off { filter: brightness(.5) saturate(.45); }
-.neon-on { filter: drop-shadow(0 0 1.5px #fff) drop-shadow(0 0 7px #4aa8f5) drop-shadow(0 0 22px #2f86e0); }
+.neon { --glow: .8; } /* techo de opacidad del halo; el header lo baja (site.css) */
+.neon-on { filter: brightness(1.04) drop-shadow(0 0 1.5px #fff); } /* el trazo nítido: fijo, no respira */
+.neon-glow { filter: blur(6px) brightness(1.1) drop-shadow(0 0 14px #3a90e8); opacity: 0; } /* halo: copia borrosa debajo; solo su opacity cambia (compositor) */
 .neon.unlit .neon-on { opacity: 0; }
 .neon.lit .neon-on { animation: fc-ignite 2s linear both; }
+.neon.lit .neon-glow { animation: fc-ignite-glow 2s linear both, fc-breathe 7s ease-in-out 2s infinite; opacity: var(--glow); }
+.neon[data-off] .neon-glow { animation-play-state: paused; }
 @keyframes fc-ignite { 0% { opacity: 0; } 6% { opacity: .95; } 10% { opacity: .15; } 18% { opacity: .85; } 22% { opacity: .25; } 34% { opacity: 1; } 100% { opacity: 1; } }
+@keyframes fc-ignite-glow { 0% { opacity: 0; } 6% { opacity: calc(var(--glow) * .95); } 10% { opacity: calc(var(--glow) * .15); } 18% { opacity: calc(var(--glow) * .85); } 22% { opacity: calc(var(--glow) * .25); } 34% { opacity: var(--glow); } 100% { opacity: calc(var(--glow) * .62); } }
+/* respiración: sube y baja suave, con un parpadeo muy leve hacia el 64 % de cada vuelta; --glow es el techo */
+@keyframes fc-breathe { 0%, 100% { opacity: calc(var(--glow) * .62); } 42% { opacity: var(--glow); } 62% { opacity: calc(var(--glow) * .9); } 64% { opacity: calc(var(--glow) * .74); } 66% { opacity: calc(var(--glow) * .92); } 68% { opacity: calc(var(--glow) * .8); } 71% { opacity: calc(var(--glow) * .88); } }
 
 /* reducir movimiento o pausa: ciudad dibujada y neón encendido, sin parpadeo */
 @media (prefers-reduced-motion: reduce) {
-  .fcity { --p: 1; animation: none; }
-  .neon .neon-on { opacity: 1; animation: none; }
+  .fcity, .fcity.is-drawn { --p: 1; animation: none; }
+  .fcity.is-live .fc-l { animation: none; }
+  .neon.lit .neon-on, .neon.unlit .neon-on { opacity: 1; animation: none; }
+  .neon.lit .neon-glow, .neon.unlit .neon-glow { opacity: calc(var(--glow) * .85); animation: none; }
 }
-html[data-motion-paused] .fcity { --p: 1; animation: none; }
+.fcity.is-done, html[data-motion-paused] .fcity.is-drawn { --p: 1; animation: none; } /* terminó o se pausó: queda dibujada y no se repite al reanudar */
+html[data-motion-paused] .fcity.is-live .fc-l { animation: none; }
 html[data-motion-paused] .neon .neon-on { opacity: 1; animation: none; }
+html[data-motion-paused] .neon .neon-glow { opacity: calc(var(--glow) * .85); animation: none; }
 
 /* Margen derecho de la línea legal = fichas flotantes (44 px de toque) + su separación del borde + aire, para que nunca queden encima del texto ni de la pausa */
 .ftr .ftr-legal { padding-right: calc(clamp(14px, 2vw, 26px) + 44px + 16px); }

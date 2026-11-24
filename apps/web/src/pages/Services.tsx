@@ -1,6 +1,5 @@
 // Portada de servicios, mismo orden de secciones que /servicios/ de Dental Nakeji: hero (antetítulo, título, entrada, índice de categorías) →
 // un bloque por categoría (título e introducción a la izquierda, una tarjeta por servicio a la derecha: ícono, título, 3 puntos, "View service").
-import { Appointment } from '@/components/Appointment'
 import { Icon } from '@/components/Icon'
 import { serviceHref } from '@/content/clinic'
 import { home } from '@/content/home'
@@ -50,7 +49,6 @@ export default function Services() {
           </section>
         ))}
       </section>
-      <Appointment />
     </>
   )
 }

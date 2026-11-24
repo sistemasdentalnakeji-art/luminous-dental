@@ -20,7 +20,7 @@ function Coin({ children }: { children: ReactNode }) {
   )
 }
 
-/** La estrella de 4 puntas del logo (vector, de public/logo.png), recortada y centrada. */
+/** La estrella de 4 puntas del logo (vector, de public/logo.webp), recortada y centrada. */
 const Star = () => (
   <svg viewBox="488 10 154 175" width="16" height="18" focusable="false">
     <path d="M565 20L576 85L632 98L576 110L565 175L554 110L498 98L554 85Z" fill="#7bc3eb" />

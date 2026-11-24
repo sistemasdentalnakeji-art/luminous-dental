@@ -38,9 +38,9 @@
 .brk-card{
   --anatomy-paper:#102349;--anatomy-face:#17305a;--anatomy-top:#1d3a69;
   --anatomy-shade-0:#0c1a36;--anatomy-shade-1:#0f2142;--anatomy-shade-2:#13284d;--anatomy-shade-3:#182f58;
-  --anatomy-lit-top:var(--color-gold-soft);--anatomy-lit-shade:#c99a3a;
-  --anatomy-hi:#a9cfe9;--anatomy-mid:#58789f;--anatomy-lo:#2f4a76;--anatomy-faint:#1d3359;--anatomy-lit:var(--color-gold);
-  --anatomy-halo:#02060f;--anatomy-halo-opacity:.85;--anatomy-dot:#cfe3f3;
+  --anatomy-lit-top:var(--color-medic-soft);--anatomy-lit-shade:#2a9fb0;
+  --anatomy-hi:#a9cfe9;--anatomy-mid:#58789f;--anatomy-lo:#2f4a76;--anatomy-faint:#1d3359;--anatomy-lit:var(--color-medic);
+  --anatomy-weight:1;--anatomy-halo:#02060f;--anatomy-halo-opacity:.85;--anatomy-dot:#cfe3f3;
 }
 .brk-card .tooth{--anatomy-paper:#e6e0d1;--anatomy-top:#faf6ea;--anatomy-shade-0:#aaa593;--anatomy-shade-1:#c1bca9;--anatomy-shade-2:#d6d0be;--anatomy-shade-3:#e9e3d3;--anatomy-mid:#6f6a5a;--anatomy-lo:#9c9683}
 .brk-card .metal{--anatomy-paper:#a9b9cd;--anatomy-top:#eaf2fb;--anatomy-shade-0:#5f7189;--anatomy-shade-1:#7587a0;--anatomy-shade-2:#93a6bd;--anatomy-shade-3:#b9c8da;--anatomy-mid:#2b3b54;--anatomy-lo:#46587a;--anatomy-hi:#1b2a42}
@@ -53,7 +53,7 @@
 .brk-card .tray{--anatomy-paper:rgba(150,200,235,.12);--anatomy-top:rgba(190,225,248,.2);--anatomy-shade-0:rgba(110,170,215,.16);--anatomy-shade-1:rgba(120,180,222,.14);--anatomy-shade-2:rgba(140,195,232,.12);--anatomy-shade-3:rgba(160,208,240,.1);--anatomy-hi:rgba(200,230,250,.8);--anatomy-mid:rgba(160,205,238,.6);--anatomy-lo:rgba(150,200,235,.45)}
 .brk-shadow{fill:rgba(0,6,20,.42);filter:blur(9px)}
 
-/* Variante de tarjeta (páginas de servicio): título, modelo sobre su tablero con la perilla dorada, nombre del paso, botones y nota. */
+/* Variante de tarjeta (páginas de servicio): título, modelo sobre su tablero con la perilla azul medicina, nombre del paso, botones y nota. */
 .brk-card--box{border-radius:22px;background:linear-gradient(180deg,rgba(18,38,76,.92),rgba(11,26,54,.94));box-shadow:0 0 0 1px rgba(123,195,235,.32),0 40px 80px -40px rgba(0,8,24,.9),0 0 80px -20px rgba(123,195,235,.22);padding:clamp(12px,1.5vw,18px) clamp(8px,1.6vw,20px) clamp(14px,1.6vw,20px)}
 .bx-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:15px;line-height:1.3;padding-inline:6px}
 .bx-title{font-family:var(--font-serif);font-size:clamp(19px,1.6vw,23px);color:#fff}
@@ -65,8 +65,8 @@
 .bx-controls button{width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.05);color:#fff;font:600 16px/1 var(--font-sans);cursor:pointer;transition:background-color .2s ease-out,border-color .2s ease-out,color .2s ease-out,transform .15s ease-out}
 .bx-controls button:hover{border-color:var(--color-sky)}
 .bx-controls button:active{transform:scale(.96)}
-.bx-controls button:focus-visible{outline:3px solid var(--color-gold);outline-offset:3px}
-.bx-steps button[aria-pressed="true"]{background:var(--color-gold);border-color:var(--color-gold);color:var(--color-night)}
+.bx-controls button:focus-visible{outline:3px solid var(--color-medic);outline-offset:3px}
+.bx-steps button[aria-pressed="true"]{background:var(--color-medic);border-color:var(--color-medic);color:var(--color-night)}
 .bx-controls .brk-pause{margin-right:6px;display:grid;place-items:center;padding:0}
 .bx-controls .brk-pause[hidden]{display:none}
 .bx-foot{display:flex;justify-content:space-between;gap:6px 18px;flex-wrap:wrap;margin-top:12px;font-size:15px;line-height:1.4;color:var(--color-text2);padding-inline:6px}
@@ -77,14 +77,14 @@
 .brk-card{position:relative;color:var(--color-text);font-family:var(--font-sans)}
 .brk-stage{display:block;margin:0 auto;outline:none;touch-action:pan-y;cursor:grab;border-radius:14px;-webkit-tap-highlight-color:transparent}
 .brk-stage:active{cursor:grabbing}
-.brk-stage:focus-visible{outline:3px solid var(--color-gold);outline-offset:2px}
+.brk-stage:focus-visible{outline:3px solid var(--color-medic);outline-offset:2px}
 .brk-bob{animation:brk-bob 7s ease-in-out infinite;animation-play-state:paused}
 .result-fig[data-live] .brk-bob{animation-play-state:running} /* el bucle suave solo corre mientras la figura está en pantalla */
 .result-fig{display:block;width:100%}
 .result-wrap{position:relative;width:100%}
 .result-pause{position:absolute;top:0;right:0;display:grid;place-items:center;width:44px;height:44px;padding:0;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:rgba(10,21,41,.45);cursor:pointer}
 .result-pause:hover{border-color:var(--color-sky)}
-.result-pause:focus-visible{outline:3px solid var(--color-gold);outline-offset:3px}
+.result-pause:focus-visible{outline:3px solid var(--color-medic);outline-offset:3px}
 .result-pause svg{width:18px;height:18px;fill:#fff}
 @keyframes brk-bob{50%{transform:translateY(-4px)}}
 .brk-card--box .brk-stage{cursor:grab}

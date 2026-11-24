@@ -2,7 +2,6 @@
 // 1. Hero (migas de pan, título, subtítulo, 3 puntos, botones) · 2. Sobre el tratamiento (título en forma de pregunta, párrafo, botón al blog,
 // y a la derecha la figura de ese servicio si la tiene; sin figura = sin caja vacía) · 3. Formulario de cita con el servicio elegido.
 import { lazy, Suspense } from 'react'
-import { Appointment } from '@/components/Appointment'
 import { Icon } from '@/components/Icon'
 import { clinic } from '@/content/clinic'
 import { type ServicePage, serviceText as T } from '@/content/services'
@@ -31,7 +30,7 @@ export default function Service({ page }: { page: ServicePage }) {
           </ul>
         )}
         <div className="hero-cta">
-          <a className="btn" href="#appointment">{T.book}</a>
+          <Link className="btn" href="/contact#appointment">{T.book}</Link>
           <a className="btn btn-ghost" href={clinic.phone.href}>{T.call}</a>
         </div>
       </section>
@@ -58,7 +57,6 @@ export default function Service({ page }: { page: ServicePage }) {
           </div>
         </section>
       )}
-      <Appointment service={page.name} />
     </>
   )
 }

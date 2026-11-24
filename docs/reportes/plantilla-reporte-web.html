@@ -1,4 +1,4 @@
-<title>Reporte web Luminous Dental</title>
+<title>Proyecto página web · Luminous Dental</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..400&family=Figtree:wght@400;500;600;700&display=swap">
@@ -25,7 +25,7 @@
 body{background:var(--desk);color:var(--ink);font:15.5px/1.6 var(--body);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .stack{max-width:880px;margin:0 auto;padding-block:32px 64px;display:grid;gap:30px}
-.sheet{background:var(--wm) center/420px 300px repeat,var(--paper);border-radius:3px;box-shadow:0 18px 40px -24px rgba(10,21,41,.55);padding:clamp(24px,5.5vw,60px);min-width:0;position:relative}
+.sheet{background:var(--paper);overflow:hidden;border-radius:3px;box-shadow:0 18px 40px -24px rgba(10,21,41,.55);padding:clamp(24px,5.5vw,60px);min-width:0;position:relative}
 h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.1;text-wrap:balance;margin:0}
 h2{font-size:clamp(28px,4vw,38px);letter-spacing:-.01em}
 h2 .n{color:var(--gold);font-style:italic;margin-right:.18em}
@@ -133,167 +133,163 @@ strong{font-weight:600}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .stack{max-width:none;padding:0;gap:0;display:block}
   .sheet{border-radius:0;box-shadow:none;padding:.6in .65in;break-after:page;min-height:11in;font-size:13.5px;
-    background:var(--wm) center/420px 300px repeat,var(--paper)}
+    background:var(--paper)}
   .cover{height:11in;min-height:0;background:radial-gradient(110% 70% at 88% 0%,#2f63ad 0%,transparent 58%),radial-gradient(80% 60% at 0% 100%,#122b55 0%,transparent 70%),linear-gradient(165deg,var(--night2),var(--night) 62%)}
   .sheet:last-child{break-after:auto}
   .lead{font-size:15px}
   .change{padding-block:16px}
 }
+
+/* marca de agua: una sola palabra grande y tenue en diagonal, al centro de cada hoja */
+.sheet:not(.cover)::before{content:"CONFIDENCIAL";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-30deg);font:700 clamp(40px,11vw,100px)/1 var(--body);letter-spacing:.08em;color:var(--ink);opacity:.06;pointer-events:none;white-space:nowrap;z-index:0}
+.sheet > *{position:relative;z-index:1}
+.cover .stamp{position:absolute;top:clamp(24px,5.5vw,60px);right:clamp(24px,5.5vw,60px);z-index:2;border:2px solid #e7a0a0;color:#f2b8b8;font-weight:700;letter-spacing:.2em;font-size:13px;padding:6px 12px;border-radius:4px;transform:rotate(4deg)}
+.cover h1 .t1{display:block;font-size:.42em;letter-spacing:0;color:#c7d6ee;font-weight:300;margin-bottom:.15em}
+.cover h1 em{display:block}
+.runhead{justify-content:space-between}
+.pair{align-items:start}
+.pair.narrow{max-width:640px}
+.change{padding-block:18px}
+.change > p{margin:2px 0 0}
+.sumlist{margin:18px 0 0;padding-left:22px;display:grid;gap:12px;font-size:16.5px;max-width:68ch}
+.sumlist li::marker{color:var(--gold)}
+.group ul ul{margin-top:2px}
 </style>
 
 <main class="stack">
 
 <section class="sheet cover" aria-label="Portada">
+  <div class="stamp">CONFIDENCIAL</div>
   <div><img class="logo" src="img/logo.png" alt="Luminous Dental" width="640" height="365"></div>
   <div class="mid">
-    <h1>Nueva página web de <em>Luminous Dental</em></h1>
-    <p class="sub">Avance del 20 de noviembre de 2026 y estado del proyecto desde su inicio.</p>
+    <h1><span class="t1">Proyecto página web</span><em>Luminous Dental</em></h1>
     <div class="rule"></div>
   </div>
   <div>
     <div class="fields">
-      <div><span>Reporte</span><b>RW-2026-01</b></div>
+      <div><span>Reporte</span><b>RW-2026-02</b></div>
       <div><span>Empresa</span><b>Luminous Dental · Las Vegas, NV</b></div>
       <div><span>Departamento</span><b>IT · Páginas web</b></div>
-      <div><span>Dirigido a</span><b>Gerencia</b></div>
-      <div><span>Elaboró</span><b>Equipo de Páginas web</b></div>
-      <div><span>Fecha</span><b>20 de noviembre de 2026</b></div>
+      <div><span>Dirigido a</span><b>Dirección</b></div>
+      <div><span>Elaboró</span><b>Jadro Montes</b></div>
+      <div><span>Fecha</span><b>21 de noviembre de 2026</b></div>
     </div>
     <p class="note">Documento interno de uso exclusivo de la empresa.</p>
   </div>
 </section>
 
 <section class="sheet" aria-labelledby="s1">
-  <div class="runhead"><span>Luminous Dental · Nueva página web · RW-2026-01</span><span class="conf">CONFIDENCIAL</span><span>Hoja 2</span></div>
+  <div class="runhead"><span>Luminous Dental · Proyecto página web · RW-2026-02</span><span>Hoja 2</span></div>
   <h2 id="s1"><span class="n">1</span>Resumen</h2>
-  <p class="lead">La página nueva ya tiene 32 páginas funcionando. Hoy se terminaron la portada, los seguros, el contacto y el cierre de cada página. Para publicarla faltan las citas en línea, la política de privacidad y el permiso de los pacientes para sus fotos.</p>
-
-  <div class="figs">
-    <div class="fig"><b>32</b><span>páginas listas</span></div>
-    <div class="fig"><b>10</b><span>cambios de hoy</span></div>
-    <div class="fig"><b>4</b><span>días de trabajo</span></div>
-    <div class="fig"><b>8</b><span>pendientes</span></div>
-  </div>
-
-  <div class="road">
-    <h3>Dónde va el proyecto</h3>
-    <ol>
-      <li class="done"><b>Información</b>Datos y competencia</li>
-      <li class="done"><b>Diseño</b>Estilo elegido</li>
-      <li class="now"><b>Construcción</b>32 páginas</li>
-      <li><b>Revisión final</b>Pruebas completas</li>
-      <li><b>Citas</b>Formulario conectado</li>
-      <li><b>Publicación</b>Sitio oficial</li>
-    </ol>
-  </div>
-
-  <div class="keys">
-    <div class="key"><h3>Hoy</h3><p>Portada, seguros, contacto y cierre con Las Vegas.</p></div>
-    <div class="key"><h3>Calidad</h3><p>Cada cambio lo revisa otra persona del equipo.</p></div>
-    <div class="key"><h3>Para publicar</h3><p>Citas en línea, privacidad y permiso de fotos.</p></div>
-    <div class="key"><h3>Respaldo</h3><p>Todo guardado en GitHub hasta el 20 de noviembre.</p></div>
-  </div>
+  <ul class="sumlist">
+    <li>La portada muestra casos de antes y después con una línea que se arrastra.</li>
+    <li>Los botones flotantes quedaron fijos y más fáciles de tocar.</li>
+    <li>El formulario de citas es más limpio y trae calendario y horas. Todavía no envía citas.</li>
+    <li>El pie de página lleva el logo como letrero de neón y la ciudad de Las Vegas de fondo.</li>
+    <li>Los títulos del inicio y los servicios destacados se ven más cuidados.</li>
+    <li>Las revisiones de calidad hechas hoy salieron aprobadas. La revisión final queda pendiente por orden de la dueña.</li>
+    <li>Para publicar faltan aprobaciones, datos de la clínica y conectar las citas. Todo está guardado en GitHub (rama webpage-V1.21.11.26).</li>
+  </ul>
 </section>
 
 <section class="sheet" aria-labelledby="s2">
-  <div class="runhead"><span>Luminous Dental · Nueva página web · RW-2026-01</span><span class="conf">CONFIDENCIAL</span><span>Hoja 3</span></div>
-  <h2 id="s2"><span class="n">2</span>Qué cambió hoy</h2>
+  <div class="runhead"><span>Luminous Dental · Proyecto página web · RW-2026-02</span><span>Hoja 3</span></div>
+  <h2 id="s2"><span class="n">2</span>Qué cambió</h2>
 
   <article class="change">
     <h3>Portada del inicio</h3>
-    <p>Se cambió por una con casos reales de antes y después, para que el paciente vea resultados desde el primer momento.</p>
-    <div class="pair">
-      <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Inicio</span></div><img src="img/antes-inicio.jpg" alt="Portada del inicio el 18 de noviembre" width="1440" height="900"></div><figcaption><span class="pill before">ANTES</span>18 de noviembre</figcaption></figure>
-      <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Inicio</span></div><img src="img/inicio-arriba.jpg" alt="Portada del inicio el 20 de noviembre" width="1440" height="900"></div><figcaption><span class="pill after">AHORA</span>20 de noviembre</figcaption></figure>
+    <p>Mejora: las fotos que giraban se cambiaron por un comparador quieto que se arrastra o se maneja con teclado.</p>
+    <div class="pair ">
+      <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Inicio</span></div><img src="img/antes-heroe.jpg" alt="Portada con fotos que giraban" width="1280" height="800" loading="lazy"></div><figcaption><span class="pill before">ANTES</span>Fotos que giraban</figcaption></figure>
+      <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Inicio</span></div><img src="img/ahora-heroe.jpg" alt="Portada con comparador antes y después" width="1280" height="800" loading="lazy"></div><figcaption><span class="pill after">AHORA</span>Comparador quieto</figcaption></figure>
     </div>
   </article>
-
   <article class="change">
-    <h3>Seguros</h3>
-    <p>Se agregó un buscador con 24 aseguradoras, para que el paciente sepa rápido si aceptan su seguro.</p>
-    <div class="pair">
-      <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Seguros</span></div><img src="img/antes-seguros.jpg" alt="Seguros el 18 de noviembre" width="1440" height="900"></div><figcaption><span class="pill before">ANTES</span>18 de noviembre</figcaption></figure>
-      <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Seguros</span></div><img src="img/seguros.jpg" alt="Seguros el 20 de noviembre" width="1440" height="900"></div><figcaption><span class="pill after">AHORA</span>20 de noviembre</figcaption></figure>
+    <h3>Botones flotantes</h3>
+    <p>Mejora: de monedas que giraban a fichas fijas, más chicas, que ya no se esconden.</p>
+    <div class="pair narrow">
+      <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Botones · lado derecho</span></div><img src="img/antes-flotantes.jpg" alt="Botones como monedas que giran" width="440" height="340" loading="lazy"></div><figcaption><span class="pill before">ANTES</span>Monedas que giran</figcaption></figure>
+      <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Botones · lado derecho</span></div><img src="img/ahora-flotantes.jpg" alt="Botones como fichas fijas" width="440" height="340" loading="lazy"></div><figcaption><span class="pill after">AHORA</span>Fichas fijas</figcaption></figure>
     </div>
   </article>
-
   <article class="change">
-    <h3>Contacto</h3>
-    <p>Se agregaron un letrero de bienvenida y un mapa que se abre desde una moneda, para que el paciente encuentre cómo llegar.</p>
-    <div class="pair">
-      <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Contacto</span></div><img src="img/antes-contacto.jpg" alt="Contacto el 18 de noviembre" width="1440" height="900"></div><figcaption><span class="pill before">ANTES</span>18 de noviembre</figcaption></figure>
-      <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Contacto</span></div><img src="img/contacto.jpg" alt="Contacto el 20 de noviembre" width="1440" height="900"></div><figcaption><span class="pill after">AHORA</span>20 de noviembre</figcaption></figure>
+    <h3>Formulario de citas</h3>
+    <p>Mejora: secciones numeradas, menos letra y un calendario con horas (horario de ejemplo, por confirmar, hora de Las Vegas). El mensaje avisa que no se escriba historial médico ni datos de pago.</p>
+    <div class="pair narrow">
+      <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Pedir cita</span></div><img src="img/antes-formulario.jpg" alt="Formulario del 20 de noviembre" width="500" height="580" loading="lazy"></div><figcaption><span class="pill before">ANTES</span>Un solo campo de fecha y hora</figcaption></figure>
+      <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Pedir cita</span></div><img src="img/ahora-calendario.jpg" alt="Calendario y horas" width="660" height="800" loading="lazy"></div><figcaption><span class="pill after">AHORA</span>Calendario y horas</figcaption></figure>
     </div>
   </article>
-
   <article class="change">
-    <h3>Cierre de cada página</h3>
-    <p>Se agregó la ciudad de Las Vegas con un letrero de neón del logo, para cerrar la visita con la identidad local de la clínica.</p>
-    <figure class="win wide"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Final de página</span></div><img src="img/pie-ciudad.jpg" alt="Final de página con la ciudad y el letrero de neón" width="1440" height="900"></div><figcaption><span class="pill new">NUEVO</span>20 de noviembre</figcaption></figure>
+    <h3>Pie de página</h3>
+    <p>Mejora: el logo brilla como neón arriba y la ciudad de Las Vegas quedó de fondo, con un pie más ligero.</p>
+    <div class="pair ">
+      <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Final de página</span></div><img src="img/antes-pie.jpg" alt="Pie con cartel grande de neón" width="900" height="840" loading="lazy"></div><figcaption><span class="pill before">ANTES</span>Cartel grande abajo</figcaption></figure>
+      <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Final de página</span></div><img src="img/ahora-pie.jpg" alt="Pie con logo de neón y ciudad de fondo" width="1280" height="656" loading="lazy"></div><figcaption><span class="pill after">AHORA</span>Logo arriba, ciudad de fondo</figcaption></figure>
+    </div>
   </article>
-
+  <article class="change">
+    <h3>Títulos del inicio</h3>
+    <p>Mejora: las palabras suben y la palabra verde menta recibe un brillo, una sola vez. Con «reducir movimiento» todo se ve quieto.</p>
+    <div class="pair ">
+      <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Inicio</span></div><img src="img/antes-titulos.jpg" alt="Título sin animación" width="1280" height="900" loading="lazy"></div><figcaption><span class="pill before">ANTES</span>Título quieto</figcaption></figure>
+      <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Inicio</span></div><img src="img/ahora-titulos.jpg" alt="Título con palabra verde" width="1280" height="940" loading="lazy"></div><figcaption><span class="pill after">AHORA</span>Animado (captura quieta)</figcaption></figure>
+    </div>
+  </article>
+  <article class="change">
+    <h3>Servicios destacados</h3>
+    <p>Mejora: tarjeta con brillo dorado, ícono de grupo, etiquetas, barra de avance «1 / 5» y pestañas redondeadas.</p>
+    <div class="pair ">
+      <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Inicio</span></div><img src="img/antes-servicios.jpg" alt="Servicios destacados antes" width="1280" height="900" loading="lazy"></div><figcaption><span class="pill before">ANTES</span>20 de noviembre</figcaption></figure>
+      <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Inicio</span></div><img src="img/ahora-servicios.jpg" alt="Servicios destacados ahora" width="1280" height="993" loading="lazy"></div><figcaption><span class="pill after">AHORA</span>21 de noviembre</figcaption></figure>
+    </div>
+  </article>
   <article class="change">
     <h3>Además</h3>
     <ul class="extra">
-      <li>Formulario de citas con revisión de cada dato, para que lleguen completos.</li>
-      <li>Botones de pausa, volver arriba y WhatsApp, para moverse más fácil.</li>
-      <li>Todo ajustado para celular.</li>
+      <li>Corregido: la ficha del mapa solo abre con clic (antes se abría sola y el clic la cerraba).</li>
+      <li>Corregido: el teléfono ya no se come el «1». En celular, el contacto sigue el orden letrero, tarjeta y mapa.</li>
+      <li>Mejora: el verde menta se lee mejor en celular, sin cambiar el color.</li>
     </ul>
   </article>
 </section>
 
 <section class="sheet" aria-labelledby="s3">
-  <div class="runhead"><span>Luminous Dental · Nueva página web · RW-2026-01</span><span class="conf">CONFIDENCIAL</span><span>Hoja 4</span></div>
-  <h2 id="s3"><span class="n">3</span>El proyecto completo</h2>
-
-  <div class="pages">
-    <div><b>5</b><span>Principales</span><small>Inicio, Nosotros, Servicios, Seguros, Contacto</small></div>
-    <div><b>11</b><span>Tratamientos</span><small>Una por servicio, 5 con dibujo paso a paso</small></div>
-    <div><b>15</b><span>Blog</span><small>4 temas y 10 artículos</small></div>
-    <div><b>1</b><span>Aviso de error</span><small>Con enlaces para regresar</small></div>
-  </div>
-
-  <ol class="time">
-    <li><b>17 de noviembre</b>Información de la clínica, competencia y 3 propuestas de diseño.</li>
-    <li><b>18 de noviembre</b>Diseño elegido y primera versión de la página.</li>
-    <li><b>19 de noviembre</b>Revisión completa del equipo y correcciones. La página abre más rápido.</li>
-    <li><b>20 de noviembre</b>Portada, seguros, contacto y cierre con Las Vegas.</li>
-  </ol>
-
-  <div class="gal">
-    <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Servicios</span></div><img src="img/servicios.jpg" alt="Página de servicios" width="1440" height="900"></div><figcaption>Servicios</figcaption></figure>
-    <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Implantes</span></div><img src="img/servicio-implantes.jpg" alt="Página de implantes" width="1440" height="900"></div><figcaption>Un tratamiento: implantes</figcaption></figure>
-    <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Nosotros</span></div><img src="img/about.jpg" alt="Página Nosotros" width="1440" height="900"></div><figcaption>Nosotros</figcaption></figure>
-    <figure class="win"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>Luminous Dental · Blog</span></div><img src="img/blog.jpg" alt="Portada del blog" width="1440" height="900"></div><figcaption>Blog</figcaption></figure>
-  </div>
-</section>
-
-<section class="sheet" aria-labelledby="s4">
-  <div class="runhead"><span>Luminous Dental · Nueva página web · RW-2026-01</span><span class="conf">CONFIDENCIAL</span><span>Hoja 5</span></div>
-  <h2 id="s4"><span class="n">4</span>Pendientes</h2>
+  <div class="runhead"><span>Luminous Dental · Proyecto página web · RW-2026-02</span><span>Hoja 4</span></div>
+  <h2 id="s3"><span class="n">3</span>Pendientes</h2>
 
   <div class="groups">
-    <div class="group g-eq"><h3>Equipo de Páginas web <small>3</small></h3><ul>
-      <li>Revisión final de lo hecho hoy.</li>
-      <li>Que el verde de los títulos se lea mejor en celular.</li>
-      <li>Preparar la página para Google.</li></ul></div>
-    <div class="group g-ow"><h3>Dueño <small>2</small></h3><ul>
-      <li>Aprobar los textos nuevos de la página.</li>
-      <li>Autorizar que se actualice el enlace de muestra en internet.</li></ul></div>
-    <div class="group g-cl"><h3>Clínica <small>2</small></h3><ul>
-      <li>Número de WhatsApp, horario, lista de aseguradoras y permiso de fotos de pacientes.</li>
-      <li>Política de privacidad.</li></ul></div>
-    <div class="group g-sy"><h3>Sistemas <small>1</small></h3><ul>
-      <li>Conectar las citas y decidir dónde se publica la página.</li></ul></div>
+    <div class="group g-eq"><h3>Páginas web <small>3</small></h3><ul>
+      <li>Revisión final de calidad (QA 5), pendiente por orden de la dueña.</li>
+      <li>Detalles menores de calidad:<ul>
+        <li>Días del calendario muy angostos en celular.</li>
+        <li>Errores que no se borran al corregir.</li>
+        <li>Foco inicial en un día cerrado.</li>
+        <li>Las fichas flotantes pueden quedar un instante sobre el botón de pausa de las reseñas.</li></ul></li>
+      <li>Actualizar la página pública cuando se apruebe.</li></ul></div>
+    <div class="group g-ow"><h3>Gerencia y Dueño <small>2</small></h3><ul>
+      <li>Visto bueno del dueño a los textos nuevos: título de la portada, frase del pie, textos del formulario y de los seguros.</li>
+      <li>Visto bueno de Gerencia al diseño.</li></ul></div>
+    <div class="group g-cl"><h3>Clínica <small>5</small></h3><ul>
+      <li>Número de WhatsApp.</li>
+      <li>Horario real, con sus tres versiones.</li>
+      <li>Permiso de fotos de pacientes.</li>
+      <li>Lista de las 24 aseguradoras.</li>
+      <li>Si ofrecen consulta virtual.</li></ul></div>
+    <div class="group g-sy"><h3>Sistemas · Jadro <small>4</small></h3><ul>
+      <li>Conectar el formulario para que envíe las citas, y poner la casilla anti-bots.</li>
+      <li>Publicar en Vercel.</li>
+      <li>Volver el repositorio privado.</li>
+      <li>Configuración de GitHub: rama de producción y permisos.</li></ul></div>
   </div>
 
-  <div class="next"><h3>Siguiente paso</h3><p>El equipo cierra sus pendientes. Con las respuestas del dueño y de la clínica se conectan las citas y la página queda lista para publicarse.</p></div>
+  <div class="next"><h3>Siguiente paso</h3><p>Hacer la revisión final de calidad cuando la dueña lo ordene. Con los vistos buenos y los datos de la clínica se conectan las citas, se publica y se actualiza la página pública.</p></div>
 
   <div class="sign">
-    <div>Elaboró · Equipo de Páginas web</div>
-    <div>Recibió · Gerencia</div>
+    <div>Elaboró · Jadro Montes</div>
+    <div>Recibió · Dirección</div>
   </div>
-  <p class="foot">Las fotos de pacientes son de muestra y no se publican hasta tener su permiso.</p>
+  <p class="foot">Las fotos de pacientes son de muestra y no se publican hasta tener su permiso. El horario del calendario es de ejemplo.</p>
 </section>
 
 </main>

@@ -9,10 +9,11 @@
   --color-glow: #2f63ad;
   --color-ink: #2a4269;
   --color-sky: #7bc3eb;
-  --color-gold: #e0b65c;
+  --color-gold: #e0b65c; /* solo piezas físicas: fichas de casino, letrero y moneda del mapa (desde 23-11-2026) */
   --color-gold-soft: #f3d79a;
+  --color-medic: #34bfcc; /* tercer color (23-11-2026): azul medicina, familia de la menta; hovers, rayas, íconos y foco. 8.22:1 sobre noche, 7.65 sobre tarjeta */
+  --color-medic-soft: #8fe3e8; /* versión clara para íconos sobre fondos azules (12.43:1 sobre noche, 4.08 sobre --color-glow) */
   --color-mint: #3fcfae; /* acento de palabras y títulos (C1; 9.33:1 sobre noche, 8.68 sobre tarjeta) */
-  --color-mint-ink: #0f766e; /* menta para fondos blancos o claros (5.47:1 sobre blanco) */
   --mint-halo: 0 0 5px rgb(6 14 30/.95),0 0 14px rgb(6 14 30/.9),0 2px 30px rgb(6 14 30/.8); /* halo oscuro tras la menta de los titulares: sube el contraste sobre el resplandor azul del fondo (21-11-2026) */
   --color-title: #fff;
   --color-text: #f4f9ff;
@@ -35,8 +36,12 @@
 }
 
 :root {
+  /* Escala 23-11-2026 (r2), medida contra Dental Nakeji: bajo 1600 px este sitio ya es igual o mayor (cuerpo 17.5 vs 16 px, títulos 56 vs 44); Nakeji crece desde 1600 px (+0.417 px por cada 100 px) y aquí no crecía. Estos tokens crecen igual. */
+  --fs-body: min(22px, calc(17.5px + max(0px, 100vw - 1600px) * 0.0045));
+  --fs-btn: min(20px, calc(16.5px + max(0px, 100vw - 1600px) * 0.0036));
+  --fs-nav: clamp(18px, calc(11px + 0.5vw), 22px); /* menú: 18 px hasta ~1400, 19 en 1600, 20.6 en 1920 (Nakeji: 17 / 18.4) */
+  --hdr-h: clamp(96px, 6vw, 124px); /* alto de la píldora del menú (78 px en celular, ver site.css) */
+  --hbar-h: calc(var(--hdr-h) + 10px); /* + 10 px de aire arriba; alimenta scroll-padding-top y el panel del celular */
+  --logo-w: clamp(150px, 9.4vw, 196px); /* letrero de neón del header */
   --pad: clamp(18px, 4.4vw, 64px);
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --logo-img: url("/logo.png");
-  --logo-star: url("/logo-star.png");
-}
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);}

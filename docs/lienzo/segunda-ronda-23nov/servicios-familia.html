@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maqueta A · Dental care for the whole family (Luminous Dental)</title>
+<link rel="stylesheet" href="base.css">
+<style>
+/* ===== Sección «La estrella en el camino» (Home #services) ===== */
+.fam{position:relative;padding-block:clamp(72px,9vw,140px) clamp(72px,9vw,128px);overflow:clip}
+.fam::before{content:"";position:absolute;left:50%;top:18%;width:min(1100px,130%);aspect-ratio:1;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(52,191,204,.16),rgba(47,99,173,.18) 45%,transparent 72%);pointer-events:none}
+.fam__title{position:relative;text-align:center;margin-inline:auto;max-width:11.5em;font:400 clamp(46px,7.6vw,112px)/.98 var(--font-serif);letter-spacing:-.03em;text-wrap:balance}
+.fam__path{--row:clamp(170px,13.5vw,200px);--star:clamp(56px,5.4vw,84px);--x:50%;position:relative;margin-top:clamp(40px,6vw,88px)}
+/* hilo: tenue de punta a punta; el tramo ya recorrido se enciende (--fill en px lo pone el script) */
+.fam__rail{position:absolute;left:var(--x);top:var(--y0,0);height:calc(var(--y1,0px) - var(--y0,0px));width:2px;margin-left:-1px;border-radius:2px;background:linear-gradient(var(--color-line-ui),var(--color-line-ui)) 0 0/100% 100% no-repeat;opacity:.55}
+.fam__fill{position:absolute;left:var(--x);top:var(--y0,0);height:var(--fill,0px);width:4px;margin-left:-2px;border-radius:4px;background:linear-gradient(var(--color-sky),var(--color-medic));box-shadow:0 0 14px 1px rgba(52,191,204,.7)}
+.fam__star{position:absolute;left:var(--x);top:calc(var(--y0,0px) + var(--fill,0px));width:var(--star);aspect-ratio:1;transform:translate(-50%,-50%);z-index:3;pointer-events:none;filter:drop-shadow(0 0 10px rgba(143,227,232,.85)) drop-shadow(0 0 28px rgba(52,191,204,.55))}
+.fam__star svg{display:block;width:100%;height:100%;overflow:visible}
+.fam__stops{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 88px minmax(0,1fr);grid-auto-rows:minmax(var(--row),auto);align-items:center}
+.fam__stop{position:relative;display:block}
+.fam__stop[data-side=l]{grid-column:1;text-align:right}
+.fam__stop[data-side=r]{grid-column:3;text-align:left}
+.fam__stop:nth-child(1){grid-row:1}.fam__stop:nth-child(2){grid-row:2}.fam__stop:nth-child(3){grid-row:3}.fam__stop:nth-child(4){grid-row:4}
+.fam__link{display:block;text-decoration:none;padding:18px 8px 18px;min-height:44px;transition:opacity .5s var(--ease)}
+.fam__link h3{font:400 clamp(34px,4.6vw,68px)/1.02 var(--font-serif);letter-spacing:-.025em;transition:color .25s var(--ease)}
+.fam__link p{margin-top:12px;max-width:27em;color:var(--color-text);text-wrap:pretty}
+.fam__stop[data-side=l] p{margin-left:auto}
+.fam__go{display:inline-grid;place-items:center;width:44px;height:44px;margin-top:14px;border:1.5px solid var(--color-line-ui);border-radius:50%;color:#fff;transition:background-color .25s var(--ease),border-color .25s var(--ease),color .25s var(--ease),transform .25s var(--ease)}
+.fam__go svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.fam__link:hover h3,.fam__link:focus-visible h3{color:var(--color-medic-soft)}
+.fam__link:hover .fam__go,.fam__link:focus-visible .fam__go{background:var(--color-medic);border-color:var(--color-medic);color:var(--color-night);transform:translateX(4px)}
+/* nodo sobre el hilo: hueco hasta que llega la estrella */
+.fam__node{position:absolute;top:50%;width:20px;height:20px;margin-top:-10px;border-radius:50%;border:2px solid var(--color-line-ui);background:var(--color-night);transition:background-color .4s var(--ease),border-color .4s var(--ease),box-shadow .6s var(--ease)}
+.fam__stop[data-side=l] .fam__node{left:calc(100% + 34px)}
+.fam__stop[data-side=r] .fam__node{right:calc(100% + 34px)}
+.fam__stop.is-lit .fam__node{background:var(--color-medic);border-color:var(--color-medic-soft);box-shadow:0 0 0 6px rgba(52,191,204,.18),0 0 18px rgba(52,191,204,.8)}
+.fam--live .fam__stop:not(.is-lit) .fam__link{opacity:.5}
+/* botón: segunda hilera, lado libre del hilo */
+.fam__more{grid-column:1;grid-row:2;justify-self:end;padding-right:8px}
+.fam__more .btn{min-height:60px;padding:0 36px;font-size:17px}
+.fam__sr{position:absolute}
+@media (max-width:759px){
+ .fam__path{--x:22px;--row:0px;--star:48px}
+ .fam__stops{grid-template-columns:44px minmax(0,1fr);row-gap:clamp(36px,9vw,56px);grid-auto-rows:auto}
+ .fam__stop[data-side]{grid-column:2;text-align:left}
+ .fam__stop:nth-child(n){grid-row:auto}
+ .fam__stop[data-side=l] p{margin-left:0}
+ .fam__stop[data-side=l] .fam__node,.fam__stop[data-side=r] .fam__node{left:-44px;right:auto;margin-left:12px}
+
+ .fam__link{padding-inline:0}
+ .fam__more{grid-column:2;grid-row:auto;justify-self:stretch;padding:0;margin-top:clamp(0px,2vw,12px)}
+ .fam__more .btn{width:100%}
+ .fam__title{font-size:clamp(42px,12.6vw,60px)}
+}
+/* entrada de las palabras del título (una vez; igual que RevealText) */
+.fam__title .w{display:inline-block}
+.fam--live .fam__title:not(.is-in) .w{transform:translateY(40%);opacity:0;filter:blur(8px)}
+.fam--live .fam__title.is-in .w{transition:transform .8s var(--ease) calc(var(--i)*80ms),opacity .6s ease calc(var(--i)*80ms),filter .6s ease calc(var(--i)*80ms)}
+@media (prefers-reduced-motion:reduce){.fam *{transition:none!important}.fam .fam__title .w{opacity:1!important;transform:none!important;filter:none!important}}
+html[data-motion-paused] .fam *{transition:none!important}
+</style></head>
+<body>
+<p class="note">Maqueta A · 2.ª sección del inicio. Parámetros: ?p=0 a 1 congela el avance de la estrella; ?static=1 = estado quieto (reducir movimiento / pausa).</p>
+<section class="fam" id="services" aria-labelledby="fam-h"><div class="wrap">
+  <h2 class="fam__title" id="fam-h"><span class="w" style="--i:0">Dental</span> <span class="w" style="--i:1">care</span> <span class="w" style="--i:2">for</span> <span class="w" style="--i:3">the</span> <span class="w accent" style="--i:4">whole</span> <span class="w accent" style="--i:5">family</span></h2>
+  <div class="fam__path" id="path">
+    <span class="fam__rail" aria-hidden="true"></span><span class="fam__fill" aria-hidden="true"></span>
+    <span class="fam__star" aria-hidden="true"><svg viewBox="-10 -10 120 120"><defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#8fe3e8"/><stop offset="1" stop-color="#34bfcc"/></linearGradient></defs>
+      <path d="M50 0C54 30 70 46 100 50C70 54 54 70 50 100C46 70 30 54 0 50C30 46 46 30 50 0Z" fill="url(#sg)"/>
+      <path d="M50 38v24M38 50h24" stroke="#0a1529" stroke-width="5" stroke-linecap="round" opacity=".78"/></svg></span>
+    <ul class="fam__stops">
+      <li class="fam__stop" data-side="l"><span class="fam__node" aria-hidden="true"></span><a class="fam__link" href="#"><h3>General Dentistry</h3><p>Checkups, cleanings, fillings and preventive care to keep your smile healthy at every stage of life.</p><span class="fam__go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+      <li class="fam__stop" data-side="r"><span class="fam__node" aria-hidden="true"></span><a class="fam__link" href="#"><h3>Cosmetic Dentistry</h3><p>Veneers, crowns, bonding, implants and whitening to improve how your smile looks and works.</p><span class="fam__go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+      <li class="fam__stop" data-side="l"><span class="fam__node" aria-hidden="true"></span><a class="fam__link" href="#"><h3>Orthodontics</h3><p>Invisalign and braces for a straighter smile and a better bite, for children, teens and adults.</p><span class="fam__go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+      <li class="fam__stop" data-side="r"><span class="fam__node" aria-hidden="true"></span><a class="fam__link" href="#"><h3>Pediatric Dentistry</h3><p>Gentle exams, cleanings and tips for kids, in a comfortable setting.</p><span class="fam__go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+      <li class="fam__more"><a class="btn" href="#">See all services</a></li>
+    </ul>
+  </div>
+</div></section>
+<script>
+const q=new URLSearchParams(location.search),sec=document.querySelector('.fam'),path=document.getElementById('path'),stops=[...path.querySelectorAll('.fam__stop')],title=document.querySelector('.fam__title');
+const still=q.get('static')==='1'||matchMedia('(prefers-reduced-motion:reduce)').matches;
+function measure(){const pr=path.getBoundingClientRect();const ys=stops.map(s=>{const r=s.querySelector('.fam__node').getBoundingClientRect();return r.top+r.height/2-pr.top});
+ path.style.setProperty('--y0',ys[0]+'px');path.style.setProperty('--y1',ys[3]+'px');return ys}
+function update(){const ys=measure();const y0=ys[0],y1=ys[3];let p;
+ if(q.has('p'))p=+q.get('p');else{const r=path.getBoundingClientRect();const mark=innerHeight*.6;p=Math.min(1,Math.max(0,(mark-(r.top+y0))/(y1-y0)))}
+ if(still)p=1;const fill=p*(y1-y0);path.style.setProperty('--fill',fill+'px');
+ stops.forEach((s,i)=>s.classList.toggle('is-lit',still||fill>=ys[i]-y0-1));}
+if(!still)sec.classList.add('fam--live');
+addEventListener('scroll',update,{passive:true});addEventListener('resize',update);document.fonts.ready.then(update);update();
+const io=new IntersectionObserver(([e])=>{if(e.isIntersecting){title.classList.add('is-in');io.disconnect()}},{threshold:.3});io.observe(title);
+if(q.get('title')!=='0'&&(q.has('p')||still))title.classList.add('is-in');
+</script></body></html>

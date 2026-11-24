@@ -1,0 +1,18 @@
+/* Base de las maquetas de la segunda ronda (23-11-2026). Copia los valores de apps/web/src/styles/tokens.css; no es código de producción. */
+@import url("../../../apps/web/src/styles/fonts.css");
+:root{--color-night:#0a1529;--color-surface:#0d1c37;--color-surface-deep:#0c1a33;--color-glow:#2f63ad;--color-ink:#2a4269;--color-sky:#7bc3eb;--color-medic:#34bfcc;--color-medic-soft:#8fe3e8;--color-mint:#3fcfae;--color-text:#f4f9ff;--color-text2:#f2f8fe;--color-line:rgb(255 255 255/.14);--color-line-ui:rgb(255 255 255/.34);--color-field-text:#1d3152;--color-field-border:#8592a7;
+--font-serif:"Newsreader",Georgia,serif;--font-sans:"Figtree",Arial,sans-serif;--ease:cubic-bezier(.22,1,.36,1);--pad:clamp(18px,4.4vw,64px);--hbar-h:106px}
+*{box-sizing:border-box}
+html{background:var(--color-night)}
+body{margin:0;color:var(--color-text);font:17.5px/1.7 var(--font-sans);-webkit-font-smoothing:antialiased;
+background:radial-gradient(900px 600px at 80% 10%,rgba(47,99,173,.5),transparent 70%),radial-gradient(700px 500px at 5% 60%,rgba(47,99,173,.3),transparent 70%),linear-gradient(180deg,#0e2142,#0b1932 45%,#0a1529)}
+h1,h2,h3,p,ul{margin:0}ul{padding:0;list-style:none}a{color:inherit}h1,h2,h3{color:#fff}
+.wrap{max-width:1440px;margin:0 auto;padding-inline:var(--pad)}
+:focus-visible{outline:3px solid var(--color-medic);outline-offset:3px;border-radius:6px}
+.btn{white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;min-height:54px;padding:0 30px;border-radius:999px;font:600 16.5px/1 var(--font-sans);text-decoration:none;border:1.5px solid #fff;background:#fff;color:var(--color-ink);cursor:pointer;box-shadow:0 10px 30px -12px rgba(123,195,235,.6)}
+.tlink{position:relative;text-decoration:none;font-weight:600;color:#fff;display:inline-flex;align-items:center;min-height:44px}
+.tlink::after{content:"";position:absolute;left:0;right:0;bottom:8px;height:1px;background:rgba(123,195,235,.8);transform:scaleX(.3);transform-origin:left}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.accent{color:var(--color-mint)}
+/* nota de maqueta (no forma parte del diseño) */
+.note{max-width:1440px;margin:0 auto;padding:10px var(--pad);font:600 13px/1.4 var(--font-sans);color:var(--color-sky);border-bottom:1px solid var(--color-line)}

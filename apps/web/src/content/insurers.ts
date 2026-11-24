@@ -51,4 +51,8 @@ export const insuranceText = {
   emptyTitle: (q: string) => `We do not see “${q}” on our list yet.`,
   emptyText: 'Call or text us and we will check it with you.',
   showAll: 'Show all plans',
+  // NUEVOS, POR APROBAR (segunda ronda 23-11): botón del muro colapsado de la home.
+  expand: (n: number) => `Show all ${n} plans`,
+  collapse: 'Show fewer plans',
+  wallLabel: 'Insurance plans on our list',
 } as const

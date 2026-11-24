@@ -1,0 +1,50 @@
+/* «La estrella en el camino» (components/FamilyCare.tsx, docs/diseno-segunda-ronda-23nov.md A). Valores de la maqueta servicios-familia.html.
+   Local: ningún token nuevo. El avance usa --fp (0 a 1), --y0 (px del primer nodo) y --len (px de primer a último nodo), que escribe el componente. */
+.fam{position:relative;padding-block:clamp(72px,9vw,140px) clamp(72px,9vw,128px);overflow:clip}
+.fam::before{content:"";position:absolute;left:50%;top:18%;width:min(1100px,130%);aspect-ratio:1;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(52,191,204,.16),rgba(47,99,173,.18) 45%,transparent 72%);pointer-events:none}
+.fam__title{position:relative;text-align:center;margin-inline:auto;max-width:11.5em;font:400 clamp(34px,5.6vw,84px)/1 var(--font-serif);letter-spacing:-.03em;text-wrap:balance}
+.fam__path{--row:clamp(170px,13.5vw,200px);--star:clamp(56px,5.4vw,84px);--x:50%;--fp:1;--y0:0px;--len:0px;position:relative;margin-top:clamp(40px,6vw,88px)}
+/* hilo: tenue de punta a punta; el tramo ya recorrido se enciende (scaleY) y la estrella baja con translate */
+.fam__rail{position:absolute;left:var(--x);top:var(--y0);height:var(--len);width:2px;margin-left:-1px;border-radius:2px;background:var(--color-line-ui);opacity:.55}
+.fam__fill{position:absolute;left:var(--x);top:var(--y0);height:var(--len);width:4px;margin-left:-2px;border-radius:4px;background:linear-gradient(var(--color-sky),var(--color-medic));box-shadow:0 0 14px 1px rgba(52,191,204,.7);transform-origin:top;transform:scaleY(var(--fp))}
+.fam__star{position:absolute;left:var(--x);top:var(--y0);width:var(--star);aspect-ratio:1;margin:calc(var(--star) / -2) 0 0 calc(var(--star) / -2);transform:translateY(calc(var(--fp) * var(--len)));z-index:3;pointer-events:none;filter:drop-shadow(0 0 10px rgba(143,227,232,.85)) drop-shadow(0 0 28px rgba(52,191,204,.55))}
+.fam__star svg{display:block;width:100%;height:100%;overflow:visible}
+.fam__stops{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 88px minmax(0,1fr);grid-auto-rows:minmax(var(--row),auto);align-items:center}
+.fam__stop{position:relative;display:block}
+.fam__stop[data-side=l]{grid-column:1;text-align:right}
+.fam__stop[data-side=r]{grid-column:3;text-align:left}
+.fam__stop{grid-row:var(--r)}
+.fam__link{display:block;text-decoration:none;padding:18px 8px;min-height:44px;transition:opacity .5s var(--ease)}
+.fam__link h3{font:400 clamp(28px,3.4vw,50px)/1.02 var(--font-serif);letter-spacing:-.025em;transition:color .25s var(--ease)}
+.fam__link p{margin-top:12px;max-width:27em;color:var(--color-text);text-wrap:pretty}
+.fam__stop[data-side=l] p{margin-left:auto}
+.fam__go{display:inline-grid;place-items:center;width:44px;height:44px;margin-top:14px;border:1.5px solid var(--color-line-ui);border-radius:50%;color:#fff;transition:background-color .25s var(--ease),border-color .25s var(--ease),color .25s var(--ease),transform .25s var(--ease)}
+.fam__go svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.fam__link:hover h3,.fam__link:focus-visible h3{color:var(--color-medic-soft)}
+.fam__link:hover .fam__go,.fam__link:focus-visible .fam__go{background:var(--color-medic);border-color:var(--color-medic);color:var(--color-night);transform:translateX(4px)}
+/* nodo sobre el hilo: hueco hasta que llega la estrella */
+.fam__node{position:absolute;top:50%;width:20px;height:20px;margin-top:-10px;border-radius:50%;border:2px solid var(--color-line-ui);background:var(--color-night);transition:background-color .4s var(--ease),border-color .4s var(--ease),box-shadow .6s var(--ease)}
+.fam__stop[data-side=l] .fam__node{left:calc(100% + 34px)}
+.fam__stop[data-side=r] .fam__node{right:calc(100% + 34px)}
+.fam__stop.is-lit .fam__node{background:var(--color-medic);border-color:var(--color-medic-soft);box-shadow:0 0 0 6px rgba(52,191,204,.18),0 0 18px rgba(52,191,204,.8)}
+.fam__path--live .fam__stop:not(.is-lit) .fam__link{opacity:.75} /* 4.5:1 en la descripción sobre el resplandor (QA 2: .5 daba 3.3:1) */
+/* «See all services»: segunda hilera, lado libre del hilo */
+.fam__more{grid-column:1;grid-row:2;justify-self:end;padding-right:8px}
+.fam__more--m{display:none}
+.fam__more .btn{min-height:60px;padding:0 36px;font-size:17px}
+@media (max-width:759px){
+  .fam__path{--x:22px;--row:0px;--star:48px}
+  .fam__stops{grid-template-columns:44px minmax(0,1fr);row-gap:clamp(36px,9vw,56px);grid-auto-rows:auto}
+  .fam__stop[data-side]{grid-column:2;text-align:left}
+  .fam__stop{grid-row:auto}
+  .fam__stop[data-side=l] p{margin-left:0}
+  .fam__stop[data-side=l] .fam__node,.fam__stop[data-side=r] .fam__node{left:-44px;right:auto;margin-left:12px}
+  .fam__link{padding-inline:0}
+  .fam__more{grid-column:2;grid-row:auto;justify-self:stretch;padding:0}
+  .fam__more--d{display:none}
+  .fam__more--m{display:block}
+  .fam__more .btn{width:100%}
+  .fam__title{font-size:clamp(34px,9vw,40px)}
+}
+@media (prefers-reduced-motion:reduce){.fam *{transition:none!important}}
+html[data-motion-paused] .fam *{transition:none!important}

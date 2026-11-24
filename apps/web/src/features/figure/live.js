@@ -1,6 +1,6 @@
 // @ts-nocheck
 // Comportamiento de la figura de la página de servicio (de docs/lienzo/anatomy/servicios/live.js). Un número t es el estado de un servicio:
-// recorre los pasos en bucle mientras nadie lo toca, y la perilla dorada, los botones de paso y las flechas del teclado toman el control.
+// recorre los pasos en bucle mientras nadie lo toca, y la perilla azul medicina, los botones de paso y las flechas del teclado toman el control.
 import { SERVICES, iso, setView, dynSvg, carriageTransform, sceneState, W, STEP_U, RAIL_W } from "./engine.js";
 export function mountServices(root, P, TXT) {
   setView(P);
@@ -11,7 +11,7 @@ export function mountServices(root, P, TXT) {
   const svc = SERVICES.findIndex((s) => s.id === root.dataset.only);
   const steps = SERVICES[svc].steps, max = steps.length - 1;
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
-  const s0 = iso(W([STEP_U(0), RAIL_W]).concat(10), P)[0] / P.width, s1 = iso(W([STEP_U(4), RAIL_W]).concat(10), P)[0] / P.width; // el recorrido propio de la perilla dorada
+  const s0 = iso(W([STEP_U(0), RAIL_W]).concat(10), P)[0] / P.width, s1 = iso(W([STEP_U(4), RAIL_W]).concat(10), P)[0] / P.width; // el recorrido propio de la perilla azul medicina
   let t = 0, target = 0, last = 0, frame = 0, visible = false, touring = false, clock = 0, idle = 0, pressed = false, shown = -1, shownStep = -1;
   let paused = false, hovering = false, focused = false;
   const dwell = (i) => (i === max ? 3.2 : 1.8), total = steps.reduce((a, _, i) => a + dwell(i), 0);

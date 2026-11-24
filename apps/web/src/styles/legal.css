@@ -1,0 +1,29 @@
+/* Páginas legales (23-11-2026, r3): índice fijo a la izquierda y una tarjeta de vidrio por sección, con los tokens del sitio. */
+.legal-head{max-width:760px;margin-bottom:clamp(28px,3.5vw,48px)}
+.legal-lead{margin-top:18px;font-size:var(--fs-body);line-height:1.6;color:var(--color-text2)}
+.legal-date{margin-top:10px;font-size:15px;color:var(--color-input-muted)}
+.legal-doc{display:grid;grid-template-columns:minmax(220px,300px) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:start}
+.legal-toc{position:sticky;top:calc(var(--hbar-h) + 16px);padding:20px;border:1px solid var(--color-line);border-radius:20px;background:var(--color-glass)}
+.legal-toc__label{margin:0 0 10px;font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--color-medic)}
+.legal-toc ol{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.legal-toc a{display:block;padding:8px 12px;border-left:2px solid transparent;border-radius:0 10px 10px 0;color:var(--color-text);font-size:16px;line-height:1.3;text-decoration:none;transition:background-color .18s,color .18s}
+.legal-toc a:hover,.legal-toc a:focus-visible{background:rgba(255,255,255,.08);color:#fff}
+.legal-toc a[aria-current]{border-left-color:var(--color-medic);color:#fff;font-weight:600}
+.legal-body{display:grid;gap:clamp(14px,1.6vw,22px)}
+.legal-card{scroll-margin-top:calc(var(--hbar-h) + 16px);padding:clamp(22px,2.6vw,36px);border:1px solid var(--color-line);border-radius:24px;background:var(--color-glass)}
+.legal-card h2{margin:0 0 14px;font:400 clamp(24px,2.2vw,32px)/1.15 var(--font-serif);letter-spacing:-.01em;color:#fff}
+.legal-card h3{margin:20px 0 8px;font-size:17px;font-weight:600;color:var(--color-medic-soft)}
+.legal-card p,.legal-card li{font-size:var(--fs-body);line-height:1.65;color:var(--color-text)}
+.legal-card p+p,.legal-card p+ul,.legal-card ul+p{margin-top:12px}
+.legal-card ul{list-style:disc;margin:10px 0 0;padding-left:1.2em;display:grid;gap:6px}
+.legal-card li::marker{color:var(--color-medic)}
+@media (max-width:900px){
+  .legal-doc{grid-template-columns:minmax(0,1fr)}
+  .legal-toc{position:static}
+}
+
+/* Enlaces legales junto a la línea final del pie y bajo el consentimiento del formulario */
+.ftr-legal__links{display:flex;flex-wrap:wrap;gap:4px 20px}
+.ftr-legal__links a{color:#cddaee;text-decoration:underline;text-underline-offset:3px}
+.consent-links{margin:2px 0 0 62px;font-size:15px;color:var(--color-input-muted)}
+.consent-links a{color:var(--color-sky);text-underline-offset:3px}

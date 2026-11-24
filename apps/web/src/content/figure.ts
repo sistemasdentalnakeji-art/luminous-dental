@@ -3,9 +3,9 @@
 export const figureText = {
   label: 'Treatment steps',
   cardTitles: { braces: 'How braces work', implants: 'Dental implants', bridges: 'Dentures & bridges', crowns: 'Veneers & crowns', whitening: 'Teeth whitening' }, // NUEVO
-  hintCard: 'Drag the gold knob or pick a step', // NUEVO
+  hintCard: 'Drag the blue knob or pick a step', // NUEVO
   describeCard:
-    'Illustration of a model of the lower teeth. Step through how the treatment is done with the number buttons, by dragging the gold knob, or with the left and right arrow keys.', // NUEVO
+    'Illustration of a model of the lower teeth. Step through how the treatment is done with the number buttons, by dragging the blue knob, or with the left and right arrow keys.', // NUEVO
   note: 'Illustration. Individual results vary.',
   stepsLabel: 'Steps',
   pause: 'Pause animation',

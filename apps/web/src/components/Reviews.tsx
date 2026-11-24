@@ -89,7 +89,7 @@ export function Reviews() {
                 <p className="mac-window__slogan">{T.slogan}</p>
                 <p className="mac-window__sub">{T.sloganSub}</p>
               </div>
-              <img className="mac-window__brand" src={`${import.meta.env.BASE_URL}logo.png`} width={640} height={365} alt="" aria-hidden="true" />
+              <img className="mac-window__brand" src={`${import.meta.env.BASE_URL}logo.webp`} width={520} height={297} alt="" aria-hidden="true" />
             </div>
           </div>
         </div>
@@ -103,8 +103,11 @@ export function Reviews() {
       </div>
       <div className="reviews-rows">
         <Marquee label={`${T.carousel}, first row`} items={cards} direction="ltr" secondsPerCard={22} paused={stopped} />
-        {/* Una sola fila hasta que haya 6 o más reseñas reales: dos filas de 3 repiten las mismas tarjetas (docs/mejoras-1-plan.md 2.1). */}
-        {cards.length >= 6 && <Marquee label={`${T.carousel}, second row`} items={bottom} direction="rtl" secondsPerCard={26} paused={stopped} />}
+        {/* Siempre dos filas (pedido de la dueña, 23-11-2026). Con pocas reseñas reales se repiten, empezando en otra tarjeta; no se inventan reseñas. */}
+        {/* Misma lista repetida: se oculta a lectores de pantalla y al teclado para que no se oigan 6 tarjetas. */}
+        <div style={{ display: 'contents' }} aria-hidden="true" inert>
+          <Marquee label={`${T.carousel}, second row`} items={bottom} direction="rtl" secondsPerCard={26} paused={stopped} />
+        </div>
       </div>
     </section>
   )

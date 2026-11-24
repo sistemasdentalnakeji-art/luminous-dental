@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maqueta B · Seguros «La tarjeta» (Luminous Dental)</title>
+<link rel="stylesheet" href="base.css">
+<style>
+/* ===== Seguros «La tarjeta» (Home #insurance y /insurance-financing) ===== */
+.ins{padding-block:clamp(64px,8vw,120px)}
+.ins__top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 40px;align-items:end;margin-bottom:clamp(28px,4vw,56px)}
+.ins__title{font:400 clamp(44px,6vw,88px)/1 var(--font-serif);letter-spacing:-.03em}
+.ins__lead{margin-top:16px;max-width:30em;font-size:clamp(18px,1.5vw,21px);text-wrap:pretty}
+.ins__grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,8fr);gap:clamp(24px,4vw,56px);align-items:start}
+/* la tarjeta: es el buscador */
+.ins-card{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:28px;min-height:clamp(250px,22vw,300px);padding:clamp(22px,2.2vw,30px);border-radius:24px;border:1px solid rgba(255,255,255,.28);
+ background:radial-gradient(120% 90% at 100% 0,rgba(143,227,232,.38),transparent 60%),linear-gradient(135deg,#2a5ea8 0%,#1c4585 55%,#15386f 100%);
+ box-shadow:0 30px 60px -30px rgba(0,8,24,.9),inset 0 1px 0 rgba(255,255,255,.35)}
+.ins-card::before{content:"";position:absolute;right:-8%;bottom:-18%;width:62%;aspect-ratio:1;background:url("../../../apps/web/public/logo-star.png") center/contain no-repeat;opacity:.12;z-index:-1}
+.ins-card::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.22) 50%,transparent 60%) no-repeat -120% 0/220% 100%;pointer-events:none;z-index:-1}
+.ins-card__top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.ins-card__logo{height:clamp(46px,4vw,58px);width:auto}
+.ins-card__chip{flex:none;width:48px;height:36px;border-radius:9px;border:1.5px solid rgba(255,255,255,.55);background:linear-gradient(90deg,transparent 31%,rgba(255,255,255,.5) 31% 33%,transparent 33% 66%,rgba(255,255,255,.5) 66% 68%,transparent 68%),linear-gradient(0deg,transparent 47%,rgba(255,255,255,.5) 47% 53%,transparent 53%),rgba(255,255,255,.14)}
+.ins-find{display:flex;flex-direction:column;gap:8px}
+.ins-find label{font-weight:600;color:#fff}
+.ins-find input[type=search]{font:400 17px/1.4 var(--font-sans);color:var(--color-field-text);background:#fff;border:1.5px solid var(--color-field-border);border-radius:14px;padding:13px 16px;min-height:52px;width:100%;transition:box-shadow .15s,border-color .15s}
+.ins-find input[type=search]::placeholder{color:#5b6b85;opacity:1}
+.ins-find input[type=search]:focus-visible{outline:3px solid var(--color-medic-soft);outline-offset:2px;border-color:#fff}
+.ins-count{min-height:1.4em;font-size:15px;color:var(--color-text2)}
+.ins__side{margin-top:0}
+/* muro */
+.ins-wall{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding:0}
+.ins-wall[hidden]{display:none}
+.ins-plan{position:relative;display:grid;grid-template-rows:1fr auto;place-items:center;height:104px;padding:12px 10px 10px;border-radius:14px;background:#fff;
+ transition-property:translate,box-shadow;transition-duration:.25s;transition-timing-function:var(--ease)}
+.ins-plan[hidden]{display:none}
+.ins-plan img{width:min(calc(40px*sqrt(var(--ar,4))),128px);height:auto;max-height:46px;object-fit:contain}
+.ins-plan__name{margin-top:6px;color:var(--color-field-text);font:600 12px/1.25 var(--font-sans);text-align:center}
+.ins-plan::after{content:"";position:absolute;left:18%;right:18%;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--brand,var(--color-medic));transform:scaleY(0);transform-origin:bottom;transition:transform .25s var(--ease)}
+.ins-plan:hover{translate:0 -3px;box-shadow:0 16px 28px -18px var(--brand,#34bfcc)}
+.ins-plan:hover::after{transform:none}
+.is-filtered .ins-plan{box-shadow:0 0 0 2px var(--color-medic)}
+.ins-more[hidden]{display:none}
+.ins-more{display:flex;align-items:center;gap:16px;margin-top:20px}
+.ins-more button{min-height:48px;padding:0 24px;border-radius:999px;border:1.5px solid var(--color-line-ui);background:rgba(255,255,255,.04);color:#fff;font:600 16px/1 var(--font-sans);cursor:pointer}
+.ins-more button:hover{background:var(--color-medic);border-color:var(--color-medic);color:var(--color-night)}
+.ins-more p{font-size:15px;color:var(--color-text2)}
+.ins-empty{display:grid;justify-items:start;gap:12px;padding:22px;border:1px solid var(--color-line);border-radius:20px;background:var(--color-surface)}
+.ins-empty[hidden]{display:none}
+.ins-empty__title{font:400 clamp(20px,2.4vw,26px)/1.2 var(--font-serif);color:#fff}
+/* SAHARA: hermana de la tarjeta, en banda */
+.ins-out{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px clamp(24px,5vw,80px);align-items:center;margin-top:clamp(40px,6vw,88px);padding:clamp(28px,4vw,48px) 0 0;border-top:1px solid var(--color-line-ui)}
+.ins-out h2{font:400 clamp(32px,4vw,56px)/1.04 var(--font-serif);letter-spacing:-.025em;text-wrap:balance}
+.ins-out p{max-width:28em;margin-bottom:10px;text-wrap:pretty}
+/* movimiento: una entrada (reparto de fichas) */
+@keyframes deal{from{opacity:0;translate:-90px -30px;rotate:-6deg}to{opacity:1;translate:0 0;rotate:0deg}}
+@keyframes sheen{to{background-position:140% 0}}
+.ins--live .ins-card{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .7s var(--ease)}
+.ins--live.is-in .ins-card{opacity:1;transform:none}
+.ins--live.is-in .ins-card::after{animation:sheen 1.1s ease .5s 1 both}
+.ins--live .ins-plan{opacity:0}
+.ins--live.is-in .ins-plan{animation:deal .55s var(--ease) calc(.35s + var(--i)*28ms) both}
+.ins--live .ins-plan.is-new{animation:deal .35s var(--ease) calc(var(--j)*20ms) both}
+@media (max-width:959px){.ins__grid{grid-template-columns:minmax(0,1fr)}.ins-wall{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:559px){.ins__top{grid-template-columns:1fr}.ins-wall{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.ins-out{grid-template-columns:1fr}.ins-more{flex-direction:column;align-items:stretch}.ins-more p{text-align:center}}
+@media (prefers-reduced-motion:reduce){.ins *,.ins *::after{animation:none!important;transition:none!important}.ins--live .ins-card,.ins--live .ins-plan{opacity:1;transform:none}}
+html[data-motion-paused] .ins *,html[data-motion-paused] .ins *::after{animation:none!important;transition:none!important}
+</style></head>
+<body>
+<p class="note">Maqueta B · Seguros «La tarjeta». Parámetros: ?open=1 (muro completo), ?q=cig (buscador escrito), ?q=zzz (sin resultados), ?static=1 (quieto).</p>
+<section class="wrap ins" id="insurance" aria-labelledby="ins-h">
+  <header class="ins__top"><div><h2 class="ins__title" id="ins-h">Insurance</h2><p class="ins__lead">Questions about insurance or payment? Ask our team.</p></div><a class="tlink" href="#">See insurance and financing</a></header>
+  <div class="ins__grid">
+    <div class="ins-card">
+      <div class="ins-card__top"><img class="ins-card__logo" src="../../../apps/web/public/logo.png" alt="" width="200" height="60"><span class="ins-card__chip" aria-hidden="true"></span></div>
+      <div class="ins-find"><label for="ins-q">Find your plan</label><input id="ins-q" type="search" autocomplete="off" placeholder="Type your plan, e.g. Cigna" aria-describedby="ins-count"><p id="ins-count" class="ins-count" role="status"></p></div>
+    </div>
+    <div class="ins__side">
+      <ul class="ins-wall" id="wall" role="list" aria-label="Insurance plans on our list"></ul>
+      <div class="ins-empty" id="empty" hidden><p class="ins-empty__title" id="empty-t"></p><p>Call or text us and we will check it with you.</p><div style="display:flex;gap:8px 24px;flex-wrap:wrap;align-items:center"><a class="btn" href="#">Call or text (702) 805-8688</a><button type="button" class="tlink" id="show-all" style="background:none;border:0;color:#fff;font:inherit;font-weight:600;cursor:pointer">Show all plans</button></div></div>
+      <div class="ins-more" id="more"><button type="button" id="toggle" aria-expanded="false" aria-controls="wall">Show all 24 plans</button><p>Logos belong to their owners. Ask us to confirm your plan.</p></div>
+    </div>
+  </div>
+  <div class="ins-out">
+    <h2>Coming from <span class="accent">out of town?</span></h2>
+    <div><p>We've partnered with SAHARA Las Vegas to offer exclusive benefits for our patients.</p><a class="tlink" href="#">See SAHARA Las Vegas benefits</a></div>
+  </div>
+</section>
+<script>
+const I=[['Aetna','aetna',480,124,'#754099'],['AlwaysCare','alwayscare',480,115,'#012454'],['Ameritas','ameritas',480,99,'#d42229'],['Anthem','anthem',480,109,'#0062a6'],['BeneSys','benesys',480,113,'#024932'],['Cigna','cigna',480,161,'#0383cd'],['Delta Dental','delta-dental',480,54,'#33aa14'],['Dental Health Services','dental-health-services',480,76,'#7bc3eb'],['Guardian','guardian',480,89,'#0b4161'],['HealthSCOPE Benefits','healt-scope-benefits',365,138,'#5aa94b'],['HealthComp','health-comp',480,78,'#7bc3eb'],['Horizon','horizon',480,119,'#0162b3'],['Humana','humana',480,99,'#66af03'],['Lincoln Financial Group','lincon-financial-group',480,154,'#970a2c'],['MetLife','metlife',480,104,'#0085ce'],['Premera Blue Cross','premera-blue-cross',480,128,'#0195d9'],['Premier Insurance Company','premier-insurance-company',480,100,'#fbaa0a'],['Principal','principal',480,135,'#31b1d8'],['Regence','regence',480,113,'#0289e3'],['Renaissance','renaissance',480,90,'#064b8b'],['Summit','summit',480,146,'#004778'],['UFCW','ufcw',480,131,'#014990'],['UnitedHealthcare','united-healthcare',480,151,'#012678'],['Unum','unum',480,144,'#005197']];
+const P=new URLSearchParams(location.search),sec=document.getElementById('insurance'),wall=document.getElementById('wall'),inp=document.getElementById('ins-q'),cnt=document.getElementById('ins-count'),empty=document.getElementById('empty'),more=document.getElementById('more'),tg=document.getElementById('toggle');
+const COLLAPSED=()=>innerWidth<560?8:innerWidth<960?9:12;let open=P.get('open')==='1';
+const norm=s=>s.normalize('NFD').replace(/\p{M}/gu,'').toLowerCase().replace(/\s+/g,'');
+wall.innerHTML=I.map(([n,f,w,h,c],i)=>`<li class="ins-plan" style="--i:${i};--brand:${c};--ar:${w/h}"><img src="../../../apps/web/public/insurers/${f}.webp" width="${w}" height="${h}" alt="" loading="lazy"><span class="ins-plan__name">${n}</span></li>`).join('');
+const lis=[...wall.children];
+function render(){const q=inp.value.trim(),k=norm(q);const m=lis.map((li,i)=>norm(I[i][0]).includes(k));const n=m.filter(Boolean).length;
+ const limit=(open||q)?99:COLLAPSED();let shown=0;lis.forEach((li,i)=>{const s=m[i]&&shown<limit;if(s)shown++;li.hidden=!s});
+ wall.classList.toggle('is-filtered',!!q&&n>0);wall.hidden=n===0;empty.hidden=n>0;
+ cnt.textContent=!q?'24 plans on our list':n===0?`No plans match “${q}”`:`${n} ${n===1?'plan matches':'plans match'} “${q}”`;
+ if(n===0)document.getElementById('empty-t').textContent=`We do not see “${q}” on our list yet.`;
+ more.hidden=!!q||n===0;tg.setAttribute('aria-expanded',open);tg.textContent=open?'Show fewer plans':'Show all 24 plans'}
+inp.addEventListener('input',render);document.getElementById('show-all').onclick=()=>{inp.value='';render();inp.focus()};
+tg.onclick=()=>{const before=lis.filter(l=>!l.hidden).length;open=!open;render();if(open&&!matchMedia('(prefers-reduced-motion:reduce)').matches)lis.filter(l=>!l.hidden).slice(before).forEach((l,j)=>{l.style.setProperty('--j',j);l.classList.add('is-new');setTimeout(()=>l.classList.remove('is-new'),900)})};
+if(P.has('q'))inp.value=P.get('q');render();
+const still=P.get('static')==='1'||matchMedia('(prefers-reduced-motion:reduce)').matches;
+if(!still){sec.classList.add('ins--live');const io=new IntersectionObserver(([e])=>{if(e.isIntersecting){sec.classList.add('is-in');io.disconnect()}},{threshold:.25});io.observe(sec);if(P.get('deal')==='done')setTimeout(()=>sec.classList.add('is-in'),0)}
+</script></body></html>

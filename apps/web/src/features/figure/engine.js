@@ -527,7 +527,7 @@ function floatShadowSvg() {
   return `<path class="brk-shadow" d="${onTop(gumRing(23, 20).map(W), -30, VIEW.P, true)}"/>`;
 }
 
-// el control: un carro sobre el riel con una perilla dorada moleteada; se dibuja en u = 0 y se mueve con un translate
+// el control: un carro sobre el riel con una perilla azul medicina moleteada; se dibuja en u = 0 y se mueve con un translate
 function carriageSvg() {
   const P = VIEW.P, out = [];
   const c = [0, RAIL_W - 1.2];

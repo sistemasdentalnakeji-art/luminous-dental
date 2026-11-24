@@ -1,0 +1,53 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "docs/reportes/RW-2026-03/reporte-luminous.html"
+        ],
+        "createdAt": "2026-11-24T01:08:48.838Z",
+        "reason": "Jefe: texto claro de la portada sobre degradado azul noche; el detector lo mide contra el papel #fbfcfd (falso positivo). Mismo diseño aprobado en RW-2026-02."
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "docs/reportes/RW-2026-03/reporte-luminous.html"
+        ],
+        "createdAt": "2026-11-24T01:09:00.831Z",
+        "reason": "Jefe: formato del reporte RW-2026-02 aprobado por la dueña (Guía de reportes 23-11, USB); RW-2026-03 copia esa plantilla sin cambiar su diseño."
+      },
+      {
+        "rule": "italic-serif-display",
+        "value": "*",
+        "files": [
+          "docs/reportes/RW-2026-03/reporte-luminous.html"
+        ],
+        "createdAt": "2026-11-24T01:09:01.165Z",
+        "reason": "Jefe: formato del reporte RW-2026-02 aprobado por la dueña (Guía de reportes 23-11, USB); RW-2026-03 copia esa plantilla sin cambiar su diseño."
+      },
+      {
+        "rule": "undersized-ui-text",
+        "value": "*",
+        "files": [
+          "docs/reportes/RW-2026-03/reporte-luminous.html"
+        ],
+        "createdAt": "2026-11-24T01:09:01.502Z",
+        "reason": "Jefe: formato del reporte RW-2026-02 aprobado por la dueña (Guía de reportes 23-11, USB); RW-2026-03 copia esa plantilla sin cambiar su diseño."
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "docs/reportes/RW-2026-03/reporte-luminous.html"
+        ],
+        "createdAt": "2026-11-24T01:09:01.864Z",
+        "reason": "Jefe: formato del reporte RW-2026-02 aprobado por la dueña (Guía de reportes 23-11, USB); RW-2026-03 copia esa plantilla sin cambiar su diseño."
+      }
+    ]
+  }
+}

@@ -1,7 +1,6 @@
 // Blog, las mismas tres vistas que el de Dental Nakeji: portada (índice de temas, estantes de artículos, llamada final), categoría y artículo
 // ("camino del tema": los artículos del tema, la hoja con la respuesta corta y las secciones, y el siguiente artículo).
 // Solo en inglés. Aún no hay fotos, así que las tarjetas llevan una franja de color con el ícono del tema.
-import { Appointment } from '@/components/Appointment'
 import { Icon, type IconName } from '@/components/Icon'
 import { type Article, type Category, articlesIn, blog, blogPath, blogText as T, categoryOf, linksIn, readingMinutes } from '@/lib/blog'
 import { Link } from '@/lib/router'
@@ -75,10 +74,9 @@ export function BlogHub() {
         <div className="blog-cta">
           <h2>{hub.ctaTitle}</h2>
           <p>{hub.ctaText}</p>
-          <a className="btn" href="#appointment">{T.book}</a>
+          <Link className="btn" href="/contact#appointment">{T.book}</Link>
         </div>
       </section>
-      <Appointment />
     </>
   )
 }
@@ -98,7 +96,6 @@ export function BlogCategory({ category }: { category: Category }) {
           {others.map((c) => <li key={c.key}><Link href={blogPath(c.key)}><strong>{c.name}</strong><span>{c.description}</span></Link></li>)}
         </ul>
       </section>
-      <Appointment />
     </>
   )
 }
@@ -162,7 +159,6 @@ export function BlogArticle({ article }: { article: Article }) {
           </aside>
         </div>
       </section>
-      <Appointment />
     </>
   )
 }

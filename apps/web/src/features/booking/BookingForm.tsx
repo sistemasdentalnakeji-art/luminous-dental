@@ -1,6 +1,7 @@
 import { useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { BookingError, MAX, NAME_JUNK, checkAppointment, formatPhone, sendAppointment, type AppointmentRequest } from '@/config/booking'
 import { services } from '@/content/clinic'
+import { legalText } from '@/content/legal'
 import { home } from '@/content/home'
 import { BookingSchedule } from './BookingSchedule'
 
@@ -33,12 +34,15 @@ export function BookingForm({ defaultTreatment = '' }: { defaultTreatment?: stri
   const [time, setTime] = useState('')
   const form = useRef<HTMLFormElement>(null)
 
+  // Al elegir un día u hora válidos, se quita el aviso que quedó del envío anterior.
+  const clear = (k: string) => setBad(({ [k]: _gone, ...rest }) => rest)
+
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    if (status === 'sending' || status === 'sent') return // no se envía por segunda vez mientras hay un envío en curso o ya terminado
+    if (status === 'sending') return // no se envía por segunda vez mientras hay un envío en curso (tras uno terminado se puede pedir otra cita: el formulario ya quedó limpio)
     const el = e.currentTarget
     const data = new FormData(el)
-    if (data.get('company')) return // honeypot: los bots llenan los campos ocultos
+    if (data.get('contact_ref')) { setStatus('error'); return } // honeypot: los bots llenan los campos ocultos; si lo llenó el autocompletado de una persona, ve el aviso genérico y puede reintentar
     const s = (k: string) => String(data.get(k) ?? '')
     // Las reglas viven en config/booking.ts (las mismas que revisa el envío).
     const { clean, errors: found } = checkAppointment({
@@ -73,10 +77,11 @@ export function BookingForm({ defaultTreatment = '' }: { defaultTreatment?: stri
 
   // Un campo: etiqueta, control y su propio mensaje enlazado con aria-describedby.
   // `wide`: ocupa las dos columnas; `required: false`: campo opcional (sin atributo required).
-  const field = (name: keyof typeof errors, label: string, control: (p: object) => ReactNode, wide = false, required = true) => (
+  const field = (name: keyof typeof errors, label: string, control: (p: object) => ReactNode, wide = false, required = true, hint?: string) => (
     <div className={`f${wide ? ' w2' : ''}${bad[name] ? ' bad' : ''}`}>
       <label htmlFor={`b-${name}`}>{label}</label>
-      {control({ id: `b-${name}`, name, required, maxLength: MAX[name as keyof typeof MAX], 'aria-describedby': `e-${name}`, 'aria-invalid': bad[name] ? true : undefined })}
+      {control({ id: `b-${name}`, name, required, maxLength: MAX[name as keyof typeof MAX], 'aria-describedby': hint ? `h-${name} e-${name}` : `e-${name}`, 'aria-invalid': bad[name] ? true : undefined })}
+      {hint && <p className="hint" id={`h-${name}`}>{hint}</p>}
       <p className="err" id={`e-${name}`} role={bad[name] ? 'alert' : undefined}>{bad[name]}</p>
     </div>
   )
@@ -84,10 +89,10 @@ export function BookingForm({ defaultTreatment = '' }: { defaultTreatment?: stri
   return (
     <form ref={form} onSubmit={onSubmit} noValidate>
       <Group step={1} title="Your details">
-        {field('firstName', 'First name', (p) => <input type="text" autoComplete="given-name" onInput={onName} {...p} />)}
-        {field('lastName', 'Last name', (p) => <input type="text" autoComplete="family-name" onInput={onName} {...p} />)}
-        {field('phone', 'Phone', (p) => <input type="tel" inputMode="tel" autoComplete="tel-national" placeholder="(702) 555-0123" onInput={onPhone} {...p} />)}
-        {field('email', 'Email', (p) => <input type="email" autoComplete="email" {...p} />)}
+        {field('firstName', 'First name', (p) => <input type="text" autoComplete="given-name" placeholder="Your first name" onInput={onName} {...p} />)}
+        {field('lastName', 'Last name', (p) => <input type="text" autoComplete="family-name" placeholder="Your last name" onInput={onName} {...p} />)}
+        {field('phone', 'Phone', (p) => <input type="tel" inputMode="tel" autoComplete="tel-national" placeholder="(000) 000-0000" onInput={onPhone} {...p} />)}
+        {field('email', 'Email', (p) => <input type="email" autoComplete="email" placeholder="you@example.com" {...p} />)}
       </Group>
       <Group step={2} title="Your visit">
         {field('treatment', 'What do you need?', (p) => (
@@ -97,21 +102,22 @@ export function BookingForm({ defaultTreatment = '' }: { defaultTreatment?: stri
             <option>Not sure yet</option>
           </select>
         ), true)}
-        <BookingSchedule date={date} time={time} onDate={setDate} onTime={setTime} errDate={bad.preferredDate} errTime={bad.preferredTime} />
+        <BookingSchedule date={date} time={time} onDate={(d) => { setDate(d); if (d) clear('preferredDate') }} onTime={(v) => { setTime(v); if (v) clear('preferredTime') }} errDate={bad.preferredDate} errTime={bad.preferredTime} />
       </Group>
       <Group step={3} title="Message and consent">
-        {field('message', 'Anything else we should know (optional)', (p) => <textarea rows={3} placeholder="No medical history or payment info, please." {...p} />, true, false)}
-        <label className="hidden" aria-hidden="true">Company<input name="company" tabIndex={-1} autoComplete="off" /></label>
+        {field('message', 'Anything else we should know (optional)', (p) => <textarea rows={3} placeholder="Tell us how we can help." {...p} />, true, false, home.appointment.messageHint)}
+        <label className="hidden" aria-hidden="true">Reference<input name="contact_ref" tabIndex={-1} autoComplete="off" /></label>
         <div className={`f w2${bad.consent ? ' bad' : ''}`}>
           <label className="consent" htmlFor="b-consent">
             <input id="b-consent" name="consent" type="checkbox" required aria-describedby="e-consent" aria-invalid={bad.consent ? true : undefined} />
             <span>{consent}</span>
           </label>
-          <p className="err" id="e-consent">{errors.consent}</p>
+          <p className="consent-links">{legalText.consentLead} <a href={`${import.meta.env.BASE_URL}privacy-policy`} target="_blank" rel="noopener">{legalText.privacyLabel}</a> {legalText.consentAnd} <a href={`${import.meta.env.BASE_URL}terms-and-conditions`} target="_blank" rel="noopener">{legalText.termsLabel}</a>.</p>
+          <p className="err" id="e-consent" role={bad.consent ? 'alert' : undefined}>{errors.consent}</p>
         </div>
       </Group>
       <div className="submit-row">
-        <button className="btn" type="submit" disabled={status === 'sending' || status === 'sent'}>{status === 'sending' ? messages.sending : submitLabel}</button>
+        <button className="btn" type="submit" disabled={status === 'sending'}>{status === 'sending' ? messages.sending : submitLabel}</button>
         <a className="tlink" href={phone.href}>{phone.label}</a>
       </div>
       <div role="status" aria-live="polite">

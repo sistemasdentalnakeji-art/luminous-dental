@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maqueta · Featured services · tarjeta con pestañas a la izquierda (Luminous Dental)</title>
+<link rel="stylesheet" href="base.css"><link rel="stylesheet" href="cristal.css">
+<style>
+.sec{padding-block:clamp(48px,7vw,104px)}
+.featured{position:relative;padding-bottom:clamp(40px,6vw,96px)}
+.featured-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px 32px;margin-bottom:clamp(24px,3.4vw,48px)}
+.ft-title{font:400 clamp(44px,7.6vw,112px)/1 var(--font-serif);letter-spacing:-.03em;text-wrap:balance}
+.ft-title::after{content:"";display:block;width:88px;height:3px;margin-top:22px;border-radius:2px;background:linear-gradient(90deg,var(--color-medic),rgba(52,191,204,.5))}
+.hub-lead{margin-top:18px;max-width:34em;font-size:clamp(17.5px,1.3vw,20px);color:var(--color-text)}
+.tlink svg{margin-left:8px}
+/* ===== Tarjeta ===== */
+.sc{--stride:70px;display:grid;grid-template-columns:clamp(250px,21vw,300px) minmax(0,1fr);min-height:clamp(540px,41vw,600px);overflow:hidden;border-radius:28px;border:1px solid transparent;
+ background:linear-gradient(115deg,rgba(255,255,255,.07) 0%,rgba(255,255,255,.015) 34%,transparent 58%) padding-box,linear-gradient(150deg,rgba(30,70,125,.55),rgba(8,20,42,.68)) padding-box,linear-gradient(135deg,rgba(255,255,255,.55),rgba(52,191,204,.28) 45%,rgba(123,195,235,.12) 72%,rgba(255,255,255,.3)) border-box;
+ -webkit-backdrop-filter:blur(18px) saturate(1.35);backdrop-filter:blur(18px) saturate(1.35);box-shadow:0 30px 60px -32px rgba(0,8,24,.95),inset 0 1px 0 rgba(255,255,255,.18)}
+.sc__rail{display:flex;flex-direction:column;padding:clamp(20px,2vw,28px) clamp(14px,1.3vw,18px);border-right:1px solid var(--color-line);background:linear-gradient(180deg,rgba(255,255,255,.05),transparent)}
+.sc__tabs{position:relative;display:grid;gap:6px}
+.sc__tabs::before{content:"";position:absolute;left:0;right:0;top:0;height:64px;border-radius:16px;background:rgba(52,191,204,.14);border:1px solid rgba(52,191,204,.6);box-shadow:0 10px 24px -14px rgba(52,191,204,.8);transform:translateY(calc(var(--i,0) * var(--stride)));transition:transform .35s var(--ease)}
+.sc__tab{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:10px;height:64px;padding:0 18px;border:0;border-radius:16px;background:transparent;color:var(--color-text2);opacity:.82;text-align:left;font:600 clamp(17px,1.3vw,20px)/1.2 var(--font-sans);cursor:pointer;transition:opacity .15s ease,color .15s ease,transform .15s ease}
+.sc__tab:hover{opacity:1}.sc__tab:active{transform:scale(.98)}
+.sc__tab[aria-current=true]{color:#fff;opacity:1}
+.sc__tab svg{flex:none;opacity:0;transform:translateX(-6px);transition:opacity .25s ease,transform .25s var(--ease)}
+.sc__tab[aria-current=true] svg{opacity:1;transform:none}
+.sc__count{display:flex;align-items:center;gap:12px;margin-top:auto;padding:20px 6px 0}
+.sc__count span{position:relative;flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.14);overflow:hidden}
+.sc__count span::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(90deg,var(--color-medic),var(--color-medic-soft));transform-origin:left;transform:scaleX(calc((var(--i,0) + 1) / 5));transition:transform .35s var(--ease)}
+.sc__count b{font:600 14px/1 var(--font-sans);font-variant-numeric:tabular-nums;color:var(--color-text2)}
+.sc__view{min-width:0;display:flex}
+.sc__track{flex:1;min-width:0;display:grid;grid-auto-flow:column;grid-auto-columns:100%;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none}
+.sc__track::-webkit-scrollbar{display:none}
+.sc__slide{min-width:0;scroll-snap-align:start;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);grid-template-areas:"body fig"}
+.sc__body{grid-area:body;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:14px;padding:clamp(24px,2.8vw,44px) clamp(8px,1vw,16px) clamp(24px,2.8vw,44px) clamp(24px,2.8vw,44px)}
+.sc__eyebrow{display:flex;align-items:center;gap:16px;font:600 15px/1.2 var(--font-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--color-medic-soft)}
+.sc__title{font:400 clamp(30px,3.3vw,50px)/1.06 var(--font-serif);letter-spacing:-.02em;text-wrap:balance}
+.sc__text{font-size:clamp(18px,1.5vw,22px);line-height:1.5;text-wrap:pretty}
+.sc__chips{display:flex;flex-wrap:wrap;gap:8px;margin-block:4px 10px}
+.sc__chips li{display:flex;align-items:center;gap:8px;padding:8px 14px 8px 8px;border-radius:20px;border:1px solid var(--color-line);background:rgba(255,255,255,.05);font-size:clamp(16px,1.2vw,18px);font-weight:500;line-height:1.3}
+.sc__check{display:inline-grid;flex:none;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--color-glow);box-shadow:inset 0 0 0 1.5px var(--color-medic);color:var(--color-medic)}
+.sc__cta{gap:10px;min-height:56px;padding:0 32px;font-size:clamp(17px,1.3vw,19px);color:var(--color-ink)}
+/* ventana de la figura */
+.sc__fig{grid-area:fig;position:relative;display:grid;place-items:center;margin:clamp(14px,1.6vw,24px);border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:radial-gradient(70% 70% at 50% 52%,rgba(47,99,173,.6),rgba(10,21,41,.4) 78%);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 -40px 70px -40px rgba(0,8,24,.7)}
+.sc__fig::after{content:"";position:absolute;left:22%;right:22%;bottom:11%;height:26px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,8,24,.6),transparent);filter:blur(4px);pointer-events:none}
+.sc__real{flex:none;width:610px;height:510px;zoom:.86;background:url(capturas/ref-actual-inicio-1440.png) -690px -4130px/1440px auto no-repeat;-webkit-mask:radial-gradient(closest-side,#000 62%,transparent);mask:radial-gradient(closest-side,#000 62%,transparent);}
+.sc__stand{display:grid;justify-items:center;gap:16px;color:var(--color-text2)}
+.sc__stand small{font:500 13px/1.3 var(--font-sans);opacity:.8;border:1px dashed var(--color-line-ui);border-radius:8px;padding:4px 10px}
+.sc__pause{position:absolute;top:12px;right:12px;z-index:2;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid var(--color-line-ui);background:rgba(10,21,41,.55);color:#fff}
+.sc__tab:focus-visible{outline:3px solid var(--color-medic);outline-offset:-3px}
+.sc__track:focus-visible{outline:3px solid var(--color-medic);outline-offset:-3px;border-radius:24px}
+/* tableta: la figura pasa arriba del texto */
+@media (max-width:1023px){.sc{min-height:0;grid-template-columns:220px minmax(0,1fr)}.sc__slide{grid-template-columns:minmax(0,1fr);grid-template-areas:"fig" "body"}.sc__fig{min-height:300px}.sc__body{padding:8px 28px 32px}.sc__tab{font-size:17px}}
+/* celular: pestañas en fila arriba (se desliza de lado), figura, texto */
+@media (max-width:767px){
+ .sc{display:block;border-radius:24px}
+ .sc__rail{flex-direction:row;padding:10px 0 10px 10px;border-right:0;border-bottom:1px solid var(--color-line)}
+ .sc__tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-right:36px;-webkit-mask:linear-gradient(90deg,#000 calc(100% - 44px),transparent);mask:linear-gradient(90deg,#000 calc(100% - 44px),transparent)}
+ .sc__tabs::-webkit-scrollbar{display:none}
+ .sc__tabs::before,.sc__count,.sc__tab svg{display:none}
+ .sc__tab{flex:none;height:48px;padding:0 18px;border:1px solid transparent;border-radius:999px;font-size:16px;white-space:nowrap}
+ .sc__tab[aria-current=true]{background:rgba(52,191,204,.14);border-color:rgba(52,191,204,.6)}
+ .sc__fig{min-height:0;aspect-ratio:4/3;margin:12px}
+ .sc__body{padding:8px 20px 24px}
+ .sc__eyebrow{font-size:14px;gap:14px}
+ .gem{--g:56px}
+ .sc__title{font-size:clamp(32px,9vw,40px)}
+ .sc__text{font-size:18px}
+ .sc__chips li{font-size:15.5px}
+ .sc__cta{width:100%}
+ .sc__slide{align-content:start}
+ .sc__real{zoom:.5}
+}
+html[data-static] *,html[data-static] *::before,html[data-static] *::after{transition:none!important;animation:none!important}
+.sc__slide[data-on]{}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+ <linearGradient id="gem-s" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#8fe3e8"/></linearGradient>
+ <linearGradient id="gem-f" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".42"/><stop offset="1" stop-color="#34bfcc" stop-opacity=".30"/></linearGradient>
+ <symbol id="g-braces" viewBox="0 0 24 24"><path d="M7.5 3.5c-2.5 0-4 2-4 4.5 0 2 1 3.5 1.5 5.5.5 2 .5 7 2.5 7 1.5 0 1.5-4 2-5s1-1 2 0 .5 5 2 5c2 0 2-5 2.5-7 .5-2 1.5-3.5 1.5-5.500 0-2.500-1.500-4.500-4-4.500-1.500 0-2.500.8-3.500.8S9 3.500 7.500 3.500z"/><rect x="9.5" y="7" width="5" height="4" rx="1" class="solid"/><path d="M1.500 9.500q10.500 3.500 21 0"/></symbol>
+ <symbol id="g-implants" viewBox="0 0 24 24"><path d="M7 3.500h10c1 0 1.700.8 1.700 1.800 0 2-.7 3.200-1.200 4.200h-11c-.5-1-1.200-2.200-1.200-4.200C5.300 4.300 6 3.500 7 3.500z"/><path d="M10.500 9.500h3v2h-3z" class="solid"/><path d="M9.500 11.500h5l-.8 9.500h-3.400zM10 14.300h4M10.200 17h3.600"/></symbol>
+ <symbol id="g-bridges" viewBox="0 0 24 24"><path d="M2.500 8c0-1.700 1.300-3 3-3h13c1.700 0 3 1.300 3 3v3.500c0 .8-.7 1.500-1.500 1.500H19v5.500c0 .8-.7 1.500-1.500 1.500S16 19.800 16 19v-5H8v5c0 .8-.7 1.500-1.500 1.500S5 19.800 5 19v-5.500H4c-.8 0-1.500-.7-1.500-1.500z"/><path d="M8.500 5v8M15.500 5v8"/></symbol>
+ <symbol id="g-crowns" viewBox="0 0 24 24"><path d="M5 9.500c0-3.500 2-6 4.500-6 1 0 1.700.6 2.500.6s1.500-.6 2.500-.6c2.500 0 4.500 2.500 4.500 6 0 1.300-.3 2.300-.7 3.300H5.700c-.4-1-.7-2-.7-3.300z"/><path d="M8 12.800c0 3.700.5 7.700 1.700 7.700 1 0 1.200-2.500 2.300-2.500s1.300 2.500 2.300 2.500c1.200 0 1.700-4 1.700-7.700" stroke-dasharray="0"/><path d="M8.500 6.500c.8-.9 1.800-1.200 3-.8" opacity=".9"/></symbol>
+ <symbol id="g-whitening" viewBox="0 0 24 24"><path d="M6.500 6c-2.200 0-3.500 1.800-3.500 4 0 1.800.9 3.100 1.300 4.900.4 1.800.4 6.100 2.200 6.100 1.300 0 1.300-3.500 1.800-4.400s.9-.9 1.800 0 .5 4.400 1.800 4.400c1.800 0 1.800-4.300 2.200-6.100.4-1.800 1.300-3.100 1.300-4.900" /><path d="M18.500 2.500l1 2.500 2.500 1-2.500 1-1 2.500-1-2.500-2.500-1 2.500-1z" class="solid"/><path d="M7 3.200l.6 1.300 1.300.6-1.300.6L7 7l-.6-1.300L5 5.100l1.400-.6z" class="solid"/></symbol>
+</defs></svg>
+<p class="note">MAQUETA · Servicios destacados: tarjeta de vidrio fija, pestañas a la izquierda · ?i=0..4 elige pestaña · ?static=1 sin movimiento</p>
+<section class="sec wrap featured" aria-labelledby="featured-h">
+ <header class="featured-head">
+  <div><h2 class="ft-title" id="featured-h">Featured <span class="accent">services</span></h2><p class="hub-lead">Some of the treatments we offer at our clinic in Las Vegas.</p></div>
+  <a class="tlink" href="#">View all services<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+ </header>
+ <div class="sc" id="sc" role="region" aria-roledescription="carousel" aria-label="Featured services" style="--i:0">
+  <div class="sc__rail">
+   <ul class="sc__tabs" id="tabs" aria-label="Slides of Featured services">
+    <li><button class="sc__tab" type="button"><span>Braces &amp; Invisalign</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></li>
+    <li><button class="sc__tab" type="button"><span>Implants</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></li>
+    <li><button class="sc__tab" type="button"><span>Dentures &amp; bridges</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></li>
+    <li><button class="sc__tab" type="button"><span>Veneers &amp; crowns</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></li>
+    <li><button class="sc__tab" type="button"><span>Whitening</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></li>
+   </ul>
+   <div class="sc__count" aria-hidden="true"><span></span><b id="cnt">1 / 5</b></div>
+  </div>
+  <div class="sc__view"><div class="sc__track" id="track" tabindex="0" aria-label="List: Featured services">
+<article class="sc__slide" aria-label="1 of 5">
+ <div class="sc__body">
+  <p class="sc__eyebrow"><span class="gem" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#g-braces"/></svg><i></i></span><span>Orthodontics</span></p>
+  <h3 class="sc__title">Invisalign &amp; Braces</h3>
+  <p class="sc__text">A straighter smile and a better bite, for children, teens and adults.</p>
+  <ul class="sc__chips"><li><span class="sc__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Invisalign and braces.</li><li><span class="sc__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>For children, teens and adults.</li></ul>
+  <a class="btn sc__cta" href="#"><span>View service<span class="sr">: Invisalign &amp; Braces</span></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+ </div>
+ <div class="sc__fig"><span class="sc__real" role="img" aria-label="3D model"></span><span class="sc__pause" aria-hidden="true"><svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor"><path d="M5 3h3.4v14H5zM11.6 3H15v14h-3.4z"/></svg></span></div>
+</article>
+<article class="sc__slide" aria-label="2 of 5">
+ <div class="sc__body">
+  <p class="sc__eyebrow"><span class="gem" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#g-implants"/></svg><i></i></span><span>Cosmetic Dentistry</span></p>
+  <h3 class="sc__title">Dental Implants</h3>
+  <p class="sc__text">Artificial teeth to fill the gaps left by damaged, lost or decayed teeth.</p>
+  <ul class="sc__chips"><li><span class="sc__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Single, multiple or full arch implants.</li><li><span class="sc__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>A consultation to check your candidacy.</li><li><span class="sc__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>A personalized treatment plan.</li></ul>
+  <a class="btn sc__cta" href="#"><span>View service<span class="sr">: Dental Implants</span></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+ </div>
+ <div class="sc__fig"><span class="sc__stand"><span class="gem gem--lg"><svg viewBox="0 0 24 24"><use href="#g-implants"/></svg></span><small>ResultFigure 3D (aquí va la figura real)</small></span><span class="sc__pause" aria-hidden="true"><svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor"><path d="M5 3h3.4v14H5zM11.6 3H15v14h-3.4z"/></svg></span></div>
+</article>
+<article class="sc__slide" aria-label="3 of 5">
+ <div class="sc__body">
+  <p class="sc__eyebrow"><span class="gem" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#g-bridges"/></svg><i></i></span><span>General Dentistry</span></p>
+  <h3 class="sc__title">Dentures &amp; Bridges</h3>
+  <p class="sc__text">Replacements for missing teeth that focus on aesthetics, fit and comfort.</p>
+  <ul class="sc__chips"><li><span class="sc__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Full and partial dentures.</li><li><span class="sc__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Bridges that close the gap left by missing teeth.</li><li><span class="sc__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>An exam first to recommend the right option.</li></ul>
+  <a class="btn sc__cta" href="#"><span>View service<span class="sr">: Dentures &amp; Bridges</span></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+ </div>
+ <div class="sc__fig"><span class="sc__stand"><span class="gem gem--lg"><svg viewBox="0 0 24 24"><use href="#g-bridges"/></svg></span><small>ResultFigure 3D (aquí va la figura real)</small></span><span class="sc__pause" aria-hidden="true"><svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor"><path d="M5 3h3.4v14H5zM11.6 3H15v14h-3.4z"/></svg></span></div>
+</article>
+<article class="sc__slide" aria-label="4 of 5">
+ <div class="sc__body">
+  <p class="sc__eyebrow"><span class="gem" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#g-crowns"/></svg><i></i></span><span>Cosmetic Dentistry</span></p>
+  <h3 class="sc__title">Porcelain Veneers &amp; Crowns</h3>
+  <p class="sc__text">Cosmetic and restorative options made with porcelain.</p>
+  <ul class="sc__chips"><li><span class="sc__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Veneers are ultra-thin shells placed over teeth.</li><li><span class="sc__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Crowns are placed over damaged teeth.</li><li><span class="sc__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Made with porcelain, a durable material.</li></ul>
+  <a class="btn sc__cta" href="#"><span>View service<span class="sr">: Porcelain Veneers &amp; Crowns</span></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+ </div>
+ <div class="sc__fig"><span class="sc__stand"><span class="gem gem--lg"><svg viewBox="0 0 24 24"><use href="#g-crowns"/></svg></span><small>ResultFigure 3D (aquí va la figura real)</small></span><span class="sc__pause" aria-hidden="true"><svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor"><path d="M5 3h3.4v14H5zM11.6 3H15v14h-3.4z"/></svg></span></div>
+</article>
+<article class="sc__slide" aria-label="5 of 5">
+ <div class="sc__body">
+  <p class="sc__eyebrow"><span class="gem" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#g-whitening"/></svg><i></i></span><span>Cosmetic Dentistry</span></p>
+  <h3 class="sc__title">Teeth Whitening</h3>
+  <p class="sc__text">Professional-grade products for yellow, discolored teeth.</p>
+  <ul class="sc__chips"><li><span class="sc__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Done under the observation of a dental professional.</li><li><span class="sc__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Custom-made trays or UV light.</li><li><span class="sc__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>A take-home option may be available.</li></ul>
+  <a class="btn sc__cta" href="#"><span>View service<span class="sr">: Teeth Whitening</span></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+ </div>
+ <div class="sc__fig"><span class="sc__stand"><span class="gem gem--lg"><svg viewBox="0 0 24 24"><use href="#g-whitening"/></svg></span><small>ResultFigure 3D (aquí va la figura real)</small></span><span class="sc__pause" aria-hidden="true"><svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor"><path d="M5 3h3.4v14H5zM11.6 3H15v14h-3.4z"/></svg></span></div>
+</article>
+  </div></div>
+ </div>
+</section>
+<script>
+const q=new URLSearchParams(location.search);if(q.get('static'))document.documentElement.dataset.static=1;
+const card=document.getElementById('sc'),track=document.getElementById('track'),tabsEl=document.getElementById('tabs'),tabs=[...tabsEl.querySelectorAll('.sc__tab')],slides=[...track.children],cnt=document.getElementById('cnt');
+// los botones están dentro de li pero el hilo (.sc__thumb) es hijo directo del ul: se mide por la altura fija (64 + 6)
+function sync(){const i=Math.round(track.scrollLeft/track.clientWidth);card.style.setProperty('--i',i);cnt.textContent=(i+1)+' / 5';tabs.forEach((t,k)=>t.setAttribute('aria-current',k===i?'true':'false'));slides.forEach((s,k)=>k===i?s.setAttribute('data-on',''):s.removeAttribute('data-on'));if(innerWidth<768){const t=tabs[i];tabsEl.scrollTo({left:t.parentElement.offsetLeft-12})}}
+const go=(i,instant)=>track.scrollTo({left:i*track.clientWidth,behavior:instant||q.get('static')?'auto':'smooth'});
+tabs.forEach((t,i)=>t.addEventListener('click',()=>go(i)));
+tabsEl.addEventListener('keydown',e=>{const i=tabs.indexOf(document.activeElement);const k={ArrowDown:1,ArrowRight:1,ArrowUp:-1,ArrowLeft:-1}[e.key];let n=k?Math.min(4,Math.max(0,i+k)):e.key==='Home'?0:e.key==='End'?4:-1;if(n<0)return;e.preventDefault();tabs[n].focus();go(n)});
+track.addEventListener('scroll',sync,{passive:true});
+const i0=+q.get('i')||0;requestAnimationFrame(()=>{go(i0,true);setTimeout(sync,60)});
+</script></body></html>
