@@ -47,44 +47,47 @@ h1,h2,h3{color:var(--color-title)}
 /* header: la única píldora de vidrio. Estructura del menú y animación de apertura como en Dental Nakeji (header.css). */
 /* Menú fijo (23-11-2026): sticky, así sigue en el flujo y no tapa el contenido; --hbar-h (tokens.css) es su alto y alimenta scroll-padding-top y el panel del celular. */
 .hbar{padding-top:10px;position:sticky;top:0;z-index:40}
-.hdr{position:relative;isolation:isolate;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px;min-height:var(--hdr-h);padding:0 12px 0 28px;border-radius:999px;border:1px solid rgba(255,255,255,.16)}
+.hdr{position:relative;isolation:isolate;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;min-height:var(--hdr-h);padding:0 12px 0 28px;border-radius:999px;border:1px solid rgba(255,255,255,.16)}
 .hdr::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:linear-gradient(135deg,rgba(40,84,140,.97),rgba(13,28,55,.98));
   box-shadow:0 22px 50px -26px rgba(0,8,24,.85),0 2px 10px -4px rgba(58,112,176,.25),inset 0 1px rgba(255,255,255,.12)}
 .nav-list{display:flex;align-items:center;gap:2px;white-space:nowrap}
 .nav-item{position:relative}
-.nav-link{--nav-pad:clamp(10px,.8vw,16px);position:relative;display:inline-flex;align-items:center;justify-content:center;gap:4px;min-width:44px;min-height:44px;padding:0 var(--nav-pad);border:0;border-radius:999px;background:transparent;color:var(--color-text);font:600 var(--fs-nav)/1 var(--font-sans);white-space:nowrap;text-decoration:none;cursor:pointer;transition-property:background-color,color;transition-duration:.18s}
+.nav-link{--nav-pad:14px;position:relative;display:inline-flex;align-items:center;justify-content:center;gap:4px;min-width:44px;min-height:44px;padding:0 var(--nav-pad);border:0;border-radius:999px;background:transparent;color:var(--color-text);font:600 var(--fs-nav)/1 var(--font-sans);white-space:nowrap;text-decoration:none;cursor:pointer;transition-property:background-color,color;transition-duration:.18s}
 .nav-link:hover,.nav-link:focus-visible,.has-dropdown.is-open>.nav-link{background:rgba(255,255,255,.08);color:#fff}
 /* Pestaña activa (23-11-2026, r3): barra fija de lado a lado de la palabra (de borde a borde del texto, sin el relleno) sobre luz medic. Sin animación: al pasar el mouse solo cambia el color. Sigue a la página actual (aria-current) y, en Services, a todas sus subpáginas (.is-active). */
-.nav-link::after{content:"";position:absolute;left:var(--nav-pad);right:var(--nav-pad);bottom:7px;height:3px;border-radius:3px;background:var(--color-medic);box-shadow:0 0 8px 1px var(--color-medic),0 0 20px 3px rgba(52,191,204,.55);opacity:0}
+.nav-link::after{content:"";position:absolute;top:-9px;left:50%;right:auto;width:80%;height:4px;transform:translateX(-50%);border-radius:0 0 4px 4px;background:var(--color-medic);box-shadow:0 0 8px 1px var(--color-medic),0 0 20px 3px rgba(52,191,204,.55);opacity:0}
 .nav-link[aria-current]::after,.nav-link.is-active::after{opacity:1}
 .nav-link[aria-current],.nav-link.is-active{background:radial-gradient(90% 130% at 50% 120%,rgba(52,191,204,.34),rgba(255,255,255,.1) 70%)}
-.hdr .neon{width:var(--logo-w);margin:0;justify-self:start}
+.hdr .neon{width:var(--logo-w);margin:-6px 0;justify-self:start} /* margen negativo: el logo más grande no estira la barra (75 px) */
 .hdr .neon{--glow:.5} /* halo más bajo que el del pie (23-11 r3) */
 .hdr-social{display:none;align-items:center;gap:2px}
 @media (min-width:1280px){.hdr-social{display:flex}}
 .hdr-phone{display:none}
 @media (min-width:1280px){.hdr-phone{display:inline-flex}}
-.hbar .wrap{max-width:1760px;padding-inline:clamp(16px,2.6vw,44px)} /* píldora más ancha que el contenido: con el menú más grande y las redes ya no cabía en 1440 px */
+.hbar .wrap{max-width:1608px;padding-inline:clamp(16px,2.6vw,44px)} /* píldora más ancha que el contenido: con el menú más grande y las redes ya no cabía en 1440 px */
 .site-menu__social{display:flex;justify-content:center}
 @media (min-width:1280px){.site-menu__social{display:none}}
 /* 1280–1439 px: el menú completo (enlaces, redes, teléfono y botón) cabe ajustando solo los espacios; el aspecto no cambia (23-11-2026, r5). */
 @media (min-width:1280px) and (max-width:1439px){.hbar .wrap{padding-inline:12px}.hdr{gap:8px;padding:0 8px 0 20px}.hdr-r{gap:8px}.nav-link{--nav-pad:9px}}
 .nav-chevron{transition:transform .18s}
 .has-dropdown.is-open .nav-chevron{transform:rotate(180deg)}
-.hdr-r{display:flex;align-items:center;gap:20px;justify-content:flex-end}
-.hdr-phone{width:52px;height:52px;border-radius:50%;border:1px solid var(--color-line-ui);background:rgba(255,255,255,.05);align-items:center;justify-content:center;color:#fff;transition-property:background-color,border-color;transition-duration:.18s}
+.hdr-r{display:flex;align-items:center;gap:8px;justify-content:flex-end}
+.hdr-phone{width:44px;height:44px;border-radius:50%;border:1px solid var(--color-line-ui);background:rgba(255,255,255,.05);align-items:center;justify-content:center;color:#fff;transition-property:background-color,border-color;transition-duration:.18s}
 .hdr-phone:hover{background:rgba(255,255,255,.12);border-color:#fff}
 .hdr-phone svg{width:22px;height:22px;fill:none;stroke:var(--color-sky);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .hdr .btn{min-height:52px;padding:0 28px;font-size:var(--fs-btn)}
+.hdr .hdr-cta{min-height:44px;padding:0 22px;font-size:calc(var(--fs-btn) - 2px)} /* medidas del botón Agendar de Dental Nakeji */
 .menu-toggle{display:none;place-items:center;width:48px;height:48px;border-radius:50%;border:1px solid var(--color-line-ui);background:rgba(255,255,255,.05);color:#fff;cursor:pointer}
 .menu-toggle:hover{background:rgba(255,255,255,.12)}
 /* filas del submenú (las comparten el panel de escritorio y el acordeón del celular) */
 .dropdown__link{display:flex;align-items:center;gap:12px;min-height:44px;padding:10px 14px;border-radius:12px;color:var(--color-text);font-size:16px;font-weight:500;line-height:1.2;text-decoration:none;transition-property:background-color,color;transition-duration:.18s}
 .dropdown__link:hover,.dropdown__link:focus-visible{background:rgba(255,255,255,.08);color:#fff}
 .dropdown__link[aria-current]{color:#fff;font-weight:600}
+.dropdown--more .dropdown__list{grid-template-columns:1fr}
+.dropdown--more .dropdown__list li + li{margin-top:4px;padding-top:4px;border-top:1px solid var(--color-line)}
 .dropdown__icon{display:grid;flex:none;place-items:center;width:36px;height:36px;border-radius:10px;background:var(--color-glow);color:#fff;transition:color .18s}
 .dropdown__link:hover .dropdown__icon,.dropdown__link:focus-visible .dropdown__icon,.dropdown__link[aria-current] .dropdown__icon{color:var(--color-medic-soft)}
-.dropdown__overview{margin-top:8px;width:fit-content}
+.hdr .dropdown__overview{justify-content:space-between;gap:8px;min-height:44px;padding:10px 14px;margin-top:8px;width:fit-content;font-size:.9375rem} /* .hdr .btn lo agrandaba: mismas medidas que en Dental Nakeji */
 @keyframes dropdown-in{from{opacity:0;transform:translateY(-6px)}}
 
 @media (min-width:1280px){
@@ -92,18 +95,19 @@ h1,h2,h3{color:var(--color-title)}
   .site-menu__row{display:none}
   .dropdown{position:absolute;top:calc(100% + 14px);left:0;z-index:60;width:max-content;min-width:260px;padding:12px;border-radius:22px;border:1px solid var(--color-line);background:linear-gradient(180deg,#0d1c37,#0a1529);box-shadow:0 30px 60px -20px rgba(0,8,24,.9),0 1px 2px rgba(0,0,0,.4);animation:dropdown-in .18s var(--ease)}
   .dropdown[hidden]{display:none}
-  .dropdown--services{left:-150px;width:800px}
+  .dropdown--services{left:-120px;width:750px}
+  .dropdown--more{left:0;min-width:300px} /* «More»: una columna, línea divisora entre opciones (como «Más» de Dental Nakeji) */
   /* Services: enlaces en 3 columnas que se leen por filas, con una línea entre filas */
   .dropdown--services .dropdown__list{display:grid;grid-template-columns:repeat(3,1fr);column-gap:4px}
   .dropdown--services .dropdown__list li:nth-child(n+4){margin-top:4px;padding-top:4px;border-top:1px solid var(--color-line)}
-  .dropdown--services .dropdown__overview{margin-left:14px}
+  .hdr .dropdown--services .dropdown__overview{width:calc((100% - 8px) * 2 / 3 + 4px - 14px);margin-left:14px} /* empieza a la altura de los iconos y termina al final de la 2.ª columna */
 }
 @media (max-width:1279px){
   :root{--hbar-h:88px}
   .hdr{grid-template-columns:auto 1fr;min-height:78px;padding-left:20px}
-  .hdr .neon{width:clamp(118px,32vw,136px)}
+  .hdr .neon{width:clamp(146px,39vw,165px);margin:-5px 0}
   .nav-link{--nav-pad:4px}
-  .nav-link::after{left:-12px;right:auto;top:22%;bottom:22%;width:3px;height:auto}
+  .nav-link::after{left:-12px;top:22%;bottom:22%;width:3px;height:auto;transform:none;border-radius:3px}
   .hdr-phone,.hdr-cta{display:none}
   .menu-toggle{display:grid}
   .site-menu{display:none}
@@ -122,12 +126,9 @@ h1,h2,h3{color:var(--color-title)}
 /* hero */
 .hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:30px}
 /* cresta + franja de dientes (de A: se ilumina desde el centro hacia afuera, ahora como estrellas) */
-.ridge{display:block;width:100%;height:clamp(46px,7vw,100px);margin-top:clamp(0px,1vw,14px)}
 .ridge-far{fill:#0e1d38}
 .ridge-line{fill:none;stroke:rgba(123,195,235,.32);stroke-width:1;vector-effect:non-scaling-stroke}
 .ridge-near{fill:var(--color-night)}
-.ridge-fade{fill:url(#rn)}
-.ridge-farfade{fill:url(#rf)}
 
 .sec{padding-block:clamp(64px,8vw,120px)}
 .h2{font:400 clamp(36px,4.4vw,58px)/1.08 var(--font-serif);letter-spacing:-.02em;text-wrap:balance}

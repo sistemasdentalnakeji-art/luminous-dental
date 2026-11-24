@@ -5,6 +5,7 @@
  */
 export const reviewsSource = {
   endpoint: null as string | null,
-  profileUrl: null as string | null, // el enlace de la clínica en Google, POR CONFIRMAR
+  // Ficha de la clínica en Google (verificada); la usa el botón «See reviews on Google».
+  profileUrl: 'https://www.google.com/maps/search/?api=1&query=Luminous+Dental+1212+S+Maryland+Pkwy+Las+Vegas+NV',
 }
 

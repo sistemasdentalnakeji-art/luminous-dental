@@ -40,8 +40,8 @@
   --fs-body: min(22px, calc(17.5px + max(0px, 100vw - 1600px) * 0.0045));
   --fs-btn: min(20px, calc(16.5px + max(0px, 100vw - 1600px) * 0.0036));
   --fs-nav: clamp(18px, calc(11px + 0.5vw), 22px); /* menú: 18 px hasta ~1400, 19 en 1600, 20.6 en 1920 (Nakeji: 17 / 18.4) */
-  --hdr-h: clamp(96px, 6vw, 124px); /* alto de la píldora del menú (78 px en celular, ver site.css) */
+  --hdr-h: 75px; /* alto de la píldora del menú (78 px en celular, ver site.css) */
   --hbar-h: calc(var(--hdr-h) + 10px); /* + 10 px de aire arriba; alimenta scroll-padding-top y el panel del celular */
-  --logo-w: clamp(150px, 9.4vw, 196px); /* letrero de neón del header */
+  --logo-w: 134px; /* letrero de neón del header */
   --pad: clamp(18px, 4.4vw, 64px);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);}

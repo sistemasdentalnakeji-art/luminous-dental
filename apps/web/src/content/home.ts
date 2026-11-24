@@ -24,7 +24,12 @@ export const home = {
       { label: 'Insurance & Financing', href: '/insurance-financing' },
       { label: 'Contact', href: '/contact' },
       { label: 'About', href: '/about' },
-      { label: 'Blog', href: '/blog' },
+      // «More»: submenú con lo que no cabe en la barra (rutas de config/routes.ts; icono = nombre de components/Icon.tsx).
+      { label: 'More', items: [
+        { label: 'Blog', href: '/blog', icon: 'book' },
+        { label: 'Terms and Conditions', href: '/terms-and-conditions', icon: 'document' },
+        { label: 'Privacy Notice', href: '/privacy-policy', icon: 'lock' },
+      ] },
     ],
     servicesOverview: 'View all services',
     cta: { label: 'Request an appointment', href: '#appointment' },
@@ -70,7 +75,6 @@ export const home = {
         href: '/services#pediatric',
       },
     ],
-    cta: { label: 'See all services', href: '/services' },
   },
 
   // 4. Por qué Luminous
@@ -137,9 +141,6 @@ export const home = {
   coverage: {
     insurance: {
       heading: 'Insurance',
-      // NUEVO, para aprobación. Reemplaza «We work with most private dental insurance» (la clínica no lo ha confirmado). No promete nada sobre planes ni financiamiento.
-      text: 'Questions about insurance or payment? Ask our team.',
-      cta: { label: 'See insurance and financing', href: '/insurance-financing' },
     },
     outOfTown: {
       heading: 'Coming from out of town?',
@@ -155,6 +156,8 @@ export const home = {
   appointment: {
     id: 'appointment',
     heading: 'Request an appointment',
+    intro:
+      `Tell us who you are and what you need. Sending this form does not reserve a time. Our team will follow up to set your visit. You can also call or text ${tel}.`,
     submitLabel: 'Send my request',
     messageHint: 'No medical history or payment info, please.', // ayuda fija bajo el mensaje del formulario completo (guardado, hoy sin usar)
     consent: 'I agree that Luminous Dental may contact me about this request.',

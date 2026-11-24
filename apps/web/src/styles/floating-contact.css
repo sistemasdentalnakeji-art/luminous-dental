@@ -22,12 +22,12 @@
 .float-contact__pause{position:relative;display:block;width:32px;height:32px;margin:0 3px 0 0;padding:0;border:0;border-radius:50%;background:none;box-shadow:0 8px 18px -8px rgba(0,8,24,.75);cursor:pointer;transition:translate .2s var(--ease),filter .2s}
 .float-contact__pause:hover,.float-contact__pause:focus-visible{translate:0 -2px;filter:brightness(1.12) drop-shadow(0 0 6px rgba(224,182,92,.55))}
 
-/* Ficha con la estrella del logo; el aro de progreso (azul→oro) va como borde, fuera del giro. */
+/* Ficha con la estrella del logo; el aro de progreso (azul→oro) rodea la ficha por fuera (la ficha lo tapaba cuando iba pegado: su canto y filete llegan a 21.5 px del centro). */
 .float-contact__top{position:relative;display:block;width:38px;height:38px;padding:0;border:0;border-radius:50%;background:none;box-shadow:0 10px 24px -10px rgba(0,8,24,.8);cursor:pointer;transition:translate .2s var(--ease),filter .2s}
 .float-contact__top:hover,.float-contact__top:focus-visible{translate:0 -2px;filter:brightness(1.12) drop-shadow(0 0 6px rgba(224,182,92,.55))}
-.float-contact__ring{position:absolute;inset:-3px;width:calc(100% + 6px);height:calc(100% + 6px);rotate:-90deg;pointer-events:none}
-.float-contact__track{fill:none;stroke:rgba(123,195,235,.2);stroke-width:2.5}
-.float-contact__fill{fill:none;stroke:url(#float-progress);stroke-width:2.5;stroke-linecap:round;filter:drop-shadow(0 0 3px rgba(224,182,92,.6));transition:stroke-dashoffset .12s linear}
+.float-contact__ring{overflow:visible;position:absolute;inset:-7px;width:calc(100% + 14px);height:calc(100% + 14px);rotate:-90deg;pointer-events:none}
+.float-contact__track{fill:none;stroke:rgba(224,182,92,.22);stroke-width:3.5}
+.float-contact__fill{fill:none;stroke:url(#float-progress);stroke-width:3.5;stroke-linecap:round;filter:drop-shadow(0 0 4px rgba(224,182,92,.75));transition:stroke-dashoffset .12s linear}
 
 /* WhatsApp: misma ficha azul con el logo en verde. */
 .float-contact__wa-wrap{position:relative;display:grid;justify-items:end}

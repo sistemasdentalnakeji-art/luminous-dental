@@ -4,7 +4,7 @@ import { home } from '@/content/home'
 import { Link } from '@/lib/router'
 import '@/styles/about.css'
 
-const links = home.header.nav.filter((n) => n.href === '/services' || n.href === '/insurance-financing')
+const links = home.header.nav.filter((n) => 'href' in n && (n.href === '/services' || n.href === '/insurance-financing'))
 
 /** Icono de línea en un cuadro de vidrio (decorativo). */
 function Tile({ icon }: { icon: Icon }) {

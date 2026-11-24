@@ -1,12 +1,18 @@
-// Selector de hora del formulario de citas, como el de Dental Nakeji (features/booking/Picker.tsx): un botón que abre una cuadrícula de horarios agrupada en Morning / Afternoon.
-// Patrón ARIA «select-only combobox»: botón con role="combobox" + role="listbox". Teclado: flechas, Inicio/Fin, Enter o Espacio, Esc. La hora elegida la guarda el formulario (no hay campo oculto).
+// Lista desplegable propia del formulario de citas, como el Picker de Dental Nakeji: la hora (cuadrícula Morning / Afternoon) y el tratamiento (lista agrupada con iconos, grid={false}).
+// Patrón ARIA «select-only combobox»: botón con role="combobox" + role="listbox". Teclado: flechas, Inicio/Fin, Enter o Espacio, Esc. La hora la guarda el formulario; con `name` se envía el valor en un campo oculto (el tratamiento).
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react'
+import { Icon, type IconName } from '@/components/Icon'
 import '@/styles/time-picker.css'
 
-export type TimeGroup = { label: string; options: { value: string; label: string }[] }
+export type TimeGroup = { label: string; icon?: IconName; options: { value: string; label: string }[] }
 
 type Props = {
   id: string
+  name?: string
+  /** false = lista de una columna (tratamientos) en vez de cuadrícula de horas. */
+  grid?: boolean
+  /** data-focus del botón: el formulario le da el foco si el campo tiene error. */
+  focusKey?: string
   value: string
   groups: TimeGroup[]
   placeholder: string
@@ -16,9 +22,7 @@ type Props = {
   onChange: (value: string) => void
 }
 
-const COLS = 3 // columnas de la cuadrícula (time-picker.css): las flechas arriba y abajo saltan de 3 en 3
-
-export function TimePicker({ id, value, groups, placeholder, disabled, invalid, describedBy, onChange }: Props) {
+export function TimePicker({ id, name, grid = true, focusKey = 'preferredTime', value, groups, placeholder, disabled, invalid, describedBy, onChange }: Props) {
   const listId = useId()
   const options = groups.flatMap((g) => g.options)
   const selected = options.find((o) => o.value === value)
@@ -30,6 +34,7 @@ export function TimePicker({ id, value, groups, placeholder, disabled, invalid, 
   const list = useRef<HTMLDivElement>(null)
   const byPointer = useRef(false) // la opción activa la movió el mouse: ya está a la vista, no hay que desplazar nada
   const optionId = (i: number) => `${listId}-${i}`
+  const COLS = grid ? 3 : 1 // columnas de la cuadrícula (time-picker.css): las flechas arriba y abajo saltan de 3 en 3 (en la lista, de 1 en 1)
 
   // Clic o toque fuera: se cierra.
   useEffect(() => {
@@ -60,7 +65,7 @@ export function TimePicker({ id, value, groups, placeholder, disabled, invalid, 
 
   function onListKey(e: KeyboardEvent) {
     const last = options.length - 1
-    const move: Record<string, number> = { ArrowDown: COLS, ArrowUp: -COLS, ArrowRight: 1, ArrowLeft: -1 }
+    const move: Record<string, number> = { ArrowDown: COLS, ArrowUp: -COLS, ArrowRight: grid ? 1 : 0, ArrowLeft: grid ? -1 : 0 }
     byPointer.current = false
     if (e.key in move) { e.preventDefault(); setActive((i) => Math.min(last, Math.max(0, i + move[e.key]))) }
     else if (e.key === 'Home' || e.key === 'End') { e.preventDefault(); setActive(e.key === 'Home' ? 0 : last) }
@@ -84,15 +89,16 @@ export function TimePicker({ id, value, groups, placeholder, disabled, invalid, 
         aria-invalid={invalid || undefined}
         aria-describedby={describedBy}
         disabled={disabled}
-        data-focus="preferredTime"
+        data-focus={focusKey}
         onClick={() => (open ? setOpen(false) : show())}
         onKeyDown={onButtonKey}
       >{selected?.label ?? placeholder}</button>
+      {name && <input type="hidden" name={name} value={value} />}
       {open && (
-        <div ref={list} id={listId} role="listbox" aria-labelledby={id} aria-activedescendant={optionId(active)} tabIndex={-1} className="tp-list" onKeyDown={onListKey}>
+        <div ref={list} id={listId} role="listbox" aria-labelledby={id} aria-activedescendant={optionId(active)} tabIndex={-1} className={`tp-list${grid ? '' : ' tp-list--list'}`} onKeyDown={onListKey}>
           {groups.map((g) => (
             <div key={g.label} role="group" aria-label={g.label} className="tp-group">
-              <p className="tp-group-title" aria-hidden="true">{g.label}</p>
+              <p className="tp-group-title" aria-hidden="true">{g.icon && <Icon name={g.icon} size={16} />}{g.label}</p>
               <div className="tp-options">
                 {g.options.map((o) => {
                   const i = ++n
@@ -105,7 +111,7 @@ export function TimePicker({ id, value, groups, placeholder, disabled, invalid, 
                       className={`tp-option${i === active ? ' is-active' : ''}`}
                       onPointerEnter={() => { byPointer.current = true; setActive(i) }}
                       onClick={() => pick(i)}
-                    >{o.label}</div>
+                    >{o.label}{!grid && o.value === value && <Icon name="check" size={16} className="tp-check" />}</div>
                   )
                 })}
               </div>

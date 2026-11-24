@@ -1,7 +1,7 @@
 import { home } from '@/content/home'
 import { Link } from '@/lib/router'
 
-const pages = home.header.nav.filter((n) => n.href !== '/' && n.href !== '/about')
+const pages = home.header.nav.flatMap((n): { label: string; href: string }[] => ('items' in n ? [...n.items] : [n])).filter((n) => n.href !== '/' && n.href !== '/about')
 
 export default function NotFound() {
   return (

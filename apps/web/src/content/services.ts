@@ -147,12 +147,20 @@ export const serviceText = {
   blogCta: 'Learn more about this treatment',
   featured: {
     title: 'Featured services',
-    text: 'Some of the treatments we offer at our clinic in Las Vegas.', // NUEVO (adaptado de Dental Nakeji), para aprobación
     cta: 'View all services',
     // NUEVO, para aprobación: nombres cortos de las 5 pestañas bajo el carrusel, en el mismo orden que featuredNames
     tabs: ['Braces & Invisalign', 'Implants', 'Dentures & bridges', 'Veneers & crowns', 'Whitening'],
     card: 'Learn more about this service', // como el botón de la tarjeta de Dental Nakeji («Conocer más del servicio»)
     carousel: 'Featured services',
+    badge: 'Most requested',
+    // Textos propios de la tarjeta del inicio (más descriptivos que los de la página de cada servicio). Solo hechos generales, sin promesas. POR APROBAR.
+    copy: {
+      'Invisalign & Braces': { text: 'Straight teeth fit together better and are easier to keep clean. We will go over clear aligners and traditional braces with you, so you can choose what fits your life.', points: ['Clear aligners or traditional braces.', 'Options for children, teens and adults.', 'A first visit to talk through your goals.'] },
+      'Dental Implants': { text: 'Implants are artificial teeth that replace teeth that are damaged, lost or decayed. We start by getting to know your health and your smile, then build a plan around you.', points: ['Single, multiple or full-arch options.', 'A consultation to check if implants are right for you.', 'A personalized plan, step by step.'] },
+      'Dentures & Bridges': { text: 'Missing teeth can change how you chew and how you feel about your smile. We will look at your case, hear your concerns and explain your options in plain words.', points: ['Full or partial dentures.', 'Bridges that close the gap between teeth.', 'An exam first, to recommend the right fit.'] },
+      'Porcelain Veneers & Crowns': { text: 'Veneers are ultra-thin shells that go over your teeth, and crowns cover a damaged tooth. Both are made with porcelain, and we will help you decide which one suits you.', points: ['Veneers: thin shells placed over teeth.', 'Crowns: a cap placed over a damaged tooth.', 'Made with porcelain, a durable material.'] },
+      'Teeth Whitening': { text: 'Teeth can look yellow or dull over time. Professional whitening uses dental-grade products and is done while a dental professional looks after the process.', points: ['Custom-made trays or UV light.', 'Done under a dental professional’s care.', 'A take-home option may be available.'] },
+    },
   },
   hub: {
     title: 'Dental services',

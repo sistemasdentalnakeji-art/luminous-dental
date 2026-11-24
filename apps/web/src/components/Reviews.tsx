@@ -4,6 +4,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Marquee } from '@/components/Marquee'
 import { Stars } from '@/components/Stars'
+import { reviewsSource } from '@/config/reviews'
 import { reviewsText as T, type Review } from '@/content/reviews'
 import { useMotionPaused } from '@/lib/motion'
 import { useGoogleReviews } from '@/lib/useGoogleReviews'
@@ -88,6 +89,20 @@ export function Reviews() {
               <div className="mac-window__scene">
                 <p className="mac-window__slogan">{T.slogan}</p>
                 <p className="mac-window__sub">{T.sloganSub}</p>
+                {/* Botón dorado y cursor animado que lo «presiona» (como en Dental Nakeji); el cursor es decorativo. */}
+                <div className="mac-window__action">
+                  <a className="mac-window__btn" href={reviewsSource.profileUrl} target="_blank" rel="noopener noreferrer">
+                    {T.cta}<span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                  <svg className="mac-window__cursor" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M5 3l14 7-6 2-2 6z" fill="#fff" stroke="#0b1220" strokeWidth="1.4" strokeLinejoin="round" />
+                  </svg>
+                </div>
+                {/* Cinco estrellas que se llenan de dorado (como en Dental Nakeji); es decorativo, no es una calificación. */}
+                <div className="mac-window__stars" aria-hidden="true">
+                  <Stars rating={0} size={26} />
+                  <span className="mac-window__stars-fill"><Stars rating={5} size={26} /></span>
+                </div>
               </div>
               <img className="mac-window__brand" src={`${import.meta.env.BASE_URL}logo.webp`} width={520} height={297} alt="" aria-hidden="true" />
             </div>

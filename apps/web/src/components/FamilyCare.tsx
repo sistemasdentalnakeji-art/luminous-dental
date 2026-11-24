@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { RevealText } from '@/components/RevealText'
 import { home } from '@/content/home'
 import { serviceHref } from '@/content/clinic'
@@ -16,7 +16,6 @@ const stops = names.map((name) => { const p = servicePages.find((s) => s.name ==
 
 // «La estrella en el camino» (docs/diseno-segunda-ronda-23nov.md, A): una estrella de la marca baja por un hilo al hacer scroll y enciende cada grupo.
 // El hilo se mide desde los centros de los nodos (sirve con cualquier alto de texto). Solo transform y opacity se animan; el avance va por variables CSS (--fp, --y0, --len).
-// «See all services» está dos veces (una por tamaño, la otra con display:none) para que el orden de Tab siga al visual: en escritorio va entre General y Cosmetic, en celular al final.
 // Con «reducir movimiento» o la pausa: todo encendido y quieto, con la estrella al final del hilo.
 export function FamilyCare() {
   const path = useRef<HTMLDivElement>(null)
@@ -88,19 +87,14 @@ export function FamilyCare() {
           </span>
           <ul className="fam__stops">
             {stops.map((g, i) => (
-              <Fragment key={g.name}>
-              {i === 1 && <li className="fam__more fam__more--d"><Link className="btn" href={services.cta.href}>{services.cta.label}</Link></li>}
-              <li className={`fam__stop${i < lit ? ' is-lit' : ''}`} data-side={sides[i % 2]} style={{ '--r': i + 1 } as CSSProperties}>
+              <li key={g.name} className={`fam__stop${i < lit ? ' is-lit' : ''}`} data-side={sides[i % 2]} style={{ '--r': i + 1 } as CSSProperties}>
                 <span className="fam__node" aria-hidden="true" />
                 <Link className="fam__link" href={g.href}>
                   <h3>{g.name}</h3>
                   <p>{g.line}</p>
-                  <span className="fam__go" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
                 </Link>
               </li>
-              </Fragment>
             ))}
-            <li className="fam__more fam__more--m"><Link className="btn" href={services.cta.href}>{services.cta.label}</Link></li>
           </ul>
         </div>
       </div>

@@ -4,6 +4,8 @@ import { services } from '@/content/clinic'
 import { legalText } from '@/content/legal'
 import { home } from '@/content/home'
 import { BookingSchedule } from './BookingSchedule'
+import { TimePicker } from './TimePicker'
+import type { IconName } from '@/components/Icon'
 
 type Status = 'idle' | 'sending' | 'sent' | 'preview' | 'error' | 'invalid' | 'busy'
 
@@ -15,6 +17,12 @@ const ORDER = ['firstName', 'lastName', 'phone', 'email', 'treatment', 'preferre
 
 const { submitLabel, consent, messages, errors } = home.appointment
 const phone = home.footer.phone
+// Un icono por grupo de tratamientos (los grupos salen de content/clinic.ts).
+const GROUP_ICON: Record<string, IconName> = { 'General Dentistry': 'tooth', 'Cosmetic Dentistry': 'sparkle', Orthodontics: 'braces', 'Pediatric Dentistry': 'child' }
+const TREATMENT_GROUPS = [
+  ...[...new Set(services.map((s) => s.group))].map((g) => ({ label: g, icon: GROUP_ICON[g], options: services.filter((s) => s.group === g).map((s) => ({ value: s.name, label: s.name })) })),
+  { label: 'Not sure?', options: [{ value: 'Not sure yet', label: 'Not sure yet' }] },
+]
 
 // Sección del formulario: fieldset con leyenda numerada (agrupa los campos para lectores de pantalla).
 function Group({ step, title, children }: { step: number; title: string; children: ReactNode }) {
@@ -32,6 +40,7 @@ export function BookingForm({ defaultTreatment = '' }: { defaultTreatment?: stri
   const [bad, setBad] = useState<Record<string, string>>({}) // nombre del campo -> su mensaje
   const [date, setDate] = useState('')
   const [time, setTime] = useState('')
+  const [treatment, setTreatment] = useState(defaultTreatment)
   const form = useRef<HTMLFormElement>(null)
 
   // Al elegir un día u hora válidos, se quita el aviso que quedó del envío anterior.
@@ -68,7 +77,7 @@ export function BookingForm({ defaultTreatment = '' }: { defaultTreatment?: stri
     setStatus('sending')
     try {
       const result = await sendAppointment(request)
-      if (result === 'sent') { el.reset(); setDate(''); setTime('') } // los datos enviados no se quedan en pantalla
+      if (result === 'sent') { el.reset(); setDate(''); setTime(''); setTreatment(defaultTreatment) } // los datos enviados no se quedan en pantalla
       setStatus(result)
     } catch (err) {
       setStatus(err instanceof BookingError && err.kind !== 'down' ? err.kind : 'error')
@@ -77,7 +86,7 @@ export function BookingForm({ defaultTreatment = '' }: { defaultTreatment?: stri
 
   // Un campo: etiqueta, control y su propio mensaje enlazado con aria-describedby.
   // `wide`: ocupa las dos columnas; `required: false`: campo opcional (sin atributo required).
-  const field = (name: keyof typeof errors, label: string, control: (p: object) => ReactNode, wide = false, required = true, hint?: string) => (
+  const field = (name: keyof typeof errors, label: string, control: (p: any) => ReactNode, wide = false, required = true, hint?: string) => (
     <div className={`f${wide ? ' w2' : ''}${bad[name] ? ' bad' : ''}`}>
       <label htmlFor={`b-${name}`}>{label}</label>
       {control({ id: `b-${name}`, name, required, maxLength: MAX[name as keyof typeof MAX], 'aria-describedby': hint ? `h-${name} e-${name}` : `e-${name}`, 'aria-invalid': bad[name] ? true : undefined })}
@@ -96,11 +105,7 @@ export function BookingForm({ defaultTreatment = '' }: { defaultTreatment?: stri
       </Group>
       <Group step={2} title="Your visit">
         {field('treatment', 'What do you need?', (p) => (
-          <select defaultValue={defaultTreatment} {...p}>
-            <option value="" disabled>Choose a treatment</option>
-            {services.map((s) => <option key={s.name}>{s.name}</option>)}
-            <option>Not sure yet</option>
-          </select>
+          <TimePicker id={p.id} name="treatment" grid={false} focusKey="treatment" value={treatment} groups={TREATMENT_GROUPS} placeholder="Choose a treatment" invalid={Boolean(bad.treatment)} describedBy={p['aria-describedby']} onChange={(v) => { setTreatment(v); clear('treatment') }} />
         ), true)}
         <BookingSchedule date={date} time={time} onDate={(d) => { setDate(d); if (d) clear('preferredDate') }} onTime={(v) => { setTime(v); if (v) clear('preferredTime') }} errDate={bad.preferredDate} errTime={bad.preferredTime} />
       </Group>

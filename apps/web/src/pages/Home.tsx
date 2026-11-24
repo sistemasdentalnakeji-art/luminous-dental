@@ -25,16 +25,6 @@ export default function Home() {
 
       <Appointment />
 
-      <svg className="ridge" viewBox="0 30 1440 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-        <defs>
-          <linearGradient id="rf" x1="0" y1="0" x2="0" y2="1"><stop offset=".3" stopColor="#0e1d38" /><stop offset="1" stopColor="#0e1d38" stopOpacity="0" /></linearGradient>
-          <linearGradient id="rn" x1="0" y1="0" x2="0" y2="1"><stop offset=".2" stopColor="#0a1529" /><stop offset="1" stopColor="#0a1529" stopOpacity="0" /></linearGradient>
-        </defs>
-        <path className="ridge-far ridge-farfade" style={{ stroke: 'none' }} d="M0 92 L80 70 L170 86 L260 52 L350 80 L450 40 L540 72 L640 58 L740 88 L850 48 L950 76 L1060 36 L1160 74 L1260 56 L1350 82 L1440 62 L1440 130 L0 130Z" />
-        <path className="ridge-line" d="M0 92 L80 70 L170 86 L260 52 L350 80 L450 40 L540 72 L640 58 L740 88 L850 48 L950 76 L1060 36 L1160 74 L1260 56 L1350 82 L1440 62" />
-        <path className="ridge-near ridge-fade" d="M0 114 L120 96 L230 110 L340 90 L470 112 L600 98 L720 116 L860 94 L980 110 L1100 92 L1230 112 L1340 98 L1440 110 L1440 130 L0 130Z" />
-      </svg>
-
       <FeaturedServices />
 
       <section className="sec wrap" aria-labelledby="why-h">
@@ -70,11 +60,7 @@ export default function Home() {
 
       <section className="wrap ins" id="insurance" aria-labelledby="ins-h">
         <header className="ins__top">
-          <div>
-            <RevealText className="ins__title" id="ins-h">{coverage.insurance.heading}</RevealText>
-            <p className="ins__lead">{coverage.insurance.text}</p>
-          </div>
-          <Link className="tlink" href={coverage.insurance.cta.href}>{coverage.insurance.cta.label}</Link>
+          <RevealText className="ins__title" id="ins-h">{coverage.insurance.heading}</RevealText>
         </header>
         <InsurancePlans variant="home" />
         <div className="ins-out">

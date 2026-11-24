@@ -21,9 +21,10 @@ export const reviewsText = {
   title: 'What our patients say',
   slogan: "Don't just take our word for it. Our patients speak for us.",
   sloganSub: 'Words from our patients on Google.',
+  cta: 'See reviews on Google',
   carousel: 'Patient reviews',
   pause: 'Pause patient reviews animation', // NUEVO, para aprobación
   play: 'Play patient reviews animation', // NUEVO, para aprobación
   domain: 'luminousdentallv.com',
-  // «See on Google» se omite hasta que se confirme el enlace de la clínica en Google (docs/datos.md).
+  // «See on Google» de cada tarjeta se omite hasta que se confirme el enlace de la clínica en Google (docs/datos.md).
 }

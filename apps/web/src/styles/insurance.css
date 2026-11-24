@@ -49,28 +49,27 @@
 .ins{padding-block:clamp(64px,8vw,120px)}
 .ins__top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 40px;align-items:end;margin-bottom:clamp(28px,4vw,56px)}
 .ins__title{font:400 clamp(44px,6vw,88px)/1 var(--font-serif);letter-spacing:-.03em}
-.ins__lead{margin-top:16px;max-width:30em;font-size:clamp(18px,1.5vw,21px);text-wrap:pretty}
 .ins__grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,8fr);gap:clamp(24px,4vw,56px);align-items:start}
-/* la tarjeta: es el buscador */
-.ins-card{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:28px;min-height:clamp(250px,22vw,300px);padding:clamp(22px,2.2vw,30px);border-radius:24px;border:1px solid rgba(255,255,255,.28);
-  background:radial-gradient(120% 90% at 100% 0,rgba(143,227,232,.38),transparent 60%),linear-gradient(135deg,#2a5ea8 0%,#1c4585 55%,#15386f 100%);
-  box-shadow:0 30px 60px -30px rgba(0,8,24,.9),inset 0 1px 0 rgba(255,255,255,.35)}
-.ins-card__mark{position:absolute;right:-8%;bottom:-18%;width:62%;height:auto;aspect-ratio:1;object-fit:contain;opacity:.12;z-index:-1;pointer-events:none}
-.ins-card::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.22) 50%,transparent 60%) no-repeat -120% 0/220% 100%;pointer-events:none;z-index:-1}
+/* la tarjeta: de adorno, tipo tarjeta premium (borde de luz, relieve, brillo) */
+.ins-card{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:28px;min-height:clamp(250px,22vw,300px);padding:clamp(22px,2.2vw,30px);border-radius:24px;border:1px solid rgba(255,255,255,.16);
+  background:radial-gradient(120% 90% at 100% 0,rgba(255,255,255,.12),transparent 55%),radial-gradient(90% 70% at 0 100%,rgba(143,227,232,.07),transparent 65%),repeating-linear-gradient(115deg,rgba(255,255,255,.025) 0 1px,transparent 1px 6px),linear-gradient(135deg,#1b1d22 0%,#0c0d10 55%,#050506 100%);
+  box-shadow:0 36px 64px -30px rgba(0,0,0,.95),0 0 0 1px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.22),inset 0 -2px 0 rgba(0,0,0,.6),inset 0 0 28px rgba(255,255,255,.02)}
+.ins-card::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.14) 50%,transparent 60%) no-repeat -120% 0/220% 100%;pointer-events:none;z-index:-1}
 .ins-card__top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
 .ins-card__logo{height:clamp(46px,4vw,58px);width:auto}
-.ins-card__chip{flex:none;width:48px;height:36px;border-radius:9px;border:1.5px solid rgba(255,255,255,.55);background:linear-gradient(90deg,transparent 31%,rgba(255,255,255,.5) 31% 33%,transparent 33% 66%,rgba(255,255,255,.5) 66% 68%,transparent 68%),linear-gradient(0deg,transparent 47%,rgba(255,255,255,.5) 47% 53%,transparent 53%),rgba(255,255,255,.14)}
-.ins-card .ins-find{max-width:none;margin:0}
-.ins-card .ins-find input[type=search]{border-radius:14px}
-.ins-card .ins-find input[type=search]:focus-visible{outline:3px solid var(--color-medic-soft);outline-offset:2px;border-color:#fff}
+/* chip dorado de tarjeta de crédito: placa metálica con las ranuras de contacto */
+.ins-card__chip{flex:none;width:54px;height:41px;border-radius:9px;border:1px solid #8a6a1f;box-shadow:0 2px 6px rgba(0,8,24,.45),inset 0 1px 0 rgba(255,255,255,.6),inset 0 -1px 0 rgba(90,60,5,.5);
+  background:linear-gradient(90deg,transparent 33%,rgba(110,76,10,.55) 33% 35%,transparent 35% 65%,rgba(110,76,10,.55) 65% 67%,transparent 67%),linear-gradient(0deg,transparent 31%,rgba(110,76,10,.55) 31% 34%,transparent 34% 66%,rgba(110,76,10,.55) 66% 69%,transparent 69%),linear-gradient(135deg,#f6dc8c 0%,#d9a93f 38%,#f3d27a 55%,#b88728 100%)}
+/* números en relieve plateados, decorativos (no es una tarjeta real); fuente monoespaciada del sistema, sin fuentes nuevas */
+.ins-card__dots{max-width:100%;white-space:nowrap;font:300 clamp(14px,4.6vw,21px)/1 ui-monospace,"Cascadia Mono",Consolas,"Courier New",monospace;letter-spacing:.12em;color:transparent;background:linear-gradient(180deg,#fff 0%,#dfe6ee 38%,#9aa6b6 52%,#e9eef5 74%,#b6c0cd 100%);-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 1px 0 rgba(255,255,255,.3)) drop-shadow(0 -1px 0 rgba(0,8,24,.3)) drop-shadow(0 1px 2px rgba(0,8,24,.35))}
 .ins__side .ins-wall{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:0}
-/* colapsado: 12 fichas (4 columnas), 9 (3 columnas) y 8 (2 columnas); al escribir o abrir se ven las 24 */
-.ins__side .ins-wall:not(.is-open):not(.is-filtered) .ins-plan:nth-child(n+13){display:none}
-.ins-more[hidden]{display:none}
-.ins-more{display:flex;align-items:center;gap:16px;margin-top:20px}
-.ins-more button{min-height:48px;padding:0 24px;border-radius:999px;border:1.5px solid var(--color-line-ui);background:rgba(255,255,255,.04);color:#fff;font:600 16px/1 var(--font-sans);cursor:pointer;transition:background-color .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease)}
-.ins-more button:hover{background:var(--color-medic);border-color:var(--color-medic);color:var(--color-night)}
-.ins-more p{font-size:15px;color:var(--color-text2)}
+/* colapsado: 12 fichas (4 columnas), 9 (3 columnas) y 8 (2 columnas); las 24 están en /insurance-financing */
+.ins__side .ins-wall .ins-plan:nth-child(n+13){display:none}
+.ins__left{display:grid;gap:20px;align-content:start}
+.ins-more{display:grid;justify-items:start;gap:16px}
+.ins-more p{max-width:24em;font-size:clamp(17px,1.4vw,19px);color:var(--color-text);text-wrap:pretty}
+.ins-more a{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;border-radius:999px;border:1.5px solid var(--color-line-ui);background:rgba(255,255,255,.04);color:#fff;font:600 16px/1 var(--font-sans);text-decoration:none;cursor:pointer;transition:background-color .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease)}
+.ins-more a:hover{background:var(--color-medic);border-color:var(--color-medic);color:var(--color-night)}
 .ins__side .ins-empty{margin-top:0}
 /* SAHARA: hermana de la tarjeta, en banda */
 .ins-out{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px clamp(24px,5vw,80px);align-items:center;margin-top:clamp(40px,6vw,88px);padding:clamp(28px,4vw,48px) 0 0;border-top:1px solid var(--color-line-ui)}
@@ -84,19 +83,18 @@
 .ins--live.is-in .ins-card::after{animation:sheen 1.1s ease .5s 1 both}
 .ins--live .ins-plan{opacity:0}
 .ins--live.is-in .ins-plan{animation:deal .55s var(--ease) calc(.35s + var(--i) * 28ms) both}
-.ins--live .ins-plan.is-new{animation:deal .35s var(--ease) calc(var(--j) * 20ms) both}
 @media (max-width:959px){
   .ins__grid{grid-template-columns:minmax(0,1fr)}
   .ins__side .ins-wall{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .ins__side .ins-wall:not(.is-open):not(.is-filtered) .ins-plan:nth-child(n+10){display:none}
+  .ins__side .ins-wall .ins-plan:nth-child(n+10){display:none}
 }
 @media (max-width:559px){
   .ins__top{grid-template-columns:1fr}
   .ins__side .ins-wall{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-  .ins__side .ins-wall:not(.is-open):not(.is-filtered) .ins-plan:nth-child(n+9){display:none}
+  .ins__side .ins-wall .ins-plan:nth-child(n+9){display:none}
   .ins-out{grid-template-columns:1fr}
-  .ins-more{flex-direction:column;align-items:stretch}
-  .ins-more p{text-align:center}
+  .ins-more{justify-items:stretch}
+  .ins-more a{justify-content:center}
 }
 @media (prefers-reduced-motion:reduce){.ins *,.ins *::after{animation:none!important;transition:none!important}.ins--live .ins-card,.ins--live .ins-plan{opacity:1;transform:none}}
 html[data-motion-paused] .ins *,html[data-motion-paused] .ins *::after{animation:none!important;transition:none!important}

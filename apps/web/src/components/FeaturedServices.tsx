@@ -19,20 +19,16 @@ const items = featuredNames.map((name) => {
   return page
 })
 
-// Máximo 3 beneficios (chips), y ninguno que repita la frase de arriba (docs/mejoras-1-plan.md 1.1).
-const bullets = (sentence: string, points: string[]) =>
-  points.filter((h) => !sentence.toLowerCase().includes(h.toLowerCase().replace(/\.$/, ''))).slice(0, 3)
+const c = (name: string) => T.featured.copy[name as keyof typeof T.featured.copy]
 
 export function FeaturedServices() {
   return (
     <section className="sec wrap featured" aria-labelledby="featured-h">
       <header className="featured-head">
-        <div>
-          <RevealText className="h2" id="featured-h" line accent="services">{T.featured.title}</RevealText>
-          <RevealText as="p" mode="blur" className="hub-lead">{T.featured.text}</RevealText>
-        </div>
-        <Link className="tlink featured-all" href="/services">{T.featured.cta}<Icon name="arrowRight" size={18} /></Link>
+        <RevealText className="h2" id="featured-h" line accent="services">{T.featured.title}</RevealText>
       </header>
+      <div className="featured-stage">
+      <span className="sc__badge">{T.featured.badge}</span>
       <Carousel
         label={T.featured.carousel}
         className="carousel--services"
@@ -41,19 +37,24 @@ export function FeaturedServices() {
           <article className="sc__article" key={s.slug}>
             <div className="sc__body">
               <p className="sc__eyebrow">{s.group}</p>
-              {/* La caja de texto es la tarjeta de servicios de Dental Nakeji (sin foto ni etiqueta «Most requested»): ícono en baldosa, título, gancho, hasta 3 frases con check y botón. */}
-              <div className="sc__card">
+              {/* Sin caja de fondo: arriba el ícono, en medio la información (título, gancho y frases con check) y abajo el botón. */}
+              <div className="sc__head">
                 <span className="icon-badge siri" aria-hidden="true">{s.figure && <ServiceGlyph id={s.figure} size={28} />}</span>
                 <h3 className="sc__title">{s.title}</h3>
-                {s.subtitle && <p className="sc__text">{s.subtitle}</p>}
+              </div>
+              <div className="sc__card">
+                <p className="sc__text">{c(s.name).text}</p>
                 <ul className="sc__chips" aria-label={`${s.name}: what it offers`}>
-                  {bullets(s.subtitle, s.highlights).map((h, i) => <li key={i}><span className="sc__check" aria-hidden="true"><Icon name="check" size={14} /></span>{h}</li>)}
+                  {c(s.name).points.map((h, i) => <li key={i}><span className="sc__check" aria-hidden="true"><Icon name="check" size={14} /></span>{h}</li>)}
                 </ul>
-                <Link className="sc__cta" href={serviceHref(s.name)}>
-                  <span className="sc__dot" aria-hidden="true" />
-                  <span className="sc__lab">{T.featured.card}<span className="sr-only">: {s.name}</span></span>
-                  <span className="sc__over" aria-hidden="true">{T.featured.card}<Icon name="arrowRight" size={18} /></span>
-                </Link>
+              </div>
+              <div className="sc__actions">
+              <Link className="sc__cta" href={serviceHref(s.name)}>
+                <span className="sc__dot" aria-hidden="true" />
+                <span className="sc__lab">{T.featured.card}<span className="sr-only">: {s.name}</span></span>
+                <span className="sc__over" aria-hidden="true">{T.featured.card}<Icon name="arrowRight" size={18} /></span>
+              </Link>
+              <Link className="btn btn-ghost sc__all" href="/services">{T.featured.cta}</Link>
               </div>
             </div>
             <div className="sc__fig">
@@ -62,6 +63,7 @@ export function FeaturedServices() {
           </article>
         ))}
       />
+      </div>
     </section>
   )
 }

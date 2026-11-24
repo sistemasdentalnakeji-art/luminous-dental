@@ -74,12 +74,11 @@ export function Carousel({ label, items, className, tabs }: { label: string; ite
               </li>
             ))}
           </ul>
-          <div className="sc__count" aria-hidden="true"><span /><b>{current + 1} / {items.length}</b></div>
         </div>
         <div className="sc__view">
           <ul ref={trackRef} className="sc__track" tabIndex={0} aria-label={`List: ${label}`}>
             {items.map((item, index) => (
-              <li key={index} className="sc__slide" data-on={index === current ? '' : undefined} aria-roledescription="slide" aria-label={`${index + 1} of ${items.length}`}>{item}</li>
+              <li key={index} className="sc__slide" data-on={index === current ? '' : undefined} inert={index !== current} aria-roledescription="slide" aria-label={`${index + 1} of ${items.length}`}>{item}</li>
             ))}
           </ul>
         </div>

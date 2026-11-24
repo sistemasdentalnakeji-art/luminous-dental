@@ -1,9 +1,9 @@
-// Header: misma estructura que el de Dental Nakeji (components/layout/Header.tsx): logo, menú principal con un submenú "Services",
+// Header: misma estructura que el de Dental Nakeji (components/layout/Header.tsx): logo, menú principal con submenús "Services" y "More",
 // y en celulares un panel que se abre debajo de la barra (botón de menú, submenú tipo acordeón). Teclado: Enter/Espacio abre,
 // las flechas mueven, Escape cierra. Estilos: styles/site.css (bloque "header menu").
 import { useEffect, useRef, useState, type FocusEvent, type KeyboardEvent, type PointerEvent as ReactPointerEvent } from 'react'
 import { flushSync } from 'react-dom'
-import { Icon } from '@/components/Icon'
+import { Icon, type IconName } from '@/components/Icon'
 import { NeonLogo } from '@/components/NeonLogo'
 import { SocialLinks } from '@/components/SocialLinks'
 import { serviceHref } from '@/content/clinic'
@@ -83,25 +83,25 @@ export function Header({ path, appointmentHref }: { path: string; appointmentHre
           <div id={MENU_ID} className={cx('site-menu', menuOpen && 'is-open')}>
             <nav className="nav" aria-label="Main">
               <ul className="nav-list">
-                {header.nav.map((n) =>
-                  'menu' in n ? (
+                {header.nav.map((n) => {
+                  const menu = 'items' in n ? { id: 'more', items: n.items } : 'menu' in n ? { id: 'services', items: servicePages.map((s) => ({ label: s.name, href: serviceHref(s.name), icon: s.icon })), overview: { label: header.servicesOverview, href: n.href } } : null
+                  return menu ? (
                     <NavDropdown
-                      key={n.href}
-                      id="services"
+                      key={n.label}
+                      {...menu}
                       label={n.label}
-                      href={n.href}
                       path={path}
-                      open={openId === 'services'}
-                      onToggle={() => setOpenId((id) => (id === 'services' ? null : 'services'))}
-                      onOpen={() => setOpenId('services')}
-                      onClose={() => setOpenId((id) => (id === 'services' ? null : id))}
+                      open={openId === menu.id}
+                      onToggle={() => setOpenId((id) => (id === menu.id ? null : menu.id))}
+                      onOpen={() => setOpenId(menu.id)}
+                      onClose={() => setOpenId((id) => (id === menu.id ? null : id))}
                     />
-                  ) : (
+                  ) : 'href' in n && (
                     <li key={n.href} className="nav-item">
                       <Link className="nav-link" href={n.href} aria-current={current(n.href, path)}>{n.label}</Link>
                     </li>
-                  ),
-                )}
+                  )
+                })}
               </ul>
             </nav>
             <div className="site-menu__row">
@@ -137,7 +137,9 @@ export function Header({ path, appointmentHref }: { path: string; appointmentHre
 interface DropdownProps {
   id: string
   label: string
-  href: string
+  items: readonly { label: string; href: string; icon: IconName }[]
+  /** Botón de ancho completo al pie del panel (solo Services: «View all services»). */
+  overview?: { label: string; href: string }
   path: string
   open: boolean
   onToggle: () => void
@@ -145,8 +147,8 @@ interface DropdownProps {
   onClose: () => void
 }
 
-function NavDropdown({ id, label, href, path, open, onToggle, onOpen, onClose }: DropdownProps) {
-  const active = path === href || path.startsWith(href + '/')
+function NavDropdown({ id, label, items, overview, path, open, onToggle, onOpen, onClose }: DropdownProps) {
+  const active = [overview?.href, ...items.map((i) => i.href)].some((h) => h && (path === h || path.startsWith(h + '/')))
   // Escritorio con mouse: abre al pasar el cursor, cierra tras 150 ms (hay un hueco de 10 px entre el botón y el panel). Táctil y teclado: clic.
   const hovering = useRef(false)
   const timer = useRef<number | undefined>(undefined)
@@ -203,16 +205,16 @@ function NavDropdown({ id, label, href, path, open, onToggle, onOpen, onClose }:
       </button>
       <div id={`nav-${id}-panel`} className={`dropdown dropdown--${id}`} hidden={!open}>
         <ul className="dropdown__list">
-          {servicePages.map((s) => (
-            <li key={s.slug}>
-              <Link className="dropdown__link" href={serviceHref(s.name)} aria-current={current(serviceHref(s.name), path)}>
-                <span className="dropdown__icon" aria-hidden="true"><Icon name={s.icon} size={20} /></span>
-                {s.name}
+          {items.map((it) => (
+            <li key={it.href}>
+              <Link className="dropdown__link" href={it.href} aria-current={current(it.href, path)}>
+                <span className="dropdown__icon" aria-hidden="true"><Icon name={it.icon} size={20} /></span>
+                {it.label}
               </Link>
             </li>
           ))}
         </ul>
-        <Link className="dropdown__overview btn" href={href} aria-current={current(href, path)}>{header.servicesOverview}</Link>
+        {overview && <Link className="dropdown__overview btn" href={overview.href} aria-current={current(overview.href, path)}>{overview.label}</Link>}
       </div>
     </li>
   )

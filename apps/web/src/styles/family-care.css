@@ -18,20 +18,13 @@
 .fam__link h3{font:400 clamp(28px,3.4vw,50px)/1.02 var(--font-serif);letter-spacing:-.025em;transition:color .25s var(--ease)}
 .fam__link p{margin-top:12px;max-width:27em;color:var(--color-text);text-wrap:pretty}
 .fam__stop[data-side=l] p{margin-left:auto}
-.fam__go{display:inline-grid;place-items:center;width:44px;height:44px;margin-top:14px;border:1.5px solid var(--color-line-ui);border-radius:50%;color:#fff;transition:background-color .25s var(--ease),border-color .25s var(--ease),color .25s var(--ease),transform .25s var(--ease)}
-.fam__go svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .fam__link:hover h3,.fam__link:focus-visible h3{color:var(--color-medic-soft)}
-.fam__link:hover .fam__go,.fam__link:focus-visible .fam__go{background:var(--color-medic);border-color:var(--color-medic);color:var(--color-night);transform:translateX(4px)}
 /* nodo sobre el hilo: hueco hasta que llega la estrella */
 .fam__node{position:absolute;top:50%;width:20px;height:20px;margin-top:-10px;border-radius:50%;border:2px solid var(--color-line-ui);background:var(--color-night);transition:background-color .4s var(--ease),border-color .4s var(--ease),box-shadow .6s var(--ease)}
 .fam__stop[data-side=l] .fam__node{left:calc(100% + 34px)}
 .fam__stop[data-side=r] .fam__node{right:calc(100% + 34px)}
 .fam__stop.is-lit .fam__node{background:var(--color-medic);border-color:var(--color-medic-soft);box-shadow:0 0 0 6px rgba(52,191,204,.18),0 0 18px rgba(52,191,204,.8)}
 .fam__path--live .fam__stop:not(.is-lit) .fam__link{opacity:.75} /* 4.5:1 en la descripción sobre el resplandor (QA 2: .5 daba 3.3:1) */
-/* «See all services»: segunda hilera, lado libre del hilo */
-.fam__more{grid-column:1;grid-row:2;justify-self:end;padding-right:8px}
-.fam__more--m{display:none}
-.fam__more .btn{min-height:60px;padding:0 36px;font-size:17px}
 @media (max-width:759px){
   .fam__path{--x:22px;--row:0px;--star:48px}
   .fam__stops{grid-template-columns:44px minmax(0,1fr);row-gap:clamp(36px,9vw,56px);grid-auto-rows:auto}
@@ -40,10 +33,6 @@
   .fam__stop[data-side=l] p{margin-left:0}
   .fam__stop[data-side=l] .fam__node,.fam__stop[data-side=r] .fam__node{left:-44px;right:auto;margin-left:12px}
   .fam__link{padding-inline:0}
-  .fam__more{grid-column:2;grid-row:auto;justify-self:stretch;padding:0}
-  .fam__more--d{display:none}
-  .fam__more--m{display:block}
-  .fam__more .btn{width:100%}
   .fam__title{font-size:clamp(34px,9vw,40px)}
 }
 @media (prefers-reduced-motion:reduce){.fam *{transition:none!important}}

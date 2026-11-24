@@ -5,8 +5,8 @@
       "name": "luminous-web",
       "runtimeExecutable": "node",
       "runtimeArgs": [
-        "C:/Users/Trabajo/Desktop/Luminous Dental/node_modules/vite/bin/vite.js",
-        "C:/Users/Trabajo/Desktop/Luminous Dental/apps/web",
+        "node_modules/vite/bin/vite.js",
+        "apps/web",
         "--port",
         "5181",
         "--strictPort"
