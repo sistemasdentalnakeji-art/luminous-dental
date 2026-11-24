@@ -1,0 +1,1 @@
+import{t as e}from"./LegalDocument-xD0mrkJs.js";import{o as t}from"./index-D5qAa5gY.js";import{t as n}from"./jsx-runtime-Am8b9ysO.js";var r=n();function i(){return(0,r.jsx)(e,{doc:t})}export{i as default};
