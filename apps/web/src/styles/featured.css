@@ -24,17 +24,20 @@
  background:linear-gradient(115deg,rgba(255,255,255,.07) 0%,rgba(255,255,255,.015) 34%,transparent 58%) padding-box,linear-gradient(150deg,rgba(30,70,125,.55),rgba(8,20,42,.68)) padding-box,linear-gradient(135deg,rgba(255,255,255,.55),rgba(52,191,204,.28) 45%,rgba(123,195,235,.12) 72%,rgba(255,255,255,.3)) border-box;
  -webkit-backdrop-filter:blur(18px) saturate(1.35);backdrop-filter:blur(18px) saturate(1.35);box-shadow:0 30px 60px -32px rgba(0,8,24,.95),inset 0 1px 0 rgba(255,255,255,.18)}
 .sc__rail{display:flex;flex-direction:column;padding:clamp(16px,1.6vw,22px) clamp(12px,1.1vw,14px);border-right:1px solid var(--color-line);background:linear-gradient(180deg,rgba(255,255,255,.05),transparent)}
-.sc__tabs{position:relative;flex:1;display:grid;grid-template-rows:repeat(5,1fr);gap:0;list-style:none;padding:0}
+.sc__tabs{position:relative;flex:1;display:grid;grid-template-rows:repeat(5,1fr);gap:10px;list-style:none;padding:0}
 .sc__tabs>li{display:grid}
-.sc__tabs>li:not(:last-child){border-bottom:1px solid var(--color-line)}
-/* indicador de vidrio: baja o sube con la pestaña (solo transform) */
-.sc__tabs::before{content:"";position:absolute;left:0;right:0;top:0;height:calc(20% - 24px);margin-top:12px;border-radius:14px;background:rgba(52,191,204,.14);border:1px solid rgba(52,191,204,.6);box-shadow:0 10px 24px -14px rgba(52,191,204,.8);transform:translateY(calc(var(--i,0) * (100% + 24px)));transition:transform .35s var(--ease)}
-.sc__tab{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;margin:12px 0;padding:0 12px 0 16px;border:0;border-radius:14px;background:transparent;color:var(--color-text2);opacity:.86;text-align:left;font:600 clamp(16.5px,1.3vw,19px)/1.2 var(--font-sans);letter-spacing:.012em;cursor:pointer;transition:opacity .15s ease,color .15s ease,transform .15s ease}
-.sc__tab:hover{opacity:1}
+/* 26-11-2026 r2 (D2): cada servicio es su propio rectángulo (radio 8 px); el activo se rellena de menta y le crece la barra del borde izquierdo. Sin indicador que viaja: cada rectángulo cambia en su lugar. */
+.sc__tab{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;margin:0;padding:0 12px 0 20px;border:1px solid var(--color-line);border-radius:8px;overflow:hidden;background:rgba(255,255,255,.03);color:var(--color-text2);text-align:left;font:600 clamp(16.5px,1.3vw,19px)/1.2 var(--font-sans);letter-spacing:.012em;cursor:pointer;transition-property:background-color,border-color,color,transform;transition-duration:.25s;transition-timing-function:ease-out}
+.sc__tab::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--color-medic);transform:scaleY(0);transition:transform .3s var(--ease)}
+.sc__tab:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.28);color:#fff}
 .sc__tab:active{transform:scale(.98)}
-.sc__tab[aria-current="true"]{color:#fff;opacity:1}
+.sc__tab[aria-current="true"]{background:rgba(52,191,204,.16);border-color:rgba(52,191,204,.55);color:#fff}
+.sc__tab[aria-current="true"]::before{transform:none}
 .sc__tab svg{flex:none;opacity:0;transform:translateX(-6px);transition:opacity .25s ease,transform .25s var(--ease)}
 .sc__tab[aria-current="true"] svg{opacity:1;transform:none}
+/* el servicio nuevo aparece con un fundido corto (sin recorrer los intermedios) */
+.sc__slide[data-on]>*{animation:sc-in .35s ease-out}
+@keyframes sc-in{from{opacity:0;transform:translateY(8px)}}
 .sc__view{min-width:0;display:flex}
 .sc__track{flex:1;min-width:0;display:grid;grid-auto-flow:column;grid-auto-columns:100%;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;list-style:none;padding:0}
 .sc__track::-webkit-scrollbar{display:none}
@@ -90,14 +93,14 @@ html[data-motion-paused] .sc__badge,html[data-motion-paused] .sc__badge::after{a
 @media (max-width:767px){
  .sc{display:block;border-radius:24px}
  .sc__rail{flex-direction:row;padding:10px 0 10px 10px;border-right:0;border-bottom:1px solid var(--color-line)}
- .sc__tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-right:36px;-webkit-mask:linear-gradient(90deg,#000 calc(100% - 44px),transparent);mask:linear-gradient(90deg,#000 calc(100% - 44px),transparent)}
+ .sc__tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-right:36px;-webkit-mask:linear-gradient(90deg,#000 calc(100% - 44px),transparent);mask:linear-gradient(90deg,#000 calc(100% - 44px),transparent)}
  .sc__tabs::-webkit-scrollbar{display:none}
- .sc__tabs::before,.sc__tab svg{display:none}
+ .sc__tab svg{display:none}
+ .sc__tabs>li{flex:none}
  .sc__tabs>li:not(:last-child){border-bottom:0}
  .sc__actions{flex-direction:column}
  .sc__actions>*{width:100%}
- .sc__tab{flex:none;width:auto;height:40px;margin:0;padding:0 16px;border:1px solid transparent;border-radius:999px;font-size:16px;white-space:nowrap}
- .sc__tab[aria-current="true"]{background:rgba(52,191,204,.14);border-color:rgba(52,191,204,.6)}
+ .sc__tab{flex:none;width:auto;height:44px;padding:0 16px 0 18px;font-size:16px;white-space:nowrap}
  .sc__fig{min-height:0;aspect-ratio:4/3;margin:12px}
  .sc__body{width:auto;padding:8px 16px 20px}
  .sc__eyebrow{font-size:14px}
@@ -106,8 +109,9 @@ html[data-motion-paused] .sc__badge,html[data-motion-paused] .sc__badge::after{a
  .sc__lab{padding-inline:8px}
  .sc__slide{align-content:start}
 }
-html[data-motion-paused] .sc__tabs::before{transition:none}
-@media (prefers-reduced-motion:reduce){.sc__tabs::before,.sc__tab,.sc__tab svg{transition:none}}
+html[data-motion-paused] .sc__tab,html[data-motion-paused] .sc__tab::before,html[data-motion-paused] .sc__tab svg{transition:none}
+html[data-motion-paused] .sc__slide>*{animation:none}
+@media (prefers-reduced-motion:reduce){.sc__tab,.sc__tab::before,.sc__tab svg{transition:none}.sc__slide>*{animation:none!important}}
 
 /* ── Ícono de servicio, copiado de Dental Nakeji (24-11-2026, r4): baldosa de vidrio esmerilado de 56 px con contorno luminoso «.siri» (styles/components/siri.css y
    services.css de Nakeji) con los colores de Luminous (azul medicina en lugar del dorado/azul de Nakeji). El contorno gira solo con el cursor o el foco dentro de la diapositiva; quieto con reducir movimiento y con la pausa. ── */

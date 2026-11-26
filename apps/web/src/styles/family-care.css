@@ -2,6 +2,7 @@
    Local: ningún token nuevo. El avance usa --fp (0 a 1), --y0 (px del primer nodo) y --len (px de primer a último nodo), que escribe el componente. */
 .fam{position:relative;padding-block:clamp(72px,9vw,140px) clamp(72px,9vw,128px);overflow:clip}
 .fam::before{content:"";position:absolute;left:50%;top:18%;width:min(1100px,130%);aspect-ratio:1;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(52,191,204,.16),rgba(47,99,173,.18) 45%,transparent 72%);pointer-events:none}
+.fam__title::after{margin-inline:auto}
 .fam__title{position:relative;text-align:center;margin-inline:auto;max-width:11.5em;font:400 clamp(34px,5.6vw,84px)/1 var(--font-serif);letter-spacing:-.03em;text-wrap:balance}
 .fam__path{--row:clamp(170px,13.5vw,200px);--star:clamp(56px,5.4vw,84px);--x:50%;--fp:1;--y0:0px;--len:0px;position:relative;margin-top:clamp(40px,6vw,88px)}
 /* hilo: tenue de punta a punta; el tramo ya recorrido se enciende (scaleY) y la estrella baja con translate */
@@ -14,11 +15,11 @@
 .fam__stop[data-side=l]{grid-column:1;text-align:right}
 .fam__stop[data-side=r]{grid-column:3;text-align:left}
 .fam__stop{grid-row:var(--r)}
-.fam__link{display:block;text-decoration:none;padding:18px 8px;min-height:44px;transition:opacity .5s var(--ease)}
+.fam__link{display:block;padding:18px 8px;transition:opacity .5s var(--ease)}
 .fam__link h3{font:400 clamp(28px,3.4vw,50px)/1.02 var(--font-serif);letter-spacing:-.025em;transition:color .25s var(--ease)}
 .fam__link p{margin-top:12px;max-width:27em;color:var(--color-text);text-wrap:pretty}
 .fam__stop[data-side=l] p{margin-left:auto}
-.fam__link:hover h3,.fam__link:focus-visible h3{color:var(--color-medic-soft)}
+.fam__stops{margin:0;padding:0;list-style:none}
 /* nodo sobre el hilo: hueco hasta que llega la estrella */
 .fam__node{position:absolute;top:50%;width:20px;height:20px;margin-top:-10px;border-radius:50%;border:2px solid var(--color-line-ui);background:var(--color-night);transition:background-color .4s var(--ease),border-color .4s var(--ease),box-shadow .6s var(--ease)}
 .fam__stop[data-side=l] .fam__node{left:calc(100% + 34px)}

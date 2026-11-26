@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from 'react'
 import { Icon } from '@/components/Icon'
+import { ui } from '@/content/ui'
+import { useLang } from '@/lib/lang'
 
 // Basado en components/ui/Carousel.tsx de Dental Nakeji: pista con scroll-snap que se puede deslizar, desplazar, mover con las flechas del teclado (cuando la
 // pista tiene el foco), con los botones de abajo o con los puntos. Si se da `tabs` es la variante «riel» (23-11-2026, r3): una pestaña con nombre por diapositiva en una lista vertical a la
 // izquierda (fila deslizable arriba en celular), sin botones ni puntos; cada `item` aporta los dos hijos de su diapositiva (texto y figura). Una diapositiva por vista. Sin autoplay (así no hace falta control de pausa).
 export function Carousel({ label, items, className, tabs }: { label: string; items: ReactNode[]; className?: string; tabs?: readonly string[] }) {
+  const t = ui[useLang()].carousel
   const trackRef = useRef<HTMLUListElement>(null)
   const tabsRef = useRef<HTMLUListElement>(null)
   const [current, setCurrent] = useState(0)
@@ -40,7 +43,7 @@ export function Carousel({ label, items, className, tabs }: { label: string; ite
     if (row && tab) row.scrollTo({ left: tab.offsetLeft - (row.clientWidth - tab.offsetWidth) / 2, behavior: 'auto' })
   }, [current])
 
-  const behavior = () => (matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth')
+  const behavior = () => (tabs || matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth') // con pestañas el cambio es directo más un fundido (D2, 26-11 r2)
   const goTo = (index: number) => {
     const track = trackRef.current
     const slide = track?.children[index] as HTMLElement | undefined
@@ -64,7 +67,7 @@ export function Carousel({ label, items, className, tabs }: { label: string; ite
       <div className={`sc${className ? ` ${className}` : ''}`} role="region" aria-roledescription="carousel" aria-label={label} style={{ '--i': current } as CSSProperties}>
         {/* El riel va primero en el DOM: el orden de Tab sigue al visual (riel, pista, botón de la diapositiva). */}
         <div className="sc__rail">
-          <ul ref={tabsRef} className="sc__tabs" aria-label={`Slides of ${label}`} onKeyDown={onTabKeys}>
+          <ul ref={tabsRef} className="sc__tabs" aria-label={t.slidesOf(label)} onKeyDown={onTabKeys}>
             {tabs.map((name, index) => (
               <li key={name}>
                 <button type="button" className="sc__tab" tabIndex={index === current ? 0 : -1} aria-current={index === current ? 'true' : undefined} onClick={() => goTo(index)}>
@@ -76,9 +79,9 @@ export function Carousel({ label, items, className, tabs }: { label: string; ite
           </ul>
         </div>
         <div className="sc__view">
-          <ul ref={trackRef} className="sc__track" tabIndex={0} aria-label={`List: ${label}`}>
+          <ul ref={trackRef} className="sc__track" tabIndex={0} aria-label={t.list(label)}>
             {items.map((item, index) => (
-              <li key={index} className="sc__slide" data-on={index === current ? '' : undefined} inert={index !== current} aria-roledescription="slide" aria-label={`${index + 1} of ${items.length}`}>{item}</li>
+              <li key={index} className="sc__slide" data-on={index === current ? '' : undefined} inert={index !== current} aria-roledescription="slide" aria-label={t.slide(index + 1, items.length)}>{item}</li>
             ))}
           </ul>
         </div>
@@ -89,27 +92,27 @@ export function Carousel({ label, items, className, tabs }: { label: string; ite
   return (
     <div className={`carousel${className ? ` ${className}` : ''}`} role="region" aria-roledescription="carousel" aria-label={label}>
       {/* Solo entra en el orden de Tab cuando hay algo que desplazar. */}
-      <ul ref={trackRef} className="carousel__track" tabIndex={canPrev || canNext ? 0 : undefined} aria-label={`List: ${label}`}>
+      <ul ref={trackRef} className="carousel__track" tabIndex={canPrev || canNext ? 0 : undefined} aria-label={t.list(label)}>
         {items.map((item, index) => (
-          <li key={index} className="carousel__item" aria-roledescription="slide" aria-label={`${index + 1} of ${items.length}`}>{item}</li>
+          <li key={index} className="carousel__item" aria-roledescription="slide" aria-label={t.slide(index + 1, items.length)}>{item}</li>
         ))}
       </ul>
       <div className="carousel__controls" hidden={!canPrev && !canNext}>
         {/* aria-disabled (no disabled): el botón presionado conserva el foco cuando llega al final. */}
         <button type="button" className="carousel__button" onClick={() => canPrev && goTo(current - 1)} aria-disabled={!canPrev}>
           <Icon name="chevronLeft" size={20} />
-          <span className="sr-only">{`Previous: ${label}`}</span>
+          <span className="sr-only">{t.previous(label)}</span>
         </button>
-        <ul className="carousel__dots" aria-label={`Slides of ${label}`}>
+        <ul className="carousel__dots" aria-label={t.slidesOf(label)}>
           {items.map((_, index) => (
             <li key={index}>
-              <button type="button" className="carousel__dot" aria-label={`Go to slide ${index + 1} of ${items.length}`} aria-current={index === current ? 'true' : undefined} onClick={() => goTo(index)} />
+              <button type="button" className="carousel__dot" aria-label={t.goTo(index + 1, items.length)} aria-current={index === current ? 'true' : undefined} onClick={() => goTo(index)} />
             </li>
           ))}
         </ul>
         <button type="button" className="carousel__button" onClick={() => canNext && goTo(current + 1)} aria-disabled={!canNext}>
           <Icon name="chevronRight" size={20} />
-          <span className="sr-only">{`Next: ${label}`}</span>
+          <span className="sr-only">{t.next(label)}</span>
         </button>
       </div>
     </div>

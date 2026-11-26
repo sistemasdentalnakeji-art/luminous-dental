@@ -1,6 +1,8 @@
 // @ts-nocheck
 // Motor de la figura (skill Anatomy): kit recortado + modelo + dibujo, copiado de docs/lienzo/anatomy/servicios (model.js, draw.js) el 2026-11-18.
-// JS plano a propósito: es código incluido tal cual y auditado (audit.mjs: sin colisiones, finales de línea 0). No lo edites a mano; regéneralo desde la carpeta lienzo.
+// 2026-11-25: YA NO SE REGENERA desde docs/lienzo/anatomy/servicios. Se reescribió aquí el dibujo de molde, encía, dientes, collar de encía, gel y brackets
+// (sólidos con luz y color por faceta, coronas lofteadas con cúspides y brillo) y la caída con asentamiento de cada pieza. El kit de arriba (iso, extrude, etc.) y el
+// modelo (poses, alambre, orden del pintor) siguen igual que en el lienzo; en la ronda 2 (25-nov) se rehízo también el arco (curva en U) y las medidas de los dientes. Si se vuelve a copiar desde el lienzo se pierde este cambio.
 // Los nombres de servicios y pasos están en model.js (SERVICES). Los textos de la tarjeta están en src/content/figure.ts.
 const AZIMUTH = 45;
 const ELEVATION = 30;
@@ -301,29 +303,41 @@ function dotsSvg(points, { size = 0.5, tone = "mid", pulse = false } = {}) {
 const STEPS = ["Crooked teeth", "Brackets bonded", "Archwire threaded in", "Teeth start to move", "Teeth move into line"];
 const ZG = 7;            // parte alta del reborde de la encía (aquí se apoyan los dientes)
 const ZS = 14;           // altura de la ranura del bracket, igual en todos los dientes
-const ARCH = { a: 52, b: 44, w0: -22 };
-// ancho de ranura, ancho de corona, profundidad de corona, altura de corona, tipo  (orden desde la línea media hacia afuera)
+// Ronda 2 (25-nov): arco en U real (curvatura que sube y baja con suavidad: incisivos casi rectos, esquina en los caninos, molares casi paralelos),
+// medidas de un modelo de estudio (central más ancho que lateral, molar el mayor) y dientes casi en contacto. Referencia: ver docs/bitacora.md.
+const GS = 1.3; // escala de todos los dientes respecto de las medidas base
+const kind = (name, tw, td, h, r, groove, gap = 0.7) => ({ name, slot: (tw + gap) * GS, tw: tw * GS, td: td * GS, h: h * GS, r: r * GS, cap: 0, groove });
+// ancho (mesiodistal), profundidad (vestíbulo-lingual), altura de corona, radio de esquina, surco  (orden desde la línea media hacia afuera)
 const KINDS = [
-  { name: "central", slot: 14, tw: 12.4, td: 9, h: 15, r: 4.4, cap: 2.6, groove: 0 },
-  { name: "lateral", slot: 11.5, tw: 10.2, td: 8.4, h: 14, r: 4.1, cap: 2.4, groove: 0 },
-  { name: "canine", slot: 13, tw: 11.4, td: 10.4, h: 16, r: 5.1, cap: 1.2, groove: 0 },
-  { name: "premolar 1", slot: 12, tw: 9.8, td: 11.6, h: 12, r: 4.9, cap: 0.9, groove: 1 },
-  { name: "premolar 2", slot: 12, tw: 9.8, td: 11.6, h: 12, r: 4.9, cap: 0.9, groove: 1 },
-  { name: "molar", slot: 17, tw: 14, td: 15, h: 11, r: 6.2, cap: 0.9, groove: 1 },
+  kind("central", 11.6, 8.4, 15.5, 2.2, 0),
+  kind("lateral", 9.2, 7.8, 14, 2.2, 0),
+  kind("canine", 10, 9.6, 16.5, 3.6, 0),
+  kind("premolar 1", 9.6, 10.8, 12.5, 4.2, 1),
+  kind("premolar 2", 9.6, 10.8, 12, 4.2, 1),
+  kind("molar", 13.5, 13.5, 11.5, 5, 1),
 ];
+const ARCH = { front: 30, turn: 1.5 }; // w del frente del arco y giro total (rad, ~86°) de la línea del arco hasta los molares
+const REACH = 0.4 + KINDS.reduce((s, k) => s + k.slot, 0);
 // inicio chueco: [a lo largo del arco, hacia afuera del arco, giro en grados], una fila por tipo, por lado
 const CROOK = {
   "-1": [[0, 1.5, 18], [0, -5.5, -8], [-0.5, 5.5, 12], [0, 0, -7], [0, 1.5, 0], [0, 0, 0]],
   "1": [[0, -2, -10], [0, 3.5, 14], [0, -4.5, -12], [0, 0, 5], [0, 1.5, 0], [0, 0, 0]],
 };
-
-function archPoint(theta) { return [ARCH.a * Math.sin(theta), ARCH.b * Math.cos(theta) + ARCH.w0]; }
-function archNormal(theta) { const n = [Math.sin(theta) / ARCH.a, Math.cos(theta) / ARCH.b]; const l = Math.hypot(n[0], n[1]); return [n[0] / l, n[1] / l]; }
-function thetaAtLength(s) { // longitud de arco -> ángulo (numérico)
-  let theta = 0, run = 0; const step = 0.0005;
-  while (run < s) { const p = archPoint(theta), q = archPoint(theta + step); run += Math.hypot(q[0] - p[0], q[1] - p[1]); theta += step; }
-  return theta;
+const headingAt = (s) => { const u = Math.min(1, s / (REACH * 0.6)); return ARCH.turn * u * u * (3 - 2 * u); }; // curvatura 0 al frente, máxima hacia los caninos, 0 atrás
+const ARCH_DS = 0.25;
+const ARCH_TAB = (() => {
+  const n = Math.ceil((REACH + 12) / ARCH_DS), xs = [0], ys = [0];
+  let x = 0, y = 0;
+  for (let i = 0; i < n; i++) { const phi = headingAt((i + 0.5) * ARCH_DS); x += Math.cos(phi) * ARCH_DS; y += Math.sin(phi) * ARCH_DS; xs.push(x); ys.push(y); }
+  return { xs, ys };
+})();
+// theta es la longitud de arco con signo desde la línea media (negativa = lado izquierdo)
+function archPoint(theta) {
+  const f = Math.abs(theta) / ARCH_DS, i = Math.floor(f), r = f - i, { xs, ys } = ARCH_TAB;
+  return [Math.sign(theta) * (xs[i] + (xs[i + 1] - xs[i]) * r), ARCH.front - (ys[i] + (ys[i + 1] - ys[i]) * r)];
 }
+function archNormal(theta) { const phi = headingAt(Math.abs(theta)); return [(theta < 0 ? -1 : 1) * Math.sin(phi), Math.cos(phi)]; }
+const thetaAtLength = (s) => s;
 function buildTeeth() {
   const teeth = [];
   for (const side of [-1, 1]) {
@@ -345,15 +359,15 @@ const TEETH = buildTeeth();
 const clamp01 = (x) => Math.min(1, Math.max(0, x));
 const ease = (x) => { x = clamp01(x); return x * x * (3 - 2 * x); };
 // todo el estado sale de un solo número t (0..4): el control que mueve el visitante
-function stateOf(t) {
-  const a = clamp01(t);                 // los brackets se posan
-  const w = clamp01(t - 1);             // el arco de alambre se enhebra
+function stateOf(t, dir) {
+  const a = clamp01(t);                 // los brackets caen (avance lineal: la curva de caída la pone fall())
+  const w = ease(clamp01(t - 1));       // el arco de alambre se enhebra
   const m = clamp01((t - 2) / 2);       // los dientes se mueven
   const step = Math.min(4, Math.max(0, Math.round(t)));
   const moves = TEETH.map((tooth) => ease(m * 1.35 - 0.35 * ((tooth.k % 3) / 2 + (tooth.side > 0 ? 0.15 : 0))));
-  const land = TEETH.map((tooth) => ease(a * 1.7 - 0.7 * (tooth.o / 11)));
+  const land = TEETH.map((tooth) => clamp01(a * 1.7 - 0.7 * (tooth.o / 11)));
   const poses = TEETH.map((tooth, i) => poseOf(tooth, moves[i]));
-  return { id: "braces", max: 4, t, a, w, m, step, moves, land, poses };
+  return { id: "braces", max: 4, t, a, w, m, step, moves, land, poses, dir };
 }
 function poseOf(tooth, q) {
   const k = 1 - q;
@@ -431,22 +445,24 @@ const SERVICES = [
 ];
 const ALIGNED = TEETH.map((tooth) => poseOf(tooth, 1));
 const IMPLANT = 9, BRIDGE = [6, 7, 8], CROWN = 5;
-function sceneState(svc, t) {
+function sceneState(svc, t, dir = 1) {
   const sv = SERVICES[svc], max = sv.steps.length - 1;
   t = Math.min(max, Math.max(0, t));
-  if (sv.id === "braces") return stateOf(t);
+  if (sv.id === "braces") return stateOf(t, dir);
   const e = (x) => ease(clamp01(x));
-  const st = { id: sv.id, max, t, step: Math.round(t), poses: ALIGNED };
-  if (sv.id === "implants") Object.assign(st, { post: e(t), abut: e(t - 1), crown: e(t - 2) });
-  if (sv.id === "bridges") Object.assign(st, { prep: e(t), show: e((t - 1) * 2), seat: e(t - 1) });
-  if (sv.id === "crowns") Object.assign(st, { prep: e(t), show: e(t - 1), seat: e(t - 2) });
-  if (sv.id === "whitening") Object.assign(st, { gel: e(t) * (1 - e(t - 2)), shade: e((t - 1.2) / 1.8) });
+  const st = { id: sv.id, max, t, step: Math.round(t), poses: ALIGNED, dir };
+  // los avances de lo que cae son lineales (clamp01); fall() les da la aceleración y el asentamiento
+  if (sv.id === "implants") Object.assign(st, { post: clamp01(t), abut: clamp01(t - 1), crown: clamp01(t - 2) });
+  if (sv.id === "bridges") Object.assign(st, { prep: e(t), seat: clamp01(t - 1) });
+  if (sv.id === "crowns") Object.assign(st, { prep: e(t), show: clamp01(t - 1), seat: clamp01(t - 2) });
+  if (sv.id === "whitening") Object.assign(st, { gelIn: clamp01(t), gelOut: clamp01(t - 2), shade: e((t - 1.2) / 1.8) });
   return st;
 }
 
 // Figura de brackets: dibujo. Usa las funciones del kit Anatomy y model.js (todo en el mismo ámbito).
 const YAW = 14;
 let VIEW = null;
+function setScope(s) { SCOPE = s; }
 function setView(P) {
   const phi = ((P.azimuth + YAW) * Math.PI) / 180;
   const az = (P.azimuth * Math.PI) / 180;
@@ -481,15 +497,92 @@ function gumRing(offOut, offIn) {
   return [...outer, ...cap(end, 1, false), ...inner.reverse(), ...cap(-end, -1, true)];
 }
 
+// ---- 25-nov-2026 · sólidos con volumen: luz única, color por faceta, caída con asentamiento
+let SCOPE = "f"; // prefijo de los id de degradados: cada figura de la página tiene el suyo (un degradado dentro de un svg oculto no lo ven los demás)
+const LAMP = [-0.353, 0.505, 0.788]; // la luz, en el mundo: (derecha de la cámara, hacia el espectador, arriba); llega de arriba a la izquierda y al frente
+const hexOf = (rgb) => "#" + rgb.map((v) => Math.round(v).toString(16).padStart(2, "0")).join("");
+const mixHexC = (a, b, x) => { const p = hex(a), q = hex(b); return hexOf([0, 1, 2].map((k) => p[k] + (q[k] - p[k]) * x)); };
+const rampAt = (stops, s) => { const n = stops.length - 1, f = Math.min(n - 1e-9, Math.max(0, s * n)), i = Math.floor(f); return mixHexC(stops[i], stops[i + 1], f - i); };
+function lamOf(nx, ny, nz) { const { sinA, cosA } = cameraOf(VIEW.P); return (nx * sinA - ny * cosA) * LAMP[0] + (nx * cosA + ny * sinA) * LAMP[1] + nz * LAMP[2]; }
+const toneOf = (lam) => clamp01(0.2 + lam);
+// la luz sobre un cilindro visto de frente, de izquierda a derecha de su silueta: un degradado horizontal por paleta
+function cylGradient(id, ramp) {
+  const stops = [];
+  for (let k = 0; k <= 8; k++) { const nr = -1 + k / 4, nt = Math.sqrt(Math.max(0, 1 - nr * nr)); stops.push(`<stop offset="${k / 8}" stop-color="${rampAt(ramp, toneOf(nr * LAMP[0] + nt * LAMP[1]))}"/>`); }
+  return `<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="0">${stops.join("")}</linearGradient>`;
+}
+const GR = new Map(); // degradados de paleta del cuadro que se dibuja: clave -> { id, pal }
+function gradFor(pal) { const key = pal.join(""); if (!GR.has(key)) GR.set(key, { id: `${SCOPE}-p${GR.size}`, pal }); return GR.get(key).id; }
+const palRamp = (p) => [p[2], p[3], p[4], p[5], p[1]];
+const GUM_PAL = ["#b9677a", "#e9a2ad", "#6f3144", "#9a4d62", "#bb6d80", "#d6899a"]; // papel, tapa, sombras 0..3 de la encía
+function dynDefs() {
+  const s = SCOPE;
+  return `<defs><linearGradient id="${s}-ao" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9def5" stop-opacity=".18"/><stop offset=".2" stop-color="#b9def5" stop-opacity="0"/><stop offset=".58" stop-color="#2a1a14" stop-opacity="0"/><stop offset="1" stop-color="#2a1a14" stop-opacity=".36"/></linearGradient>`
+    + `<radialGradient id="${s}-gl"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".55" stop-color="#fff" stop-opacity=".28"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>`
+    + `<radialGradient id="${s}-dm" cx=".38" cy=".32" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#3b2e1c" stop-opacity=".5"/></radialGradient>`
+    + `<radialGradient id="${s}-cu"><stop offset="0" stop-color="#fff" stop-opacity=".62"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>`
+    + [...GR.values()].map(({ id, pal }) => cylGradient(id, palRamp(pal))).join("") + `</defs>`;
+}
+// Une anillos con el mismo número de puntos en un sólido liso: cada faceta toma el tono de la luz que le toca; el último anillo es la tapa.
+function loft(rings, zs, ramp, o = {}) {
+  const P = VIEW.P, { sinA, cosA, sinE, cosE } = cameraOf(P), view = [cosA * cosE, sinA * cosE, sinE], n = rings[0].length, ccw = signedArea(rings[0]) > 0, out = [];
+  for (let j = 0; j < rings.length - 1; j++) {
+    const A = rings[j], B = rings[j + 1], h = zs[j + 1] - zs[j];
+    for (let i = 0; i < n; i++) {
+      const i2 = (i + 1) % n, [ax, ay] = A[i], [bx, by] = A[i2], dx = bx - ax, dy = by - ay, l = Math.hypot(dx, dy) || 1;
+      const nx = ccw ? dy / l : -dy / l, ny = ccw ? -dx / l : dx / l;
+      const inset = -(((B[i][0] + B[i2][0] - ax - bx) / 2) * nx + ((B[i][1] + B[i2][1] - ay - by) / 2) * ny), m = Math.hypot(h, inset) || 1;
+      const N = [(nx * h) / m, (ny * h) / m, inset / m];
+      if (N[0] * view[0] + N[1] * view[1] + N[2] * view[2] <= 1e-6) continue;
+      const c = rampAt(ramp, toneOf(lamOf(N[0], N[1], N[2])));
+      out.push(`<path d="${pathOf([iso([ax, ay, zs[j]], P), iso([bx, by, zs[j]], P), iso([B[i2][0], B[i2][1], zs[j + 1]], P), iso([B[i][0], B[i][1], zs[j + 1]], P)], true)}" fill="${c}" stroke="${c}" stroke-width=".6" stroke-linejoin="round"/>`);
+    }
+  }
+  const z = zs[zs.length - 1], top = rings[rings.length - 1].map(([x, y]) => iso([x, y, z], P)), tc = o.top || rampAt(ramp, toneOf(LAMP[2]));
+  out.push(`<path d="${pathOf(oriented(top), true)}" fill="${tc}" stroke="${o.topStroke || tc}" stroke-width=".6" stroke-linejoin="round"/>`);
+  return out.join("");
+}
+// Encía: el reborde del arco con sección redondeada, de la base al hombro donde se apoyan los dientes
+const GUM_LEVELS = [[18.6, 15.6, 0], [18, 15, 1.6], [16.8, 14, 3.6], [15.6, 13, 5.6], [14.6, 12.2, 6.8], [14, 11.8, ZG]]; // [fuera, dentro, z]
+const GUM_RAMP = ["#48202f", "#743548", "#a45567", "#d4818e"];
+const gumSvg = () => wrap("gum", loft(GUM_LEVELS.map(([o, i]) => gumRing(o, i).map(W)), GUM_LEVELS.map((l) => l[2]), GUM_RAMP, { top: "#c77786", topStroke: "#a85a69" }));
+// Base del tablero: bloque con canto biselado arriba y abajo, color suave por faceta
+const BASE_LEVELS = [[2.2, -12], [0.5, -10.6], [0, -9.4], [0, -1.7], [1.1, 0]]; // [retranqueo, z]
+const BASE_RAMP = ["#091630", "#132d58", "#244d86", "#4d84be"];
+const baseRing = (inset) => plateRing(PLATE.x + inset, PLATE.y + inset, PLATE.w - 2 * inset, PLATE.d - 2 * inset, Math.max(2, PLATE.r - inset * 0.5)).map(W);
+function baseSvg() {
+  const P = VIEW.P, rim = extrude(baseRing(1.1), 0, 0, P).crease;
+  return loft(BASE_LEVELS.map(([i]) => baseRing(i)), BASE_LEVELS.map((l) => l[1]), BASE_RAMP, { top: `url(#${SCOPE}-bt)`, topStroke: "#35629c" }) + `<g opacity=".7">${Ln(rim, { tone: "hi" })}</g>`;
+}
+// Suelo del modelo de yeso: lo que queda dentro del arco (paladar / lengua), a poca altura y por debajo del reborde de la encía
+function floorSvg(off, fill, z = 1.4) {
+  const P = VIEW.P, end = thetaAtLength(REACH - 6), N = 40, pts = [];
+  for (let i = 0; i <= N; i++) { const p = archPoint(-end + (2 * end * i) / N), n = archNormal(-end + (2 * end * i) / N); pts.push(W([p[0] - n[0] * off, p[1] - n[1] * off])); }
+  return `<path d="${pathOf(pts.map(([x, y]) => iso([x, y, z], P)), true)}" fill="${fill}" stroke="#6e3547" stroke-opacity=".5" stroke-width=".7" stroke-linejoin="round"/>`;
+}
+const palateSvg = () => floorSvg(16, `url(#${SCOPE}-fl)`) + `<g opacity=".2">${floorSvg(5, "#f0b4c0", 1.5)}</g>`;
+const staticDefs = () => `<defs><linearGradient id="${SCOPE}-fl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9c5468"/><stop offset="1" stop-color="#7a3a50"/></linearGradient><linearGradient id="${SCOPE}-bt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2d5a94"/><stop offset=".55" stop-color="#1c3f72"/><stop offset="1" stop-color="#132c55"/></linearGradient></defs>`;
+
+// La caída: avance p (0..1, lineal en el tiempo) -> [altura relativa (1 arriba, 0 en su lugar), opacidad].
+// Hacia adelante cae acelerando (1 - u²) y rebota un poco al llegar; si se quita (dir < 0) sube acelerando y se desvanece al final.
+const DROP = 34;
+function fall(p, dir) {
+  p = clamp01(p);
+  if (dir < 0) { const q = 1 - p; return [q * q, 1 - clamp01((q - 0.5) / 0.5)]; }
+  if (p < 0.7) { const u = p / 0.7; return [1 - u * u, clamp01(p / 0.12)]; }
+  const v = (p - 0.7) / 0.3;
+  return [0.1 * Math.sin(Math.PI * v) * (1 - 0.4 * v), 1];
+}
+
 // Variante de tarjeta (páginas de servicio): el modelo sobre su base de tablero con el riel de control, como en B4/B5.
 function cardStaticSvg() {
-  const P = VIEW.P, out = [];
+  const P = VIEW.P, out = [staticDefs()];
   const plate = plateRing(PLATE.x, PLATE.y, PLATE.w, PLATE.d, PLATE.r);
   out.push(`<path class="iso-halo" d="${slabL(plate, -17, 17).fill}"/>`);
   // patas
   const feet = [[-66, -30], [66, -30], [-66, 68], [66, 68]].sort((a, b) => depthOf([...W(a), 0], P) - depthOf([...W(b), 0], P));
   for (const f of feet) { const w = W(f); out.push(S(cylinder(w[0], w[1], 7, -17, 1.6, P, 24), { tone: "lo" }), S(cylinder(w[0], w[1], 5.4, -15.4, 3.4, P, 24), { tone: "mid" })); }
-  out.push(S(slabL(plate, -12, 12, 0.8), { tone: "mid" }));
+  out.push(baseSvg());
   out.push(Ln(onTop(plateRing(PLATE.x + 5, PLATE.y + 5, PLATE.w - 10, PLATE.d - 10, 5).map(W), 0, P, true), { tone: "lo" }));
   const screws = [[-72, -36], [72, -36], [-72, 72], [72, 72]];
   out.push(Ln(screws.map((c) => ringL(c, 2.2, 0, 16)).join(""), { tone: "lo" }), dotsL(screws, 0, { size: 0.5 }));
@@ -497,8 +590,7 @@ function cardStaticSvg() {
   out.push(S(slabL(plateRing(-20, -38, 40, 12, 1.5, 3), 0, 0.7, 0), { tone: "lo", crease: "none" }));
   out.push(Ln([-1, 0, 1].map((i) => onTop([[-16, -32 + i * 3], [-16 + (i === 1 ? 22 : 30), -32 + i * 3]].map(W), 0.7, P)).join(""), { tone: "lo", free: true }));
   // encía: labio moldeado de la base, luego el reborde donde se apoyan los dientes
-  out.push(wrap("gum", S(extrude(gumRing(18.5, 15.5).map(W), 0, 2.2, P, { convex: false, bevel: 0.5 }), { tone: "lo" })));
-  out.push(wrap("gum", S(extrude(gumRing(16.5, 13.5).map(W), 2.2, ZG - 2.2, P, { convex: false, bevel: 0.6 }), { tone: "mid", crease: "lo" })));
+  out.push(palateSvg(), gumSvg());
   // riel de control: canal, dos rieles guía, topes de extremo, tira de regla
   out.push(S(slabL(plateRing(-74, RAIL_W - 7, 148, 14, 3, 4), 0, 2, 0.4), { tone: "mid" }));
   for (const y of [RAIL_W - 4.6, RAIL_W + 2.2]) out.push(S(slabL(plateRing(-70, y, 140, 2.4, 0.8, 3), 2, 2.4, 0.3), { tone: "lo" }));
@@ -512,14 +604,15 @@ function cardStaticSvg() {
 }
 
 
+const TRAY_LEVELS = [[23.5, 20.5, -6], [25, 22, -4.8], [25, 22, -0.7], [24.2, 21.2, 0]]; // [fuera, dentro, z]
+const TRAY_RAMP = ["#1f4468", "#3d78a8", "#80b9e0", "#c9ebfb"];
 // Una bandeja pequeña y transparente (como una vista previa de un molde de acrílico) que flota; la encía va dentro. Sin tablero ni riel.
 function staticSvg() {
   const P = VIEW.P, out = [];
-  out.push(wrap("tray", S(extrude(gumRing(25, 22).map(W), -6, 6, P, { convex: false, bevel: 0.8 }), { tone: "hi", crease: "mid" })));
-  out.push(Ln(onTop(gumRing(22, 19).map(W), 0, P, true), { tone: "mid" }));
-  // encía: labio moldeado de la base, luego el reborde donde se apoyan los dientes
-  out.push(wrap("gum", S(extrude(gumRing(18.5, 15.5).map(W), 0, 2.2, P, { convex: false, bevel: 0.5 }), { tone: "lo" })));
-  out.push(wrap("gum", S(extrude(gumRing(16.5, 13.5).map(W), 2.2, ZG - 2.2, P, { convex: false, bevel: 0.6 }), { tone: "mid", crease: "lo" })));
+  // bandeja de acrílico: sólido liso con canto biselado, vista a través del vidrio (opacidad del grupo, así las facetas no se solapan)
+  out.push(`<g opacity=".55">${floorSvg(21, "#6aa5cf", -0.5)}${loft(TRAY_LEVELS.map(([o, i]) => gumRing(o, i).map(W)), TRAY_LEVELS.map((l) => l[2]), TRAY_RAMP, { top: "#7fb4da", topStroke: "#bfe3f8" })}</g>`);
+  out.push(Ln(onTop(gumRing(24.2, 21.2).map(W), 0, P, true), { tone: "hi" }), Ln(onTop(gumRing(22, 19).map(W), 0, P, true), { tone: "mid" }));
+  out.push(gumSvg());
   return out.join("");
 }
 // sombra suave muy por debajo de la bandeja, para que se vea flotando
@@ -547,33 +640,73 @@ const PAL = { natural: ["#e6e0d1", "#faf6ea", "#aaa593", "#c1bca9", "#d6d0be", "
 const hex = (s) => [1, 3, 5].map((i) => parseInt(s.slice(i, i + 2), 16));
 const mixPal = (A, B, x) => A.map((c, i) => { const p = hex(c), q = hex(B[i]); return "#" + [0, 1, 2].map((k) => Math.round(p[k] + (q[k] - p[k]) * x).toString(16).padStart(2, "0")).join(""); });
 const palStyle = (p) => `--anatomy-paper:${p[0]};--anatomy-top:${p[1]};--anatomy-shade-0:${p[2]};--anatomy-shade-1:${p[3]};--anatomy-shade-2:${p[4]};--anatomy-shade-3:${p[5]}`;
-// o: trim (0..1 tallado), lift (z), grow (más ancho), alpha, pal (paleta), gel (0..1 capa)
-function toothSvg(tooth, pose, o = {}) {
-  const P = VIEW.P, k = tooth.kind, out = [], trim = o.trim || 0, lift = o.lift || 0;
-  const tw = (k.tw + (o.grow || 0)) * (1 - 0.26 * trim), td = (k.td + (o.grow || 0)) * (1 - 0.26 * trim), H = k.h * (1 - 0.3 * trim), z0 = ZG + lift;
-  const h1 = Math.round(H * 0.62 * 10) / 10, h2 = H - h1;
-  out.push(S(slabL(frameRing(pose, -tw / 2, -td / 2, tw, td, k.r, 7), z0, h1, 0.4), { tone: "mid", crease: "lo" }));
-  const cd = td - 2.6 - k.cap * 1.2, cw = tw - 2.6;
-  out.push(S(slabL(frameRing(pose, -cw / 2, -cd / 2, cw, cd, Math.max(0.8, k.r - 1.3), 7), z0 + h1, h2, 0.5), { tone: "mid", crease: "lo" }));
-  if (k.groove >= 1) out.push(Ln(onTop([framePoint(pose, -cw / 2, 0), framePoint(pose, cw / 2, 0)].map(W), z0 + H, P), { tone: "lo" }));
-  let html = wrap("tooth", out.join(""), (o.alpha !== undefined && o.alpha < 1 ? ` opacity="${Math.max(0, o.alpha).toFixed(2)}"` : "") + (o.pal ? ` style="${palStyle(o.pal)}"` : ""));
-  if (o.gel > 0.02) html += wrap("tie", S(slabL(frameRing(pose, -tw / 2 - 0.15, -td / 2 - 0.15, tw + 0.3, td + 0.3, k.r + 0.15, 7), ZG, H + 0.5, 0.3), { tone: "mid", crease: "none" }), ` opacity="${(o.gel * 0.4).toFixed(2)}"`);
-  return html;
+// Corona: cinco anillos de la base (cuello) al borde (la planta se estrecha hacia lingual arriba, como un diente real); [z relativo, ancho, borde lingual, borde labial, radio], los bordes en fracción de la profundidad
+const PROF_ANT = [[0, 0.74, -0.36, 0.4, 0.9], [0.22, 0.9, -0.46, 0.5, 1], [0.55, 1, -0.5, 0.5, 1], [0.85, 1, -0.38, 0.47, 0.8], [1, 0.99, -0.05, 0.42, 0.6]]; // pala: más ancha hacia el borde, que es recto
+const PROF_CAN = [[0, 0.74, -0.36, 0.4, 0.9], [0.22, 0.9, -0.46, 0.5, 1], [0.55, 1, -0.5, 0.5, 1], [0.82, 0.78, -0.4, 0.44, 1], [1, 0.26, -0.12, 0.26, 1]]; // cúspide en punta
+const PROF_POST = [[0, 0.8, -0.4, 0.4, 0.9], [0.22, 0.96, -0.5, 0.5, 1], [0.55, 1, -0.5, 0.5, 1], [0.88, 0.94, -0.48, 0.48, 1], [1, 0.88, -0.44, 0.44, 1]];
+const profileOf = (k) => (k.name === "canine" ? PROF_CAN : k.groove ? PROF_POST : PROF_ANT);
+function crownDims(tooth, o) {
+  const k = tooth.kind, trim = o.trim || 0, g = o.grow || 0, sc = o.s || 1;
+  return { tw: (k.tw + g) * (1 - 0.26 * trim) * sc, td: (k.td + g) * (1 - 0.26 * trim) * sc, H: k.h * (1 - 0.3 * trim), z0: ZG + (o.lift || 0) };
+}
+function crownRings(tooth, pose, d, steps = 5) {
+  const k = tooth.kind;
+  return profileOf(k).map(([f, wf, b, e, rf]) => { const w = d.tw * wf, dep = (e - b) * d.td; return [d.z0 + f * d.H, frameRing(pose, -w / 2, b * d.td, w, dep, Math.min(k.r * rf, w / 2, dep / 2), steps)]; });
+}
+const hullOf = (rings) => convexHull(rings.flatMap(([z, ring]) => ring.map((p) => iso([...W(p), z], VIEW.P))));
+const ellPts = (pose, cx, cy, rx, ry, z, n = 10) => Array.from({ length: n }, (_, i) => { const a = (i / n) * Math.PI * 2, q = W(framePoint(pose, cx + rx * Math.cos(a), cy + ry * Math.sin(a))); return iso([q[0], q[1], z], VIEW.P); });
+const poly = (pts, attrs) => `<path d="${pathOf(pts, true)}" ${attrs}/>`;
+const bbox = (pts) => { const xs = pts.map((p) => p[0]), ys = pts.map((p) => p[1]); return [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)]; };
+
+// Collar de encía: el anillo rosado que abraza el cuello de cada diente (o del hueco); entre dientes vecinos se funden en festones
+function collarSvg(tooth, pose, wide = 1) {
+  const d = crownDims(tooth, { s: 1.3 * wide, lift: -0.3 }), top = crownDims(tooth, { s: 1.04, lift: 2.2 }), P = VIEW.P, k = tooth.kind;
+  const rings = [[d.z0, frameRing(pose, -d.tw / 2, -d.td / 2, d.tw, d.td, k.r * 1.3, 6)], [top.z0, frameRing(pose, -top.tw * 0.45, -top.td * 0.45, top.tw * 0.9, top.td * 0.9, k.r * 0.9, 6)]];
+  return `<path d="${pathOf(hullOf(rings), true)}" fill="url(#${gradFor(GUM_PAL)})" stroke="#8e4457" stroke-opacity=".6" stroke-width=".7" stroke-linejoin="round"/>`;
 }
 
-function bracketSvg(tooth, pose, land, tie) {
-  const P = VIEW.P, k = tooth.kind, out = [];
-  const lift = (1 - land) * 7, off = (1 - land) * 9;
-  const p = { c: [pose.c[0] + pose.n[0] * off, pose.c[1] + pose.n[1] * off], T: pose.T, n: pose.n };
+// o: trim (0..1 tallado), lift (z), grow (más ancho), alpha, pal (paleta), gloss (0..1)
+function toothSvg(tooth, pose, o = {}) {
+  const P = VIEW.P, k = tooth.kind, d = crownDims(tooth, o), rings = crownRings(tooth, pose, d), top = rings[rings.length - 1];
+  const pal = o.pal || PAL.natural, hull = hullOf(rings), sil = pathOf(hull, true), [bx0, , bx1, by1] = bbox(hull);
+  const topPts = top[1].map((p) => iso([...W(p), top[0]], P)), topY = Math.max(...topPts.map((p) => p[1]));
+  const nw = W(pose.n), dim = Math.min(0.26, Math.max(0, (0.3 - lamOf(nw[0], nw[1], 0)) * 0.5)), out = [];
+  out.push(`<path d="${sil}" fill="url(#${gradFor(pal)})" stroke="${mixHexC(pal[2], "#3b3224", 0.35)}" stroke-opacity=".8" stroke-width=".8" stroke-linejoin="round"/>`);
+  if (dim > 0.01) out.push(`<path d="${sil}" fill="#1b1224" fill-opacity="${dim.toFixed(2)}"/>`);
+  out.push(`<path d="${sil}" fill="url(#${SCOPE}-ao)"/>`);
+  out.push(poly(topPts, `fill="${k.groove ? mixHexC(pal[1], pal[2], 0.3) : pal[1]}" stroke="#fff" stroke-opacity=".55" stroke-width=".7" stroke-linejoin="round"`));
+  // cúspides: premolar con 2, molar con 4; son cúpulas con su propia luz sobre una cara oclusal algo más oscura, así los surcos salen de los huecos entre ellas
+  const z = top[0] + 0.05, edge = mixHexC(pal[2], "#3b3224", 0.4);
+  const dome = (cx, cy, rx, ry) => { const pts = ellPts(pose, cx * d.tw, cy * d.td, rx * d.tw, ry * d.td, z + 1.1, 12); return poly(pts, `fill="${mixHexC(pal[1], pal[4], 0.45)}"`) + poly(pts, `fill="url(#${SCOPE}-dm)" stroke="${edge}" stroke-opacity=".35" stroke-width=".6"`); };
+  if (k.name === "premolar 1" || k.name === "premolar 2") out.push(dome(0, 0.18, 0.37, 0.2), dome(0, -0.2, 0.32, 0.17));
+  else if (k.name === "molar") out.push(dome(-0.23, -0.19, 0.23, 0.2), dome(0.24, -0.21, 0.21, 0.19), dome(-0.22, 0.2, 0.22, 0.2), dome(0.2, 0.22, 0.2, 0.18));
+  // brillo de esmalte: una veta vertical suave en el lado de la luz
+  const gl = o.gloss === undefined ? 1 : o.gloss, h = by1 - topY;
+  if (h > 4 && gl > 0.02) { const cx = bx0 + (bx1 - bx0) * 0.3, cy = topY + h * 0.42; out.push(`<ellipse cx="${tenth(cx)}" cy="${tenth(cy)}" rx="${tenth((bx1 - bx0) * 0.085)}" ry="${tenth(h * 0.3)}" fill="url(#${SCOPE}-gl)" opacity="${(0.9 * gl).toFixed(2)}" transform="rotate(-8 ${tenth(cx)} ${tenth(cy)})"/>`); }
+  let html = wrap("tooth", out.join(""), o.alpha !== undefined && o.alpha < 1 ? ` opacity="${Math.max(0, o.alpha).toFixed(2)}"` : "");
+  if (o.gelA > 0.02) html += gelSvg(tooth, pose, o);
+  return html;
+}
+// gel de blanqueamiento: una funda translúcida y brillante que cae sobre el diente
+function gelSvg(tooth, pose, o) {
+  const P = VIEW.P, d = crownDims(tooth, { s: 1.09, lift: (o.gelLift || 0) - 0.3 }), rings = crownRings(tooth, pose, { ...d, H: d.H * 1.05 }), hull = hullOf(rings), [bx0, by0, bx1, by1] = bbox(hull);
+  const cx = bx0 + (bx1 - bx0) * 0.3, cy = by0 + (by1 - by0) * 0.5;
+  return wrap("gel", `<path d="${pathOf(hull, true)}" fill="#8fd6f7" fill-opacity=".34" stroke="#d6f1ff" stroke-opacity=".8" stroke-width=".9" stroke-linejoin="round"/><ellipse cx="${tenth(cx)}" cy="${tenth(cy)}" rx="${tenth((bx1 - bx0) * 0.1)}" ry="${tenth((by1 - by0) * 0.26)}" fill="url(#${SCOPE}-gl)" opacity=".8" transform="rotate(-8 ${tenth(cx)} ${tenth(cy)})"/>`, ` opacity="${o.gelA.toFixed(2)}"`);
+}
+
+function bracketSvg(tooth, pose, land, tie, dir) {
+  const P = VIEW.P, k = tooth.kind, out = [], [fy, fa] = fall(land, dir);
+  const lift = fy * DROP;
+  const p = pose;
   const molar = k.name === "molar", bw = molar ? 9.4 : 6.6, bh = molar ? 5.4 : 5.2, z0 = ZS - 3.6 + lift, y0 = k.td / 2;
-  out.push(S(slabL(frameRing(p, -bw / 2 - 0.9, y0 - 0.2, bw + 1.8, 1.2, 0.5, 3), z0, 7.2, 0.2), { tone: "mid", crease: "none" }));
+  out.push(S(slabL(frameRing(p, -bw / 2 - 0.9, y0 - 0.2, bw + 1.8, 1.2, 0.5, 3), z0, 7.2, 0.2), { tone: "mid" , crease: "none" }));
   out.push(S(slabL(frameRing(p, -bw / 2, y0 + 1, bw, 2.2, 0.5, 3), ZS - bh / 2 + lift, bh, 0.25), { tone: "mid", crease: "lo" }));
   const a = framePoint(p, -bw / 2, y0 + 3.2), b = framePoint(p, bw / 2, y0 + 3.2);
   out.push(Ln(segment([...W(a), ZS + lift], [...W(b), ZS + lift], P), { tone: "hi" }));
   out.push(dotsSvg([iso([...W(a), ZS + lift], P), iso([...W(b), ZS + lift], P)], { size: 0.4, tone: "hi" }));
   if (!molar) out.push(dotsSvg([[-2.3, 2], [2.3, 2], [-2.3, -2], [2.3, -2]].map(([x, dz]) => { const q = W(framePoint(p, x, y0 + 3.2)); return iso([q[0], q[1], ZS + lift + dz], P); }), { size: 0.4, tone: "lo" }));
-  let html = wrap("metal", out.join(""), land < 1 ? ` opacity="${Math.max(0, land).toFixed(2)}"` : "");
-  if (tie > 0.02) {
+  let html = wrap("metal", out.join(""), fa < 1 ? ` opacity="${Math.max(0, fa).toFixed(2)}"` : "");
+  if (tie > 0.02 && fy < 0.01) {
     const tw = molar ? 0 : bw + 1.2, ring = frameRing(p, -tw / 2, y0 + 0.4, tw, 3.4, 1.3, 3);
     if (!molar) html += wrap("tie", S(slabL(ring, ZS - 1.4, 2.8, 0.25), { tone: "mid", crease: "none" }), tie < 1 ? ` opacity="${tie.toFixed(2)}"` : "");
   }
@@ -594,27 +727,40 @@ function wireD(samples, from, to, limit) {
 const wireSvg2 = (d) => (d ? `<path class="wire-d" d="${d}"/><path class="wire-l" d="${d}"/>` : "");
 
 const alphaOf = (v) => (v < 1 ? ` opacity="${v.toFixed(2)}"` : "");
-// implante: alvéolo en la encía, poste de titanio, pilar, corona de porcelana, cada uno se posa por turno
+const ZC = ZG + 2.2; // la cara de arriba del collar de encía: ahí se apoya lo que va en el hueco
+const away = (p, dir) => fall(1 - p, -dir); // lo que se quita: sube y se va (hacia atrás, vuelve cayendo)
+// hueco en la encía (alvéolo) donde falta un diente
+function socketSvg(tooth, pose) {
+  const r = Math.min(tooth.kind.tw, tooth.kind.td) * 0.36;
+  return wrap("socket", poly(ellPts(pose, 0, 0, r * 1.15, r * 1.15, ZC, 16), `fill="#5b2c40" stroke="#d08c9b" stroke-opacity=".5" stroke-width=".7"`) + poly(ellPts(pose, 0, 0, r * 0.8, r * 0.8, ZC - 0.15, 16), `fill="#2b111f"`));
+}
+// implante: hueco en la encía, poste de titanio, pilar y corona de porcelana: cada uno cae por turno
 function implantSvg(tooth, pose, st) {
-  const P = VIEW.P, c = W(pose.c), out = [];
-  out.push(wrap("socket", S(slabL(frameRing(pose, -3.6, -3.6, 7.2, 7.2, 3.6, 8), ZG - 0.2, 0.3, 0), { tone: "lo", crease: "none" })));
-  if (st.post > 0.01) {
-    const z = ZG + (1 - st.post) * 16;
-    out.push(wrap("metal", S(cylinder(c[0], c[1], 3.3, z, 4.6, P, 20, 0.3), { tone: "mid" }) + Ln(sideArc(c[0], c[1], 3.3, z + 1.5, P, 12) + sideArc(c[0], c[1], 3.3, z + 3, P, 12), { tone: "lo" }), alphaOf(st.post)));
-    if (st.post > 0.98) out.push(Ln(ringL(pose.c, 4.8, ZG + 0.05, 24), { tone: "mid" }));
+  const P = VIEW.P, c = W(pose.c), out = [socketSvg(tooth, pose)];
+  const [py, pa] = fall(st.post, st.dir), [ay, aa] = fall(st.abut, st.dir), [cy, ca] = fall(st.crown, st.dir);
+  if (pa > 0.01) {
+    const z = ZC - 0.2 + py * DROP;
+    out.push(wrap("metal", S(cylinder(c[0], c[1], 3.3, z, 4.6, P, 20, 0.3), { tone: "mid" }) + Ln(sideArc(c[0], c[1], 3.3, z + 1.5, P, 12) + sideArc(c[0], c[1], 3.3, z + 3, P, 12), { tone: "lo" }), alphaOf(pa)));
   }
-  if (st.abut > 0.01) out.push(wrap("metal", S(cylinder(c[0], c[1], 2.3, ZG + 4.6 + (1 - st.abut) * 14, 5.2, P, 18, 0.3), { tone: "mid" }), alphaOf(st.abut)));
-  if (st.crown > 0.01) out.push(toothSvg(tooth, pose, { lift: (1 - st.crown) * 22, alpha: st.crown }));
+  if (aa > 0.01) out.push(wrap("metal", S(cylinder(c[0], c[1], 2.3, ZC + 4.4 + ay * DROP, 5.2, P, 18, 0.3), { tone: "mid" }), alphaOf(aa)));
+  if (ca > 0.01) out.push(toothSvg(tooth, pose, { lift: cy * DROP, alpha: ca }));
   return out.join("");
 }
-// un diente tallado (preparado): más pequeño y un poco más oscuro, luego la corona de porcelana baja sobre él
-function crownOver(tooth, pose, prep, show, seat, grow) {
-  const stump = toothSvg(tooth, pose, { trim: prep, pal: mixPal(PAL.natural, PAL.prep, prep) });
-  return show > 0.01 ? stump + toothSvg(tooth, pose, { lift: (1 - seat) * 24, alpha: show, grow }) : stump;
+// un diente tallado (preparado): más pequeño y un poco más oscuro, luego la corona de porcelana cae sobre él
+function crownOver(tooth, pose, prep, y, a, grow) {
+  const stump = toothSvg(tooth, pose, { trim: prep, pal: mixPal(PAL.natural, PAL.prep, prep), gloss: 1 - prep * 0.8 });
+  return a > 0.01 ? stump + toothSvg(tooth, pose, { lift: y * DROP, alpha: a, grow }) : stump;
+}
+// la corona (páginas de coronas): se hace (cae y queda flotando sobre el diente tallado) y luego se asienta (cae el resto, con rebote)
+function crownFall(st) {
+  const HOV = 0.4;
+  if (st.t < 2) { const eo = 1 - (1 - st.show) ** 3; return [HOV + (1 - HOV) * (1 - eo), clamp01(st.show / 0.15)]; }
+  return [HOV * fall(st.seat, st.dir)[0], 1];
 }
 
 function dynSvg(st) {
   const P = VIEW.P, items = [];
+  GR.clear();
   const visible = (n) => n[0] * VIEW.look[0] + n[1] * VIEW.look[1] > 0.05;
   const braces = st.id === "braces", wire = braces && st.w > 0 ? wirePath(st.poses) : null;
   const limit = wire ? wire.total * st.w + (st.w >= 1 ? 1 : 0) : 0;
@@ -622,14 +768,16 @@ function dynSvg(st) {
   TEETH.forEach((tooth, i) => {
     const pose = st.poses[i];
     let html;
-    if (st.id === "implants" && i === IMPLANT) html = implantSvg(tooth, pose, st);
+    if (st.id === "implants" && i === IMPLANT) html = collarSvg(tooth, pose) + implantSvg(tooth, pose, st);
     else if (st.id === "bridges" && BRIDGE.includes(i)) {
-      const gap = i === BRIDGE[1];
-      html = gap ? wrap("socket", S(slabL(frameRing(pose, -3.8, -3.8, 7.6, 7.6, 3.8, 8), ZG - 0.2, 0.3, 0), { tone: "lo", crease: "none" })) + (st.show > 0.01 ? toothSvg(tooth, pose, { lift: (1 - st.seat) * 24, alpha: st.show, grow: 0.4 }) : "") : crownOver(tooth, pose, st.prep, st.show, st.seat, 0.4);
-    } else if (st.id === "crowns" && i === CROWN) html = crownOver(tooth, pose, st.prep, st.show, st.seat, 0);
-    else if (st.id === "whitening") html = toothSvg(tooth, pose, { pal: light, gel: st.gel });
-    else html = toothSvg(tooth, pose);
-    if (braces && st.land[i] > 0.01 && visible(pose.n)) html += bracketSvg(tooth, pose, st.land[i], wire ? Math.min(1, Math.max(0, (limit - wire.toothLen[i]) / 10)) : 0);
+      const [y, a] = fall(st.seat, st.dir);
+      html = collarSvg(tooth, pose) + (i === BRIDGE[1] ? socketSvg(tooth, pose) + (a > 0.01 ? toothSvg(tooth, pose, { lift: y * DROP, alpha: a, grow: 0.4 }) : "") : crownOver(tooth, pose, st.prep, y, a, 0.4));
+    } else if (st.id === "crowns" && i === CROWN) { const [y, a] = crownFall(st); html = collarSvg(tooth, pose) + crownOver(tooth, pose, st.prep, y, a, 0); }
+    else if (st.id === "whitening") {
+      const [y1, a1] = fall(st.gelIn, st.dir), [y2, a2] = away(st.gelOut, st.dir);
+      html = collarSvg(tooth, pose) + toothSvg(tooth, pose, { pal: light, gelA: a1 * a2, gelLift: (y1 + y2) * DROP * 0.55 });
+    } else html = collarSvg(tooth, pose) + toothSvg(tooth, pose);
+    if (braces && st.land[i] > 0.01 && visible(pose.n)) html += bracketSvg(tooth, pose, st.land[i], wire ? Math.min(1, Math.max(0, (limit - wire.toothLen[i]) / 10)) : 0, st.dir);
     const w3 = W(pose.c);
     items.push({ key: depthOf([w3[0], w3[1], ZG + 6], P), html, i });
   });
@@ -647,7 +795,8 @@ function dynSvg(st) {
     }
   }
   const order = teethOrder(st, VIEW.look, (i) => items[i].key).map((i) => items[i]);
-  return order.map((it) => it.html).join("");
+  const body = order.map((it) => it.html).join("");
+  return dynDefs() + body; // dynDefs va después de pintar los dientes: ahí ya se sabe qué paletas se usaron
 }
 
 // marcas de regla para un servicio con `max` + 1 pasos: una marca larga en cada paso, tres cortas entre ellas
@@ -657,4 +806,4 @@ function rulerSvg(max) {
   return Ln(minor.join(""), { tone: "lo" }) + Ln(major.join(""), { tone: "mid" });
 }
 
-export { SERVICES, iso, fitProjection, setView, staticSvg, cardStaticSvg, floatShadowSvg, carriageSvg, carriageTransform, rulerSvg, dynSvg, sceneState, W, STEP_U, RAIL_W };
+export { setScope, SERVICES, iso, fitProjection, setView, staticSvg, cardStaticSvg, floatShadowSvg, carriageSvg, carriageTransform, rulerSvg, dynSvg, sceneState, W, STEP_U, RAIL_W };

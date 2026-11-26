@@ -1,27 +1,21 @@
-/* Comparador antes/después quieto (components/BeforeAfter.tsx): lado derecho del héroe. Prefijo ba-.
-   Una sola pieza (23-11-2026, r5): el marco .ba lleva la foto, sus controles dentro (casos arriba, Before/After abajo) y la nota de pie. */
-.ba{--ice:#cfe3ff;--ice-dim:rgb(207 227 255/.9);position:relative;display:flex;flex-direction:column;width:100%;max-width:640px;margin-inline:auto;min-width:0;border-radius:22px;overflow:hidden;background:#08142b;box-shadow:0 0 0 1.5px rgb(207 227 255/.45),0 24px 60px -24px rgb(0 8 30/.9)}
-.ba-stage{--pos:50%;position:relative;width:100%;aspect-ratio:16/10;touch-action:pan-y;background:#08142b}
-.ba-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none}
-.ba-after{clip-path:inset(0 0 0 var(--pos))}
-.ba-bar{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 12px rgb(0 8 30/.55);pointer-events:none}
-.ba-knob{position:absolute;top:50%;left:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:rgb(8 20 48/.85);border:1.5px solid #fff;color:#fff;display:grid;place-items:center}
-.ba-range{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;-webkit-appearance:none;appearance:none}
-.ba-stage:has(.ba-range:focus-visible){outline:2px solid #fff;outline-offset:-5px}
-/* controles dentro del marco: cristal oscuro sobre la foto, por encima del control deslizante invisible */
-.ba-cases,.ba-seg button{z-index:2;border:1px solid rgb(207 227 255/.38);background:rgb(5 11 26/.62);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
-.ba-cases{position:absolute;top:12px;left:50%;transform:translateX(-50%);display:flex;gap:2px;max-width:calc(100% - 24px);padding:3px;border-radius:999px}
-.ba-seg{position:absolute;left:12px;right:12px;bottom:12px;z-index:2;display:flex;justify-content:space-between;pointer-events:none}
-.ba-seg button{pointer-events:auto;border-radius:999px}
-.ba-cases button,.ba-seg button{min-height:40px;padding:0 16px;color:var(--ice-dim);font:600 14px/1.2 var(--font-sans);white-space:nowrap;cursor:pointer;transition:background-color .2s,color .2s,border-color .2s}
-.ba-cases button{border:0;border-radius:999px;background:transparent}
-.ba-seg button{min-width:76px}
-.ba-cases button:hover,.ba-seg button:hover{color:#fff}
-.ba-cases button[aria-pressed=true],.ba-seg button[aria-pressed=true]{background:var(--ice);border-color:var(--ice);color:#06122b}
+/* Antes/después del héroe (components/BeforeAfter.tsx). Prefijo ba-. r4 (26-11-2026): par apilado, las dos fotos completas a la vez, sin divisor ni marco que lo envuelva.
+   Arriba el antes (neutro), debajo el después (borde y etiqueta menta); casos como rectángulos con miniatura. */
+.ba{display:flex;flex-direction:column;gap:14px;width:100%;max-width:640px;margin-inline:auto;min-width:0}
+.ba-pair{display:grid}
+.ba-case{grid-area:1/1;display:flex;flex-direction:column;gap:10px;opacity:0;visibility:hidden;transition:opacity .45s var(--ease),visibility 0s .45s}
+.ba-case[data-on=true]{opacity:1;visibility:visible;transition-delay:0s}
+.ba-fig{position:relative;margin:0;aspect-ratio:5/2;overflow:hidden;border-radius:8px;border:1px solid rgb(207 227 255/.3);background:#08142b}
+.ba-fig img{display:block;width:100%;height:100%;object-fit:cover;user-select:none}
+.ba-fig-after{border:2px solid var(--color-mint);box-shadow:0 0 28px -8px rgb(63 207 174/.5)}
+.ba-fig figcaption{position:absolute;left:10px;bottom:10px;padding:6px 14px;border-radius:6px;background:rgb(5 11 26/.78);color:#fff;font:600 14px/1.2 var(--font-sans)}
+.ba-fig-after figcaption{background:var(--color-mint);color:#06122b}
+.ba-pick{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ba-pick button{display:flex;align-items:center;gap:12px;min-height:56px;padding:6px 14px 6px 6px;border-radius:8px;border:1px solid rgb(207 227 255/.28);background:rgb(207 227 255/.05);color:rgb(207 227 255/.92);font:600 15px/1.25 var(--font-sans);text-align:left;cursor:pointer;transition:background-color .2s,border-color .2s,color .2s}
+.ba-pick button img{flex:none;width:64px;height:44px;border-radius:5px;object-fit:cover}
+.ba-pick button:hover{border-color:rgb(207 227 255/.6);color:#fff}
+.ba-pick button[aria-pressed=true]{border-color:var(--color-mint);background:rgb(63 207 174/.14);color:#fff;box-shadow:inset 3px 0 0 var(--color-mint)}
 .ba :focus-visible{outline:2px solid #fff;outline-offset:2px}
-.ba-cap{margin:0;padding:12px 16px;text-align:center;font-size:14px;line-height:1.4;color:var(--ice-dim);border-top:1px solid rgb(207 227 255/.22);background:rgb(5 11 26/.55)}
-.ba-cap strong{color:#fff;font-weight:600}
-.ba-vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0}
-@media (pointer:coarse){.ba-cases button,.ba-seg button{min-height:44px}}
-@media (max-width:480px){.ba-cases{top:8px}.ba-cases button,.ba-seg button{padding:0 12px;font-size:13px}.ba-seg{left:8px;right:8px;bottom:8px}.ba-seg button{min-width:68px}}
+.ba-cap{margin:0;font-size:14px;line-height:1.4;color:rgb(207 227 255/.85);text-align:center}
+@media (max-width:480px){.ba{gap:12px}.ba-pick button{gap:10px;padding-right:10px;font-size:14px}.ba-pick button img{width:52px;height:38px}.ba-fig figcaption{left:8px;bottom:8px;padding:5px 11px;font-size:13px}}
 @media (prefers-reduced-motion:reduce){.ba *{transition:none!important}}
+html[data-motion-paused] .ba *{transition:none!important}

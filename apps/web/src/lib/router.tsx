@@ -21,14 +21,15 @@ export function useLocation() {
   return loc
 }
 
-export function navigate(to: string) {
-  history.pushState(null, '', internal(to) ? BASE + to : to)
+export function navigate(to: string, replace = false) {
+  history[replace ? 'replaceState' : 'pushState'](null, '', internal(to) ? BASE + to : to)
   dispatchEvent(new Event(EVENT))
 }
 
 const internal = (href: string) => href.startsWith('/') && !href.startsWith('//')
+const external = (href: string) => /^https?:\/\//.test(href)
 
-/** Enlace que se queda dentro del sitio cuando la dirección es una ruta ("/about", "/services#cosmetic"); las anclas y los enlaces externos funcionan como siempre. */
+/** Enlace que se queda dentro del sitio cuando la dirección es una ruta ("/en/about", "/es/servicios#cosmetic"; sácala con hrefOf(clave, idioma) de config/routes.ts); las anclas funcionan como siempre y los enlaces externos (http/https) se abren en otra pestaña con noopener, salvo que se pida otra cosa. */
 export function Link({ href, onClick, ...rest }: AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }) {
   const go = (e: MouseEvent<HTMLAnchorElement>) => {
     onClick?.(e)
@@ -37,5 +38,5 @@ export function Link({ href, onClick, ...rest }: AnchorHTMLAttributes<HTMLAnchor
     navigate(href)
   }
   const warm = () => { if (internal(href)) prefetch(href) } // empieza a cargar la página antes del clic
-  return <a href={internal(href) ? BASE + href : href} onClick={go} onPointerEnter={warm} onFocus={warm} onTouchStart={warm} {...rest} />
+  return <a href={internal(href) ? BASE + href : href} onClick={go} onPointerEnter={warm} onFocus={warm} onTouchStart={warm} {...(external(href) && !rest.target ? { target: '_blank', rel: 'noopener noreferrer' } : {})} {...rest} />
 }

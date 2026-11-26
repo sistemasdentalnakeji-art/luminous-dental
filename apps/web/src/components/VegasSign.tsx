@@ -1,5 +1,6 @@
-import type { CSSProperties } from 'react'
-import { locationText as T } from '@/content/location'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { locationText } from '@/content/location'
+import { useLang } from '@/lib/lang'
 
 // Réplica de las proporciones y el diseño del clásico letrero "Welcome to Fabulous Las Vegas, Nevada" (1959, Betty Willis, quien nunca lo registró),
 // con las palabras de esta clínica: un rombo ancho y estirado con borde dorado y focos por todo el contorno, siete "monedas" grandes de plata con letras rojas sobre el
@@ -34,7 +35,6 @@ function star(cx: number, cy: number, long: number, short: number, valley: numbe
   }).join(' ')
 }
 
-const letters = T.sign.welcome.split('')
 const COIN_X = (i: number) => 170 + i * 75.8
 // Cada moneda queda justo dentro del borde superior, siguiendo su pendiente, para que ninguna cubra el borde dorado ni los focos (y ninguna toque las palabras).
 const edgeY = (x: number) => (x < 338 ? 336 - (144 * (x - 48)) / 290 : x <= 472 ? 192 - 14 * (1 - Math.abs(x - 405) / 67) : 192 + (144 * (x - 472)) / 276)
@@ -42,8 +42,19 @@ const COIN_R = 24
 const GOLD = '#e9b824', RED = '#e63a2a', BLUE = '#1f7fe0'
 
 export function VegasSign() {
+  const T = locationText[useLang()]
+  const ref = useRef<SVGSVGElement>(null)
+  const [on, setOn] = useState(false) // 58 focos animados: fuera de pantalla se pausan
+  useEffect(() => {
+    const el = ref.current
+    if (!el || !('IntersectionObserver' in window)) return setOn(true)
+    const io = new IntersectionObserver(([e]) => setOn(e.isIntersecting))
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+  const letters = T.sign.welcome.split('')
   return (
-    <svg className="vsign" viewBox="0 0 800 612" aria-hidden="true" focusable="false">
+    <svg ref={ref} className={`vsign${on ? '' : ' vsign--off'}`} viewBox="0 0 800 612" aria-hidden="true" focusable="false">
       <defs>
         <radialGradient id="vsign-coin" cx="40%" cy="35%" r="75%">
           <stop offset="0" stopColor="#ffffff" />

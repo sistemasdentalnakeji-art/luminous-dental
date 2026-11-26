@@ -3,22 +3,41 @@
 // y a la derecha la figura de ese servicio si la tiene; sin figura = sin caja vacía) · 3. Formulario de cita con el servicio elegido.
 import { lazy, Suspense } from 'react'
 import { Icon } from '@/components/Icon'
+import { blogHref, hrefOf } from '@/config/routes'
+import { ServiceBeforeAfter } from '@/components/ServiceBeforeAfter'
+import { beforeAfter } from '@/content/beforeAfter'
 import { clinic } from '@/content/clinic'
-import { type ServicePage, serviceText as T } from '@/content/services'
-import { articleOf, blogPath } from '@/lib/blog'
+import { servicePhotos } from '@/content/servicePhotos'
+import { type ServicePage, serviceText } from '@/content/services'
+import { ui } from '@/content/ui'
+import { useLang } from '@/lib/lang'
 import { Link } from '@/lib/router'
+import '@/styles/service-photo.css'
 
 const Figure = lazy(() => import('@/features/figure/Figure'))
 
 export default function Service({ page }: { page: ServicePage }) {
-  const blogHref = page.blogKey && articleOf(page.blogKey) ? blogPath(page.blogKey) : null
-  const hasText = Boolean(page.about || blogHref)
+  const lang = useLang()
+  const T = serviceText[lang]
+  const blogLink = page.blogKey ? blogHref(lang, page.blogKey) : undefined
+  const hasText = Boolean(page.about || blogLink)
+  const photo = servicePhotos[page.id]
+  const src = (dir: string) => `${import.meta.env.BASE_URL}images/servicios/${dir}${photo?.file}.webp`
   return (
     <>
-      <section className="service-hero wrap" aria-labelledby="service-h">
+      <section className={`service-hero wrap${photo ? ' service-hero--photo' : ''}`} aria-labelledby="service-h">
+        {photo && (
+          <div className="service-hero__bg">
+            <img
+              src={src('')} srcSet={`${src('640/')} 640w, ${src('1280/')} 1280w, ${src('')} 2000w`} sizes="(min-width: 1440px) 1440px, 100vw"
+              width="2000" height="1125" alt={photo.alt[lang]} fetchPriority="high" decoding="async" style={photo.position ? { objectPosition: photo.position } : undefined}
+            />
+            <div className="service-hero__scrim" aria-hidden="true" />
+          </div>
+        )}
         <nav className="crumbs" aria-label={T.crumbs}>
           <ol>
-            <li><Link href="/services">Services</Link></li>
+            <li><Link href={hrefOf('services', lang)}>{ui[lang].services}</Link></li>
             <li aria-current="page">{page.name}</li>
           </ol>
         </nav>
@@ -30,7 +49,7 @@ export default function Service({ page }: { page: ServicePage }) {
           </ul>
         )}
         <div className="hero-cta">
-          <Link className="btn" href="/contact#appointment">{T.book}</Link>
+          <Link className="btn" href={clinic.bookingUrl}>{T.book}</Link>
           <a className="btn btn-ghost" href={clinic.phone.href}>{T.call}</a>
         </div>
       </section>
@@ -46,7 +65,7 @@ export default function Service({ page }: { page: ServicePage }) {
                     <p className="service-about__text">{page.about.text}</p>
                   </>
                 )}
-                {blogHref && <Link className="btn btn-ghost" href={blogHref}>{T.blogCta}</Link>}
+                {blogLink && <Link className="btn btn-ghost" href={blogLink}>{T.blogCta}</Link>}
               </div>
             )}
             {page.figure && (
@@ -57,6 +76,7 @@ export default function Service({ page }: { page: ServicePage }) {
           </div>
         </section>
       )}
+      {beforeAfter[page.id] && <ServiceBeforeAfter id="service-ba" cases={beforeAfter[page.id]} />}
     </>
   )
 }

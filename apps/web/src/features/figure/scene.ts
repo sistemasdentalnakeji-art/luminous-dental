@@ -1,6 +1,6 @@
 // Compartido por la figura de la página de servicio (Figure.tsx) y las figuras de «resultado» de la home (ResultFigure.tsx): la cámara fija del modelo
 // y el marcado de una escena terminada. El motor (engine.js) es un solo módulo, cargado una vez para todas las figuras de la página.
-import { SERVICES, W, dynSvg, fitProjection, floatShadowSvg, iso, sceneState, setView, staticSvg } from './engine.js'
+import { SERVICES, W, dynSvg, fitProjection, floatShadowSvg, iso, sceneState, setScope, setView, staticSvg } from './engine.js'
 
 export type ServiceId = 'braces' | 'implants' | 'bridges' | 'crowns' | 'whitening'
 export const services = SERVICES as { id: string; tab: string; steps: string[] }[]
@@ -29,9 +29,10 @@ export function projection(card: boolean) {
 }
 
 /** La escena terminada (último paso) de un servicio, flotando sobre su molde, con una sombra suave y sin controles. El grupo [data-dyn] es lo que cambia mientras se reproduce. */
-export function resultSvg(id: ServiceId) {
+export function resultSvg(id: ServiceId, scope: string) {
   const { P, height } = projection(false)
   setView(P)
+  setScope(scope)
   const idx = indexOf(id)
   const last = services[idx].steps.length - 1
   return `<svg xmlns="http://www.w3.org/2000/svg" class="iso-svg" viewBox="0 0 ${WIDTH} ${height}" aria-hidden="true" focusable="false"><g class="brk-shadow-g">${floatShadowSvg()}</g><g class="brk-bob"><g>${staticSvg()}</g><g data-dyn>${dynSvg(sceneState(idx, last))}</g></g></svg>`

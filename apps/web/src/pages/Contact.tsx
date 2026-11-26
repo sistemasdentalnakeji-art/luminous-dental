@@ -1,16 +1,20 @@
-import { Appointment } from '@/components/Appointment'
 import { ContactLocation } from '@/components/ContactLocation'
+import { Emergency } from '@/components/Emergency'
+import { BookVisit } from '@/components/BookVisit'
 import { home } from '@/content/home'
+import { useLang } from '@/lib/lang'
 
-// Mismo letrero, tarjeta de contacto y mapa que el inicio, luego el formulario (sin su propio bloque "Visit us").
+// Orden (dueña, 26-11): una sola sección arriba (booking a la izquierda, emergencias 24/7 a la derecha, sin tarjetas) → «Visit us» igual que el inicio (letrero, horarios y moneda).
 export default function Contact() {
+  const { footer } = home[useLang()]
   return (
     <>
-      <section className="sec wrap pg">
-        <h1 className="h2">{home.footer.contactHeading}</h1>
+      <h1 className="sr-only">{footer.contactHeading}</h1>
+      <section className="wrap ct-top" aria-label={footer.contactHeading}>
+        <BookVisit bare />
+        <Emergency bare />
       </section>
       <ContactLocation />
-      <Appointment hideVisit />
     </>
   )
 }

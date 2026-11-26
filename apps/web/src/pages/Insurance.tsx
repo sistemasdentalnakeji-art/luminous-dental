@@ -1,65 +1,29 @@
-// Insurance & Financing, «El camino» (docs/diseno-aseguranzas-fuentes.md): una lista ordenada de 3 pasos unidos por una línea celeste.
-// Paso 1 = buscador + muro de logos (components/InsurancePlans.tsx), paso 2 = el equipo lo revisa, paso 3 = pedir cita. Sin WhatsApp.
-// La barra fija «Request / Call» del celular ya existe en todo el sitio (ActionBar de Layout.tsx); aquí no se repite.
+// Seguros (/en/insurance · /es/seguros): buscador + muro de logos en un panel ancho (components/InsurancePlans.tsx, variante full) y tres pasos «cómo funciona» con los textos de «El camino».
+// Financiamiento y Convenios tienen su propia página; el hub es Benefits.tsx. Estilos: styles/insurance.css y styles/benefits.css.
+import { BenefitsBand, BenefitsHeader, BenefitsSteps } from '@/components/BenefitsHeader'
 import { InsurancePlans } from '@/components/InsurancePlans'
-import { clinic } from '@/content/clinic'
-import { home } from '@/content/home'
-import { insuranceText as T } from '@/content/insurers'
-import { Link } from '@/lib/router'
-
-const { outOfTown } = home.coverage
-
-function Actions() {
-  return (
-    <div className="ins-actions">
-      <Link className="btn" href="/contact#appointment">{T.book}</Link>
-      <a className="tlink" href={clinic.phone.href}>{home.footer.phone.label}</a>
-    </div>
-  )
-}
+import { benefitsText } from '@/content/financing'
+import { insuranceText } from '@/content/insurers'
+import { useLang } from '@/lib/lang'
 
 export default function Insurance() {
+  const lang = useLang()
+  const T = insuranceText[lang]
+  const steps = [
+    { title: T.steps[0], text: T.help },
+    { title: T.steps[1], text: T.step2 },
+    { title: T.steps[2], text: T.step3 },
+  ]
   return (
-    <>
-      <section className="sec wrap pg" aria-labelledby="ins-h">
-        <div className="ins-head">
-          <p className="pill">{T.eyebrow}</p>
-          <h1 className="h2" id="ins-h">{T.title}</h1>
-          <p className="ins-lead">{T.lead}</p>
-          <Actions />
-        </div>
-        <ol className="ins-path">
-          <li className="ins-step">
-            <span className="ins-dot" aria-hidden="true">1</span>
-            <div>
-              <h2 id="ins-grid-h">{T.steps[0]}</h2>
-              <InsurancePlans variant="full" />
-              <p className="ins-small">{T.note}</p>
-            </div>
-          </li>
-          <li className="ins-step">
-            <span className="ins-dot" aria-hidden="true">2</span>
-            <div>
-              <h2>{T.steps[1]}</h2>
-              <p className="ins-text">{T.step2}</p>
-              <p className="ins-small">{T.payment}</p>
-            </div>
-          </li>
-          <li className="ins-step">
-            <span className="ins-dot" aria-hidden="true">3</span>
-            <div>
-              <h2>{T.steps[2]}</h2>
-              <p className="ins-text">{T.step3}</p>
-              <Actions />
-            </div>
-          </li>
-        </ol>
-        <div className="cov-out ins-sahara">
-          <h2>{outOfTown.heading}</h2>
-          <p>{outOfTown.text}</p>
-          <div><a className="tlink" href={outOfTown.cta.href} target="_blank" rel="noopener noreferrer">{outOfTown.cta.label}</a></div>
-        </div>
-      </section>
-    </>
+    <section className="sec wrap pg" aria-labelledby="ins-h">
+      <BenefitsHeader id="ins-h" eyebrow={benefitsText[lang].eyebrow} title={T.eyebrow} lead={T.lead} current="insurance" />
+      <div className="ins-panel">
+        <h2 className="ins-panel__title" id="ins-grid-h">{T.findLabel}</h2>
+        <InsurancePlans variant="full" />
+        <p className="ins-small">{T.note}</p>
+      </div>
+      <BenefitsSteps steps={steps} />
+      <BenefitsBand />
+    </section>
   )
 }

@@ -91,3 +91,39 @@
 - No se agrega nada que la dueña no haya pedido (ej. formulario repetido al final de cada página).
 - Ya no se usan fichas de casino ni temática de Las Vegas en piezas nuevas, salvo que ella lo pida.
 - La dueña autorizó al Jefe a resolver las dudas 1–10 del 23-11 (ver bitácora).
+
+## 2026-11-26 · Sitio en dos idiomas y ronda final (dueña)
+- **Idioma: inglés y español** (cambia «Solo inglés» del 17-11). Rutas como Dental Nakeji: `/en/...` (principal) y `/es/...`, con selector de idioma. Traducción con la skill `i18n-sync` (ECC). Se mejora también el texto en inglés.
+- Ronda final pedida: inicio (título del héroe, pie, sección estrella, formulario, quitar «Thinking about changing your smile», sección de convenios nueva), servicios interactivos, beneficios en 3 páginas propias, Contact (24/7 arriba → formulario → moneda y letrero), About sencillo como Nakeji, Términos, Privacidad y Preguntas frecuentes copiados de Nakeji y adaptados.
+- La dueña pide que IT trabaje sin revisiones suyas a cada rato: el Jefe resuelve dudas de gusto con criterio y las anota.
+- Encargos: `docs/encargos/ENCARGOS-26-11.md`.
+- 26-11 (corrección de la dueña): el formulario NO lleva campos. Es una sección de información bonita con botón que lleva al sitio de registro/citas (Adit). La sección de **seguros del inicio se queda** (se había quitado por error); convenios va además, no en su lugar.
+- 26-11 (dueña, 2.ª corrección): (a) sección 24/7 se ve fea: debe sentirse de **clínica dental** (calma, limpia, confiable) sin perder el estilo del sitio. (b) Hub de servicios: nada de tarjetas que se despliegan; los servicios **fijos y visibles**, un clic a su página. (c) Beneficios (hub, seguros, financiamiento, convenios): interfaz más rica, hoy muy sencilla. (d) About sigue feo tras 2 rondas → cambia de agente (Diseñador 2) con otro método. Contact, Términos y Privacidad: bien. Blog: después.
+
+## 2026-11-26 · Ronda 2 de la dueña
+- Sección estrella sin numeración 01–04. Línea azul de «Featured services» bajo los títulos de todas las secciones.
+- Botón de emergencias 24/7 con movimiento para llamar la atención. Horario fuera del pie; FAQ en la columna Legal del pie. Idioma con bandera como Dental Nakeji.
+- SAHARA: logo oficial (saharalasvegas.com) en `public/benefits/sahara.svg`; sin estrellita. Beneficios sin la cifra 24/7.
+- Antes y después: la dueña ordena usar en Luminous los casos de Dental Nakeji por servicio («son las mismas empresas»). Se muestran con crédito visible «caso de Dental Nakeji». Esto cambia la regla de no mezclar datos solo para estas fotos. Riesgo anotado: son pacientes de otra clínica (Tijuana); el permiso de los pacientes para usarlas en otro sitio sigue POR CONFIRMAR.
+- Encargo: `docs/encargos/ENCARGOS-26-11-r2.md`.
+
+## 2026-11-26 · Ronda 3 de la dueña
+- Pie: sin animación ni código de fondo (fondo fijo); FAQ fuera de la columna Legal, en la franja final; contacto alineado con las columnas; emergencias 24/7 como botón limpio.
+- Fotos de servicio de Dental Nakeji en las páginas de cada servicio de Luminous, por ahora y solo ahí (orden de la dueña: no hay fotos propias).
+- Servicios y blog: completar la información con la de Nakeji y la oficial, adaptada a Luminous.
+- SAHARA del inicio reorganizado. About con más contenido, revisando la página oficial.
+- Encargo: `docs/encargos/ENCARGOS-26-11-r3.md`.
+
+## 2026-11-26 · Ronda 4 · Correcciones y lección
+- **Lección del Jefe:** la dueña dicta por voz. «Sección R» = **sección hero**. Se leyó mal en la ronda 2 y se rediseñó Featured services en lugar del antes/después del héroe. También se tomó «no quites nada» como «no muevas Cómo funciona», y se dejó el orden del inicio a criterio del agente. Desde ahora: cada encargo cita la frase de la dueña; si una palabra no cuadra con el sitio, se pregunta en una línea antes de lanzar.
+- Inicio: Hero → sección estrella → Featured services → Cómo funciona (respuesta de la dueña: 4.ª) → Booking → Seguros → Convenios → Reseñas → Visit us.
+- Antes/después del héroe con otra forma de mostrarse; selectores rectangulares.
+- Contact: una sección con booking (izq.) y 24/7 (der.), sin tarjetas; abajo la misma «Visit us» del inicio (letrero, horarios, moneda).
+- Beneficios: sin cifras; 3 puntos sin números.
+- SAHARA del inicio: igual que el bloque de Convenios (respuesta de la dueña).
+- Blog: fotos del sitio oficial (4 fotos de la clínica) en tarjetas y artículos.
+
+## 2026-11-26 (noche) · Ronda 6 aprobada y plan de la ronda 7
+- Inicio sin fondos de tarjeta, con líneas (prueba de la ronda 6): **le gustó a la dueña**. Ajustes pedidos: reforzar la legibilidad sin fondo (se permite cambiar tamaños), logos de seguros a color en PNG sin fondo y sin nombre debajo, SAHARA centrado y más grande, «Most requested» fuera de la línea.
+- Visto bueno para extender el estilo a Servicios, Beneficios, Contact y About. Lo de «More» (FAQ, Blog, legales) todavía no.
+- Plan para seguir desde otra cuenta: `docs/encargos/ENCARGOS-26-11-r7.md`.

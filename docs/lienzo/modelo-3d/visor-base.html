@@ -1,0 +1,20 @@
+<!doctype html><meta charset="utf-8"><title>Visor dientes</title>
+<style>html,body{margin:0;height:100%;background:#eef3f6;font:14px system-ui}#ui{position:fixed;top:8px;left:8px;display:flex;gap:6px}button{padding:6px 10px}</style>
+<div id="ui"><button data-v="front">Frente</button><button data-v="iso">3/4 (como la figura)</button><button data-v="top">Arriba</button><button data-v="side">Lado</button><button id="gum">Encía on/off</button></div>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';import {OrbitControls} from 'three/addons/controls/OrbitControls.js';import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+const r=new THREE.WebGLRenderer({antialias:true});r.setPixelRatio(devicePixelRatio);r.setSize(innerWidth,innerHeight);r.toneMapping=THREE.ACESFilmicToneMapping;document.body.appendChild(r.domElement);
+const sc=new THREE.Scene();sc.background=new THREE.Color('#eef3f6');sc.environment=new THREE.PMREMGenerator(r).fromScene(new RoomEnvironment(),0.04).texture;
+const l=new THREE.DirectionalLight('#fff',1.6);l.position.set(-3,5,4);sc.add(l);
+const cam=new THREE.PerspectiveCamera(30,innerWidth/innerHeight,0.1,200);const oc=new OrbitControls(cam,r.domElement);
+const g=await new GLTFLoader().loadAsync('../../referencias/modelo-dientes/human_teeth.glb');const p=g.parser;
+const [map,,nrm]=await Promise.all([0,1,2].map(i=>p.getDependency('texture',i)));map.colorSpace=THREE.SRGBColorSpace;
+let gums;g.scene.traverse(o=>{if(!o.isMesh)return;const t=o.name.startsWith('Teeth');o.material=new THREE.MeshStandardMaterial({map,normalMap:nrm,roughness:t?0.32:0.55,metalness:0,side:THREE.DoubleSide});if(!t)gums=o;});
+sc.add(g.scene);const box=new THREE.Box3().setFromObject(g.scene);const c=box.getCenter(new THREE.Vector3());const s=box.getSize(new THREE.Vector3()).length();oc.target.copy(c);
+const V={front:[0,0,1],iso:[1,0.7,1],top:[0,1,0.05],side:[1,0.1,0]};
+function view(k){const d=new THREE.Vector3(...V[k]).normalize().multiplyScalar(s*1.6);cam.position.copy(c).add(d);oc.update();}
+window.view=view;window.info={size:box.getSize(new THREE.Vector3()).toArray()};view('iso');
+document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>view(b.dataset.v));document.getElementById('gum').onclick=()=>gums.visible=!gums.visible;
+r.setAnimationLoop(()=>{oc.update();r.render(sc,cam)});
+</script>

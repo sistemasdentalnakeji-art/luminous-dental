@@ -1,0 +1,48 @@
+/* Benefits (/insurance) y páginas de financiamiento (/financing/<slug>). Mismos colores y medidas que insurance.css. */
+.ben-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.ben-tab{display:inline-flex;align-items:center;min-height:44px;padding:0 22px;border-radius:999px;border:1.5px solid var(--color-line-ui);background:rgba(255,255,255,.04);color:#fff;font:600 16px/1 var(--font-sans);text-decoration:none;transition:background-color .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease)}
+.ben-tab:hover,.ben-tab:focus-visible{background:var(--color-medic);border-color:var(--color-medic);color:var(--color-night)}
+.ben-sec{margin-top:clamp(56px,7vw,96px);scroll-margin-top:calc(var(--hbar-h) + 16px)}
+.ben-h2{font:400 clamp(32px,4vw,52px)/1.08 var(--font-serif);letter-spacing:-.02em;color:#fff;margin-bottom:14px}
+.ben-sec>.ins-lead{margin-top:0}
+.ins-step h2,.ins-step h3{padding-top:4px;font:400 clamp(26px,3vw,38px)/1.12 var(--font-serif);letter-spacing:-.02em;color:#fff;text-wrap:balance}
+
+/* Logo sobre cuadro blanco, como las aseguradoras; --ar = ancho/alto del logo */
+.fin-logo{display:grid;place-items:center;height:132px;padding:18px;border-radius:16px;background:#fff;position:relative;overflow:hidden}
+.fin-logo::after{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--brand)}
+.fin-logo img{width:min(calc(58px * sqrt(var(--ar,4))),220px);max-height:68px;height:auto;object-fit:contain}
+.fin-logo--lg{height:clamp(150px,18vw,200px);width:clamp(240px,28vw,340px)}
+.fin-logo--lg img{width:min(calc(76px * sqrt(var(--ar,4))),270px);max-height:90px}
+
+.fin-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin-top:28px;padding:0;list-style:none}
+@media (min-width:640px){.fin-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1100px){.fin-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.fin-grid--sm{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.fin-card{display:flex;flex-direction:column;gap:10px;height:100%;padding:14px 14px 20px;border:1px solid var(--color-line);border-radius:22px;background:var(--color-surface);color:var(--color-text);text-decoration:none;transition:translate .25s var(--ease),border-color .25s var(--ease),box-shadow .25s var(--ease)}
+.fin-card:hover,.fin-card:focus-visible{translate:0 -4px;border-color:var(--color-medic);box-shadow:0 22px 36px -22px rgba(52,191,204,.55)}
+.fin-card__name{margin-top:6px;padding-inline:6px;font:400 28px/1.1 var(--font-serif);letter-spacing:-.01em;color:#fff}
+.fin-card__blurb{padding-inline:6px;color:var(--color-text2);text-wrap:pretty}
+.fin-card__more{margin-top:auto;padding:8px 6px 0;font-weight:600;color:var(--color-medic-soft)}
+.fin-grid--sm .fin-card{padding:10px;height:auto}
+
+/* Página individual */
+.fin-back{display:inline-flex;align-items:center;min-height:44px;color:#fff;font-weight:600;text-decoration:none}
+.fin-back:hover{color:var(--color-medic-soft)}
+.fin-hero{display:grid;gap:clamp(24px,4vw,56px);align-items:center;margin-top:12px}
+@media (min-width:860px){.fin-hero{grid-template-columns:auto minmax(0,1fr)}}
+.fin-h2{margin-top:clamp(40px,5vw,64px);font:400 clamp(26px,3vw,38px)/1.12 var(--font-serif);letter-spacing:-.02em;color:#fff}
+.fin-steps{display:grid;gap:14px;margin-top:20px;padding:0;list-style:none;max-width:42em}
+.fin-steps li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px;align-items:center}
+.fin-steps p{text-wrap:pretty}
+
+/* Convenios */
+.agr-card{display:grid;gap:12px;max-width:46em;padding:clamp(24px,4vw,44px);border:1px solid var(--color-line);border-radius:24px;background:var(--color-surface);position:relative;overflow:hidden}
+.agr-card::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--color-medic)}
+.agr-card__badge{justify-self:start;padding:5px 12px;border-radius:999px;background:rgba(52,191,204,.16);color:var(--color-medic-soft);font:600 14px/1.2 var(--font-sans)}
+.agr-card__name{font:400 clamp(32px,4.4vw,56px)/1.04 var(--font-serif);letter-spacing:-.02em;color:#fff}
+.agr-card__title{font:600 18px/1.3 var(--font-sans);color:var(--color-text)}
+.agr-card .btn{margin-top:8px}
+@media (prefers-reduced-motion:reduce){.fin-card,.ben-tab{transition:none}}
+/* Hub de Beneficios: tarjetas (reusan .catalog-card) */
+.ben-cards{margin-top:clamp(32px,4vw,48px)}
+.ben-card__title{font:400 26px/1.15 var(--font-serif);color:#fff}
+.ben-cards+.ins-small{margin-top:32px}

@@ -47,6 +47,33 @@
         ],
         "createdAt": "2026-11-24T01:09:01.864Z",
         "reason": "Jefe: formato del reporte RW-2026-02 aprobado por la dueña (Guía de reportes 23-11, USB); RW-2026-03 copia esa plantilla sin cambiar su diseño."
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "apps/web/src/styles/benefits.css"
+        ],
+        "createdAt": "2026-11-25T22:32:34.742Z",
+        "reason": "Jefe: L12 y L39 son barras superiores de 4px a todo el ancho (left:0;right:0;top:0), no bordes laterales; el borde lateral real de .agr-card ya se quitó el 25-11"
+      },
+      {
+        "rule": "tiny-text",
+        "value": "*",
+        "files": [
+          "docs/reportes/LD-RW-2026-04/reporte.html"
+        ],
+        "createdAt": "2026-11-25T23:44:22.821Z",
+        "reason": "Jefe: reporte impreso en hoja carta que copia el formato LD-RW-2026-03 entregado por la dueña (letra chica de documento, no página web)"
+      },
+      {
+        "rule": "undersized-ui-text",
+        "value": "*",
+        "files": [
+          "docs/reportes/LD-RW-2026-04/reporte.html"
+        ],
+        "createdAt": "2026-11-25T23:45:08.643Z",
+        "reason": "Jefe: reporte PDF impreso en hoja carta que copia el formato LD-RW-2026-03 entregado por la dueña; no es interfaz web ni tiene elementos interactivos"
       }
     ]
   }

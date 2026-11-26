@@ -1,0 +1,383 @@
+{
+  "_note": "Traducción al español (26-11-2026) de blog.en.json, con las mismas claves y la misma estructura. NECESITA REVISIÓN DE LA CLÍNICA: ver docs/datos.md. Los enlaces de fuentes llevan a páginas en inglés.",
+  "hub": {
+    "label": "BLOG DE LUMINOUS DENTAL",
+    "h1": "Entiende mejor tu salud bucal",
+    "intro": "Aquí respondemos preguntas frecuentes sobre el cuidado de tus dientes y encías y sobre los tratamientos que ofrece Luminous Dental. Encontrarás explicaciones claras, fuentes confiables y enlaces para conocer cada servicio. Esta información te ayuda a prepararte para una consulta; la recomendación adecuada para ti depende de la evaluación de un profesional.",
+    "exploreTitle": "Explora por tema",
+    "exploreText": "Elige el tema que mejor corresponda a tu pregunta. Cada artículo está relacionado con uno de nuestros servicios.",
+    "featuredText": "Artículos para resolver tus dudas",
+    "featuredLead": "Empieza por el tema que te interese. Al final de cada artículo encontrarás las fuentes consultadas.",
+    "ctaTitle": "¿Tienes dudas sobre tu caso?",
+    "ctaText": "Las necesidades de cada persona son distintas. En Luminous Dental puedes solicitar una visita para platicar con un profesional sobre tus síntomas, tus dudas y tus opciones de atención."
+  },
+  "categories": [
+    {
+      "key": "implants-and-tooth-replacement",
+      "name": "Implantes y reemplazo de dientes",
+      "description": "Información sobre las opciones para reemplazar dientes faltantes y preguntas útiles para tu evaluación.",
+      "intro": "Perder uno o más dientes puede cambiar tu forma de masticar y tu confianza al sonreír. En esta sección explicamos dos maneras de reemplazar dientes: los implantes dentales y las dentaduras. Cada opción requiere una evaluación individual."
+    },
+    {
+      "key": "cosmetic-and-restorative-dentistry",
+      "name": "Odontología estética y restauradora",
+      "description": "Conoce las diferencias entre los tratamientos que pueden restaurar o mejorar el aspecto de tus dientes.",
+      "intro": "El aspecto de una sonrisa también depende de la salud y la función de los dientes. Aquí encontrarás información sobre coronas, carillas dentales y blanqueamiento: qué hace cada tratamiento, qué no hace y por qué importa una evaluación previa."
+    },
+    {
+      "key": "orthodontics",
+      "name": "Ortodoncia",
+      "description": "Respuestas sobre la alineación de los dientes, los brackets, los alineadores y la mordida.",
+      "intro": "Alinear los dientes y mejorar cómo encajan al morder son metas que necesitan un plan hecho para cada persona. Aquí hay respuestas sobre ortodoncia, brackets y alineadores."
+    },
+    {
+      "key": "cleanings-and-extractions",
+      "name": "Limpiezas y extracciones",
+      "description": "Información sobre las limpiezas dentales profesionales y sobre cómo se evalúan las extracciones, incluidas las muelas del juicio.",
+      "intro": "La higiene diaria ayuda a cuidar dientes y encías, y las visitas profesionales ayudan a detectar problemas que no siempre se ven en casa. Aquí explicamos qué aporta una limpieza profesional y cómo se toma la decisión de retirar un diente, incluida una muela del juicio."
+    }
+  ],
+  "articles": [
+    {
+      "key": "dental-implants-what-they-are",
+      "image": "/images/blog/treatment-room",
+      "imageAlt": "Consultorio de Luminous Dental con sillón dental y equipo de rayos X de pared",
+      "category": "implants-and-tooth-replacement",
+      "title": "Implantes dentales: qué son y qué se revisa antes de colocarlos",
+      "excerpt": "Un implante puede sostener una restauración que reemplaza un diente faltante. Conoce qué se evalúa antes de recomendarlo.",
+      "lead": "Un implante dental puede ayudar a reemplazar un diente faltante, pero la decisión de colocarlo se toma después de examinar la boca y la salud de cada persona.",
+      "answer": "Un implante es una pieza que se coloca mediante cirugía en el hueso de la mandíbula superior o inferior para sostener una restauración. Según la necesidad, puede sostener una corona, un puente o una prótesis. En Luminous Dental, evaluar el hueso y las encías es parte del proceso previo.",
+      "sections": [
+        {
+          "title": "¿Qué puede resolver un implante?",
+          "paragraphs": [
+            "Cuando falta un diente, masticar con comodidad puede volverse más difícil. Un implante da una base para reemplazarlo con una restauración diseñada para cada caso. También puede formar parte de la restauración de varios dientes. Eso no significa que sea la opción adecuada para todos ni que el resultado sea igual en todos los casos."
+          ]
+        },
+        {
+          "title": "¿Qué se revisa primero?",
+          "paragraphs": [
+            "El dentista necesita conocer el estado de las encías, la cantidad y la condición del hueso y cualquier antecedente de salud relevante. La FDA señala que la salud general y hábitos como fumar pueden afectar la cicatrización y el resultado. Por eso, una explicación responsable incluye tanto los posibles beneficios como los riesgos y el seguimiento que implica."
+          ]
+        },
+        {
+          "title": "¿Qué preguntar en tu consulta?",
+          "paragraphs": [
+            "Puedes preguntar qué estudios o radiografías se necesitan, qué restauración se colocaría sobre el implante, qué cuidados necesitarías y qué alternativas existen para tu situación. La decisión se toma con un plan individual, después de que el profesional revise tu caso y responda tus preguntas."
+          ]
+        }
+      ],
+      "sources": "[FDA, información para pacientes sobre implantes dentales](https://www.fda.gov/medical-devices/dental-devices/dental-implants-what-you-should-know)."
+    },
+    {
+      "key": "all-on-4-implants",
+      "image": "",
+      "imageAlt": "",
+      "category": "implants-and-tooth-replacement",
+      "title": "Implantes All-on-4: una arcada fija sobre cuatro implantes",
+      "excerpt": "Una prótesis fija sostenida por cuatro implantes puede reemplazar una arcada completa. Conoce qué se revisa antes de considerarla.",
+      "lead": "All-on-4 es una opción de restauración que reemplaza los dientes de una arcada con una prótesis fija sostenida por cuatro implantes.",
+      "answer": "En este tratamiento, cuatro implantes sostienen una prótesis para una arcada completa. Luminous Dental incluye All-on-4 y All-on-6 entre sus servicios de implantes. Saber si está indicado requiere una valoración del hueso y una evaluación de cada caso.",
+      "sections": [
+        {
+          "title": "¿Qué significa «arcada completa»?",
+          "paragraphs": [
+            "Una arcada es el conjunto de dientes superiores o inferiores. Cuando faltan casi todos, la restauración busca reemplazar esa zona con una sola prótesis. «Fija» describe cómo se sostiene sobre los implantes; no significa que no necesite mantenimiento ni que la solución sea adecuada para todos."
+          ]
+        },
+        {
+          "title": "¿Por qué importa la evaluación?",
+          "paragraphs": [
+            "Los implantes se colocan mediante cirugía. El equipo necesita revisar el hueso disponible, las encías, la mordida y tu salud general antes de proponer un plan. Los tiempos, las etapas y los cuidados se explican según lo que se encuentre en la consulta. La FDA recomienda hablar con el profesional sobre los beneficios, los riesgos y si eres candidato antes de elegir implantes."
+          ]
+        },
+        {
+          "title": "Preguntas útiles",
+          "paragraphs": [
+            "Pregunta qué estudios o radiografías necesitas, cuál sería el plan para cada arcada, qué tipo de prótesis se considera y cómo sería el seguimiento. Esa conversación te ayuda a entender las opciones sin suponer que una técnica en particular es la mejor para todos."
+          ]
+        }
+      ],
+      "sources": "[FDA, información para pacientes sobre implantes dentales](https://www.fda.gov/medical-devices/dental-devices/dental-implants-what-you-should-know)."
+    },
+    {
+      "key": "all-on-6-implants",
+      "image": "",
+      "imageAlt": "",
+      "category": "implants-and-tooth-replacement",
+      "title": "Implantes All-on-6: en qué se diferencian de All-on-4",
+      "excerpt": "Las dos opciones sostienen una prótesis fija sobre implantes. El número de implantes no es lo que decide cuál es para ti.",
+      "lead": "Los dos tratamientos buscan sostener una prótesis fija para una arcada completa. La diferencia es el número de implantes de apoyo.",
+      "answer": "All-on-6 usa seis implantes por arcada para sostener la prótesis fija; All-on-4 usa cuatro. La elección no se hace solo por el número: el plan depende del hueso y de la mordida de cada paciente, que el dentista evalúa primero.",
+      "sections": [
+        {
+          "title": "¿Cuándo se considera esta opción?",
+          "paragraphs": [
+            "Puede considerarse cuando faltan casi todos los dientes de una arcada y se busca una opción fija. Antes de hablar de una técnica específica, se revisa el estado de la boca. El profesional debe explicar lo que encuentra, qué estudios o radiografías se necesitan y qué opciones son razonables para ese caso."
+          ]
+        },
+        {
+          "title": "Lo que el número no te dice",
+          "paragraphs": [
+            "Seis implantes no prometen automáticamente un resultado mejor, más rápido o más duradero. Toda colocación tiene consideraciones quirúrgicas y requiere cuidados después. La FDA recomienda revisar con tu dentista tu salud general, los posibles riesgos, las instrucciones de higiene y las visitas de seguimiento."
+          ]
+        },
+        {
+          "title": "Lleva estas preguntas a tu evaluación",
+          "paragraphs": [
+            "¿Qué condiciones de mi hueso y de mi mordida influyen en la recomendación? ¿Qué restauración se planearía? ¿Qué cuidados tendría que seguir? Pedir respuestas claras te ayuda a decidir con información que se ajusta a tu caso."
+          ]
+        }
+      ],
+      "sources": "[FDA, información para pacientes sobre implantes dentales](https://www.fda.gov/medical-devices/dental-devices/dental-implants-what-you-should-know)."
+    },
+    {
+      "key": "partial-and-complete-dentures",
+      "image": "",
+      "imageAlt": "",
+      "category": "implants-and-tooth-replacement",
+      "title": "Dentaduras parciales y completas: las diferencias básicas",
+      "excerpt": "Las dentaduras son prótesis removibles hechas a la medida que reemplazan algunos o todos los dientes de una arcada.",
+      "lead": "Una dentadura es una prótesis removible diseñada para reemplazar dientes faltantes. El tipo que se considera depende de cuántos dientes conserva la persona y del estado de su boca.",
+      "answer": "Una dentadura parcial reemplaza algunos dientes; una dentadura completa reemplaza todos los dientes de una arcada. Todas se hacen a la medida y necesitan revisiones y, a veces, ajustes.",
+      "sections": [
+        {
+          "title": "¿Cuál es el objetivo?",
+          "paragraphs": [
+            "Los dientes faltantes pueden afectar la masticación, el habla y la apariencia. Una prótesis removible puede ayudar a recuperar parte de esas funciones. El profesional examina la boca y platica con el paciente sobre sus necesidades antes de recomendar un tipo de dentadura y explicar qué esperar de ella."
+          ]
+        },
+        {
+          "title": "¿Por qué importan los ajustes?",
+          "paragraphs": [
+            "La forma de la boca puede cambiar, sobre todo después de perder dientes o de una extracción. Una dentadura que ya no ajusta bien puede causar molestias. Las revisiones permiten confirmar el ajuste y recibir orientación sobre la limpieza y el cuidado. No intentes modificarla en casa."
+          ]
+        },
+        {
+          "title": "Qué preguntar",
+          "paragraphs": [
+            "Pregunta si la prótesis sería parcial o completa, cómo limpiarla y cuándo se revisaría el ajuste. Luminous Dental puede explicarte la opción adecuada después de examinar tu caso."
+          ]
+        }
+      ],
+      "sources": "[NHS, dentaduras](https://www.nhs.uk/tests-and-treatments/dentures/)."
+    },
+    {
+      "key": "dental-crowns",
+      "image": "",
+      "imageAlt": "",
+      "category": "cosmetic-and-restorative-dentistry",
+      "title": "Coronas dentales: cuándo se considera cubrir un diente",
+      "excerpt": "Una corona cubre el diente y puede ayudar a restaurar su forma y su función. Conoce qué revisa primero el dentista.",
+      "lead": "Una corona cubre el diente para ayudar a restaurar su forma, su tamaño o su resistencia cuando el profesional la considera la opción adecuada.",
+      "answer": "Las coronas se usan para cubrir dientes dañados o debilitados. También se pueden colocar sobre implantes. Antes de recomendar una, el dentista revisa cuánto diente sano queda y cómo encajan tus dientes al morder.",
+      "sections": [
+        {
+          "title": "¿Por qué podría necesitarse una corona?",
+          "paragraphs": [
+            "La Asociación Dental Americana (ADA) explica que una corona puede ayudar a proteger un diente débil, restaurar uno roto o cubrirlo cuando no queda suficiente diente para sostener una restauración grande. La necesidad específica se determina en la consulta. No todo diente con una mancha, una caries o una fractura requiere una corona."
+          ]
+        },
+        {
+          "title": "Tu mordida también importa",
+          "paragraphs": [
+            "Una restauración debe ajustar con el diente y con la forma en que cierras la boca. Por eso el dentista revisa tu mordida y te explica qué preparación y qué seguimiento harían falta. Una corona no sustituye el cepillado, la limpieza entre los dientes ni las revisiones periódicas."
+          ]
+        },
+        {
+          "title": "Antes de decidir",
+          "paragraphs": [
+            "Pregunta qué problema busca resolver el tratamiento, qué otras opciones podrían considerarse y qué cuidados necesitaría la restauración. Así podrás entender el objetivo del tratamiento y sus límites."
+          ]
+        }
+      ],
+      "sources": "[ADA, coronas dentales](https://www.mouthhealthy.org/all-topics-a-z/crowns)."
+    },
+    {
+      "key": "dental-veneers",
+      "image": "",
+      "imageAlt": "",
+      "category": "cosmetic-and-restorative-dentistry",
+      "title": "Carillas dentales: qué pueden y qué no pueden cambiar",
+      "excerpt": "Las carillas cambian el aspecto de la superficie frontal del diente. Primero se debe evaluar tu salud bucal.",
+      "lead": "Las carillas son una opción para cambiar el aspecto de la parte visible de algunos dientes, después de revisar su salud y planear el resultado que se desea.",
+      "answer": "Una carilla cubre la superficie frontal del diente, a diferencia de una corona, que lo cubre de forma más completa. Puede ayudar a mejorar el aspecto de dientes con ciertas manchas, pequeñas astilladuras o cambios de forma. Si se recomienda o no depende de la evaluación individual.",
+      "sections": [
+        {
+          "title": "Tu salud bucal es lo primero",
+          "paragraphs": [
+            "Antes de pensar en la estética, el dentista debe revisar si hay caries o enfermedad de las encías. La ADA advierte que colocar carillas en dientes que no están sanos puede empeorar los problemas existentes. En Luminous Dental, la consulta incluye platicar sobre lo que la persona quisiera cambiar y mirar la sonrisa en conjunto."
+          ]
+        },
+        {
+          "title": "¿Son para todos?",
+          "paragraphs": [
+            "No necesariamente. La forma en que muerdes, el estado del esmalte y hábitos como apretar los dientes influyen en la recomendación. Algunas carillas requieren retirar una parte del esmalte, por lo que el tratamiento puede ser irreversible. Con el tiempo también pueden dañarse o necesitar reparación."
+          ]
+        },
+        {
+          "title": "Platica sobre expectativas realistas",
+          "paragraphs": [
+            "Lleva a la consulta ejemplos de lo que te preocupa y pregunta qué cambios son posibles, qué preparación se requiere y cómo cuidarías las carillas. Un plan estético responsable empieza con una boca sana y expectativas claras."
+          ]
+        }
+      ],
+      "sources": "[ADA, carillas dentales](https://www.mouthhealthy.org/all-topics-a-z/veneers)."
+    },
+    {
+      "key": "teeth-whitening",
+      "image": "",
+      "imageAlt": "",
+      "category": "cosmetic-and-restorative-dentistry",
+      "title": "Blanqueamiento dental: por qué conviene una evaluación primero",
+      "excerpt": "El blanqueamiento no funciona igual en todos los dientes y no cambia el color de las restauraciones que ya tienes.",
+      "lead": "El blanqueamiento busca aclarar el tono de los dientes naturales. Antes de empezar, conviene revisar tus dientes, tus encías y las restauraciones que ya tengas.",
+      "answer": "Los productos blanqueadores actúan sobre ciertas manchas de los dientes naturales, pero la respuesta varía. La ADA señala que no cambian el color de coronas, carillas ni empastes. Por eso Luminous Dental recomienda primero una evaluación y un plan según cada caso.",
+      "sections": [
+        {
+          "title": "¿Por qué puede variar el resultado?",
+          "paragraphs": [
+            "No toda la decoloración tiene la misma causa. Algunas responden mejor al blanqueamiento que otras; la decoloración relacionada con golpes o medicamentos puede comportarse distinto. Si tienes restauraciones visibles, el color final de tus dientes naturales podría no coincidir con ellas."
+          ]
+        },
+        {
+          "title": "La salud va antes que el color",
+          "paragraphs": [
+            "El dentista revisa el estado de tu boca y escucha lo que esperas del tratamiento. Esa conversación muestra si el blanqueamiento es adecuado y cuáles serían sus límites. No es recomendable prometer un tono exacto ni suponer que todos verán el mismo cambio."
+          ]
+        },
+        {
+          "title": "Preguntas para tu visita",
+          "paragraphs": [
+            "Pregunta qué tipo de manchas tienes, si tus restauraciones afectarían cómo se ve el resultado y qué cuidados serían adecuados para ti. La respuesta debe basarse en un examen de tu boca."
+          ]
+        }
+      ],
+      "sources": "[ADA, blanqueamiento dental](https://www.mouthhealthy.org/all-topics-a-z/teeth-whitening)."
+    },
+    {
+      "key": "orthodontics-alignment-and-bite",
+      "image": "/images/blog/kids-visit",
+      "imageAlt": "Un dentista choca la mano con una niña sonriente en el sillón dental",
+      "category": "orthodontics",
+      "title": "Ortodoncia: alineación de los dientes y mordida",
+      "excerpt": "Una evaluación ayuda a entender la posición de los dientes y la mordida antes de elegir un tratamiento.",
+      "lead": "La ortodoncia busca mover los dientes de forma planeada y revisar cómo encajan al morder. El tipo de aparato y los tiempos se deciden después de una evaluación.",
+      "answer": "Luminous Dental explica que la ortodoncia puede ayudar cuando los dientes están apiñados, separados o cuando la mordida no cierra bien. El tratamiento puede usar brackets u otros aparatos, con ajustes y seguimiento para revisar el avance.",
+      "sections": [
+        {
+          "title": "¿Qué se estudia primero?",
+          "paragraphs": [
+            "La posición de los dientes es solo una parte. El profesional también revisa la mordida y tu salud bucal. Según la Asociación Americana de Ortodoncistas, un plan empieza con un diagnóstico que puede incluir un examen, fotografías, radiografías u otros registros necesarios para el caso."
+          ]
+        },
+        {
+          "title": "¿Por qué se necesitan revisiones?",
+          "paragraphs": [
+            "Los movimientos de los dientes se planean y se revisan durante todo el tratamiento. En las visitas de seguimiento, el profesional revisa el avance y decide si hacen falta ajustes. No es responsable prometer una duración única del tratamiento ni un resultado idéntico para todos."
+          ]
+        },
+        {
+          "title": "Qué llevar a tu consulta",
+          "paragraphs": [
+            "Explica qué te preocupa de la posición de tus dientes o de tu mordida. Pregunta qué opciones existen, cómo sería el seguimiento y qué hábitos de higiene tendrías que mantener. La recomendación se adapta a tus necesidades."
+          ]
+        }
+      ],
+      "sources": "[AAO, cómo elegir un ortodoncista y valorar tus opciones](https://aaoinfo.org/resources/how-to-choose-an-orthodontist/)."
+    },
+    {
+      "key": "clear-aligners",
+      "image": "",
+      "imageAlt": "",
+      "category": "orthodontics",
+      "title": "Alineadores transparentes: cuándo pueden ser una opción",
+      "excerpt": "Son una forma discreta de mover los dientes, pero no son la mejor elección para todos los casos.",
+      "lead": "Los alineadores transparentes son una alternativa menos visible que los brackets para ciertos movimientos de los dientes. Una evaluación muestra si son adecuados.",
+      "answer": "El tratamiento con alineadores se planea según la posición de los dientes y el resultado que se busca. Se hacen revisiones durante todo el proceso. La Asociación Americana de Ortodoncistas señala que los alineadores no son la opción adecuada para todos los casos.",
+      "sections": [
+        {
+          "title": "¿Qué considera el profesional?",
+          "paragraphs": [
+            "Se revisan los dientes, la mordida y los movimientos necesarios. Algunas situaciones se pueden tratar con alineadores y otras requieren brackets o un enfoque distinto. La elección no debe basarse solo en cuál aparato es menos visible, sino en el diagnóstico y en lo que el paciente puede cumplir durante el tratamiento."
+          ]
+        },
+        {
+          "title": "El seguimiento sigue siendo necesario",
+          "paragraphs": [
+            "Los alineadores son parte de un plan supervisado. El profesional revisa cómo van cambiando los dientes y da indicaciones para usar cada etapa. El número de alineadores y los tiempos varían de un caso a otro; no existe una cifra universal que se pueda publicar."
+          ]
+        },
+        {
+          "title": "Una pregunta útil",
+          "paragraphs": [
+            "«¿Por qué los alineadores serían, o no serían, adecuados para mi mordida?» Pedir esa explicación te ayuda a comparar opciones con criterios clínicos, no solo por la apariencia."
+          ]
+        }
+      ],
+      "sources": "[AAO, alineadores transparentes](https://aaoinfo.org/treatments/aligners/)."
+    },
+    {
+      "key": "professional-dental-cleaning",
+      "image": "",
+      "imageAlt": "",
+      "category": "cleanings-and-extractions",
+      "title": "Limpieza dental profesional: qué aporta a tu cuidado diario",
+      "excerpt": "El cepillado es esencial, pero el sarro acumulado debe retirarse con una limpieza profesional.",
+      "lead": "Cepillarte y limpiar entre los dientes son hábitos esenciales. Una limpieza profesional retira el sarro que ya se formó y revisa la salud de tus dientes y encías.",
+      "answer": "La placa puede acumularse y endurecerse hasta formar sarro. El NIDCR explica que solo un profesional dental puede retirar el sarro. Una limpieza profesional incluye retirar la placa y el sarro y revisar tus dientes y encías.",
+      "sections": [
+        {
+          "title": "¿Una limpieza reemplaza el cepillado?",
+          "paragraphs": [
+            "No. La higiene diaria ayuda a controlar la placa entre una visita y otra. El NIDCR recomienda cepillarse dos veces al día con pasta dental con flúor y limpiar entre los dientes con regularidad. Una limpieza profesional complementa esos hábitos y ayuda a detectar señales que necesitan más atención."
+          ]
+        },
+        {
+          "title": "¿Es lo mismo que un tratamiento periodontal?",
+          "paragraphs": [
+            "No necesariamente. Una limpieza de rutina y una limpieza profunda recomendada para la enfermedad de las encías atienden situaciones distintas. Si hay inflamación, sangrado o bolsas alrededor de los dientes, el profesional puede evaluar si hace falta un tratamiento de encías."
+          ]
+        },
+        {
+          "title": "¿Cada cuánto conviene ir?",
+          "paragraphs": [
+            "La frecuencia depende del riesgo y de la salud bucal de cada persona. En lugar de suponer un intervalo fijo para todos, pregunta a tu dentista qué seguimiento necesitas."
+          ]
+        }
+      ],
+      "sources": "[NIDCR, higiene bucal](https://www.nidcr.nih.gov/health-info/oral-hygiene); [NIDCR, enfermedad de las encías](https://www.nidcr.nih.gov/health-info/gum-disease)."
+    },
+    {
+      "key": "extractions-and-wisdom-teeth",
+      "image": "",
+      "imageAlt": "",
+      "category": "cleanings-and-extractions",
+      "title": "Extracciones y muelas del juicio: cómo se toma la decisión",
+      "excerpt": "No toda muela del juicio necesita retirarse. La decisión se basa en el examen y en los estudios y radiografías que indique el dentista.",
+      "lead": "Una extracción puede ser necesaria en ciertas situaciones, pero la decisión se toma después de examinar el diente y de considerar las opciones de atención.",
+      "answer": "Luminous Dental incluye la extracción de muelas del juicio entre sus servicios. Antes de decidir, el dentista evalúa el diente y revisa radiografías cuando hace falta. Una muela del juicio que no causa problemas no siempre necesita retirarse.",
+      "sections": [
+        {
+          "title": "¿Por qué podría recomendarse una extracción?",
+          "paragraphs": [
+            "Un diente puede necesitar extracción por daño, enfermedad u otras condiciones que identifique el profesional. En el caso de las muelas del juicio, la ADA menciona problemas como dolor, infección, caries, daño a los dientes cercanos o falta de espacio. También explica que las muelas del juicio que se conservan deben seguir vigilándose."
+          ]
+        },
+        {
+          "title": "¿Cuál es la diferencia entre una extracción simple y una quirúrgica?",
+          "paragraphs": [
+            "La forma de retirar el diente depende de su posición y de la evaluación del profesional. El dentista debe explicar cuál recomienda, por qué, y qué cuidados posteriores son adecuados para esa persona."
+          ]
+        },
+        {
+          "title": "Antes y después de tu cita",
+          "paragraphs": [
+            "Pregunta sobre el diagnóstico, los estudios o radiografías necesarios, las alternativas y las indicaciones de recuperación. Sigue las indicaciones que te dé tu equipo de atención; los consejos generales de internet no sustituyen la orientación para tu caso."
+          ]
+        }
+      ],
+      "sources": "[ADA, muelas del juicio](https://www.mouthhealthy.org/all-topics-a-z/wisdom-teeth); [ADA, extracciones](https://www.mouthhealthy.org/all-topics-a-z/extractions)."
+    }
+  ]
+}

@@ -1,23 +1,18 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { RevealText } from '@/components/RevealText'
 import { home } from '@/content/home'
-import { serviceHref } from '@/content/clinic'
-import { servicePages } from '@/content/services'
+import { useLang } from '@/lib/lang'
 import { useMotionPaused } from '@/lib/motion'
-import { Link } from '@/lib/router'
 import '@/styles/family-care.css'
 
-const { services } = home
 const sides = ['l', 'r'] as const // zigzag: las paradas pares a la izquierda del hilo y las impares a la derecha
 
-// Paradas del camino (dueña, 23-11 r5): servicios de content/services.ts que NO se repiten en «Servicios destacados» (braces/Invisalign, implants, dentures/bridges, veneers/crowns, whitening). Nombre y subtítulo tal cual, sin textos nuevos.
-const names = ['Routine Dental Care', 'Dental Cleaning', 'Wisdom Tooth Removal', 'Cosmetic Bonding', 'Pediatric Dentistry']
-const stops = names.map((name) => { const p = servicePages.find((s) => s.name === name)!; return { name, line: p.subtitle, href: serviceHref(name) } })
-
-// «La estrella en el camino» (docs/diseno-segunda-ronda-23nov.md, A): una estrella de la marca baja por un hilo al hacer scroll y enciende cada grupo.
+// «La estrella en el camino» (docs/diseno-segunda-ronda-23nov.md, A). 26-11 (B1): ya no lista servicios; son los 4 pasos de la visita (home.visit en content/home.ts). Una estrella de la marca baja por un hilo al hacer scroll y enciende cada grupo.
 // El hilo se mide desde los centros de los nodos (sirve con cualquier alto de texto). Solo transform y opacity se animan; el avance va por variables CSS (--fp, --y0, --len).
 // Con «reducir movimiento» o la pausa: todo encendido y quieto, con la estrella al final del hilo.
 export function FamilyCare() {
+  const lang = useLang()
+  const { visit } = home[lang]
   const path = useRef<HTMLDivElement>(null)
   const paused = useMotionPaused()
   const [reduced, setReduced] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
@@ -71,9 +66,9 @@ export function FamilyCare() {
   }, [still])
 
   return (
-    <section className="fam" id="services" aria-labelledby="svc-h">
+    <section className="fam" id="visit" aria-labelledby="svc-h">
       <div className="wrap">
-        <RevealText className="fam__title" id="svc-h" accent="whole family">{services.heading}</RevealText>
+        <RevealText className="fam__title" id="svc-h" accent={visit.accent}>{visit.heading}</RevealText>
         <div className={`fam__path${still ? '' : ' fam__path--live'}`} ref={path}>
           <span className="fam__rail" aria-hidden="true" />
           <span className="fam__fill" aria-hidden="true" />
@@ -85,17 +80,17 @@ export function FamilyCare() {
               <path d="M50 0C54 30 70 46 100 50C70 54 54 70 50 100C46 70 30 54 0 50C30 46 46 30 50 0Z" fill="url(#fam-star)" />
             </svg>
           </span>
-          <ul className="fam__stops">
-            {stops.map((g, i) => (
-              <li key={g.name} className={`fam__stop${i < lit ? ' is-lit' : ''}`} data-side={sides[i % 2]} style={{ '--r': i + 1 } as CSSProperties}>
+          <ol className="fam__stops">
+            {visit.steps.map((g, i) => (
+              <li key={g.title} className={`fam__stop${i < lit ? ' is-lit' : ''}`} data-side={sides[i % 2]} style={{ '--r': i + 1 } as CSSProperties}>
                 <span className="fam__node" aria-hidden="true" />
-                <Link className="fam__link" href={g.href}>
-                  <h3>{g.name}</h3>
-                  <p>{g.line}</p>
-                </Link>
+                <div className="fam__link">
+                  <h3>{g.title}</h3>
+                  <p>{g.text}</p>
+                </div>
               </li>
             ))}
-          </ul>
+          </ol>
         </div>
       </div>
     </section>

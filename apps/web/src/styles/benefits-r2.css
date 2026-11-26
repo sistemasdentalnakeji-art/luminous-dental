@@ -1,0 +1,75 @@
+/* Beneficios, ronda 2 (26-11): encabezado asimétrico con cifras, hub en bento, pasos y franja de reserva. Mismos colores y medidas que benefits.css e insurance.css. */
+.bh{display:grid;gap:clamp(28px,4vw,56px);align-items:center}
+@media (min-width:1000px){.bh{grid-template-columns:minmax(0,7fr) minmax(0,5fr)}}
+.bh-title{margin-top:20px;font:400 clamp(42px,6.4vw,92px)/1 var(--font-serif);letter-spacing:-.03em;color:#fff;text-wrap:balance}
+.bh-lead{margin-top:24px;max-width:34em;font-size:clamp(18px,1.5vw,21px);color:var(--color-text);text-wrap:pretty}
+.bh-cta{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;margin-top:32px}
+.bh-main .ben-tabs{margin-top:36px}
+.bh-points{display:grid;gap:12px;margin:0;padding:0;list-style:none}
+.bh-points li{display:flex;gap:18px;align-items:center;padding:clamp(18px,2.2vw,26px);border-radius:24px;background:linear-gradient(160deg,rgba(24,50,96,.92),rgba(11,26,54,.96));box-shadow:0 30px 60px -40px rgba(52,191,204,.5);font-size:16px;line-height:1.45;color:var(--color-text)}
+.bh-points__icon{display:grid;place-items:center;flex:none;width:52px;height:52px;border-radius:16px;color:var(--color-mint);background:rgba(52,191,204,.12)}
+.bh-points strong{display:block;margin-bottom:2px;font:400 clamp(20px,1.8vw,24px)/1.2 var(--font-serif);color:#fff}
+
+.bhub{display:grid;gap:18px;margin-top:clamp(48px,6vw,88px);padding:0;list-style:none}
+@media (min-width:900px){.bhub{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);grid-template-rows:auto auto}.bhub__ins{grid-row:span 2}}
+.bhub>li{display:flex}
+.bcard{display:flex;flex-direction:column;gap:14px;width:100%;padding:clamp(24px,3vw,40px);border-radius:28px;border:1px solid var(--color-line);background:linear-gradient(165deg,rgba(24,50,96,.78),rgba(11,26,54,.9));color:var(--color-text);text-decoration:none;transition:translate .3s var(--ease),border-color .3s var(--ease),box-shadow .3s var(--ease)}
+.bcard:hover,.bcard:focus-visible{translate:0 -4px;border-color:var(--color-medic);box-shadow:0 28px 44px -26px rgba(52,191,204,.6)}
+.bcard__icon{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--color-glow);color:#fff;box-shadow:0 0 0 1px var(--color-sky),0 0 24px rgba(123,195,235,.35)}
+.bcard__title{font:400 clamp(30px,3.2vw,46px)/1.05 var(--font-serif);letter-spacing:-.02em;color:#fff}
+.bcard__text{max-width:30em;text-wrap:pretty}
+.bcard__cta{display:inline-flex;align-items:center;gap:8px;margin-top:auto;padding-top:6px;font-weight:600;color:var(--color-medic-soft)}
+.bcard__cta svg{transition:translate .25s var(--ease)}
+.bcard:hover .bcard__cta svg{translate:4px 0}
+.bcard__logos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:6px}
+.bcard__logo{display:grid;place-items:center;height:64px;padding:10px;border-radius:12px;background:#fff}
+.bcard__logo img{width:min(calc(30px * sqrt(var(--ar,4))),96px);max-height:34px;height:auto;object-fit:contain}
+.bcard__fins{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.bcard__fins .fin-logo{height:64px;padding:10px}
+.bcard__fins .fin-logo img{width:min(calc(30px * sqrt(var(--ar,4))),110px);max-height:34px}
+.bcard__big{font:400 clamp(30px,3.4vw,48px)/1.05 var(--font-serif);letter-spacing:-.02em;color:var(--color-mint)}
+@media (max-width:520px){.bcard__logos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.bsteps{margin-top:clamp(56px,7vw,104px)}
+.bsteps-title{font:400 clamp(32px,4vw,52px)/1.08 var(--font-serif);letter-spacing:-.02em;color:#fff}
+.bsteps-list{display:grid;gap:18px;margin-top:28px;padding:0;list-style:none}
+@media (min-width:860px){.bsteps-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.bsteps-list>li{display:flex;flex-direction:column;gap:10px;padding:clamp(22px,2.6vw,32px);border-radius:24px;background:var(--color-glass);border:1px solid var(--color-line)}
+.bsteps-list h3{font:400 clamp(24px,2.4vw,30px)/1.15 var(--font-serif);letter-spacing:-.01em;color:#fff;text-wrap:balance}
+.bsteps-list p{text-wrap:pretty}
+
+.bband{display:grid;gap:20px 40px;align-items:center;margin-top:clamp(56px,7vw,104px);padding:clamp(28px,4vw,56px);border-radius:32px;background:linear-gradient(120deg,rgba(47,99,173,.55),rgba(52,191,204,.28) 55%,rgba(11,26,54,.9));border:1px solid var(--color-line)}
+@media (min-width:900px){.bband{grid-template-columns:minmax(0,1fr) auto}}
+.bband h2{font:400 clamp(30px,3.6vw,48px)/1.08 var(--font-serif);letter-spacing:-.02em;color:#fff;text-wrap:balance}
+.bband p{margin-top:10px;max-width:34em}
+.bband .bh-cta{margin-top:0}
+
+.ins-panel{margin-top:clamp(40px,5vw,72px);padding:clamp(22px,3.4vw,48px);border-radius:32px;background:var(--color-glass);border:1px solid var(--color-line)}
+.ins-panel__title{font:400 clamp(28px,3.2vw,42px)/1.1 var(--font-serif);letter-spacing:-.02em;color:#fff}
+.ins-panel .ins-find{margin-top:14px}
+
+.fin-grid--hub{margin-top:clamp(40px,5vw,72px)}
+.fin-grid--hub .fin-logo{height:clamp(110px,12vw,150px)}
+.agr-feature{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(24px,4vw,56px);margin-top:clamp(40px,5vw,72px);padding:clamp(28px,4.4vw,64px);border-radius:32px;border:1px solid var(--color-line);background:radial-gradient(120% 140% at 0% 0%,rgba(47,99,173,.6),rgba(11,26,54,.95) 60%);position:relative;overflow:hidden}
+.agr-feature::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--color-medic)}
+@media (min-width:900px){.agr-feature{grid-template-columns:minmax(0,6fr) minmax(0,5fr);align-items:center}}
+.agr-feature .agr-card__name{margin-top:14px;font-size:clamp(44px,6vw,88px);line-height:1;text-wrap:balance}
+.agr-feature__body{display:grid;gap:14px;align-content:center}
+.agr-feature>*{min-width:0}.agr-feature .btn{white-space:normal;text-align:center}
+@media (prefers-reduced-motion:reduce){.bcard,.bcard__cta svg{transition:none}}
+html[data-motion-paused] .bcard,html[data-motion-paused] .bcard__cta svg{transition:none}
+.bsteps .ins-dot{--dot:48px}
+@media (max-width:520px){.bcard__logo:nth-child(n+9){display:none}}
+.svc-card{min-height:190px}
+@media (min-width:900px){.bcard__logos{gap:10px}.bcard__logo{height:78px}.bcard__logo img{max-height:40px}}
+/* Logos más legibles: hub = 3 por fila (15 fichas); Seguros = fichas altas de 4 por fila en escritorio */
+.bcard__logos{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (min-width:900px){.bcard__logo{height:96px}.bcard__logo img{width:min(calc(46px * sqrt(var(--ar,4))),130px);max-height:52px}}
+@media (max-width:520px){.bcard__logos{grid-template-columns:repeat(2,minmax(0,1fr))}.bcard__logo{height:84px}.bcard__logo img{width:min(calc(44px * sqrt(var(--ar,4))),120px);max-height:48px}}
+.ins-panel .ins-plan{height:124px}
+.ins-panel .ins-plan img{width:min(calc(52px * sqrt(var(--ar,4))),170px);max-height:62px}
+.ins-panel .ins-plan__name{font-size:13px}
+@media (min-width:960px){.ins-panel .ins-wall{grid-template-columns:repeat(4,minmax(0,1fr))}}
+/* SAHARA (26-11 r2): logo oficial dorado sobre placa oscura, sin ícono genérico */
+.bcard__sahara{display:block;width:min(100%,220px);height:auto}
+.agr-feature__logo{display:block;width:min(100%,360px);height:auto;margin-top:14px}

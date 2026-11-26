@@ -1,0 +1,8 @@
+/* Soft Blur In (components/SoftBlurIn.tsx): desenfoque, ascenso y aparición escalonada por letra, una sola vez. */
+.soft-blur-in__word{display:inline-block;white-space:nowrap}
+.soft-blur-in__char{display:inline-block;opacity:0;filter:blur(12px);transform:translateY(16px)}
+.soft-blur-in[data-visible] .soft-blur-in__char{animation:soft-blur-in .9s var(--ease) both;animation-delay:calc(var(--c)*25ms)}
+@keyframes soft-blur-in{to{opacity:1;filter:blur(0);transform:none}}
+@media (prefers-reduced-motion:reduce){.soft-blur-in__char{opacity:1;filter:none;transform:none}.soft-blur-in[data-visible] .soft-blur-in__char{animation:none}}
+html[data-motion-paused] .soft-blur-in__char{opacity:1;filter:none;transform:none}
+html[data-motion-paused] .soft-blur-in[data-visible] .soft-blur-in__char{animation:none}

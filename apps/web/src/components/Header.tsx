@@ -4,20 +4,25 @@
 import { useEffect, useRef, useState, type FocusEvent, type KeyboardEvent, type PointerEvent as ReactPointerEvent } from 'react'
 import { flushSync } from 'react-dom'
 import { Icon, type IconName } from '@/components/Icon'
+import { LanguageSwitch } from '@/components/LanguageSwitch'
 import { NeonLogo } from '@/components/NeonLogo'
 import { SocialLinks } from '@/components/SocialLinks'
-import { serviceHref } from '@/content/clinic'
+import { hrefOf } from '@/config/routes'
 import { home } from '@/content/home'
-import { servicePages } from '@/content/services'
+import { servicesOf } from '@/content/services'
+import { ui } from '@/content/ui'
+import { useLang } from '@/lib/lang'
 import { Link } from '@/lib/router'
 
-const { header } = home
 const MENU_ID = 'main-menu'
 const DESKTOP = '(min-width: 1280px)'
 const cx = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(' ')
 const current = (href: string, path: string) => (href === path ? 'page' : undefined)
 
 export function Header({ path, appointmentHref }: { path: string; appointmentHref: string }) {
+  const lang = useLang()
+  const { header } = home[lang]
+  const t = ui[lang]
   const [menuOpen, setMenuOpen] = useState(false)
   const [openId, setOpenId] = useState<string | null>(null)
   const ref = useRef<HTMLElement>(null)
@@ -81,10 +86,10 @@ export function Header({ path, appointmentHref }: { path: string; appointmentHre
         <div className="hdr">
           <NeonLogo />
           <div id={MENU_ID} className={cx('site-menu', menuOpen && 'is-open')}>
-            <nav className="nav" aria-label="Main">
+            <nav className="nav" aria-label={t.mainNav}>
               <ul className="nav-list">
                 {header.nav.map((n) => {
-                  const menu = 'items' in n ? { id: 'more', items: n.items } : 'menu' in n ? { id: 'services', items: servicePages.map((s) => ({ label: s.name, href: serviceHref(s.name), icon: s.icon })), overview: { label: header.servicesOverview, href: n.href } } : null
+                  const menu = 'items' in n ? { id: 'id' in n ? n.id : 'more', items: n.items.map((i) => ({ label: i.label, href: hrefOf(i.to, lang), icon: i.icon })), overview: 'overview' in n ? { label: n.overview, href: hrefOf(n.to, lang) } : undefined } : n.menu ? { id: 'services', items: servicesOf(lang).map((s) => ({ label: s.name, href: hrefOf(`service:${s.id}`, lang), icon: s.icon })), overview: { label: header.servicesOverview, href: hrefOf(n.to, lang) } } : null
                   return menu ? (
                     <NavDropdown
                       key={n.label}
@@ -96,9 +101,9 @@ export function Header({ path, appointmentHref }: { path: string; appointmentHre
                       onOpen={() => setOpenId(menu.id)}
                       onClose={() => setOpenId((id) => (id === menu.id ? null : id))}
                     />
-                  ) : 'href' in n && (
-                    <li key={n.href} className="nav-item">
-                      <Link className="nav-link" href={n.href} aria-current={current(n.href, path)}>{n.label}</Link>
+                  ) : 'to' in n && (
+                    <li key={n.to} className="nav-item">
+                      <Link className="nav-link" href={hrefOf(n.to, lang)} aria-current={current(hrefOf(n.to, lang), path)}>{n.label}</Link>
                     </li>
                   )
                 })}
@@ -108,9 +113,11 @@ export function Header({ path, appointmentHref }: { path: string; appointmentHre
               <Link className="btn site-menu__cta" href={appointmentHref} onClick={() => setMenuOpen(false)}>{header.cta.label}</Link>
               <a className="tlink" href={header.phone.href}>{header.phone.label}</a>
             </div>
+            <div className="site-menu__lang"><LanguageSwitch path={path} /></div>
             <div className="site-menu__social"><SocialLinks /></div>
           </div>
           <div className="hdr-r">
+            <LanguageSwitch className="lang-switch--bar" path={path} />
             <div className="hdr-social"><SocialLinks iconSize={28} /></div>
             <a className="hdr-phone" href={header.phone.href} aria-label={header.phone.label}>
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" /></svg>
@@ -125,7 +132,7 @@ export function Header({ path, appointmentHref }: { path: string; appointmentHre
               onClick={() => { setOpenId(null); setMenuOpen((o) => !o) }}
             >
               <Icon name={menuOpen ? 'close' : 'menu'} size={24} />
-              <span className="sr-only">Menu</span>
+              <span className="sr-only">{t.menu}</span>
             </button>
           </div>
         </div>

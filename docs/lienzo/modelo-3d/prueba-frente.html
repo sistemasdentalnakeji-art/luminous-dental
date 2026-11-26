@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prueba · figura de servicios con modelo 3D (vista de frente)</title>
+<style>
+  :root { --bg:#eef3f6; --ink:#16323f; --mint:#2e9c8a; --line:#c9d6dd; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.4 system-ui, "Segoe UI", sans-serif; }
+  main { max-width:960px; margin:0 auto; padding:12px 12px 20px; }
+  h1 { font-size:1.05rem; margin:4px 0 10px; }
+  #stage { position:relative; width:100%; aspect-ratio:16/9; border-radius:14px; overflow:hidden; background:var(--bg); }
+  #stage canvas { display:block; width:100%; height:100%; }
+  #msg { position:absolute; inset:0; display:grid; place-items:center; color:#4b6672; pointer-events:none; text-align:center; padding:12px; }
+  .row { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 0; align-items:center; }
+  button { font:inherit; padding:8px 14px; min-height:40px; border:1px solid var(--line); border-radius:999px; background:#fff; color:var(--ink); cursor:pointer; }
+  button[aria-pressed="true"] { background:var(--mint); border-color:var(--mint); color:#fff; }
+  button:focus-visible { outline:3px solid #0a6fb5; outline-offset:2px; }
+  #status { margin:10px 0 0; min-height:1.4em; }
+  #credit { margin:14px 0 0; font-size:.78rem; color:#4b6672; }
+  @media (max-width:640px) { #stage { aspect-ratio:4/3; } }
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head>
+<body>
+<main>
+  <h1>Figura de servicios · prueba con modelo 3D, vista de frente</h1>
+  <div id="stage"><div id="msg" role="status">Cargando modelo…</div></div>
+  <div class="row" role="group" aria-label="Servicio" id="svc"></div>
+  <div class="row" role="group" aria-label="Paso" id="steps"></div>
+  <div class="row"><button id="pause" type="button" aria-pressed="false">Pausa</button></div>
+  <p id="status" aria-live="polite"></p>
+  <p id="credit">Modelo: "Human teeth" de Alexander Antipov, CC BY 4.0 (Sketchfab)</p>
+</main>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+
+// ---- Reloj de pasos: misma lógica que apps/web/src/features/figure/glide.js ----
+const TRANSIT = 1.2, DWELL = 3.5, DWELL_LAST = 5;
+const dwellOf = (i, max) => (i === max ? DWELL_LAST : DWELL);
+const smooth = (x) => x * x * (3 - 2 * x);
+function makeGlide(t0 = 0) {
+  let from = t0, to = t0, t = t0, el = 0, dur = TRANSIT, dir = 1;
+  return {
+    get t() { return t; }, get to() { return to; }, get dir() { return dir; },
+    aim(next) {
+      if (next === to) return;
+      from = t; to = next; el = 0; dir = next > t ? 1 : -1;
+      dur = Math.min(1.8, TRANSIT + 0.35 * Math.max(0, Math.abs(to - from) - 1));
+    },
+    snap(v) { from = to = t = v; el = 0; },
+    tick(dt) { el += dt; const p = Math.min(1, el / dur); t = p >= 1 ? to : from + (to - from) * p; },
+  };
+}
+// ---- Caída: igual que fall() de engine.js. Devuelve [desplazamiento (1 = altura de caída), opacidad] ----
+const clamp01 = (x) => Math.min(1, Math.max(0, x));
+function fall(p, dir) {
+  p = clamp01(p);
+  if (dir < 0) { const q = 1 - p; return [q * q, 1 - clamp01((q - 0.5) / 0.5)]; }
+  if (p < 0.7) { const u = p / 0.7; return [1 - u * u, clamp01(p / 0.12)]; }
+  const v = (p - 0.7) / 0.3;
+  return [0.1 * Math.sin(Math.PI * v) * (1 - 0.4 * v), 1];
+}
+
+const $ = (id) => document.getElementById(id);
+const stage = $('stage'), msg = $('msg');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const T0 = performance.now();
+
+// ---- Escena ----
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+} catch (e) { msg.textContent = 'Este navegador no puede mostrar el modelo 3D.'; throw e; }
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 0.95;
+stage.appendChild(renderer.domElement);
+renderer.domElement.setAttribute('role', 'img');
+renderer.domElement.setAttribute('aria-label', 'Modelo 3D de dientes vistos de frente');
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#eef3f6');
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.55;
+const sun = new THREE.DirectionalLight('#ffffff', 1.9); // luz suave arriba-izquierda, como la figura actual
+sun.position.set(-4, 6, 5);
+scene.add(sun, new THREE.HemisphereLight('#ffffff', '#cfe1e8', 0.55));
+const cam = new THREE.PerspectiveCamera(24, 1, 0.1, 200);
+
+// ---- Carga del modelo (la extensión KHR_materials_pbrSpecularGlossiness avisa con console.warn: se sabe y se ignora) ----
+const warn = console.warn;
+console.warn = (...a) => { if (!String(a[0]).includes('pbrSpecularGlossiness')) warn(...a); };
+let gltf, map, nrm;
+try {
+  gltf = await new GLTFLoader().loadAsync('../../referencias/modelo-dientes/human_teeth.glb');
+  [map, nrm] = await Promise.all([0, 2].map((i) => gltf.parser.getDependency('texture', i)));
+} catch (e) { console.warn = warn; msg.textContent = 'No se pudo cargar el modelo.'; throw e; }
+console.warn = warn;
+map.colorSpace = THREE.SRGBColorSpace;
+
+const matTooth = new THREE.MeshStandardMaterial({ map, normalMap: nrm, roughness: 0.3, metalness: 0, side: THREE.DoubleSide });
+const matGum = new THREE.MeshStandardMaterial({ map, normalMap: nrm, roughness: 0.55, metalness: 0, side: THREE.DoubleSide });
+const matCrown = new THREE.MeshPhysicalMaterial({ color: '#fbf8f1', normalMap: nrm, normalScale: new THREE.Vector2(0.45, 0.45), roughness: 0.16, clearcoat: 0.6, clearcoatRoughness: 0.12, side: THREE.DoubleSide, transparent: true });
+
+let teethMesh;
+gltf.scene.traverse((o) => {
+  if (!o.isMesh) return;
+  if (o.name.startsWith('Teeth')) teethMesh = o; else o.material = matGum;
+});
+scene.add(gltf.scene);
+
+// ---- Separar los dientes: componentes conectados con vértices soldados por posición ----
+const geo = teethMesh.geometry, pos = geo.attributes.position, idx = geo.index.array, nV = pos.count;
+const rep = new Int32Array(nV), seen = new Map();
+for (let i = 0; i < nV; i++) {
+  const k = Math.round(pos.getX(i) * 1e4) + ',' + Math.round(pos.getY(i) * 1e4) + ',' + Math.round(pos.getZ(i) * 1e4);
+  if (!seen.has(k)) seen.set(k, i);
+  rep[i] = seen.get(k);
+}
+const par = Int32Array.from({ length: nV }, (_, i) => i);
+const find = (a) => { while (par[a] !== a) { par[a] = par[par[a]]; a = par[a]; } return a; };
+for (let i = 0; i < idx.length; i += 3) { const a = find(rep[idx[i]]); par[find(rep[idx[i + 1]])] = a; par[find(rep[idx[i + 2]])] = a; }
+const tris = new Map();
+for (let i = 0; i < idx.length; i += 3) { const r = find(rep[idx[i]]); (tris.get(r) || tris.set(r, []).get(r)).push(idx[i], idx[i + 1], idx[i + 2]); }
+
+teethMesh.visible = false; // el diente entero se sustituye por 32 piezas que comparten los mismos vértices
+const teeth = [];
+for (const arr of tris.values()) {
+  if (arr.length < 150) continue; // restos sueltos
+  const g = new THREE.BufferGeometry();
+  for (const k of ['position', 'normal', 'uv']) if (geo.attributes[k]) g.setAttribute(k, geo.attributes[k]);
+  g.setIndex(new THREE.BufferAttribute(new Uint32Array(arr), 1));
+  g.computeBoundingBox(); g.computeBoundingSphere();
+  // el bbox usa solo los vértices del índice? No: computeBoundingBox lee todo el atributo; se calcula a mano
+  const bb = new THREE.Box3();
+  for (const vi of arr) bb.expandByPoint(new THREE.Vector3().fromBufferAttribute(pos, vi));
+  const mesh = new THREE.Mesh(g, matTooth);
+  scene.add(mesh);
+  teeth.push({ mesh, bb, c: bb.getCenter(new THREE.Vector3()) });
+}
+// arriba/abajo: dos rectas y = a + b·z (el plano de mordida se inclina hacia atrás), por 2-medias
+let up = teeth.map((t) => t.c.y > 18.6 - 0.2 * (t.c.z - 14));
+const fit = (set) => { // mínimos cuadrados y~z
+  const n = set.length; let sz = 0, sy = 0, szz = 0, szy = 0;
+  for (const t of set) { sz += t.c.z; sy += t.c.y; szz += t.c.z * t.c.z; szy += t.c.z * t.c.y; }
+  const b = (n * szy - sz * sy) / (n * szz - sz * sz); return [(sy - b * sz) / n, b];
+};
+for (let it = 0; it < 6; it++) {
+  const [au, bu] = fit(teeth.filter((_, i) => up[i])), [al, bl] = fit(teeth.filter((_, i) => !up[i]));
+  up = teeth.map((t) => Math.abs(t.c.y - (au + bu * t.c.z)) < Math.abs(t.c.y - (al + bl * t.c.z)));
+}
+teeth.forEach((t, i) => { t.upper = up[i]; });
+const upper = teeth.filter((t) => t.upper).sort((a, b) => a.c.x - b.c.x);
+// orden por X en pantalla (de izquierda a derecha); los 4 incisivos quedan juntos en el centro
+const sepOk = teeth.length === 32 && upper.length === 16;
+
+// ---- Cámara fija de frente, ~12° desde arriba ----
+const gbox = new THREE.Box3().setFromObject(gltf.scene);
+const center = gbox.getCenter(new THREE.Vector3());
+const size = gbox.getSize(new THREE.Vector3());
+const ELEV = THREE.MathUtils.degToRad(12);
+function fitCamera() {
+  const w = stage.clientWidth, h = stage.clientHeight;
+  renderer.setSize(w, h, false);
+  cam.aspect = w / h;
+  const vf = THREE.MathUtils.degToRad(cam.fov), hf = 2 * Math.atan(Math.tan(vf / 2) * cam.aspect);
+  const needW = size.x * 1.0, needH = size.y * 1.35;
+  const d = Math.max(needW / 2 / Math.tan(hf / 2), needH / 2 / Math.tan(vf / 2)) + size.z * 0.3;
+  cam.position.set(center.x, center.y + Math.sin(ELEV) * d, center.z + Math.cos(ELEV) * d + 3);
+  cam.lookAt(center.x, center.y - 0.05, center.z + 3);
+  cam.updateProjectionMatrix();
+}
+new ResizeObserver(fitCamera).observe(stage);
+
+// ---- Brackets: del canino al segundo premolar de cada lado (10), sobre la cara frontal ----
+// Los 16 superiores ordenados por X: [m3 m2 m1 pm2 pm1 c l i | i l c pm1 pm2 m1 m2 m3]; visibles de frente: índices 3..12.
+const targets = upper.slice(3, 13);
+const arch = new THREE.Vector3(0, 0, upper.reduce((s, t) => s + t.c.z, 0) / upper.length);
+const ray = new THREE.Raycaster();
+const matMetal = () => new THREE.MeshStandardMaterial({ color: '#d9dee3', metalness: 1, roughness: 0.22, transparent: true });
+const matSlot = () => new THREE.MeshStandardMaterial({ color: '#4c555c', metalness: 0.6, roughness: 0.45, transparent: true });
+const bracketGeo = new RoundedBoxGeometry(0.42, 0.3, 0.1, 3, 0.04);
+const padGeo = new RoundedBoxGeometry(0.3, 0.22, 0.05, 2, 0.02);
+const slotGeo = new THREE.BoxGeometry(0.46, 0.055, 0.03);
+const brackets = [], wirePts = [];
+const bracketsGroup = new THREE.Group(); scene.add(bracketsGroup);
+for (const t of targets) {
+  const c = t.c.clone(); c.y += 0.05;
+  const out = new THREE.Vector3(c.x - arch.x, 0, c.z - arch.z).normalize();
+  ray.set(c.clone().addScaledVector(out, 3), out.clone().negate());
+  ray.firstHitOnly = true;
+  const hit = ray.intersectObject(t.mesh, false)[0];
+  if (!hit) { console.error('Sin impacto para un bracket en', c.toArray()); continue; }
+  const fn = hit.face.normal.clone(); if (fn.dot(out) < 0) fn.negate();
+  const n = fn.multiplyScalar(0.5).add(out.clone().multiplyScalar(0.5)).normalize();
+  const g = new THREE.Group();
+  const m1 = matMetal(), m2 = matSlot();
+  const body = new THREE.Mesh(bracketGeo, m1); body.position.z = 0.05;
+  const pad = new THREE.Mesh(padGeo, m1); pad.position.z = 0.0;
+  const slot = new THREE.Mesh(slotGeo, m2); slot.position.z = 0.1;
+  g.add(pad, body, slot);
+  g.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), n);
+  const rest = hit.point.clone().addScaledVector(n, -0.01);
+  g.position.copy(rest);
+  bracketsGroup.add(g);
+  brackets.push({ g, rest, mats: [m1, m2] });
+  wirePts.push(hit.point.clone().addScaledVector(n, 0.1 + 0.02));
+}
+// alambre por las ranuras
+const wireCurve = new THREE.CatmullRomCurve3(wirePts, false, 'centripetal');
+const TUB = 240, RAD = 8;
+const wireGeo = new THREE.TubeGeometry(wireCurve, TUB, 0.026, RAD, false);
+const wireMat = new THREE.MeshStandardMaterial({ color: '#e8ecef', metalness: 1, roughness: 0.18 });
+const wire = new THREE.Mesh(wireGeo, wireMat); wire.frustumCulled = false; scene.add(wire);
+
+// ---- Corona: copia del incisivo central superior (el de la derecha en pantalla), un poco más grande, más blanca y brillante ----
+const centralTooth = upper[8];
+const crown = new THREE.Mesh(centralTooth.mesh.geometry, matCrown);
+const CS = 1.06, cc = centralTooth.c;
+scene.add(crown);
+
+// ---- Servicios ----
+const SERVICES = [
+  { id: 'brackets', name: 'Brackets', steps: ['Dientes sin aparatos', 'Brackets', 'Alambre'] },
+  { id: 'corona', name: 'Corona', steps: ['Diente natural', 'Corona'] },
+];
+const DROP = 3.2, STAGGER = 0.07;
+let si = 0;
+const glide = makeGlide(0);
+let paused = false, dwell = 0;
+
+function apply() {
+  const t = glide.t, dir = glide.dir, id = SERVICES[si].id;
+  bracketsGroup.visible = wire.visible = id === 'brackets';
+  crown.visible = id === 'corona';
+  if (id === 'brackets') {
+    const P = clamp01(t), n = brackets.length, span = 1 - STAGGER * (n - 1);
+    brackets.forEach((b, i) => {
+      const [off, a] = fall(clamp01((P - i * STAGGER) / span), dir);
+      b.g.position.set(b.rest.x, b.rest.y + off * DROP, b.rest.z);
+      b.mats.forEach((m) => { m.opacity = a; });
+      b.g.visible = a > 0.002;
+    });
+    const w = clamp01(t - 1);
+    wire.geometry.setDrawRange(0, Math.floor(w * TUB) * RAD * 6);
+    wire.visible = w > 0.002;
+  } else {
+    const [off, a] = fall(clamp01(t), dir);
+    crown.scale.setScalar(CS);
+    crown.position.set(cc.x * (1 - CS), cc.y * (1 - CS) + off * DROP, cc.z * (1 - CS));
+    matCrown.opacity = a; crown.visible = a > 0.002;
+  }
+}
+
+// ---- Interfaz ----
+const svcBox = $('svc'), stepBox = $('steps'), status = $('status');
+function drawUi() {
+  const cur = Math.round(glide.to);
+  svcBox.replaceChildren(...SERVICES.map((s, i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = s.name;
+    b.setAttribute('aria-pressed', String(i === si)); b.onclick = () => setService(i); return b;
+  }));
+  stepBox.replaceChildren(...SERVICES[si].steps.map((s, i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = `${i + 1}. ${s}`;
+    b.setAttribute('aria-pressed', String(i === cur)); b.onclick = () => goStep(i); return b;
+  }));
+  status.textContent = `${SERVICES[si].name} · paso ${cur + 1} de ${SERVICES[si].steps.length}: ${SERVICES[si].steps[cur]}`;
+}
+function goStep(i) {
+  dwell = 0;
+  if (reduce) glide.snap(i); else glide.aim(i);
+  drawUi(); apply();
+}
+function setService(i) { si = i; glide.snap(0); dwell = 0; goStep(reduce ? SERVICES[si].steps.length - 1 : 0); }
+$('pause').onclick = (e) => { paused = !paused; e.currentTarget.setAttribute('aria-pressed', String(paused)); e.currentTarget.textContent = paused ? 'Reanudar' : 'Pausa'; };
+
+// Con «reducir movimiento» se muestra el paso final quieto y no hay reproducción automática
+if (reduce) glide.snap(SERVICES[si].steps.length - 1);
+drawUi(); apply();
+
+// ---- Bucle ----
+const frames = [];
+let last = performance.now(), firstDrawn = false;
+renderer.setAnimationLoop((now) => {
+  const dt = Math.min(0.1, (now - last) / 1000); last = now;
+  if (!paused && !reduce) {
+    glide.tick(dt);
+    dwell += dt;
+    const max = SERVICES[si].steps.length - 1;
+    if (dwell >= dwellOf(glide.to, max)) { dwell = 0; glide.aim(glide.to === max ? 0 : glide.to + 1); drawUi(); }
+  }
+  apply();
+  renderer.render(scene, cam);
+  if (frames.length < 20000) frames.push(now);
+  if (!firstDrawn) { firstDrawn = true; msg.remove(); window.__tReady = performance.now() - T0; }
+});
+fitCamera();
+
+// Ganchos para la verificación (no afectan a quien usa la página)
+window.__t = {
+  frames, sepOk, counts: { teeth: teeth.length, upper: upper.length, brackets: brackets.length },
+  setService, goStep, pause: (v) => { paused = v; },
+  seek(s, t) { paused = true; si = s; glide.snap(t); drawUi(); apply(); }, // t fraccionario para ver la mitad de la caída
+};
+</script>
+</body>
+</html>

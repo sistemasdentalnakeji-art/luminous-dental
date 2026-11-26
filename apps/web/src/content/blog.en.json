@@ -25,10 +25,10 @@
       "intro": "The appearance of a smile also depends on the health and function of the teeth. Here you will find information about crowns, dental veneers and teeth whitening: what each treatment does, what it does not do and why an evaluation beforehand matters."
     },
     {
-      "key": "orthodontics-and-pediatric-dentistry",
-      "name": "Orthodontics and pediatric dentistry",
-      "description": "Answers about tooth alignment, bite and oral care for children.",
-      "intro": "Straightening teeth and caring for the mouth from childhood are different topics that share one idea: every stage needs the right care. Here are answers about orthodontics, aligners and pediatric dentistry."
+      "key": "orthodontics",
+      "name": "Orthodontics",
+      "description": "Answers about tooth alignment, braces, aligners and bite.",
+      "intro": "Straightening teeth and improving how they meet when you bite are goals that need a plan made for each person. Here are answers about orthodontics, braces and aligners."
     },
     {
       "key": "cleanings-and-extractions",
@@ -40,6 +40,8 @@
   "articles": [
     {
       "key": "dental-implants-what-they-are",
+      "image": "/images/blog/treatment-room",
+      "imageAlt": "Treatment room at Luminous Dental with a dental chair and a wall-mounted X-ray unit",
       "category": "implants-and-tooth-replacement",
       "title": "Dental implants: what they are and what is checked before placing them",
       "excerpt": "An implant can support a restoration that replaces a missing tooth. Learn what is evaluated before it is recommended.",
@@ -68,7 +70,71 @@
       "sources": "[FDA, patient information about dental implants](https://www.fda.gov/medical-devices/dental-devices/dental-implants-what-you-should-know)."
     },
     {
+      "key": "all-on-4-implants",
+      "image": "",
+      "imageAlt": "",
+      "category": "implants-and-tooth-replacement",
+      "title": "All-on-4 implants: a fixed arch on four implants",
+      "excerpt": "A fixed prosthesis held by four implants can replace a full arch. Learn what is reviewed before it is considered.",
+      "lead": "All-on-4 is a restoration option that replaces the teeth of an arch with a fixed prosthesis held by four implants.",
+      "answer": "In this treatment, four implants support a prosthesis for a full arch. Luminous Dental lists All-on-4 and All-on-6 among its implant services. Whether it is indicated requires a bone assessment and an evaluation of the individual case.",
+      "sections": [
+        {
+          "title": "What does “a full arch” mean?",
+          "paragraphs": [
+            "An arch is the set of upper or lower teeth. When almost all of them are missing, the restoration aims to replace that area with a single prosthesis. “Fixed” describes how it is held on the implants; it does not mean it needs no maintenance or that the solution is right for everyone."
+          ]
+        },
+        {
+          "title": "Why does the evaluation matter?",
+          "paragraphs": [
+            "Implants are placed surgically. The team needs to review the available bone, the gums, the bite and your general health before proposing a plan. Timelines, stages and care are explained based on what is found at the consultation. The FDA recommends talking with the professional about benefits, risks and whether you are a candidate before choosing implants."
+          ]
+        },
+        {
+          "title": "Useful questions",
+          "paragraphs": [
+            "Ask which tests or X-rays you need, what the plan would be for each arch, what type of prosthesis is being considered and how follow-up would work. That conversation helps you understand the options without assuming that one specific technique is best for everyone."
+          ]
+        }
+      ],
+      "sources": "[FDA, dental implants](https://www.fda.gov/medical-devices/dental-devices/dental-implants-what-you-should-know)."
+    },
+    {
+      "key": "all-on-6-implants",
+      "image": "",
+      "imageAlt": "",
+      "category": "implants-and-tooth-replacement",
+      "title": "All-on-6 implants: how it differs from All-on-4",
+      "excerpt": "Both options hold a fixed prosthesis on implants. The number of implants is not what decides which one fits you.",
+      "lead": "Both treatments aim to hold a fixed prosthesis for a full arch. The difference is the number of supporting implants.",
+      "answer": "All-on-6 uses six implants per arch to hold the fixed prosthesis; All-on-4 uses four. The choice is not made by the number alone: the plan depends on each patient’s bone and bite, which the dentist evaluates first.",
+      "sections": [
+        {
+          "title": "When is this option considered?",
+          "paragraphs": [
+            "It may be considered when almost all the teeth in an arch are missing and a fixed option is the goal. Before talking about a specific technique, the condition of the mouth is reviewed. The professional should explain what they find, which tests or X-rays are needed and which options are reasonable for that case."
+          ]
+        },
+        {
+          "title": "What the number does not tell you",
+          "paragraphs": [
+            "Six implants do not automatically promise a better, faster or longer-lasting result. Every placement has surgical considerations and needs care afterwards. The FDA recommends reviewing your general health, possible risks, hygiene instructions and follow-up visits with your dentist."
+          ]
+        },
+        {
+          "title": "Bring these questions to your evaluation",
+          "paragraphs": [
+            "Which conditions of my bone and bite affect the recommendation? Which restoration would be planned? What care would I need to follow? Asking for clear answers helps you decide with information that fits your case."
+          ]
+        }
+      ],
+      "sources": "[FDA, dental implants](https://www.fda.gov/medical-devices/dental-devices/dental-implants-what-you-should-know)."
+    },
+    {
       "key": "partial-and-complete-dentures",
+      "image": "",
+      "imageAlt": "",
       "category": "implants-and-tooth-replacement",
       "title": "Partial and complete dentures: the basic differences",
       "excerpt": "Dentures are custom-made removable prostheses that replace some or all of the teeth in an arch.",
@@ -98,6 +164,8 @@
     },
     {
       "key": "dental-crowns",
+      "image": "",
+      "imageAlt": "",
       "category": "cosmetic-and-restorative-dentistry",
       "title": "Dental crowns: when covering a tooth is considered",
       "excerpt": "A crown covers the tooth and can help restore its shape and function. Learn what the dentist checks first.",
@@ -127,6 +195,8 @@
     },
     {
       "key": "dental-veneers",
+      "image": "",
+      "imageAlt": "",
       "category": "cosmetic-and-restorative-dentistry",
       "title": "Dental veneers: what they can and cannot change",
       "excerpt": "Veneers change the appearance of the front surface of the tooth. Your oral health should be evaluated first.",
@@ -156,6 +226,8 @@
     },
     {
       "key": "teeth-whitening",
+      "image": "",
+      "imageAlt": "",
       "category": "cosmetic-and-restorative-dentistry",
       "title": "Teeth whitening: why an evaluation first is a good idea",
       "excerpt": "Whitening does not work the same on every tooth and does not change the color of existing restorations.",
@@ -185,7 +257,9 @@
     },
     {
       "key": "orthodontics-alignment-and-bite",
-      "category": "orthodontics-and-pediatric-dentistry",
+      "image": "/images/blog/kids-visit",
+      "imageAlt": "A dentist gives a high five to a smiling child in the dental chair",
+      "category": "orthodontics",
       "title": "Orthodontics: tooth alignment and bite",
       "excerpt": "An evaluation helps understand the position of the teeth and the bite before choosing a treatment.",
       "lead": "Orthodontics aims to move teeth in a planned way and to review how they meet when you bite. The type of appliance and the timeline are decided after an evaluation.",
@@ -214,7 +288,9 @@
     },
     {
       "key": "clear-aligners",
-      "category": "orthodontics-and-pediatric-dentistry",
+      "image": "",
+      "imageAlt": "",
+      "category": "orthodontics",
       "title": "Clear aligners: when they can be an option",
       "excerpt": "They are a discreet way to move teeth, but they are not the best choice for every case.",
       "lead": "Clear aligners are a less visible alternative to braces for certain tooth movements. An evaluation shows whether they are suitable.",
@@ -242,36 +318,9 @@
       "sources": "[AAO, clear aligners](https://aaoinfo.org/treatments/aligners/)."
     },
     {
-      "key": "your-childs-first-dental-visit",
-      "category": "orthodontics-and-pediatric-dentistry",
-      "title": "Your child's first dental visit: what to expect",
-      "excerpt": "Children's dental care is adapted to each age. An early visit helps guide cavity prevention.",
-      "lead": "An early dental visit helps care for baby teeth, talk about hygiene habits and catch possible problems before they progress.",
-      "answer": "The American Dental Association recommends scheduling the first visit after the first tooth appears and no later than the first birthday. Luminous Dental offers pediatric dentistry with a visit adapted to each child's age and needs.",
-      "sections": [
-        {
-          "title": "Why start early?",
-          "paragraphs": [
-            "Baby teeth can get cavities. At a first visit, the professional can check the teeth and gums, look at how the mouth is developing and guide the family on cleaning and diet. It is also a chance to ask about habits such as pacifier use or thumb sucking."
-          ]
-        },
-        {
-          "title": "How to prepare your child",
-          "paragraphs": [
-            "You can write down your questions, tell the team about any health concerns and, when possible, choose a time of day when your child is well rested. The ADA explains that the exam is adapted to the child's age; with young children it can be done with a parent close by."
-          ]
-        },
-        {
-          "title": "After the first visit",
-          "paragraphs": [
-            "How often your child needs checkups depends on the professional's evaluation. The goal is to support healthy growth and help prevent cavities with guidance suited to each child."
-          ]
-        }
-      ],
-      "sources": "[ADA, baby's first dental visit](https://www.mouthhealthy.org/life-stages/babies-and-kids/first-dental-visit-for-baby); [NIDCR, tooth decay](https://www.nidcr.nih.gov/health-info/tooth-decay)."
-    },
-    {
       "key": "professional-dental-cleaning",
+      "image": "",
+      "imageAlt": "",
       "category": "cleanings-and-extractions",
       "title": "Professional dental cleaning: what it adds to your daily care",
       "excerpt": "Brushing is essential, but built-up tartar needs to be removed with a professional cleaning.",
@@ -301,6 +350,8 @@
     },
     {
       "key": "extractions-and-wisdom-teeth",
+      "image": "",
+      "imageAlt": "",
       "category": "cleanings-and-extractions",
       "title": "Extractions and wisdom teeth: how the decision is made",
       "excerpt": "Not every wisdom tooth needs to be removed. The decision is based on the exam and the tests and X-rays the dentist orders.",

@@ -1,20 +1,24 @@
+import { clinic } from '@/content/clinic'
+import { hrefOf } from '@/config/routes'
 import { home } from '@/content/home'
+import { ui } from '@/content/ui'
+import { useLang } from '@/lib/lang'
 import { Link } from '@/lib/router'
 
-const pages = home.header.nav.flatMap((n): { label: string; href: string }[] => ('items' in n ? [...n.items] : [n])).filter((n) => n.href !== '/' && n.href !== '/about')
-
 export default function NotFound() {
+  const lang = useLang()
+  const t = ui[lang].notFound
+  const pages = home[lang].header.nav.flatMap((n) => ('items' in n ? n.items : [n])).filter((n) => n.to !== 'home' && n.to !== 'about').map((n) => ({ label: n.label, href: hrefOf(n.to, lang) }))
   return (
     <section className="sec wrap pg">
-      <h1 className="h2">Page not found</h1>
-      <p className="nf-text">We could not find that page. It may have moved, or the address may have a typo.</p>
+      <h1 className="h2">{t.title}</h1>
+      <p className="nf-text">{t.text}</p>
       <div className="hero-cta nf-cta">
-        <Link className="btn" href="/">Back to Home</Link>
-        <Link className="btn btn-ghost" href="/contact#appointment">Request an appointment</Link>
+        <Link className="btn" href={hrefOf('home', lang)}>{t.back}</Link>
+        <Link className="btn btn-ghost" href={clinic.bookingUrl}>{t.request}</Link>
       </div>
-      {/* NUEVO, para aprobación: "Try one of these pages." */}
-      <nav className="nf-pages" aria-label="Try one of these pages.">
-        <p>Try one of these pages.</p>
+      <nav className="nf-pages" aria-label={t.try}>
+        <p>{t.try}</p>
         <ul>{pages.map((n) => <li key={n.href}><Link href={n.href}>{n.label}</Link></li>)}</ul>
       </nav>
     </section>

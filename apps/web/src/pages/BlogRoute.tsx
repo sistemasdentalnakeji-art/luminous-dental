@@ -1,18 +1,22 @@
 import { useEffect } from 'react'
-import { notFoundTitle } from '@/config/routes'
-import { articleOf, blogPath, categoryOf } from '@/lib/blog'
+import { blogKeyOf, langOfPath, notFoundTitle } from '@/config/routes'
+import { blogApi } from '@/lib/blog'
 import { BlogArticle, BlogCategory, BlogHub } from '@/pages/Blog'
 import NotFound from '@/pages/NotFound'
 
-// Todo lo que está bajo /blog, en un archivo aparte del resto del sitio (los textos del blog son los datos más pesados).
+// Todo lo que está bajo /en/blog y /es/blog, en un archivo aparte del resto del sitio (los textos del blog son los datos más pesados).
 const name = 'Luminous Dental'
 
 export default function BlogRoute({ path }: { path: string }) {
-  const key = path.startsWith('/blog/') ? path.slice('/blog/'.length) : ''
-  const category = categoryOf(key)
-  const article = articleOf(key)
-  const found = path === blogPath() || !!category || !!article
-  const title = category ? `${category.name} | ${name} Blog` : article ? `${article.title} | ${name}` : found ? `Blog | ${name}` : notFoundTitle
+  const lang = langOfPath(path)
+  const slug = path.split('/')[3] ?? '' // /<lang>/blog/<slug>
+  const key = slug ? blogKeyOf(lang, slug) : undefined
+  const { categoryOf, articleOf } = blogApi(lang)
+  const category = key ? categoryOf(key) : undefined
+  const article = key ? articleOf(key) : undefined
+  const found = !slug || !!category || !!article
+  const blogName = lang === 'es' ? `Blog de ${name}` : `${name} Blog`
+  const title = category ? `${category.name} | ${blogName}` : article ? `${article.title} | ${name}` : found ? `Blog | ${name}` : notFoundTitle[lang]
   useEffect(() => {
     document.title = title
   }, [title])
@@ -20,4 +24,3 @@ export default function BlogRoute({ path }: { path: string }) {
   if (article) return <BlogArticle article={article} />
   return found ? <BlogHub /> : <NotFound />
 }
-

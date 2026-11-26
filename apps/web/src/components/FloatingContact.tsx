@@ -7,6 +7,8 @@ import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Icon } from '@/components/Icon'
 import { clinic } from '@/content/clinic'
 import { home } from '@/content/home'
+import { ui } from '@/content/ui'
+import { useLang } from '@/lib/lang'
 import { setMotionPaused, useMotionPaused } from '@/lib/motion'
 
 const R = 27 // radio del aro (viewBox 60×60)
@@ -35,6 +37,8 @@ const WaLogo = () => (
 )
 
 export function FloatingContact() {
+  const lang = useLang()
+  const t = ui[lang]
   const ring = useRef<SVGCircleElement>(null)
   const paused = useMotionPaused()
   const [bubble, setBubble] = useState(false)
@@ -69,7 +73,7 @@ export function FloatingContact() {
   }, [])
 
   const waNumber = clinic.whatsapp?.replace(/\D/g, '')
-  const label = paused ? home.footer.motion.play : home.footer.motion.pause // igual que el botón del pie
+  const label = paused ? home[lang].footer.motion.play : home[lang].footer.motion.pause // igual que el botón del pie
   return (
     <div className="float-contact">
       <button type="button" className="float-contact__pause" data-paused={paused || undefined} aria-label={label} title={label} onClick={() => setMotionPaused(!paused)}>
@@ -83,7 +87,7 @@ export function FloatingContact() {
       <button
         type="button"
         className="float-contact__top"
-        aria-label="Back to top"
+        aria-label={t.backToTop}
         // Con la pausa activa el CSS global `scroll-behavior: smooth` sigue mandando (aceptado); con reduce-motion el salto es instantáneo.
         onClick={() => scrollTo({ top: 0, behavior: paused || matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })}
       >
@@ -103,20 +107,20 @@ export function FloatingContact() {
       <div className="float-contact__wa-wrap">
         {bubble && (
           <div className="float-contact__bubble" role="status">
-            <button type="button" className="float-contact__close" aria-label="Close notice" onClick={() => setBubble(false)}>
+            <button type="button" className="float-contact__close" aria-label={t.closeNotice} onClick={() => setBubble(false)}>
               <Icon name="close" size={14} />
             </button>
-            <strong>Looking for a treatment?</strong>
-            <span>Message us on WhatsApp!</span>
+            <strong>{t.waBubbleTitle}</strong>
+            <span>{t.waBubbleText}</span>
           </div>
         )}
         {waNumber ? (
-          <a className="float-contact__wa" href={`https://wa.me/${waNumber}`} target="_blank" rel="noopener noreferrer" aria-label={`${clinic.name} on WhatsApp`}>
+          <a className="float-contact__wa" href={`https://wa.me/${waNumber}`} target="_blank" rel="noopener noreferrer" aria-label={t.socialOn(clinic.name, 'WhatsApp')}>
             <Coin><WaLogo /></Coin>
           </a>
         ) : (
           // Sin número: no interactiva (sin enlace muerto).
-          <span className="float-contact__wa wa-soon" role="img" aria-label="WhatsApp (coming soon)">
+          <span className="float-contact__wa wa-soon" role="img" aria-label={t.whatsappSoon}>
             <Coin><WaLogo /></Coin>
           </span>
         )}

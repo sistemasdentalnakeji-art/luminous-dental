@@ -1,12 +1,13 @@
 // Buscador «Find your plan» y muro de 24 logos en cuadritos blancos (docs/diseno-segunda-ronda-23nov.md, B · «La tarjeta»). Estilos en styles/insurance.css.
-// variant="home": tarjeta de adorno (sin buscador) y el muro de logos colapsado (12 / 9 / 8 fichas según el ancho, lo decide el CSS); el texto y el botón «See all insurance plans» van bajo la tarjeta y llevan a /insurance-financing.
-// variant="full" (/insurance-financing, paso 1): buscador simple y muro completo, sin botón.
-// Movimiento: una sola entrada al llegar a pantalla (la tarjeta sube y las fichas se reparten);
-// con reducir movimiento o la pausa todo queda visible y quieto (insurance.css).
+// variant="home": tarjeta de adorno (sin buscador) y el muro colapsado (12 / 9 / 8 fichas según el ancho, lo decide el CSS); el texto y el botón «See all insurance plans» van bajo la tarjeta y llevan a /insurance.
+// variant="full" (/insurance): buscador simple y muro completo, sin botón.
+// Movimiento (home): una sola entrada al llegar a pantalla (la tarjeta sube y las fichas se reparten); con reducir movimiento o la pausa todo queda visible y quieto (insurance.css).
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { hrefOf } from '@/config/routes'
 import { clinic } from '@/content/clinic'
 import { home } from '@/content/home'
-import { insurers, insuranceText as T } from '@/content/insurers'
+import { insurers, insuranceText } from '@/content/insurers'
+import { useLang } from '@/lib/lang'
 import { Link } from '@/lib/router'
 
 // Sin mayúsculas, sin acentos y sin espacios: «blue cross» encuentra «Premera Blue Cross».
@@ -14,17 +15,13 @@ const normalize = (s: string) => s.normalize('NFD').replace(/\p{M}/gu, '').toLow
 const base = import.meta.env.BASE_URL
 
 export function InsurancePlans({ variant = 'full' }: { variant?: 'home' | 'full' }) {
+  const lang = useLang()
+  const T = insuranceText[lang]
   const home_ = variant === 'home'
   const [query, setQuery] = useState('')
   const [seen, setSeen] = useState(false)
-  const input = useRef<HTMLInputElement>(null)
   const root = useRef<HTMLDivElement>(null)
-  const q = query.trim()
-  const key = normalize(q)
-  const matches = new Set(insurers.filter(([name]) => normalize(name).includes(key)).map(([name]) => name))
-  const none = matches.size === 0
-  const count = !q ? T.countAll(insurers.length) : none ? T.countNone(q) : T.countSome(matches.size, q)
-
+  const input = useRef<HTMLInputElement>(null)
   useEffect(() => {
     const el = root.current
     if (!home_ || !el || !('IntersectionObserver' in window)) return setSeen(true)
@@ -32,6 +29,12 @@ export function InsurancePlans({ variant = 'full' }: { variant?: 'home' | 'full'
     io.observe(el)
     return () => io.disconnect()
   }, [home_])
+
+  const q = query.trim()
+  const key = normalize(q)
+  const matches = new Set(insurers.filter(([name]) => normalize(name).includes(key)).map(([name]) => name))
+  const none = matches.size === 0
+  const count = !q ? T.countAll(insurers.length) : none ? T.countNone(q) : T.countSome(matches.size, q)
 
   const search = (
     <div className="ins-find">
@@ -62,7 +65,7 @@ export function InsurancePlans({ variant = 'full' }: { variant?: 'home' | 'full'
           <p className="ins-empty__title">{T.emptyTitle(q)}</p>
           <p>{T.emptyText}</p>
           <div className="ins-empty__actions">
-            <a className="btn" href={clinic.phone.href}>{home.footer.phone.label}</a>
+            <a className="btn" href={clinic.phone.href}>{home[lang].footer.phone.label}</a>
             <button type="button" className="tlink" onClick={() => { setQuery(''); input.current?.focus() }}>{T.showAll}</button>
           </div>
         </div>
@@ -75,21 +78,19 @@ export function InsurancePlans({ variant = 'full' }: { variant?: 'home' | 'full'
   return (
     <div ref={root} className={`ins__grid ins--live${seen ? ' is-in' : ''}`}>
       <div className="ins__left">
-      <div className="ins-card">
-        <div className="ins-card__top">
-          <img className="ins-card__logo" src={`${base}logo.webp`} alt="" width="200" height="114" decoding="async" />
-          <span className="ins-card__chip" aria-hidden="true" />
+        <div className="ins-card">
+          <div className="ins-card__top">
+            <img className="ins-card__logo" src={`${base}logo.webp`} alt="" width="200" height="114" decoding="async" />
+            <span className="ins-card__chip" aria-hidden="true" />
+          </div>
+          <span className="ins-card__dots" aria-hidden="true">4021 7302 5600 2026</span>
         </div>
-        <span className="ins-card__dots" aria-hidden="true">4021 7302 5600 2026</span>
+        <div className="ins-more">
+          <p>{T.help}</p>
+          <Link href={hrefOf('insurance', lang)}>{T.seeAll}</Link>
+        </div>
       </div>
-      <div className="ins-more">
-        <p>{T.help}</p>
-        <Link href="/insurance-financing">{T.seeAll}</Link>
-      </div>
-      </div>
-      <div className="ins__side">
-        {wall}
-      </div>
+      <div className="ins__side">{wall}</div>
     </div>
   )
 }

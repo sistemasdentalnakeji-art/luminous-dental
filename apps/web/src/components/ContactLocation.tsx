@@ -1,10 +1,12 @@
 import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react'
 import { Icon, type IconName } from '@/components/Icon'
+import { Hours } from '@/components/Hours'
 import { SocialLinks } from '@/components/SocialLinks'
 import { VegasSign } from '@/components/VegasSign'
 import { clinic } from '@/content/clinic'
 import { home } from '@/content/home'
-import { locationText as T } from '@/content/location'
+import { locationText } from '@/content/location'
+import { useLang } from '@/lib/lang'
 
 // El mapa (datos del dibujo + tarjeta moneda) carga aparte, solo cuando su lugar está a una pantalla y media de verse; mientras tanto su caja mantiene la altura (.loc-map min-height).
 const LocationMap = lazy(() => import('@/components/LocationMap').then((m) => ({ default: m.LocationMap })))
@@ -36,14 +38,16 @@ function Item({ icon, label, children }: { icon: IconName; label: string; childr
 
 /** Mismo diseño que el inicio de Dental Nakeji: introducción, tarjeta de mapa que se expande y tarjetas de contacto (en celular: letrero, tarjeta de contacto y al final la ficha del mapa). */
 export function ContactLocation() {
-  const { footer } = home
+  const lang = useLang()
+  const { footer } = home[lang]
+  const T = locationText[lang]
   return (
     <section className="wrap loc-sec" id="location" aria-labelledby="loc-h">
       <div className="loc-grid">
         <div className="loc-head">
-          <h2 className="sr-only" id="loc-h">{T.title}</h2>
-          <div className="loc-sign"><VegasSign /></div>
-        </div>
+            <h2 className="sr-only" id="loc-h">{T.title}</h2>
+            <div className="loc-sign"><VegasSign /></div>
+          </div>
         <NearScreen><LocationMap name={clinic.name} /></NearScreen>
         <div className="loc-contact loc-card">
           <address>
@@ -54,6 +58,7 @@ export function ContactLocation() {
               </Item>
               <Item icon="phone" label={T.phoneLabel}><a className="contact-item__value" href={footer.phone.href}>{footer.phone.label}</a></Item>
               <Item icon="mail" label={T.emailLabel}><a className="contact-item__value" href={footer.email.href}>{footer.email.label}</a></Item>
+              <Item icon="clock" label={T.hoursLabel}><Hours /></Item>
             </ul>
           </address>
           <div className="loc-card__social">

@@ -1,4 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
+import { hrefOf } from '@/config/routes'
+import { ui } from '@/content/ui'
+import { useLang } from '@/lib/lang'
 import { Link } from '@/lib/router'
 
 // El logo oficial, tal cual, encendido como letrero de neón en el bloque de marca del pie. Todo el brillo es CSS (footer-city.css).
@@ -21,6 +24,7 @@ export function useSeenOnce<T extends Element>(threshold: number) {
 }
 
 export function NeonLogo() {
+  const lang = useLang()
   const [ref, lit] = useSeenOnce<HTMLDivElement>(0.6)
   // La respiración solo corre con el letrero en pantalla: data-off la pausa (atributo propio, React no lo pisa).
   useEffect(() => {
@@ -32,7 +36,7 @@ export function NeonLogo() {
   }, [ref])
   return (
     <div ref={ref} className={`neon ${lit ? 'lit' : 'unlit'}`}>
-      <Link href="/" aria-label="Luminous Dental, home">
+      <Link href={hrefOf('home', lang)} aria-label={ui[lang].homeAria}>
         <img className="neon-off" src={logo} alt="" width={520} height={297} />
         <img className="neon-glow" src={logo} alt="" width={520} height={297} />
         <img className="neon-on" src={logo} alt="" width={520} height={297} />

@@ -5,7 +5,9 @@ import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Marquee } from '@/components/Marquee'
 import { Stars } from '@/components/Stars'
 import { reviewsSource } from '@/config/reviews'
-import { reviewsText as T, type Review } from '@/content/reviews'
+import { reviewsText, type Review } from '@/content/reviews'
+import { ui } from '@/content/ui'
+import { useLang } from '@/lib/lang'
 import { useMotionPaused } from '@/lib/motion'
 import { useGoogleReviews } from '@/lib/useGoogleReviews'
 
@@ -41,7 +43,12 @@ function GoogleG({ size }: { size: number }) {
   )
 }
 
+// Colores del avatar sin foto (como Google): blanco sobre cada uno >= 4.5:1; el color sale del nombre, así no cambia en cada carga.
+const AVATAR_COLORS = ['#1a73e8', '#c5221f', '#188038', '#b3470a', '#8430ce', '#c2185b', '#00796b', '#5f6368']
+const avatarColor = (name: string) => AVATAR_COLORS[[...name.trim().toLowerCase()].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7) % AVATAR_COLORS.length]
+
 function ReviewCard({ review, index }: { review: Review; index: number }) {
+  const T = reviewsText[useLang()]
   return (
     <article className="review-card" style={{ '--i': index } as CSSProperties}>
       <div className="review-card__top"><GoogleG size={22} /></div>
@@ -49,7 +56,7 @@ function ReviewCard({ review, index }: { review: Review; index: number }) {
         {review.photoUrl ? (
           <img className="review-card__avatar" src={review.photoUrl} width={48} height={48} alt="" loading="lazy" referrerPolicy="no-referrer" />
         ) : (
-          <span className="review-card__avatar" aria-hidden="true">{review.author.trim().charAt(0).toUpperCase()}</span>
+          <span className="review-card__avatar" style={{ background: avatarColor(review.author) }} aria-hidden="true">{review.author.trim().charAt(0).toUpperCase()}</span>
         )}
         <div className="review-card__who">
           <h3 className="review-card__name">{review.authorUrl ? <a href={review.authorUrl} target="_blank" rel="noopener noreferrer">{review.author}</a> : review.author}</h3>
@@ -57,13 +64,15 @@ function ReviewCard({ review, index }: { review: Review; index: number }) {
           {review.relativeTime && <p className="review-card__time">{review.relativeTime}</p>}
         </div>
       </div>
-      <p className="review-card__text">{review.text}</p>
-      {review.googleUrl && <a className="review-card__more" href={review.googleUrl} target="_blank" rel="noopener noreferrer">Read on Google</a>}
+      <p className="review-card__text" lang={review.lang}>{review.text}</p>
+      {review.googleUrl && <a className="review-card__more" href={review.googleUrl} target="_blank" rel="noopener noreferrer">{T.readOnGoogle}</a>}
     </article>
   )
 }
 
 export function Reviews() {
+  const lang = useLang()
+  const T = reviewsText[lang]
   const reviews = useGoogleReviews().slice(0, 8)
   const [paused, setPaused] = useState(false)
   const allPaused = useMotionPaused()
@@ -92,7 +101,7 @@ export function Reviews() {
                 {/* Botón dorado y cursor animado que lo «presiona» (como en Dental Nakeji); el cursor es decorativo. */}
                 <div className="mac-window__action">
                   <a className="mac-window__btn" href={reviewsSource.profileUrl} target="_blank" rel="noopener noreferrer">
-                    {T.cta}<span className="sr-only"> (opens in a new tab)</span>
+                    {T.cta}<span className="sr-only"> {ui[lang].opensNewTab}</span>
                   </a>
                   <svg className="mac-window__cursor" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                     <path d="M5 3l14 7-6 2-2 6z" fill="#fff" stroke="#0b1220" strokeWidth="1.4" strokeLinejoin="round" />
@@ -117,11 +126,11 @@ export function Reviews() {
         </button>
       </div>
       <div className="reviews-rows">
-        <Marquee label={`${T.carousel}, first row`} items={cards} direction="ltr" secondsPerCard={22} paused={stopped} />
+        <Marquee label={`${T.carousel}, ${T.firstRow}`} items={cards} direction="ltr" secondsPerCard={22} paused={stopped} />
         {/* Siempre dos filas (pedido de la dueña, 23-11-2026). Con pocas reseñas reales se repiten, empezando en otra tarjeta; no se inventan reseñas. */}
         {/* Misma lista repetida: se oculta a lectores de pantalla y al teclado para que no se oigan 6 tarjetas. */}
         <div style={{ display: 'contents' }} aria-hidden="true" inert>
-          <Marquee label={`${T.carousel}, second row`} items={bottom} direction="rtl" secondsPerCard={26} paused={stopped} />
+          <Marquee label={`${T.carousel}, ${T.secondRow}`} items={bottom} direction="rtl" secondsPerCard={26} paused={stopped} />
         </div>
       </div>
     </section>

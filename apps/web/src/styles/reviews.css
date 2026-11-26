@@ -132,3 +132,6 @@ a.contact-item__value:hover{color:var(--color-sky)}
 .pg:has(+ .loc-sec) h1.h2{font-size:clamp(36px,3.6vw,52px)}
 .pg:has(+ .loc-sec) h1.h2::after{margin-top:14px}
 .contact-item{padding-block:6px}
+
+/* el letrero solo anima mientras está en pantalla (components/VegasSign.tsx) */
+.vsign--off .vsign__star,.vsign--off .vsign__bulb{animation-play-state:paused}

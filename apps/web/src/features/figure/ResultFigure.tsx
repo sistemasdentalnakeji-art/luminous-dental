@@ -1,20 +1,22 @@
-import { useEffect, useRef, useState } from 'react'
-import { figureText as T } from '@/content/figure'
-import { dynSvg, sceneState, setView } from './engine.js'
+import { useEffect, useId, useRef, useState } from 'react'
+import { figureText } from '@/content/figure'
+import { useLang } from '@/lib/lang'
+import { dynSvg, sceneState, setScope, setView } from './engine.js'
+import { dwellOf, makeGlide } from './glide.js'
 import { useMotionPaused } from '@/lib/motion'
 import { type ServiceId, indexOf, projection, resultSvg, services } from './scene'
 import './figure.css'
 
-const DWELL = 1.8 // segundos en cada paso
-const DWELL_LAST = 3.2 // segundos en el resultado terminado
 
 /**
- * Un servicio flotando sobre su molde transparente, que reproduce toda su animación en bucle (cada paso, del inicio al resultado),
+ * Un servicio flotando sobre su molde transparente, que reproduce toda su animación en bucle (cada paso, del inicio al resultado; `DWELL`/`DWELL_LAST` en glide.js: 3.5 s por paso y 5 s en el resultado; la pieza nueva cae y se asienta),
  * sin controles de pasos y sin tarjeta. Solo corre mientras está en pantalla (y, en un carrusel, mientras su diapositiva es la visible);
  * con movimiento reducido se queda quieta en el último paso. Un botón Pausa/Reproducir detiene el bucle (WCAG 2.2.2).
  */
 export default function ResultFigure({ id, name }: { id: ServiceId; name: string }) {
+  const T = figureText[useLang()]
   const ref = useRef<HTMLDivElement>(null)
+  const uid = 'res' + useId().replace(/:/g, '')
   const [paused, setPaused] = useState(false)
   const pausedRef = useRef(false)
   const allPaused = useMotionPaused()
@@ -24,11 +26,11 @@ export default function ResultFigure({ id, name }: { id: ServiceId; name: string
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    el.innerHTML = resultSvg(id)
+    el.innerHTML = resultSvg(id, uid)
     const dyn = el.querySelector('[data-dyn]')!
     const idx = indexOf(id)
     const last = services[idx].steps.length - 1
-    const dwell = (i: number) => (i === last ? DWELL_LAST : DWELL)
+    const dwell = (i: number) => dwellOf(i, last)
     const total = services[idx].steps.reduce((a, _, i) => a + dwell(i), 0)
     const stepAt = (c: number) => {
       let x = c
@@ -38,13 +40,17 @@ export default function ResultFigure({ id, name }: { id: ServiceId; name: string
       }
       return last
     }
+    const g = makeGlide(last)
     const reduce = matchMedia('(prefers-reduced-motion: reduce)')
     setStill(reduce.matches)
     const P = projection(false).P
-    let t = last, clock = 0, prev = 0, frame = 0, visible = false
+    let clock = 0, prev = 0, frame = 0, visible = false, shown = -1
     const draw = () => {
-      setView(P) // el motor tiene una sola cámara; todas las figuras de la home usan esta
-      dyn.innerHTML = dynSvg(sceneState(idx, t))
+      if (g.t === shown) return
+      shown = g.t
+      setView(P) // el motor tiene una sola cámara y un solo prefijo de ids; todas las figuras de la home usan esta cámara
+      setScope(uid)
+      dyn.innerHTML = dynSvg(sceneState(idx, g.t, g.dir))
     }
     const tick = (now: number) => {
       frame = requestAnimationFrame(tick)
@@ -53,7 +59,8 @@ export default function ResultFigure({ id, name }: { id: ServiceId; name: string
       prev = now
       if (pausedRef.current) return
       clock = (clock + dt) % total
-      t += (stepAt(clock) - t) * (1 - Math.exp(-dt / 0.3))
+      g.aim(stepAt(clock))
+      g.tick(dt)
       draw()
     }
     const stop = () => {
@@ -64,7 +71,7 @@ export default function ResultFigure({ id, name }: { id: ServiceId; name: string
       if (frame || reduce.matches) return
       prev = 0
       clock = 0
-      t = 0
+      g.snap(0)
       draw()
       frame = requestAnimationFrame(tick)
     }
@@ -72,7 +79,7 @@ export default function ResultFigure({ id, name }: { id: ServiceId; name: string
       setStill(reduce.matches)
       if (reduce.matches) {
         stop()
-        t = last
+        g.snap(last)
         draw()
       } else if (visible) start()
     }
@@ -83,7 +90,7 @@ export default function ResultFigure({ id, name }: { id: ServiceId; name: string
         if (visible) start()
         else {
           stop()
-          t = last
+          g.snap(last)
           draw() // fuera de vista descansa en el resultado
         }
       },
@@ -96,7 +103,7 @@ export default function ResultFigure({ id, name }: { id: ServiceId; name: string
       io.disconnect()
       reduce.removeEventListener('change', onMotion)
     }
-  }, [id])
+  }, [id, uid])
 
   return (
     <div className="result-wrap">

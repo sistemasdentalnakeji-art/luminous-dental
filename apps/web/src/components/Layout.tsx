@@ -1,31 +1,27 @@
-import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Backdrop } from '@/components/Backdrop'
 import { BrandIcon } from '@/components/BrandIcon'
 import { Header } from '@/components/Header'
 import { Icon } from '@/components/Icon'
+import { LanguageSwitch } from '@/components/LanguageSwitch'
 import { FloatingContact } from '@/components/FloatingContact'
 import { WhatsAppLink } from '@/components/WhatsAppLink'
 import { NeonLogo } from '@/components/NeonLogo'
-import { clinic, serviceHref } from '@/content/clinic'
+import { hrefOf, targetHref } from '@/config/routes'
+import { clinic } from '@/content/clinic'
 import { home } from '@/content/home'
+import { servicesOf } from '@/content/services'
+import { ui } from '@/content/ui'
 import { setMotionPaused, useMotionPaused } from '@/lib/motion'
-import { legalText } from '@/content/legal'
+import { useLang } from '@/lib/lang'
 import { Link } from '@/lib/router'
 
-const FooterCity = lazy(() => import('@/components/FooterCity')) // carga aparte: no pesa en la primera pantalla
-const { header, footer } = home
 const year = new Date().getFullYear()
-
-const Ridge = ({ d1, d2, d3 }: { d1: string; d2: string; d3: string }) => (
-  <svg className="ftr-ridge" viewBox="0 30 1440 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-    <path className="ridge-far" style={{ stroke: 'none' }} d={d1} />
-    <path className="ridge-line" d={d2} />
-    <path className="ridge-near" d={d3} />
-  </svg>
-)
 
 /** Solo celular (docs/mejoras-1-plan.md 2.1): los botones de llamar y pedir cita quedan a la mano después de la primera pantalla y se ocultan mientras el formulario está a la vista. */
 function ActionBar({ path, appointmentHref }: { path: string; appointmentHref: string }) {
+  const lang = useLang()
+  const { header } = home[lang]
   const [past, setPast] = useState(false)
   const [formInView, setFormInView] = useState(false)
   useEffect(() => {
@@ -59,8 +55,8 @@ function ActionBar({ path, appointmentHref }: { path: string; appointmentHref: s
   }, [past, formInView])
   return (
     <div className="actionbar" hidden={hidden}>
-      <a className="btn btn-ghost" href={clinic.phone.href}>Call or text</a>
-      <a className="btn" href={appointmentHref}>{header.cta.label}</a>
+      <a className="btn btn-ghost" href={clinic.phone.href}>{ui[lang].callOrText}</a>
+      <a className="btn" href={appointmentHref} target="_blank" rel="noopener noreferrer">{header.cta.label}</a>
     </div>
   )
 }
@@ -68,6 +64,11 @@ function ActionBar({ path, appointmentHref }: { path: string; appointmentHref: s
 const current = (href: string, path: string) => (href === path ? 'page' : undefined)
 
 export function Layout({ path, appointmentHref, children }: { path: string; appointmentHref: string; children: ReactNode }) {
+  const lang = useLang()
+  const { header, footer } = home[lang]
+  const t = ui[lang]
+  const services = servicesOf(lang)
+  const faqHref = hrefOf('faq', lang) // FAQ va en la línea final del pie
   const main = useRef<HTMLElement>(null)
   const shown = useRef(path)
   const motionPaused = useMotionPaused()
@@ -83,57 +84,62 @@ export function Layout({ path, appointmentHref, children }: { path: string; appo
         <a className="skip" href="#main" onClick={(e) => { e.preventDefault(); main.current?.focus() }}>{header.skipLink}</a>
         <Header path={path} appointmentHref={appointmentHref} />
         <main id="main" ref={main} tabIndex={-1}>{children}</main>
-        <Ridge
-          d1="M0 80 L90 58 L190 78 L300 44 L400 72 L520 36 L620 66 L730 50 L840 84 L950 42 L1050 72 L1150 38 L1250 70 L1350 52 L1440 76 L1440 130 L0 130Z"
-          d2="M0 80 L90 58 L190 78 L300 44 L400 72 L520 36 L620 66 L730 50 L840 84 L950 42 L1050 72 L1150 38 L1250 70 L1350 52 L1440 76"
-          d3="M0 108 L140 90 L260 106 L380 86 L500 108 L640 92 L760 110 L900 88 L1030 106 L1160 90 L1290 108 L1440 94 L1440 130 L0 130Z"
-        />
-        {/* Pie de página armado como el de Dental Nakeji: marca, columnas de enlaces, contacto y una línea final. */}
+        {/* Pie (26-11): fondo fijo y quieto · marca, emergencias, redes e idioma · columnas (Servicios, Beneficios, Clínica, Legal, Contacto) · línea final con FAQ y pausa. */}
         <footer className="ftr">
-          {/* la ciudad es el fondo del pie: va detrás de todo el contenido */}
-          <Suspense fallback={<div className="fcity-slot" />}><FooterCity /></Suspense>
           <div className="wrap ftr-grid">
             <div className="ftr-brand">
               <NeonLogo />
               <p>{footer.tagline}</p>
-              <ul className="ftr-social" aria-label="Social media">
+              <a className="btn btn-ghost ftr-emg" href={clinic.phone.href}>
+                <Icon name="phone" size={18} />{footer.emergencyLine} <span className="ftr-emg__tel">{clinic.phone.label}</span>
+              </a>
+              <a className="btn ftr-book" href={footer.request.href} target="_blank" rel="noopener noreferrer">{footer.request.label}<span className="sr-only"> {t.opensNewTab}</span></a>
+              <ul className="ftr-social" aria-label={t.social}>
                 {footer.social.map((s) => (
                   <li key={s.href}>
-                    <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`${clinic.name} on ${s.label}`}>
+                    <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={t.socialOn(clinic.name, s.label)}>
                       <BrandIcon name={s.label === 'Instagram' ? 'instagram' : 'facebook'} size={44} />
                     </a>
                   </li>
                 ))}
                 <li><WhatsAppLink size={44} /></li>
               </ul>
+              <LanguageSwitch path={path} className="ftr-lang" />
             </div>
-            <nav aria-labelledby="ftr-services">
-              <h2 id="ftr-services">{footer.servicesHeading}</h2>
-              <ul>
-                {footer.services.map((name) => <li key={name}><Link href={serviceHref(name)}>{name}</Link></li>)}
-                <li><Link href="/services">{header.servicesOverview}</Link></li>
-              </ul>
-            </nav>
-            <nav aria-labelledby="ftr-clinic">
-              <h2 id="ftr-clinic">{footer.clinicHeading}</h2>
-              <ul>{footer.links.map((l) => <li key={l.href}><Link href={l.href === '#appointment' ? appointmentHref : l.href} aria-current={current(l.href, path)}>{l.label}</Link></li>)}</ul>
-            </nav>
-            <div className="ftr-contact">
-              <h2>{footer.contactHeading}</h2>
-              <address>
-                <a href={clinic.mapsUrl} target="_blank" rel="noopener noreferrer"><Icon name="pin" size={18} />{footer.address}</a>
-                <a href={footer.phone.href}><Icon name="phone" size={18} />{footer.phone.label}</a>
-                <a href={footer.email.href}><Icon name="mail" size={18} />{footer.email.label}</a>
-              </address>
+            <div className="ftr-links">
+              <nav aria-labelledby="ftr-services">
+                <h2 id="ftr-services">{footer.servicesHeading}</h2>
+                <ul>
+                  {footer.services.map((id) => <li key={id}><Link href={hrefOf(`service:${id}`, lang)}>{services.find((s) => s.id === id)?.name}</Link></li>)}
+                  <li><Link href={hrefOf('services', lang)}>{header.servicesOverview}</Link></li>
+                </ul>
+              </nav>
+              <nav aria-labelledby="ftr-benefits">
+                <h2 id="ftr-benefits">{footer.benefitsHeading}</h2>
+                <ul>{footer.benefits.map((l) => { const href = targetHref(l, lang); return <li key={href}><Link href={href} aria-current={current(href, path)}>{l.label}</Link></li> })}</ul>
+              </nav>
+              <nav aria-labelledby="ftr-clinic">
+                <h2 id="ftr-clinic">{footer.clinicHeading}</h2>
+                <ul>{footer.links.filter((l) => targetHref(l, lang) !== faqHref).map((l) => { const href = targetHref(l, lang); return <li key={href}><Link href={href} aria-current={current(href, path)}>{l.label}</Link></li> })}</ul>
+              </nav>
+              <nav aria-labelledby="ftr-legal">
+                <h2 id="ftr-legal">{footer.legalHeading}</h2>
+                <ul>{footer.legalLinks.map((l) => { const href = targetHref(l, lang); return <li key={href}><Link href={href} aria-current={current(href, path)}>{l.label}</Link></li> })}</ul>
+              </nav>
+              <div className="ftr-contact">
+                <h2>{footer.contactHeading}</h2>
+                <address>
+                  <a href={clinic.mapsUrl} target="_blank" rel="noopener noreferrer"><Icon name="pin" size={18} />{footer.address}</a>
+                  <a href={footer.phone.href}><Icon name="phone" size={18} />{footer.phone.label}</a>
+                  <a href={footer.email.href}><Icon name="mail" size={18} />{footer.email.label}</a>
+                </address>
+              </div>
             </div>
           </div>
           <div className="wrap ftr-legal">
             <span>© {year} {footer.legal}</span>
             <span>{footer.note}</span>
-            <nav className="ftr-legal__links" aria-label={legalText.footerNav}>
-              <Link href="/privacy-policy" aria-current={current('/privacy-policy', path)}>{legalText.privacyLabel}</Link>
-              <Link href="/terms-and-conditions" aria-current={current('/terms-and-conditions', path)}>{legalText.termsLabel}</Link>
-            </nav>
+            <Link href={faqHref}>{footer.links.find((l) => targetHref(l, lang) === faqHref)?.label}</Link>
             <button type="button" className="motion-toggle" onClick={() => setMotionPaused(!motionPaused)}>{motionPaused ? footer.motion.play : footer.motion.pause}</button>
           </div>
         </footer>

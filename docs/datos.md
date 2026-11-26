@@ -8,7 +8,7 @@ Marcas: **EXISTE** (hay dato real), **PARCIAL**, **FALTA** (no hay dato real en 
 | Dato | De dónde sale hoy | Estado | Notas |
 |---|---|---|---|
 | Clínica: nombre, dirección, teléfono, correo, redes | https://luminousdentallv.com/ y https://luminousdentallv.com/contact-us/ | EXISTE | Ya está en `content/clinic.ts`. Dato nuevo: https://luminousdentallv.com/patients-resources/ muestra **otro teléfono, (725) 291-5588**, distinto al (702) 805-8688. POR CONFIRMAR cuál es. |
-| Horario | Inicio y /patients-resources/: martes a sábado 8 a. m. a 5 p. m., domingo y lunes cerrado. /contact-us/: lunes 8-19, martes a viernes 8-18, sábado 8-13. Google Maps: ver `clinic.ts` | PARCIAL, **se contradice en 3 lugares** | Corrige una nota de `docs/decisiones.md`, que decía que el horario no aparece en la página oficial: sí aparece, pero con versiones distintas. Sigue POR CONFIRMAR; no se publica. |
+| Horario | **Confirmado por la dueña el 25-11-2026:** martes 4:00–8:00 p. m.; miércoles a sábado 8:00 a. m.–4:00 p. m.; domingo y lunes cerrado. Se escribe solo en `content/clinic.ts` (`hours`) y lo leen Contact, la ubicación del inicio y el pie. Las tres versiones del sitio oficial y de Google Maps (17-11) ya no valen. | **CONFIRMADO** | Ya se muestra. Si cambia, se edita solo `clinic.hours`. |
 | Calificación de Google | Inicio: 4.3 de 5, 17 reseñas | EXISTE | Está en `clinic.ts` con fecha. Cambia con el tiempo. |
 | Servicios | Menú y https://luminousdentallv.com/services/ ; páginas: /dentures-bridges/, /routine-dental-care/, /porcelain-veneers-crowns/, /cosmetic-bonding/, /dental-implants/, /teeth-whitening/, /general-dentistry/, /pediatric-dentistry/, /wisdom-removal/ | PARCIAL | Hay 11 nombres en `clinic.ts`. Solo hay un párrafo corto por servicio; sin precios ni detalle del procedimiento. Los enlaces de Orthodontics, Dental Appliances, Dental Cleaning y todo «Treatments» del pie apuntan a la página de blanqueamiento (/teeth-whitening-2, -3, -4): están mal. Invisalign & Braces y Restorative Services solo están en el pie. |
 | Doctor y equipo | https://luminousdentallv.com/our-team/ y /about-us/ | PARCIAL | Solo el Dr. Christian Hahn (dentista general, 4 años, UNLV, inglés). **Su foto es un gris vacío.** No hay otro personal. En las reseñas aparecen nombres de pila (Joshua, Anna, Dennis, Yessenia Zamora); eso no es una lista de equipo y no se usa como tal. |
@@ -17,7 +17,7 @@ Marcas: **EXISTE** (hay dato real), **PARCIAL**, **FALTA** (no hay dato real en 
 | Seguros | https://luminousdentallv.com/insurance-financing/ | EXISTE (lista) | 15 aseguradoras nombradas (Aetna, Blue Cross and Blue Shield, Cigna, Delta Dental, GEHA, Guardian, Humana, MetLife, United Healthcare, etc.). Hay faltas («United Cncordia») que se corrigen al copiar. No dice qué planes cubre ni si está «en red»: POR CONFIRMAR. La frase «afiliados a la mayoría de seguros privados» no se publica sin confirmar. |
 | Financiamiento y formas de pago | misma página | **FALTA** | Solo una frase general. Sin socios, plazos ni precios. POR CONFIRMAR con la clínica. |
 | Blog | https://luminousdentallv.com/blog-grid/ ; 4 entradas, todas del 1-05-2026: /your-trusted-family-dentist-in-las-vegas-care-for-all-ages-on-maryland-pkwy/, /dental-implants-vs-bridges-which-solution-is-best-for-your-missing-teeth-in-las-vegas/, /exploring-the-vibrant-local-culture-of-las-vegas/, /why-luminous-dental-is-your-best-choice-for-dental-care-in-las-vegas/ | EXISTE (4) | Hay que leer cada una antes de reusar (calidad y afirmaciones médicas, no verificado). La de «local culture» parece de relleno para buscadores. La página del blog tiene texto de relleno en la introducción. |
-| Citas | https://luminousdentallv.com/contact-us/ (los botones «Get Appointment» llevan ahí) | PARCIAL | En la lectura no se vieron campos del formulario; solo la casilla de consentimiento («I consent to my personal data being collected and stored as per the Privacy Policy»), cuyo enlace va a `#`. No hay sistema de citas. Los campos del formulario nuevo salen de `packages/types/src/appointment.ts`. |
+| Citas | https://luminousdentallv.com/contact-us/ (los botones «Get Appointment» llevan ahí) | PARCIAL | En la lectura no se vieron campos del formulario; solo la casilla de consentimiento («I consent to my personal data being collected and stored as per the Privacy Policy»), cuyo enlace va a `#`. No hay sistema de citas. Desde el 25-11-2026 la cita se agenda en Adit (`clinic.bookingUrl`); no hay formulario propio. |
 | Política de privacidad | https://luminousdentallv.com/privacy-policy/ | PARCIAL | Tiene texto, pero con «Lorem ipsum» mezclado. Dice que se recogen datos como nombre, teléfono, correo, historial dental/médico, seguro y pago, y que cumple HIPAA. **Nosotros no vamos a recoger casi nada de eso** (punto 3). Hay que reescribirla y que la revise la clínica o un abogado: no verificado. |
 | Alianza SAHARA Las Vegas | Inicio; enlace en `clinic.ts` | EXISTE | Enlace con código de promoción; confirmar que sigue vigente. |
 | Contadores («k», «%», «+») | Inicio | **FALTA** | Sin números; no se muestran. |
@@ -40,13 +40,13 @@ La herramienta que recibirá las solicitudes está **POR CONFIRMAR con Jadro**. 
 
 | Fase | Qué hace | Qué guarda | Estado |
 |---|---|---|---|
-| **1. Vista previa** | El formulario no envía nada; pide llamar al (702) 805-8688 | Nada | **Hecha** (`mode: 'preview'` en `config/booking.ts`) |
+| **1. Vista previa** | (Reemplazada el 25-11-2026: el formulario propio se borró; la cita se agenda y cobra en Adit.) | Nada | **Ya no aplica** |
 | **2. Aviso por correo** | Una función en el servidor valida la solicitud (`AppointmentRequest`), revisa el campo trampa y el límite por IP, y manda un correo a la clínica | Nada: llega el correo y listo | POR CONFIRMAR (servicio de correo y quién recibe) |
 | **3. Guardar y dar seguimiento** | La solicitud se guarda con estado `received` y pasa por `contacted`, `scheduled` o `cancelled`. Nacen `apps/api` y `packages/db` | Solo los campos de `AppointmentRequest` + `id`, `status`, fechas | POR CONFIRMAR; se llama al DBA de sitios (manual, sección 26) |
 | **4. Automatización** | La solicitud avisa a la herramienta elegida (un aviso automático, «webhook») para llamar, confirmar o agendar | Lo mismo que la fase 3 | POR CONFIRMAR con Jadro: herramienta y cuenta |
 | **5. Disponibilidad real** (opcional) | El paciente elige un horario libre | Lo mismo + hora elegida | Depende de la herramienta y del horario confirmado |
 
-Contrato para todas las fases: `packages/types/src/appointment.ts`. Un solo formato sirve de la fase 1 a la 5. Errores que el formulario debe saber manejar: datos mal escritos (indicando el campo), demasiados envíos y falla del servidor, con mensajes sencillos y sin detalles internos.
+Contrato para todas las fases (YA NO EXISTE desde el 25-11-2026: se borró `packages/types/src/appointment.ts` y todo el formulario). Un solo formato sirve de la fase 1 a la 5. Errores que el formulario debe saber manejar: datos mal escritos (indicando el campo), demasiados envíos y falla del servidor, con mensajes sencillos y sin detalles internos.
 
 ### Datos de paciente que NO se deben pedir
 - Historial médico o dental, alergias, medicinas, embarazo, síntomas detallados o fotos de la boca.
@@ -203,3 +203,72 @@ Alternativa más barata: quedarse en **B** (solo correo, sin guardar). Es más s
 - Pie: se quitó la franja «Ready for a smile that lasts?» y sus botones. About: sin textos nuevos (solo cambió el diseño de «Our story» y «What we stand for»).
 
 - 2026-11-23 · Aprobados por el Jefe con permiso de la dueña: «Learn more about this service», «Explore our services».
+
+## Beneficios: financiamiento y convenios (25-11-2026) · POR APROBAR
+Página `/insurance-financing` (se conserva la URL; el menú dice «Benefits») con 3 apartados: Insurance, Financing, Agreements. Una página por empresa en `/financing/sunbit`, `/cherry`, `/plexpay`, `/icreditworks`. Textos en `src/content/financing.ts`.
+
+**Logos oficiales** (`apps/web/public/benefits/`), descargados el 25-11-2026:
+- Sunbit (`sunbit.svg`): https://sunbit.com/wp-content/themes/sunbit/assets/images/logo.svg?v=2 (logo del encabezado del sitio oficial; su página de prensa https://sunbit.com/press/ bloquea descargas automáticas).
+- Cherry (`cherry.svg`): https://cdn.prod.website-files.com/681bf1d6f7dea459fe255c59/68252146834983973a92051f_cherry-logo-primary.svg (logo principal de https://withcherry.com).
+- PlexPay (`plexpay.png`, 2485×570): https://plexpay.com/assets/logo.png. La empresa real es **PlexPay** (plataforma de financiamiento y pagos para pacientes); `flexpay.com` redirige a `plexpay.com`. «FlexPay» no existe como empresa aparte: confirmar con la dueña que es esta.
+- iCreditWorks (`icreditworks.png`, 330×75, es el único tamaño publicado): https://assets.icreditworks.com/public/website/assets/dental/images/iCreditWorks%20Point%20of%20Care%20Lending@3x.png (imagen que usa icreditworks.com). Es pequeño: se ve algo suave en pantallas grandes; pedir el logo en alta a la empresa si se quiere más nítido.
+- SAHARA Las Vegas: sin logo. Sus sitios (saharalasvegas.com y stay.saharalasvegas.com) bloquean la descarga (403); el convenio se muestra con el nombre en texto.
+
+**Descripciones (de los sitios oficiales):** Sunbit, «pay-over-time» y el financiamiento lo ofrece Transportation Alliance Bank Inc. dba TAB Bank (Sunbit no es el prestamista); Cherry, planes de pago para pagar con el tiempo; PlexPay, «patient finance and payments platform»; iCreditWorks, «Point of Care Lending» (el único dato oficial que pude leer: su sitio es una app que no se puede leer sin navegador). No se pusieron tasas, plazos, montos ni requisitos.
+
+**POR APROBAR (textos nuevos):** título y texto de «Benefits»; textos de «Financing» (lead, nota de logos, «Learn more»); las líneas de una frase de cada tarjeta (`blurb`); los 4 pasos «How it works at our office» y el aviso «Approval, rates, and terms are set by…»; botones «Visit <empresa>»; «Partner benefit» y «Agreements». Convenios reutiliza el texto y enlace de SAHARA de `content/home.ts` (coverage.outOfTown).
+**POR CONFIRMAR con la clínica:** que de verdad trabaja con las 4 empresas y cómo se solicita cada una (hoy: «nuestro equipo te dice cómo aplicar»).
+
+## Ronda 25-11-2026 · servicios, horario, emergencias y Adit (Frontend 2) · POR APROBAR
+**Confirmado por la dueña (orden del 25-11):** horario (arriba); emergencias 24 horas; la clínica agenda y cobra en Adit (`https://booking.adit.com/ad197179-9227-4a53-bc36-fadaec746854`, un solo lugar: `clinic.bookingUrl`); la clínica NO ofrece Pediatric Dentistry (se quitó de todo el sitio, y `/services/pediatric-dentistry` ahora da «Page not found»); coronas no es relevante como destacado.
+**Textos nuevos POR APROBAR:**
+- Emergencias (`clinic.emergency`): «24/7 dental emergencies» · «Dental emergencies are attended any day, at any hour. Please call before you come.» · botón «Call now» + teléfono (APROBADO por la dueña 25-11, diseño y textos; ahora es sección propia en /contact, ya no aviso en pie ni ubicación). No dice que el doctor vive en la clínica (dato interno, no publicado).
+- Sección para agendar (`home.appointment`): «Book your appointment» · «Pick a day and time that work for you on our online booking page. Prefer to talk to someone? Call or text (702) 805-8688.» · botón «Book your appointment» (se abre en otra pestaña).
+- Nuevo servicio **All-on-4 & All-on-6** (`content/services.ts`, adaptado de Dental Nakeji, sin precios ni promesas): subtítulo, 3 puntos, «What are All-on-4 and All-on-6?» y su párrafo, el texto y los 3 puntos de la tarjeta destacada. El sitio oficial no tiene página de este servicio: POR CONFIRMAR que la clínica lo ofrece tal cual. Usa la figura de implantes (aún no tiene paso propio).
+- Destacados, pestañas nuevas: «All-on-4 & All-on-6», «Braces & Invisalign», etc. Orden por costo típico (dueña): All-on-4 & All-on-6, Dental Implants, Invisalign & Braces, Dentures & Bridges, Teeth Whitening. Se quitó Porcelain Veneers & Crowns de los destacados (ahora sale en la estrella).
+- Títulos que se cambiaron al quitar «whole family»/pediatría: «Everyday dental care you can count on» (estrella), «Dental services for every smile» (hub), «One office for your dental care» + su texto (About y inicio), «Preventive care planned around each patient.» (reemplaza «Care for patients of all ages.»), «for teens and adults» en ortodoncia.
+- Blog: la categoría pasó de «Orthodontics and pediatric dentistry» a «Orthodontics» (texto nuevo) y se borró el artículo «Your child's first dental visit».
+- Páginas legales: se quitaron las menciones al «formulario» (la cita se agenda en Adit); revisar con el abogado cómo describir Adit y el consentimiento de mensajes. El apartado «Children» (el sitio es para adultos) se dejó tal cual: es aviso legal, no un servicio.
+**Dudas para la dueña:** ¿la insignia «Most requested» de la tarjeta destacada sigue valiendo ahora que la primera pestaña es All-on-4 & All-on-6? ¿«whole family» (inicio/hub) debe volver o se queda fuera?
+
+## Ronda 26-11-2026 · Español (POR APROBAR)
+Todo el español del sitio (content/*.ts, blog.es.json, legales) es traducción nueva, de tú, sin revisar por la clínica. Las páginas legales en español además necesitan revisión legal. Las 3 reseñas de pacientes se muestran en su inglés original en /es/.
+
+## Preguntas frecuentes (26-11-2026, B3) · POR APROBAR
+Textos nuevos en `apps/web/src/content/faq.ts` (EN y ES): 12 preguntas en 5 temas (citas, servicios, pagos, seguros y convenios, emergencias). Usan solo horario, teléfono, Adit, financieras, SAHARA, 24/7 y dirección ya confirmados. POR CONFIRMAR (no escritos): plazo de cancelación, tolerancia de llegada tarde, depósito, edad mínima, garantías, formas de pago, número de WhatsApp. La respuesta de convenios menciona la página Convenios (la crea B2).
+
+## B2 · 26-11 · Textos nuevos POR APROBAR
+- content/benefitsHub.ts: hub de Beneficios (título, entrada, 3 tarjetas, ayuda) y entrada de Convenios, EN y ES.
+- content/servicesHub.ts: filtros «¿Qué necesitas hoy?» y qué servicios resalta cada uno (por confirmar con la clínica).
+- content/home.ts: «View all benefits» / «Ver todos los beneficios».
+
+## Ronda 26-11-2026 · B1 inicio, pie, formulario y Contact (Frontend 1) · POR APROBAR
+- Titular: «Emergency or smile makeover, we're here.» / «¿Emergencia o cambio de sonrisa? Aquí estamos.»; pastilla «Las Vegas · Emergencies 24/7»; texto «General, cosmetic and orthodontic care with Dr. Christian Hahn. Call any hour for a dental emergency, or book your visit online.»
+- Sección estrella «Your visit, one clear step at a time»: You call or book / We evaluate / You get a clear plan / We treat (textos en `content/home.ts`, `visit`). «Dr. Christian Hahn and the team look at your teeth and listen to what you need» y «go over insurance, financing and our agreements» son redacción nueva.
+- Convenios del inicio: «Agreements for our patients», «Beyond insurance, we team up with partners that help our patients.», «Visiting from out of town».
+- Formulario corto (`content/form.ts`): «Request your visit», aviso «This form does not save or send your details», errores y panel de gracias. Días ofrecidos: martes a sábado (del horario).
+- Pie: «24/7 dental emergencies» en una línea con el teléfono; columnas Benefits (Insurance, Financing, Agreements), Clinic (About, FAQ, Blog, Contact), Legal.
+
+## About rehecha (26-11-2026, B3 r2) · POR APROBAR
+Textos nuevos en `apps/web/src/content/about.ts` (EN y ES): encabezado corto, «lo que creemos» y valores (tomados de los aprobados del inicio), cierre «Ready for your visit? / ¿Lista tu visita?» con botón a cita. POR CONFIRMAR (no se muestran): cómo y cuándo empezó la clínica, misión y visión, más integrantes y fotos.
+
+## Ronda 26-11-2026 · B1 r3 (Frontend 1) · POR APROBAR
+- Reemplaza los textos del formulario de arriba. Sección «Book your visit» / «Reserva tu visita» (`content/bookVisit.ts`): «On our online booking page you choose your service and a time that works for you, and you get a confirmation. Prefer to talk to someone? Call or text us.», «Dental emergency? Call us any day, at any hour.», puntos Hours / Insurance («Our providers are affiliated with most private dental insurance.», texto del sitio oficial) / Financing («Payment options with Sunbit, Cherry, PlexPay and iCreditWorks.»), botón «Book your appointment». «You get a confirmation» depende de que Adit confirme: POR CONFIRMAR.
+- Emergencias (`clinic.emergency`): «What counts as an emergency» + «Severe tooth pain», «A broken or knocked-out tooth», «Swelling in the gums or face»; «Call us any time». ES en `content/clinic.ts`.
+
+## About · ronda 3 (26-11-2026) · textos nuevos, POR APROBAR (content/about.ts)
+- Titular: «Your teeth should last a lifetime.» / «Tus dientes deben durar toda la vida.» (frase ya aprobada del inicio y del pie).
+- Datos de la fila (salen de `clinic.ts` y `financing.ts`, no se escriben a mano): «24/7 · dental emergencies, any day, any hour» / «emergencias dentales, cualquier día, a cualquier hora»; «Las Vegas · 1212 S Maryland Pkwy, NV»; «{n} · dental services in one office» / «servicios dentales en un solo consultorio»; «{n} · financing partners, and we go over your insurance with you» / «aliados de financiamiento, y revisamos tu seguro contigo».
+- Formación del Dr. Hahn abreviada a «UNLV» (antes «University of Nevada, Las Vegas»).
+- «What we believe» / «Lo que creemos» pasa a frase grande (mismo texto de antes). Textos de valores y cierre sin cambios.
+- Se quitó la tarjeta «Where to find us» (la dirección va en la fila de datos). El teléfono del cierre usa el texto del encabezado («Call or text …»).
+- POR CONFIRMAR (no se muestra): historia/año de la clínica, misión y visión, más integrantes, aseguradoras aceptadas.
+
+- Dental Appliances (hub de servicios): la clínica no publica descripción; línea provisional «Ask our team about this service...» POR CONFIRMAR (content/servicesHub.ts).
+
+## C1 · 26-11-2026 · Contenido de servicios y blog (Frontend 1) · POR APROBAR
+- Servicios (`content/services.ts`, EN y ES): cada «Acerca del tratamiento» suma 1-2 frases generales (para quién, qué se revisa primero, cuidados posteriores) en rutina, dentaduras y puentes, limpieza, muelas del juicio, carillas y coronas, bonding, All-on-4/6, implantes y blanqueamiento. «Invisalign y brackets» ya tiene su texto (cómo funciona la ortodoncia, adaptado de Nakeji sin datos propios) y un tercer punto destacado. Sin precios, tiempos ni promesas.
+- «Dental Appliances / Aparatos dentales» sigue sin texto: la clínica no publica descripción (POR CONFIRMAR).
+- Blog: 2 artículos nuevos en EN y ES (`blog.en.json`, `blog.es.json`): «All-on-4 implants: a fixed arch on four implants» y «All-on-6 implants: how it differs from All-on-4», adaptados de Nakeji sin su marca, ciudad ni precios; fuente FDA. Sus direcciones en español están en `config/routes.ts` (`blogSlugs`). La página All-on-4 y All-on-6 ahora enlaza a «All-on-4 implants».
+- No se pasaron los artículos de Nakeji sobre odontopediatría, periodoncia y endodoncia: Luminous no ofrece esos servicios en su sitio.
+- No verificado: no se pudo leer luminousdentallv.com (las páginas probadas dieron 404); el texto sale de lo ya revisado en el sitio y del de Nakeji. Todo necesita revisión de la clínica.

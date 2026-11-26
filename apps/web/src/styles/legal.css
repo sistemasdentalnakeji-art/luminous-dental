@@ -1,26 +1,65 @@
 /* Páginas legales (23-11-2026, r3): índice fijo a la izquierda y una tarjeta de vidrio por sección, con los tokens del sitio. */
 .legal-head{max-width:760px;margin-bottom:clamp(28px,3.5vw,48px)}
 .legal-lead{margin-top:18px;font-size:var(--fs-body);line-height:1.6;color:var(--color-text2)}
-.legal-date{margin-top:10px;font-size:15px;color:var(--color-input-muted)}
+.legal-date{display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:9px 18px 9px 14px;border:1px solid var(--color-line-ui);border-radius:999px;background:var(--color-glass);font-size:15px;font-weight:600;color:var(--color-text)}
+.legal-date svg{color:var(--color-medic)}
 .legal-doc{display:grid;grid-template-columns:minmax(220px,300px) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:start}
-.legal-toc{position:sticky;top:calc(var(--hbar-h) + 16px);padding:20px;border:1px solid var(--color-line);border-radius:20px;background:var(--color-glass)}
-.legal-toc__label{margin:0 0 10px;font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--color-medic)}
+.legal-toc{position:sticky;top:calc(var(--hbar-h) + 16px);max-height:calc(100svh - var(--hbar-h) - 32px);overflow:auto;padding:22px 16px 18px;border:1px solid var(--color-line);border-radius:24px;background:radial-gradient(circle at 85% 0,rgba(47,99,173,.5),var(--color-glass) 70%)}
+.legal-toc__label{margin:0 8px 12px;padding-bottom:12px;border-bottom:1px solid var(--color-line);font:400 20px/1.2 var(--font-serif);color:#fff}
 .legal-toc ol{list-style:none;margin:0;padding:0;display:grid;gap:2px}
-.legal-toc a{display:block;padding:8px 12px;border-left:2px solid transparent;border-radius:0 10px 10px 0;color:var(--color-text);font-size:16px;line-height:1.3;text-decoration:none;transition:background-color .18s,color .18s}
+.legal-toc a{display:flex;align-items:center;gap:12px;min-height:40px;padding:8px 12px;border-radius:12px;color:var(--color-text);font-size:16px;line-height:1.3;text-decoration:none;transition:background-color .18s,color .18s}
 .legal-toc a:hover,.legal-toc a:focus-visible{background:rgba(255,255,255,.08);color:#fff}
-.legal-toc a[aria-current]{border-left-color:var(--color-medic);color:#fff;font-weight:600}
+.legal-toc a:focus-visible{outline:3px solid var(--color-medic);outline-offset:2px}
+.legal-toc a[aria-current]{background:rgba(52,191,204,.12);color:#fff;font-weight:600}
+.legal-toc__tick{flex:none;width:6px;height:6px;border-radius:50%;background:var(--color-line-ui);transition:transform .25s var(--ease),background-color .25s}
+.legal-toc a[aria-current] .legal-toc__tick{background:var(--color-medic);transform:scale(1.6);box-shadow:0 0 10px var(--color-medic)}
 .legal-body{display:grid;gap:clamp(14px,1.6vw,22px)}
-.legal-card{scroll-margin-top:calc(var(--hbar-h) + 16px);padding:clamp(22px,2.6vw,36px);border:1px solid var(--color-line);border-radius:24px;background:var(--color-glass)}
-.legal-card h2{margin:0 0 14px;font:400 clamp(24px,2.2vw,32px)/1.15 var(--font-serif);letter-spacing:-.01em;color:#fff}
+.legal-card{scroll-margin-top:calc(var(--hbar-h) + 16px);padding:clamp(22px,2.6vw,36px);border:1px solid var(--color-line);border-radius:24px;background:var(--color-glass);transition:border-color .25s}
+.legal-card:target,.legal-card:hover{border-color:rgba(52,191,204,.45)}
+.legal-card__head{position:relative;display:flex;align-items:center;gap:clamp(14px,1.6vw,22px);margin-bottom:14px}
+.legal-card__icon{flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:15px;border:1px solid rgba(143,227,232,.4);background:linear-gradient(150deg,rgba(47,99,173,.55),rgba(8,20,42,.7));box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 0 20px -6px rgba(52,191,204,.5);color:var(--color-medic-soft)}
+.legal-card h2{margin:0;font:400 clamp(24px,2.2vw,32px)/1.15 var(--font-serif);letter-spacing:-.01em;color:#fff;text-wrap:balance}
+.legal-card__toggle{display:none}
 .legal-card h3{margin:20px 0 8px;font-size:17px;font-weight:600;color:var(--color-medic-soft)}
 .legal-card p,.legal-card li{font-size:var(--fs-body);line-height:1.65;color:var(--color-text)}
 .legal-card p+p,.legal-card p+ul,.legal-card ul+p{margin-top:12px}
 .legal-card ul{list-style:disc;margin:10px 0 0;padding-left:1.2em;display:grid;gap:6px}
 .legal-card li::marker{color:var(--color-medic)}
-@media (max-width:900px){
-  .legal-doc{grid-template-columns:minmax(0,1fr)}
-  .legal-toc{position:static}
+/* Cartas apiladas en una ventana con scroll propio (escritorio, sin «reducir movimiento» ni pausa), como Nakeji: con la rueda encima, cada carta sube y se fija --off px más abajo
+   que la anterior, que se encoge hacia atrás; al terminar, la rueda sigue con la página. LegalDocument.tsx escribe --n, --h, --h-prev, --cut, --cut-at, --card-fit y --h-last.
+   Sin soporte de animation-timeline las cartas quedan fijas pero sin encoger (siguen siendo legibles); fuera de esta condición es una lista normal. */
+@media (min-width:960px) and (min-height:600px) and (prefers-reduced-motion:no-preference){
+  html:not([data-motion-paused]) .legal-doc{--off:18px;--card-h:clamp(26rem,calc(100svh - var(--hbar-h) - 240px),40rem)}
+  html:not([data-motion-paused]) .legal-deck{--fit:var(--card-fit,var(--card-h));--deck-h:calc(var(--fit) + (var(--n) - 1) * var(--off));timeline-scope:--lg1,--lg2,--lg3,--lg4,--lg5,--lg6,--lg7,--lg8,--lg9,--lg10,--lg11,--lg12,--lg13,--lg14;display:block;height:var(--deck-h);overflow-y:auto;border-radius:28px;scrollbar-width:none}
+  html:not([data-motion-paused]) .legal-deck::-webkit-scrollbar{display:none}
+  html:not([data-motion-paused]) .legal-deck::after{content:"";display:block;height:calc(var(--fit) - var(--h-last,var(--fit)))}
+  html:not([data-motion-paused]) .legal-card{position:sticky;--top:calc(var(--i) * var(--off));top:var(--top);display:flex;flex-direction:column;margin:0;height:var(--h,var(--card-h));background:linear-gradient(150deg,#12284a,#0b1a33);border-radius:28px;box-shadow:0 -10px 16px -12px rgba(0,8,24,.8);transform-origin:50% 0;view-timeline-name:var(--tl)}
+  html:not([data-motion-paused]) .legal-card+.legal-card{margin-top:calc((var(--n) - 1) * var(--off) + 16px + var(--fit) - var(--h-prev,var(--fit)))}
+  html:not([data-motion-paused]) .legal-card__head{flex:none;margin-bottom:0}
+  html:not([data-motion-paused]) .legal-card__body{flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin;padding-top:14px}
+  html:not([data-motion-paused]) .legal-card__body:focus-visible{outline:3px solid var(--color-medic);outline-offset:-3px;border-radius:8px}
+  @supports (animation-timeline:view()){
+    html:not([data-motion-paused]) .legal-card:not(:last-child){animation:legal-recede linear both,legal-cut linear both;animation-timeline:var(--tl-next);animation-range:cover 0% cover calc(var(--deck-h) - var(--top) - var(--off)),cover var(--cut-at,0px) cover calc(var(--deck-h) - var(--top) - var(--off))}
+  }
 }
+@keyframes legal-recede{to{transform:scale(var(--scale))}}
+@keyframes legal-cut{from{clip-path:inset(-24px -24px 0 -24px)}to{clip-path:inset(-24px -24px var(--cut,0px) -24px)}}
+@media (max-width:959px){
+  .legal-doc{grid-template-columns:minmax(0,1fr)}
+  .legal-toc{display:none}
+  .legal-card{padding:0}
+  .legal-card__head{margin:0;padding:18px 18px 18px 16px}
+  .legal-card__icon{width:44px;height:44px}
+  .legal-card__toggle{display:grid;place-items:center;position:absolute;inset:0;width:100%;justify-items:end;padding-right:16px;border:0;border-radius:24px;background:none;color:var(--color-medic-soft);cursor:pointer}
+  .legal-card__toggle:focus-visible{outline:3px solid var(--color-medic);outline-offset:-3px}
+  .legal-card__toggle svg{transition:transform .3s var(--ease)}
+  .legal-card[data-open] .legal-card__toggle svg{transform:rotate(180deg)}
+  .legal-card h2{padding-right:34px}
+  .legal-card__body{display:none;padding:0 18px 22px}
+  .legal-card[data-open] .legal-card__body{display:block}
+}
+html[data-motion-paused] .legal-toc__tick,html[data-motion-paused] .legal-card__toggle svg{transition:none}
+@media (prefers-reduced-motion:reduce){.legal-toc__tick,.legal-card__toggle svg,.legal-card{transition:none}}
 
 /* Enlaces legales junto a la línea final del pie y bajo el consentimiento del formulario */
 .ftr-legal__links{display:flex;flex-wrap:wrap;gap:4px 20px}

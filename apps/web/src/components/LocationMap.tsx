@@ -13,6 +13,7 @@ import {
 import { Icon } from '@/components/Icon'
 import { LABELS, MAP_VIEW, PARKS, PIN, ROADS } from '@/content/locationMap'
 import { locationText } from '@/content/location'
+import { useLang } from '@/lib/lang'
 
 
 interface LocationMapProps {
@@ -67,7 +68,7 @@ function ChipFace({ top, bottom, id }: { top: string; bottom: string; id: string
 const step = (index: number) => ({ '--i': index }) as CSSProperties
 
 export function LocationMap({ name }: LocationMapProps) {
-  const ui = locationText.map
+  const ui = locationText[useLang()].map
   const [expanded, setExpanded] = useState(false)
   const stageRef = useRef<HTMLDivElement>(null)
   const toggleRef = useRef<HTMLButtonElement>(null)
