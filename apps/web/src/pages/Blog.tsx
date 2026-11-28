@@ -6,7 +6,7 @@ import { clinic } from '@/content/clinic'
 import { hrefOf } from '@/config/routes'
 import { type Article, type Category, blogApi, blogText, linksIn, readingMinutes } from '@/lib/blog'
 import { useLang } from '@/lib/lang'
-import { Link } from '@/lib/router'
+import { Link, NewTab } from '@/lib/router'
 
 const topicIcon: Record<string, IconName> = {
   'implants-and-tooth-replacement': 'implant',
@@ -56,7 +56,7 @@ function Card({ article, topic }: { article: Article; topic?: boolean }) {
         )}
         <span className='blog-card__body'>
           <span className='blog-card__stamp'><span className='blog-card__time'><Icon name='clock' size={14} />{T.minutes(readingMinutes(article))}</span></span>
-          <h4 className='blog-card__title'>{article.title}</h4>
+          <h3 className='blog-card__title'>{article.title}</h3>
           <span className='blog-card__excerpt'>{article.excerpt}</span>
         </span>
         <span className='blog-card__meta'>
@@ -189,7 +189,7 @@ export function BlogArticle({ article }: { article: Article }) {
               <h2>{T.sources}</h2>
               <ul>
                 {linksIn(article.sources).map((l) => (
-                  <li key={l.href}><a href={l.href} target="_blank" rel="noopener noreferrer">{l.label}<Icon name="arrowRight" size={16} /></a></li>
+                  <li key={l.href}><a href={l.href} target="_blank" rel="noopener noreferrer">{l.label}<Icon name="arrowRight" size={16} /><NewTab /></a></li>
                 ))}
               </ul>
             </footer>

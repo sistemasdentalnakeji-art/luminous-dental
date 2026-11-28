@@ -69,8 +69,8 @@ export function VegasSign() {
       <path fillRule="evenodd" fill={BLUE} stroke="#0f4f9c" strokeWidth="2" d="M338 22h124v190H338zM360 44v146h80V44z" />
       {/* estrella con puntas amarillas */}
       <g className="vsign__star">
-        <polygon points={star(400, 108, 104, 70, 20)} fill="#ee5a1c" stroke="#ffd23f" strokeWidth="4" strokeLinejoin="round" />
-        <polygon points={star(400, 108, 62, 40, 12)} fill="none" stroke="#ffd23f" strokeWidth="3" strokeLinejoin="round" />
+        <polygon points={star(400, 108, 104, 70, 20)} fill="#ff7a3d" stroke="#ffe680" strokeWidth="4" strokeLinejoin="round" />
+        <polygon points={star(400, 108, 62, 40, 12)} fill="none" stroke="#ffe680" strokeWidth="3" strokeLinejoin="round" />
       </g>
       {/* cuerpo, borde dorado */}
       <polygon points={POINTS} fill="#ffffff" stroke={GOLD} strokeWidth="14" strokeLinejoin="round" />

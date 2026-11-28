@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>LD-RW-2026-05 · Reporte Luminous Dental</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500&family=Roboto:wght@400;500;700&display=swap">
+<style>
+/* Formato LD-RW (para WhatsApp): hojas carta fijas, portada azul noche, encabezado y pie por hoja, secciones con barra azul. */
+:root{--night:#0b1529;--bar:#5aaee0;--ink:#1b2333;--muted:#5d6779;--line:#dfe5ee;--paper:#f7f9fc;--head:#eef2f7;--blue:#3d8fd1}
+*{box-sizing:border-box}
+html,body{margin:0;background:#9aa3b0;color:var(--ink);font:12.5px/1.5 Roboto,Arial,sans-serif}
+.sheet{width:8.5in;height:11in;margin:16px auto;background:var(--paper);position:relative;overflow:hidden;display:flex;flex-direction:column}
+@page{size:letter;margin:0}
+@media print{html,body{background:var(--paper)}.sheet{margin:0;break-after:page}.sheet:last-child{break-after:auto}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+
+/* portada */
+.cover{background:var(--night);color:#e9f0fb;padding:.62in .62in .45in}
+.cover .stamp{position:absolute;top:.5in;right:.5in;border:1.5px solid var(--bar);color:var(--bar);border-radius:4px;padding:3px 10px;font:500 9px/1.4 Roboto;letter-spacing:.18em}
+.cover .logo{width:2.1in;margin-top:.1in}
+.cover .mid{margin-top:auto;margin-bottom:auto}
+.cover .t1{font:400 15px/1.3 "Noto Serif",serif;color:#d9e3f3}
+.cover h1{font:400 38px/1.15 "Noto Serif",serif;margin:.12in 0 .08in;color:#fff}
+.cover .rule{width:.38in;height:2px;background:var(--bar)}
+.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 20px;border-top:1px solid #2a3c5e;padding-top:14px}
+.fields span{display:block;font:500 8px/1.3 Roboto;letter-spacing:.14em;color:var(--bar);text-transform:uppercase}
+.fields b{display:block;font:400 11.5px/1.4 Roboto;color:#fff;margin-top:2px}
+.conf{margin-top:16px}
+.conf span{display:block;font:700 8px/1.3 Roboto;letter-spacing:.14em;color:var(--bar)}
+.conf p{margin:3px 0 0;font-size:8.5px;line-height:1.45;color:#c9d4e6}
+
+/* hojas internas */
+.rh{display:flex;align-items:center;gap:14px;background:var(--head);border-bottom:1px solid var(--line);padding:9px .3in;font:500 8.5px/1 Roboto;letter-spacing:.04em;color:var(--blue);text-transform:uppercase}
+.rh b{color:var(--ink)}
+.rh .c{margin-left:auto}
+.body{padding:.16in .3in 0;flex:1;display:flex;flex-direction:column;gap:12px}
+.ft{display:flex;justify-content:space-between;padding:10px .3in 12px;font-size:9px;color:var(--muted)}
+.card{background:#fff;border:1px solid var(--line);border-radius:4px}
+.card > h2{margin:0;background:var(--bar);color:#14213a;font:700 11px/1 Roboto;letter-spacing:.06em;text-transform:uppercase;text-align:center;padding:7px 10px;border-radius:4px 4px 0 0}
+.card .in{padding:9px 12px 11px}
+.card p{margin:0 0 7px}
+ul.b{margin:0;padding:0;list-style:none;display:grid;gap:5px}
+ul.b li{padding-left:11px;position:relative}
+ul.b li::before{content:"•";position:absolute;left:0;color:var(--muted)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pair figure{margin:0}
+.pair img{display:block;width:100%;height:1.55in;object-fit:cover;object-position:top;border-radius:2px}
+.pair img.tall{height:1.9in}
+figcaption{display:flex;gap:7px;align-items:center;margin-top:5px;font-size:9.5px;color:var(--muted)}
+.pill{font:700 8.5px/1 Roboto;letter-spacing:.06em;padding:4px 7px;border-radius:3px}
+.before{background:#e6eaf0;color:#566174}.after{background:#dcf1e7;color:#1f7a55}.new{background:#dbeaf7;color:#2d6aa3}
+
+/* origen de la orden */
+table{width:100%;border-collapse:collapse;font-size:11px}
+th{text-align:left;font:700 8.5px/1.3 Roboto;letter-spacing:.08em;color:var(--blue);text-transform:uppercase;border-bottom:1px solid var(--line);padding:5px 6px}
+td{border-bottom:1px solid var(--line);padding:6px;vertical-align:top}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:500;width:28%}
+td.st{white-space:nowrap;color:#1f7a55;font-weight:500}
+.src{display:flex;gap:18px;flex-wrap:wrap;font-size:10.5px;color:var(--muted);margin-bottom:8px}
+.src b{color:var(--ink);font-weight:500}
+
+.grid4{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid4 .box{border:1px solid var(--line);border-radius:4px;padding:9px 11px}
+.grid4 h3{margin:0 0 5px;font:700 11px/1.3 Roboto}
+.sign{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:10px}
+.sign div{border-top:1px solid var(--ink);padding-top:4px;font-size:10px;color:var(--muted)}
+.note{font-size:9.5px;color:var(--muted);margin-top:8px}
+/* añadidos LD-RW-2026-05: etiqueta ES y tabla de páginas en español */
+.es{background:#fde9d9;color:#a4501b}
+table.pages td{padding:4px 6px;font-size:10.5px}
+table.pages td:first-child{width:24%}
+table.pages td.url{font-family:Consolas,monospace;font-size:9.5px;color:#2d6aa3}
+.lead{font-size:11.5px;margin:0 0 8px}
+.pair img.bottom{object-position:bottom}
+</style>
+</head>
+<body>
+
+<!-- 1 · Portada -->
+<section class="sheet cover">
+  <div class="stamp">CONFIDENCIAL</div>
+  <img class="logo" src="../RW-2026-04/img/logo.png" alt="Luminous Dental">
+  <div class="mid">
+    <div class="t1">Proyecto página web</div>
+    <h1>Luminous Dental</h1>
+    <div class="rule"></div>
+  </div>
+  <div class="fields">
+    <div><span>Reporte</span><b>LD-RW-2026-05</b></div>
+    <div><span>Empresa</span><b>Luminous Dental · Las Vegas, NV</b></div>
+    <div><span>Departamento</span><b>IT · Páginas web</b></div>
+    <div><span>Dirigido a</span><b>Dirección</b></div>
+    <div><span>Elaboró</span><b>Jadro Montes</b></div>
+    <div><span>Fecha</span><b>26 de noviembre de 2026</b></div>
+  </div>
+  <div class="conf"><span>DOCUMENTO INTERNO DE USO EXCLUSIVO DE LA EMPRESA</span>
+  <p>Aviso de confidencialidad. Este documento es propiedad de Luminous Dental y contiene información reservada. Queda prohibido copiarlo, distribuirlo o divulgarlo, en todo o en parte, sin autorización por escrito de la empresa. Si usted lo recibió o lo encontró por error, no lo lea ni lo comparta: avise de inmediato a Luminous Dental y devuélvalo o destrúyalo.</p></div>
+</section>
+
+<!-- 2 · Resumen y origen de la orden -->
+<section class="sheet">
+  <div class="rh"><b>LD-RW-2026-05</b><span>Luminous Dental · Las Vegas, NV</span>|<span>IT · Páginas web</span>|<span>26 de noviembre de 2026</span><span class="c">Confidencial</span></div>
+  <div class="body">
+    <div class="card"><h2>Resumen</h2><div class="in"><ul class="b">
+      <li><b>El sitio ya está en español.</b> Todas las páginas tienen su versión en español (<b>/es/</b>) junto a la de inglés (<b>/en/</b>), con un botón de bandera para cambiar de idioma.</li>
+      <li>Páginas nuevas: Beneficios en 4 páginas (Beneficios, Seguros, Financiamiento y Convenios), Preguntas frecuentes, Términos y Aviso de privacidad, y 2 artículos nuevos en el blog.</li>
+      <li>Inicio reordenado como pidió Gerencia, con el antes y después del héroe rediseñado y una prueba sin fondos de tarjeta (solo líneas) que fue aprobada.</li>
+      <li>Contacto en una sola sección: reserva a la izquierda y emergencias 24/7 a la derecha; abajo el letrero, el horario y el mapa.</li>
+      <li>Servicios con información completa, fotos y casos de antes y después (de Dental Nakeji, con su nota). About con más contenido.</li>
+      <li>Encabezado y pie con fondo sólido; el pie ya no tiene animaciones. SAHARA con su logo oficial.</li>
+      <li>Las revisiones de código, de armado y de QA pasan sin errores graves. Todo quedó guardado en la rama <b>webpage-V1.26.11.26</b>; falta subirlo a GitHub.</li>
+    </ul></div></div>
+
+    <div class="card"><h2>Origen de la orden</h2><div class="in">
+      <div class="src"><span>Origen: <b>Gerencia</b></span><span>Recibió: <b>Jefe de Páginas web</b></span><span>Fecha: <b>26 de noviembre de 2026</b></span></div>
+      <table>
+        <thead><tr><th>Orden</th><th>Qué se hizo</th><th>Estado</th></tr></thead>
+        <tbody>
+          <tr><td>Sitio en dos idiomas</td><td>Inglés y español en todas las páginas, con rutas propias en español y bandera para cambiar de idioma (como Dental Nakeji).</td><td class="st">Hecho</td></tr>
+          <tr><td>Orden del inicio</td><td>Héroe → sección estrella → Servicios destacados → cita → seguros → convenios → reseñas → ubicación. <b>Corrección de Gerencia:</b> la primera vez se acomodó a criterio del equipo y no como se pidió; se corrigió.</td><td class="st">Hecho</td></tr>
+          <tr><td>Antes y después del héroe</td><td>Se muestra de otra forma: las dos fotos completas, una sobre otra, con selectores rectangulares. <b>Corrección de Gerencia:</b> primero se rediseñó otra sección por error.</td><td class="st">Hecho</td></tr>
+          <tr><td>Contacto</td><td>Reserva y emergencias 24/7 en una sola sección, sin tarjetas; abajo el letrero con horario y la moneda del mapa.</td><td class="st">Hecho</td></tr>
+          <tr><td>Beneficios</td><td>4 páginas propias; sin cifras en el encabezado; SAHARA con logo oficial y sin estrella.</td><td class="st">Hecho</td></tr>
+          <tr><td>Servicios y blog</td><td>Información completa por servicio, fotos en 6 servicios, 11 artículos por idioma y tarjetas como las de Dental Nakeji; fotos del blog sin repetir.</td><td class="st">Hecho</td></tr>
+          <tr><td>Inicio sin fondos de tarjeta</td><td>Prueba con secciones de líneas en el inicio. Aprobada; se extiende a Servicios, Beneficios, Contacto y About en la siguiente ronda.</td><td class="st">En curso</td></tr>
+        </tbody>
+      </table>
+    </div></div>
+  </div>
+  <div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span>HOJA 2 DE 9</span></div>
+</section>
+
+<!-- 3 · El sitio en español -->
+<section class="sheet">
+  <div class="rh"><b>LD-RW-2026-05</b><span>Luminous Dental · Las Vegas, NV</span>|<span>IT · Páginas web</span>|<span>26 de noviembre de 2026</span><span class="c">Confidencial</span></div>
+  <div class="body">
+    <div class="card"><h2>Nuevo · el sitio en español</h2><div class="in">
+      <p class="lead">Cada página tiene su versión en español con dirección propia. El botón de bandera lleva a la misma página en el otro idioma. Los textos en español están escritos de tú, cálidos y con términos dentales correctos; esperan aprobación.</p>
+      <table class="pages">
+        <thead><tr><th>Página</th><th>Inglés</th><th>Español</th><th>Estado</th></tr></thead>
+        <tbody>
+          <tr><td>Inicio</td><td class="url">/en</td><td class="url">/es</td><td><span class="pill es">ES NUEVO</span></td></tr>
+          <tr><td>Servicios (y 11 servicios)</td><td class="url">/en/services</td><td class="url">/es/servicios</td><td><span class="pill es">ES NUEVO</span></td></tr>
+          <tr><td>Beneficios</td><td class="url">/en/benefits</td><td class="url">/es/beneficios</td><td><span class="pill new">PÁGINA NUEVA</span> <span class="pill es">ES</span></td></tr>
+          <tr><td>Seguros</td><td class="url">/en/insurance</td><td class="url">/es/seguros</td><td><span class="pill new">PÁGINA NUEVA</span> <span class="pill es">ES</span></td></tr>
+          <tr><td>Financiamiento (y 4 financieras)</td><td class="url">/en/financing</td><td class="url">/es/financiamiento</td><td><span class="pill new">PÁGINA NUEVA</span> <span class="pill es">ES</span></td></tr>
+          <tr><td>Convenios</td><td class="url">/en/agreements</td><td class="url">/es/convenios</td><td><span class="pill new">PÁGINA NUEVA</span> <span class="pill es">ES</span></td></tr>
+          <tr><td>Contacto</td><td class="url">/en/contact</td><td class="url">/es/contacto</td><td><span class="pill es">ES NUEVO</span></td></tr>
+          <tr><td>Nosotros</td><td class="url">/en/about</td><td class="url">/es/nosotros</td><td><span class="pill es">ES NUEVO</span></td></tr>
+          <tr><td>Preguntas frecuentes</td><td class="url">/en/faq</td><td class="url">/es/preguntas-frecuentes</td><td><span class="pill new">PÁGINA NUEVA</span> <span class="pill es">ES</span></td></tr>
+          <tr><td>Blog (11 artículos)</td><td class="url">/en/blog</td><td class="url">/es/blog</td><td><span class="pill es">ES NUEVO</span></td></tr>
+          <tr><td>Términos y condiciones</td><td class="url">/en/terms-and-conditions</td><td class="url">/es/terminos-y-condiciones</td><td><span class="pill new">PÁGINA NUEVA</span> <span class="pill es">ES</span></td></tr>
+          <tr><td>Aviso de privacidad</td><td class="url">/en/privacy-policy</td><td class="url">/es/aviso-de-privacidad</td><td><span class="pill new">PÁGINA NUEVA</span> <span class="pill es">ES</span></td></tr>
+        </tbody>
+      </table>
+      <p class="note">En total, unas 42 páginas por idioma (contando cada servicio, cada financiera, los temas y los artículos del blog): cerca de 84 direcciones.</p>
+    </div></div>
+    <div class="card"><h2>Inicio en español</h2><div class="in">
+      <div class="pair">
+        <figure><img style="height:3.2in" src="img/en-inicio-hero.jpg" alt="Inicio en inglés"><figcaption><span class="pill before">INGLÉS</span>/en · antes era el único idioma</figcaption></figure>
+        <figure><img style="height:3.2in" src="img/es-inicio-hero.jpg" alt="Inicio en español"><figcaption><span class="pill es">ES NUEVO</span>/es · con bandera para cambiar</figcaption></figure>
+      </div>
+    </div></div>
+  </div>
+  <div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span>HOJA 3 DE 9</span></div>
+</section>
+
+<!-- 4 · Páginas nuevas en español: Beneficios -->
+<section class="sheet">
+  <div class="rh"><b>LD-RW-2026-05</b><span>Luminous Dental · Las Vegas, NV</span>|<span>IT · Páginas web</span>|<span>26 de noviembre de 2026</span><span class="c">Confidencial</span></div>
+  <div class="body">
+    <div class="card"><h2>Páginas nuevas · Beneficios</h2><div class="in">
+      <p>Nuevo: Beneficios pasa de una sola página a cuatro. El encabezado ya no lleva cifras: tres puntos cortos (tu cobertura explicada, formas de pago, beneficios de convenio).</p>
+      <div class="pair">
+        <figure><img src="img/es-beneficios.jpg" alt="Beneficios en español"><figcaption><span class="pill new">NUEVA</span><span class="pill es">ES</span>/es/beneficios</figcaption></figure>
+        <figure><img src="img/es-seguros.jpg" alt="Seguros en español"><figcaption><span class="pill new">NUEVA</span><span class="pill es">ES</span>/es/seguros</figcaption></figure>
+      </div>
+    </div></div>
+    <div class="card"><h2>Páginas nuevas · Financiamiento y Convenios</h2><div class="in">
+      <p>Nuevo: Financiamiento con las 4 financieras (cada una con su página) y Convenios con SAHARA Las Vegas, ahora con su logo oficial.</p>
+      <div class="pair">
+        <figure><img src="img/es-financiamiento.jpg" alt="Financiamiento en español"><figcaption><span class="pill new">NUEVA</span><span class="pill es">ES</span>/es/financiamiento</figcaption></figure>
+        <figure><img src="img/es-convenios.jpg" alt="Convenios en español"><figcaption><span class="pill new">NUEVA</span><span class="pill es">ES</span>/es/convenios</figcaption></figure>
+      </div>
+    </div></div>
+    <div class="card"><h2>Beneficios · antes y ahora</h2><div class="in">
+      <p>Mejora: de una página con todo junto a un encabezado limpio y páginas propias.</p>
+      <div class="pair">
+        <figure><img src="../RW-2026-04/img/hoy-beneficios.jpg" alt="Beneficios ayer"><figcaption><span class="pill before">ANTES</span>25-11 · una sola página</figcaption></figure>
+        <figure><img src="img/es-beneficios.jpg" alt="Beneficios hoy" class="bottom"><figcaption><span class="pill after">AHORA</span>Hub con acceso a las 3 páginas</figcaption></figure>
+      </div>
+    </div></div>
+  </div>
+  <div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span>HOJA 4 DE 9</span></div>
+</section>
+
+<!-- 5 · Páginas nuevas en español: FAQ, legales, blog, nosotros -->
+<section class="sheet">
+  <div class="rh"><b>LD-RW-2026-05</b><span>Luminous Dental · Las Vegas, NV</span>|<span>IT · Páginas web</span>|<span>26 de noviembre de 2026</span><span class="c">Confidencial</span></div>
+  <div class="body">
+    <div class="card"><h2>Páginas nuevas · Preguntas frecuentes y Términos</h2><div class="in">
+      <p>Nuevo: Preguntas frecuentes con buscador; Términos y Aviso de privacidad con el formato de Dental Nakeji (cartas que se apilan). Esperan revisión legal.</p>
+      <div class="pair">
+        <figure><img src="img/es-preguntas.jpg" alt="Preguntas frecuentes"><figcaption><span class="pill new">NUEVA</span><span class="pill es">ES</span>/es/preguntas-frecuentes</figcaption></figure>
+        <figure><img src="img/es-terminos.jpg" alt="Términos"><figcaption><span class="pill new">NUEVA</span><span class="pill es">ES</span>/es/terminos-y-condiciones</figcaption></figure>
+      </div>
+    </div></div>
+    <div class="card"><h2>Blog en español</h2><div class="in">
+      <p>Nuevo: 11 artículos por idioma (2 nuevos: All-on-4 y All-on-6). Tarjetas como las de Dental Nakeji; fotos propias de la clínica solo donde tienen relación con el tema, sin repetir.</p>
+      <div class="pair">
+        <figure><img src="img/es-blog.jpg" alt="Blog en español"><figcaption><span class="pill es">ES NUEVO</span>/es/blog</figcaption></figure>
+        <figure><img src="img/es-nosotros.jpg" alt="Nosotros"><figcaption><span class="pill es">ES NUEVO</span>/es/nosotros · más contenido</figcaption></figure>
+      </div>
+    </div></div>
+    <div class="card"><h2>Servicios en español</h2><div class="in">
+      <p>Mejora: cada servicio explica para quién es, qué se revisa primero y los cuidados. 6 servicios con foto y 4 con casos de antes y después (de Dental Nakeji, con nota visible).</p>
+      <div class="pair">
+        <figure><img src="img/es-servicios.jpg" alt="Servicios"><figcaption><span class="pill es">ES NUEVO</span>/es/servicios</figcaption></figure>
+        <figure><img src="img/es-servicio-implantes.jpg" alt="Implantes"><figcaption><span class="pill es">ES NUEVO</span>/es/servicios/implantes-dentales</figcaption></figure>
+      </div>
+    </div></div>
+  </div>
+  <div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span>HOJA 5 DE 9</span></div>
+</section>
+
+<!-- 6 · Inicio -->
+<section class="sheet">
+  <div class="rh"><b>LD-RW-2026-05</b><span>Luminous Dental · Las Vegas, NV</span>|<span>IT · Páginas web</span>|<span>26 de noviembre de 2026</span><span class="c">Confidencial</span></div>
+  <div class="body">
+    <div class="card"><h2>Sección estrella</h2><div class="in">
+      <p>Mejora: ahora son los 4 pasos de la visita (llamas o reservas, te evaluamos, plan claro, tratamiento), sin numeración, justo debajo del héroe.</p>
+      <div class="pair">
+        <figure><img class="tall" src="../RW-2026-04/img/hoy-estrella.jpg" alt="Estrella ayer"><figcaption><span class="pill before">ANTES</span>Cuatro servicios</figcaption></figure>
+        <figure><img class="tall" src="img/es-inicio-estrella.jpg" alt="Estrella hoy"><figcaption><span class="pill after">AHORA</span>Los pasos de tu visita</figcaption></figure>
+      </div>
+    </div></div>
+    <div class="card"><h2>Servicios destacados sin tarjeta</h2><div class="in">
+      <p>Mejora: tercera sección del inicio; sin el panel de vidrio, con líneas finas y pestañas en filas (prueba aprobada).</p>
+      <div class="pair">
+        <figure><img class="tall" src="../RW-2026-04/img/hoy-destacados.jpg" alt="Destacados ayer"><figcaption><span class="pill before">ANTES</span>Panel de vidrio</figcaption></figure>
+        <figure><img class="tall" src="img/es-inicio-destacados.jpg" alt="Destacados hoy"><figcaption><span class="pill after">AHORA</span>Solo líneas</figcaption></figure>
+      </div>
+    </div></div>
+    <div class="card"><h2>Reserva y convenios</h2><div class="in">
+      <p>Nuevo: sección de cita sin campos que lleva a Adit, con estrella que brilla; SAHARA con el mismo bloque que la página de Convenios.</p>
+      <div class="pair">
+        <figure><img src="img/es-inicio-cita.jpg" alt="Reserva tu visita"><figcaption><span class="pill new">NUEVO</span>Reserva tu visita</figcaption></figure>
+        <figure><img src="img/es-inicio-convenios.jpg" alt="Convenios en el inicio"><figcaption><span class="pill new">NUEVO</span>SAHARA con logo oficial</figcaption></figure>
+      </div>
+    </div></div>
+  </div>
+  <div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span>HOJA 6 DE 9</span></div>
+</section>
+
+<!-- 7 · Contacto, pie y antes/después -->
+<section class="sheet">
+  <div class="rh"><b>LD-RW-2026-05</b><span>Luminous Dental · Las Vegas, NV</span>|<span>IT · Páginas web</span>|<span>26 de noviembre de 2026</span><span class="c">Confidencial</span></div>
+  <div class="body">
+    <div class="card"><h2>Contacto</h2><div class="in">
+      <p>Mejora: reserva y emergencias 24/7 en una sola sección, sin tarjetas; abajo el mismo letrero del inicio con horario y la moneda del mapa (corrección de Gerencia).</p>
+      <div class="pair">
+        <figure><img src="../RW-2026-04/img/hoy-emergencias.jpg" alt="Emergencias ayer" style="object-fit:contain;background:#0b1a33"><figcaption><span class="pill before">ANTES</span>Emergencias en su propia sección</figcaption></figure>
+        <figure><img src="img/es-contacto.jpg" alt="Contacto hoy"><figcaption><span class="pill after">AHORA</span>Reserva | Emergencias 24/7</figcaption></figure>
+      </div>
+    </div></div>
+    <div class="card"><h2>Pie de página</h2><div class="in">
+      <p>Mejora: fondo sólido y quieto (sin ciudad ni animaciones), contacto como columna, botón de emergencias 24/7, bandera de idioma y Preguntas frecuentes en la franja final. El encabezado también es sólido.</p>
+      <div class="pair">
+        <figure><img src="../RW-2026-04/img/hoy-pie.jpg" alt="Pie ayer" class="bottom"><figcaption><span class="pill before">ANTES</span>Ciudad animada</figcaption></figure>
+        <figure><img src="img/es-pie.jpg" alt="Pie hoy" class="bottom"><figcaption><span class="pill after">AHORA</span>Sólido, en español</figcaption></figure>
+      </div>
+    </div></div>
+    <div class="card"><h2>Antes y después en servicios</h2><div class="in">
+      <p>Nuevo: casos de Dental Nakeji (clínica hermana, por orden de Gerencia) con deslizador y la nota «Caso de Dental Nakeji. Los resultados varían».</p>
+      <div class="pair">
+        <figure><img src="img/es-servicio-antes-despues.jpg" alt="Antes y después" style="object-position:center 70%"><figcaption><span class="pill new">NUEVO</span>Carillas y coronas</figcaption></figure>
+        <figure><img src="img/es-inicio-ubicacion.jpg" alt="Ubicación"><figcaption><span class="pill after">AHORA</span>Ubicación sin tarjeta, con líneas</figcaption></figure>
+      </div>
+    </div></div>
+  </div>
+  <div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span>HOJA 7 DE 9</span></div>
+</section>
+
+<!-- 8 · Además -->
+<section class="sheet">
+  <div class="rh"><b>LD-RW-2026-05</b><span>Luminous Dental · Las Vegas, NV</span>|<span>IT · Páginas web</span>|<span>26 de noviembre de 2026</span><span class="c">Confidencial</span></div>
+  <div class="body">
+    <div class="card"><h2>Seguros en el inicio</h2><div class="in">
+      <p>Prueba aprobada: logos sobre una rejilla de líneas, sin placas. Ajuste pedido: logos a color original en PNG sin fondo y sin el nombre debajo (siguiente ronda).</p>
+      <div class="pair">
+        <figure><img src="../RW-2026-04/img/antes-seguros.jpg" alt="Seguros antes"><figcaption><span class="pill before">ANTES</span>Placas blancas</figcaption></figure>
+        <figure><img src="img/es-inicio-seguros.jpg" alt="Seguros hoy"><figcaption><span class="pill after">AHORA</span>Rejilla de líneas</figcaption></figure>
+      </div>
+    </div></div>
+    <div class="card"><h2>Además</h2><div class="in"><ul class="b">
+      <li>5 rondas de cambios de Gerencia en el día; la ronda 4 corrigió órdenes mal leídas (la «sección hero» se había entendido como otra sección). Desde ahora cada encargo cita la frase exacta de Gerencia.</li>
+      <li>Reseñas de Google: la inicial de cada persona lleva su propio color.</li>
+      <li>Logo oficial de SAHARA tomado de su sitio; fotos del blog tomadas del sitio oficial de Luminous; fotos y casos de servicio de Dental Nakeji.</li>
+      <li>6 revisiones de QA en el día: ninguna con fallos graves; todos los menores se corrigieron.</li>
+      <li>Unos 73 archivos del sitio cambiaron desde el último guardado (24-11). Typecheck y armado sin errores.</li>
+      <li>Plan de la siguiente ronda guardado en <b>docs/encargos/ENCARGOS-26-11-r7.md</b> para seguir desde otra cuenta.</li>
+    </ul></div></div>
+  </div>
+  <div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span>HOJA 8 DE 9</span></div>
+</section>
+
+<!-- 9 · Pendientes -->
+<section class="sheet">
+  <div class="rh"><b>LD-RW-2026-05</b><span>Luminous Dental · Las Vegas, NV</span>|<span>IT · Páginas web</span>|<span>26 de noviembre de 2026</span><span class="c">Confidencial</span></div>
+  <div class="body">
+    <div class="card"><h2>Pendientes</h2><div class="in"><div class="grid4">
+      <div class="box"><h3>Páginas web · 4</h3><ul class="b">
+        <li>Inicio: reforzar la lectura de los textos sin fondo (se pueden ajustar tamaños).</li>
+        <li>Seguros a color en PNG sin fondo y sin nombre; SAHARA centrado; «Más pedido» fuera de la línea.</li>
+        <li>Llevar el estilo de líneas a Servicios, Beneficios, Contacto y About (aprobado).</li>
+        <li>QA final contra las frases de Gerencia.</li></ul></div>
+      <div class="box"><h3>Gerencia y Dueño · 3</h3><ul class="b">
+        <li>Aprobar los textos nuevos, sobre todo los de español.</li>
+        <li>Revisión de un abogado a Términos y Aviso de privacidad.</li>
+        <li>Decidir lo de «Más» (Preguntas, Blog, legales) en el nuevo estilo.</li></ul></div>
+      <div class="box"><h3>Clínica · 5</h3><ul class="b">
+        <li>Permiso de fotos: casos de Dental Nakeji y personas en las fotos del blog.</li>
+        <li>Confirmar que ofrecen All-on-4 y All-on-6.</li>
+        <li>Descripción de Dental Appliances (su página está vacía).</li>
+        <li>Confirmar los «4 años» del Dr. Hahn; su página «About us» trae texto de plantilla.</li>
+        <li>Lista real de aseguradoras (24 de Nakeji contra 15 oficiales).</li></ul></div>
+      <div class="box"><h3>Sistemas · Jadro · 2</h3><ul class="b">
+        <li>Iniciar sesión de GitHub en esta PC (el acceso venció) y subir la rama webpage-V1.26.11.26.</li>
+        <li>Volver el repositorio privado.</li></ul></div>
+    </div></div></div>
+    <div class="card"><h2>Siguiente paso</h2><div class="in">
+      <p>Subir a GitHub la rama del día en cuanto se renueve el acceso, y seguir la ronda 7 desde la otra cuenta con el plan guardado: terminar el inicio con líneas y llevarlo a Servicios, Beneficios, Contacto y About.</p>
+      <div class="sign"><div>Elaboró · Jadro Montes</div><div>Recibió · Dirección</div></div>
+      <p class="note">Los textos en español y los nuevos en inglés esperan aprobación. Las fotos de pacientes no se publican en la página pública hasta tener su permiso.</p>
+    </div></div>
+  </div>
+  <div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span>HOJA 9 DE 9</span></div>
+</section>
+
+</body>
+</html>

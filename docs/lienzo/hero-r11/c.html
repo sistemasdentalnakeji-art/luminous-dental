@@ -1,0 +1,31 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Héroe r11 · propuesta C (maqueta)</title>
+<link rel="stylesheet" href="hero-r11.css"><style>
+/* C · «Espejo»: lente redonda (eco del aro del logo); el después se enciende desde el centro con un anillo de luz. Cambia solo, se pausa y tiene botones Antes / Después. */
+.c .mir-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;position:relative}
+.c .mir{position:relative;width:min(100%,500px);padding:0}
+.c .mir-stage{width:100%;aspect-ratio:1;border-radius:50%;overflow:hidden;cursor:pointer;background:#08142b;touch-action:manipulation}
+.c .mir .cmp-media{border-radius:50%}
+.c .mir .cmp-media img{object-position:50% 46%}
+.c .mir .cmp-after{clip-path:circle(calc(var(--p,0)*72%) at 50% 50%)}
+.c .mir-sweep{position:absolute;left:50%;top:50%;width:calc(var(--p,0)*150%);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:2px solid #d9fff4;box-shadow:0 0 30px 4px rgb(63 207 174/.6),inset 0 0 36px rgb(63 207 174/.45);opacity:var(--ro,0);pointer-events:none}
+.c .mir-ring{position:absolute;inset:-14px;border-radius:50%;border:2px solid rgb(52 191 204/.75);pointer-events:none}
+.c .mir-star{position:absolute;right:-6px;top:6%;width:64px;height:64px;pointer-events:none;filter:drop-shadow(0 0 10px rgb(143 227 232/.8))}
+.c .mir-ctl{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+.c .mir-seg{display:inline-flex;padding:4px;border-radius:999px;border:1px solid rgb(207 227 255/.34);background:rgb(10 21 41/.6)}
+.c .mir-seg button{min-height:44px;padding:0 24px;border:0;border-radius:999px;background:none;color:rgb(207 227 255/.9);font:600 16px/1 var(--font-sans);cursor:pointer;transition:background-color .25s,color .25s}
+.c .mir-seg button[aria-pressed=true]{background:var(--color-mint);color:#06122b}
+.c .mir-pause{min-height:44px;padding:0 20px;border-radius:999px;border:1px solid rgb(207 227 255/.34);background:rgb(255 255 255/.04);color:#fff;font:600 15px/1 var(--font-sans);cursor:pointer}
+.c .mir-case{display:flex;align-items:center;gap:6px;color:#fff;font:italic 300 24px/1.2 var(--font-serif)}
+.c .mir-dots{display:inline-flex}
+.c .mir-dot{width:44px;height:44px;border:0;background:none;display:grid;place-items:center;cursor:pointer}
+.c .mir-dot::before{content:"";width:11px;height:11px;border-radius:50%;border:2px solid var(--color-medic);transition:background-color .25s}
+.c .mir-dot[aria-pressed=true]::before{background:var(--color-mint);border-color:var(--color-mint)}
+.c .mir-wrap .cmp-note{margin-top:-6px}
+@media (max-width:1000px){.c .hx-grid{display:flex;flex-direction:column;align-items:stretch;padding-bottom:20px}.c .hx-copy{display:contents}.c .hx-pill{order:1;align-self:flex-start}.c h1{order:2}.c .hx-slot{order:3;margin:10px auto 18px;width:100%}.c .hx-sub{order:4}.c .hx-actions{order:5}.c .hx-more{order:6}}
+@media (max-width:480px){.c .mir{width:min(100%,296px)}.c .mir-star{width:48px;height:48px;right:-4px}.c .mir-ring{inset:-10px}.c .mir-case{font-size:21px}}
+</style></head><body class="c"><header class="hdr" id="hdr"></header>
+<main class="hx" id="top"><div class="wrap hx-grid"><div class="hx-copy" id="copy"></div><div class="hx-slot" id="slot"></div></div></main>
+<script src="common.js"></script><script type="module">
+import { mirrorHTML, initMirror } from './compare.js'
+document.getElementById('slot').innerHTML = mirrorHTML(); initMirror(document.querySelector('.mir-wrap'))
+</script></body></html>

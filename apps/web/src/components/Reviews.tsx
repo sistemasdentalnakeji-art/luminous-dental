@@ -3,6 +3,7 @@
 // El número de calificación, las fechas de las reseñas y el enlace "See on Google" no se muestran hasta que se confirmen (docs/datos.md).
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Marquee } from '@/components/Marquee'
+import { NeonLogo } from '@/components/NeonLogo'
 import { Stars } from '@/components/Stars'
 import { reviewsSource } from '@/config/reviews'
 import { reviewsText, type Review } from '@/content/reviews'
@@ -48,7 +49,8 @@ const AVATAR_COLORS = ['#1a73e8', '#c5221f', '#188038', '#b3470a', '#8430ce', '#
 const avatarColor = (name: string) => AVATAR_COLORS[[...name.trim().toLowerCase()].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7) % AVATAR_COLORS.length]
 
 function ReviewCard({ review, index }: { review: Review; index: number }) {
-  const T = reviewsText[useLang()]
+  const lang = useLang()
+  const T = reviewsText[lang]
   return (
     <article className="review-card" style={{ '--i': index } as CSSProperties}>
       <div className="review-card__top"><GoogleG size={22} /></div>
@@ -59,13 +61,13 @@ function ReviewCard({ review, index }: { review: Review; index: number }) {
           <span className="review-card__avatar" style={{ background: avatarColor(review.author) }} aria-hidden="true">{review.author.trim().charAt(0).toUpperCase()}</span>
         )}
         <div className="review-card__who">
-          <h3 className="review-card__name">{review.authorUrl ? <a href={review.authorUrl} target="_blank" rel="noopener noreferrer">{review.author}</a> : review.author}</h3>
+          <h3 className="review-card__name">{review.authorUrl ? <a href={review.authorUrl} target="_blank" rel="noopener noreferrer">{review.author}<span className="sr-only"> {ui[lang].opensNewTab}</span></a> : review.author}</h3>
           <Stars rating={review.rating} size={14} />
           {review.relativeTime && <p className="review-card__time">{review.relativeTime}</p>}
         </div>
       </div>
       <p className="review-card__text" lang={review.lang}>{review.text}</p>
-      {review.googleUrl && <a className="review-card__more" href={review.googleUrl} target="_blank" rel="noopener noreferrer">{T.readOnGoogle}</a>}
+      {review.googleUrl && <a className="review-card__more" href={review.googleUrl} target="_blank" rel="noopener noreferrer">{T.readOnGoogle}<span className="sr-only"> {ui[lang].opensNewTab}</span></a>}
     </article>
   )
 }
@@ -113,17 +115,17 @@ export function Reviews() {
                   <span className="mac-window__stars-fill"><Stars rating={5} size={26} /></span>
                 </div>
               </div>
-              <img className="mac-window__brand" src={`${import.meta.env.BASE_URL}logo.webp`} width={520} height={297} alt="" aria-hidden="true" />
+              {/* r8c: el logo que se ilumina (el del encabezado); decorativo, así que sin foco ni lector */}
+              <div className="mac-window__brand" aria-hidden="true" inert><NeonLogo /></div>
             </div>
+            {/* r9: la pausa va dentro de la ventana, abajo a la derecha (no en la barra de arriba) */}
+            <button type="button" className="pause-btn mac-window__pause" aria-label={paused ? T.play : T.pause} onClick={() => setPaused((p) => !p)}>
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d={paused ? 'M6 3l11 7-11 7z' : 'M5 3h3.4v14H5zM11.6 3H15v14h-3.4z'} />
+              </svg>
+            </button>
           </div>
         </div>
-      </div>
-      <div className="wrap reviews-pause">
-        <button type="button" className="pause-btn" aria-label={paused ? T.play : T.pause} onClick={() => setPaused((p) => !p)}>
-          <svg viewBox="0 0 20 20" aria-hidden="true">
-            <path d={paused ? 'M6 3l11 7-11 7z' : 'M5 3h3.4v14H5zM11.6 3H15v14h-3.4z'} />
-          </svg>
-        </button>
       </div>
       <div className="reviews-rows">
         <Marquee label={`${T.carousel}, ${T.firstRow}`} items={cards} direction="ltr" secondsPerCard={22} paused={stopped} />

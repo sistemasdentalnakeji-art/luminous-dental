@@ -1,12 +1,9 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { Backdrop } from '@/components/Backdrop'
 import { BrandIcon } from '@/components/BrandIcon'
 import { Header } from '@/components/Header'
 import { Icon } from '@/components/Icon'
-import { LanguageSwitch } from '@/components/LanguageSwitch'
 import { FloatingContact } from '@/components/FloatingContact'
-import { WhatsAppLink } from '@/components/WhatsAppLink'
-import { NeonLogo } from '@/components/NeonLogo'
+import { StarLogo } from '@/components/StarLogo'
 import { hrefOf, targetHref } from '@/config/routes'
 import { clinic } from '@/content/clinic'
 import { home } from '@/content/home'
@@ -56,7 +53,7 @@ function ActionBar({ path, appointmentHref }: { path: string; appointmentHref: s
   return (
     <div className="actionbar" hidden={hidden}>
       <a className="btn btn-ghost" href={clinic.phone.href}>{ui[lang].callOrText}</a>
-      <a className="btn" href={appointmentHref} target="_blank" rel="noopener noreferrer">{header.cta.label}</a>
+      <a className="btn" href={appointmentHref} target="_blank" rel="noopener noreferrer">{header.cta.label}<span className="sr-only"> {ui[lang].opensNewTab}</span></a>
     </div>
   )
 }
@@ -68,7 +65,8 @@ export function Layout({ path, appointmentHref, children }: { path: string; appo
   const { header, footer } = home[lang]
   const t = ui[lang]
   const services = servicesOf(lang)
-  const faqHref = hrefOf('faq', lang) // FAQ va en la línea final del pie
+  const faqHref = hrefOf('faq', lang) // FAQ va en la columna Legal del pie
+  const faqLabel = footer.links.find((l) => targetHref(l, lang) === faqHref)?.label
   const main = useRef<HTMLElement>(null)
   const shown = useRef(path)
   const motionPaused = useMotionPaused()
@@ -79,7 +77,6 @@ export function Layout({ path, appointmentHref, children }: { path: string; appo
   }, [path])
   return (
     <div className="page">
-      <Backdrop />
       <div className="layer">
         <a className="skip" href="#main" onClick={(e) => { e.preventDefault(); main.current?.focus() }}>{header.skipLink}</a>
         <Header path={path} appointmentHref={appointmentHref} />
@@ -88,23 +85,20 @@ export function Layout({ path, appointmentHref, children }: { path: string; appo
         <footer className="ftr">
           <div className="wrap ftr-grid">
             <div className="ftr-brand">
-              <NeonLogo />
+              <StarLogo />
               <p>{footer.tagline}</p>
-              <a className="btn btn-ghost ftr-emg" href={clinic.phone.href}>
-                <Icon name="phone" size={18} />{footer.emergencyLine} <span className="ftr-emg__tel">{clinic.phone.label}</span>
+              <a className="btn btn-ghost ftr-emg" href={clinic.phone.href} aria-label={`${footer.emergencyLine}: ${clinic.phone.label}`}>
+                <Icon name="phone" size={18} />{footer.emergencyLine}
               </a>
-              <a className="btn ftr-book" href={footer.request.href} target="_blank" rel="noopener noreferrer">{footer.request.label}<span className="sr-only"> {t.opensNewTab}</span></a>
               <ul className="ftr-social" aria-label={t.social}>
                 {footer.social.map((s) => (
                   <li key={s.href}>
-                    <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={t.socialOn(clinic.name, s.label)}>
+                    <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`${t.socialOn(clinic.name, s.label)} ${t.opensNewTab}`}>
                       <BrandIcon name={s.label === 'Instagram' ? 'instagram' : 'facebook'} size={44} />
                     </a>
                   </li>
                 ))}
-                <li><WhatsAppLink size={44} /></li>
               </ul>
-              <LanguageSwitch path={path} className="ftr-lang" />
             </div>
             <div className="ftr-links">
               <nav aria-labelledby="ftr-services">
@@ -124,12 +118,16 @@ export function Layout({ path, appointmentHref, children }: { path: string; appo
               </nav>
               <nav aria-labelledby="ftr-legal">
                 <h2 id="ftr-legal">{footer.legalHeading}</h2>
-                <ul>{footer.legalLinks.map((l) => { const href = targetHref(l, lang); return <li key={href}><Link href={href} aria-current={current(href, path)}>{l.label}</Link></li> })}</ul>
+                <ul>
+                  {footer.legalLinks.map((l) => { const href = targetHref(l, lang); return <li key={href}><Link href={href} aria-current={current(href, path)}>{l.label}</Link></li> })}
+                  <li><Link href={faqHref} aria-current={current(faqHref, path)}>{faqLabel}</Link></li>
+                  <li className="ftr-note">{footer.note}</li>
+                </ul>
               </nav>
               <div className="ftr-contact">
                 <h2>{footer.contactHeading}</h2>
                 <address>
-                  <a href={clinic.mapsUrl} target="_blank" rel="noopener noreferrer"><Icon name="pin" size={18} />{footer.address}</a>
+                  <a href={clinic.mapsUrl} target="_blank" rel="noopener noreferrer"><Icon name="pin" size={18} />{footer.address}<span className="sr-only"> {t.opensNewTab}</span></a>
                   <a href={footer.phone.href}><Icon name="phone" size={18} />{footer.phone.label}</a>
                   <a href={footer.email.href}><Icon name="mail" size={18} />{footer.email.label}</a>
                 </address>
@@ -138,9 +136,7 @@ export function Layout({ path, appointmentHref, children }: { path: string; appo
           </div>
           <div className="wrap ftr-legal">
             <span>© {year} {footer.legal}</span>
-            <span>{footer.note}</span>
-            <Link href={faqHref}>{footer.links.find((l) => targetHref(l, lang) === faqHref)?.label}</Link>
-            <button type="button" className="motion-toggle" onClick={() => setMotionPaused(!motionPaused)}>{motionPaused ? footer.motion.play : footer.motion.pause}</button>
+            <button type="button" className="ftr-textbtn" onClick={() => setMotionPaused(!motionPaused)}>{motionPaused ? footer.motion.play : footer.motion.pause}</button>
           </div>
         </footer>
         <ActionBar path={path} appointmentHref={appointmentHref} />

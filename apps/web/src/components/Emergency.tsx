@@ -3,13 +3,15 @@ import { clinic, clinicText } from '@/content/clinic'
 import { useLang } from '@/lib/lang'
 
 /** Primera sección de Contact: emergencias 24/7. Tarjeta serena de vidrio: título, qué cuenta como emergencia y el teléfono como botón principal. Textos aprobados el 25-11 (más los de 26-11, POR APROBAR); estilos .emg* en styles/home-b1.css. */
-export function Emergency({ bare = false }: { bare?: boolean }) {
+/** hero (Contact, r8): es la sección héroe de la página: su título es el h1 y va sin tarjeta, en dos columnas con una línea fina. */
+export function Emergency({ bare = false, hero = false }: { bare?: boolean; hero?: boolean }) {
+  const H = hero ? 'h1' : 'h2'
   const { title, text, cta, examplesTitle, examples, callLabel } = clinicText[useLang()].emergency
   const body = (
-      <div className={bare ? "emg emg--bare" : "emg"}>
+      <div className={hero ? "emg emg--hero" : bare ? "emg emg--bare" : "emg"}>
         <div className="emg__main">
           <span className="emg__eyebrow" aria-hidden="true"><Icon name="tooth" size={24} /></span>
-          <h2 id="emg-h">{title}</h2>
+          <H id="emg-h">{title}</H>
           <p className="emg__text">{text}</p>
           <h3>{examplesTitle}</h3>
           <ul className="emg__list">
@@ -22,5 +24,5 @@ export function Emergency({ bare = false }: { bare?: boolean }) {
         </div>
       </div>
   )
-  return bare ? body : <section className="wrap emg-sec" id="emergencies" aria-labelledby="emg-h">{body}</section>
+  return bare && !hero ? body : <section className={`wrap emg-sec${hero ? " emg-sec--hero" : ""}`} id="emergencies" aria-labelledby="emg-h">{body}</section>
 }

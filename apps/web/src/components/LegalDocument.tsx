@@ -130,7 +130,7 @@ export function LegalDocument({ doc }: { doc: LegalDoc }) {
             ))}
           </ol>
         </nav>
-        <div className="legal-body legal-deck" ref={deckRef} style={{ '--n': sections.length } as CSSProperties}>
+        <div className="legal-body legal-deck" role="region" tabIndex={0} aria-label={doc.tocLabel} ref={deckRef} style={{ '--n': sections.length } as CSSProperties}>
           {sections.map((s, i) => (
             <section key={s.id} id={s.id} className="legal-card" data-open={open === s.id ? '' : undefined} aria-labelledby={`${s.id}-h`}
               // Con Tab, al enfocar el texto de una carta tapada la ventana se desplaza hasta ella.

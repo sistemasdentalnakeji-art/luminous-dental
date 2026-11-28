@@ -127,3 +127,48 @@
 - Inicio sin fondos de tarjeta, con líneas (prueba de la ronda 6): **le gustó a la dueña**. Ajustes pedidos: reforzar la legibilidad sin fondo (se permite cambiar tamaños), logos de seguros a color en PNG sin fondo y sin nombre debajo, SAHARA centrado y más grande, «Most requested» fuera de la línea.
 - Visto bueno para extender el estilo a Servicios, Beneficios, Contact y About. Lo de «More» (FAQ, Blog, legales) todavía no.
 - Plan para seguir desde otra cuenta: `docs/encargos/ENCARGOS-26-11-r7.md`.
+
+## 2026-11-27 · Ronda 8 · Cierre de la página (dueña)
+- La dueña pide terminar de una vez. Encargo: `docs/encargos/ENCARGOS-27-11-r8.md`.
+- Inicio: el bloque de cita deja horarios/seguros/financiamiento y pasa a **formulario corto** (sigue sin envío real: aviso de «no conectado»). Seguros más grandes y legibles sin pintarlos de blanco. Convenios: solo título afuera; SAHARA sin la etiqueta «Convenio con SAHARA».
+- Encabezado sin redes ni teléfono; idioma junto al botón de cita. Pie: pausa dentro del pie; logo que se ilumina en lugar del neón («terminal» = pie, aclarado por la dueña).
+- Contact: Emergencias 24/7 como héroe; cita + dirección, teléfono, correo y horario en una sola sección; sin la moneda del mapa (solo en Contact).
+- Beneficios: héroe de un solo contenido. Servicios: una sola sección, sin «¿qué necesitas hoy?» ni «explorar por categoría».
+- Fondo con menos estrellas en la parte media; las tarjetas de fondo en servicios esperan a que la dueña vea el cambio.
+- Blog: fotos en todos los artículos (Luminous → redes oficiales → libre uso), con fuente y licencia. Cambia la regla del 26-11 «si no hay foto relacionada, en blanco».
+- QA: una sola revisión conjunta al final.
+
+## 2026-11-27 · Ronda 11 · Respuestas de la dueña
+- Hub de Servicios: vuelven los íconos propios de cada servicio en lugar de la estrellita.
+- Héroe de Contact: «DENTAL» / «EMERGENCIAS» a la derecha como bloque, debajo el «24/7» con diseño nuevo animado; texto y botón de llamar a la izquierda.
+
+## 2026-11-27 · Héroe del inicio: elegida la propuesta B (dueña)
+- «Me gustó la B, pero nomás déjale el before y after, los otros textos quítaselos. Y que el cambio de izquierda a derecha sea automático. Y añádele un botón de pausa.»
+- Se programa B en el sitio: solo las etiquetas Before/After sobre la imagen; sin los textos de casos («A different future», «No longer hidden»); el divisor se mueve solo de izquierda a derecha; botón de pausa.
+
+## 2026-11-27 · Logo del encabezado (dueña)
+- «El logo en el header me gustaría que fuera un poquito más grande, inclusive que hasta se saliera poquito… temática como parte de un letrero… para que sea bonito.» Encargado a D2 (ld-disenador-uiux-2).
+
+## 2026-11-27 · Íconos de servicios con aura (dueña, corrige la r11)
+- La r11 se entendió mal: «el ícono que se mueve / editar el azul» era el ícono con aura de destacados (`.siri`, copiado de Nakeji), no la figura 3D. A la figura se le cambiaron los colores sin pedirlo → se regresan como estaban.
+- Mismo dibujo en todos lados: los íconos del menú de Servicios (`Icon s.icon`) en menú, hub de Servicios y destacados. Sin cambiar el dibujo.
+- Se edita solo el color y el aura, con colores de Luminous: hub y destacados con el aura; menú con efecto de respirar suave, que no canse. Beneficios: sus íconos igual, con colores de Luminous.
+- Encargado a F2 (ld-frontend-2), en styles propios sin tocar Header.tsx (D2 está en el logo).
+
+## 2026-11-27 · Contact y logo (dueña, tras ver la r11)
+- Contact: «El 24/7 ya me gustó, pero como está ubicado, no. El título debería ir más en medio, centrado; el orden no me gusta. Usaste otra tipografía para "dental emergencias": respeta la tipografía, no la cambies. Deja el 24/7, eso me parece muy bien.» + «Checa bien la sección de contacto; siento que se me olvidaron algunas cosas; en escritorio la veo mal.» Encargado a D1.
+- Logo del encabezado: sin tarjeta de fondo; solo el logo como PNG transparente. Avisado a D2.
+
+## 2026-11-27 · Ronda 12 (dueña, tras ver r11)
+- Héroe B: la foto de los dientes quedó muy a la derecha y arriba; centrar el encuadre. → D1.
+- Íconos: le gustaron (menú, hub y servicios). Solo en el menú: sin respirar; el contorno verde «recorre» la silueta del borde y el fondo del ícono queda fijo. → F2.
+- Seguros, Financiamiento y Convenios: quitar los botones que llevan a las otras páginas (píldoras); dejar título, subtítulo y botones; «Call or text (702)…» pasa a botón verde con ícono de teléfono y solo el número. → F1.
+- WhatsApp: la clínica NO tiene WhatsApp. Quitar el botón/ficha flotante, el del pie y cualquier otro enlace a WhatsApp. → D2.
+- Fondo: quitar todo lo de estrellas, destellos, fugaz, movimiento y el fondo dibujado (código incluido); provisional un azul oscuro plano. Después se diseña un fondo nuevo. → D2.
+- Al final, QA completa con calma.
+
+## 2026-11-27 · Fotos de servicios y All-on-4 / All-on-6 separados (dueña)
+- Cambiar la foto del héroe de: Teeth Whitening, Porcelain Veneers & Crowns y Dental Implants, por fotos de internet (libre uso, con fuente y licencia en docs/creditos.md). «La de porcelana no me gustó.»
+- All-on-4 y All-on-6: separarlos en dos servicios como en Dental Nakeji, copiando su información (adaptada a Luminous) y la foto individual de cada uno de Nakeji.
+- Encargado a F2 (ld-frontend-2).
+- 27-11: la dueña aprobó las fotos nuevas (Whitening, Veneers & Crowns, Implants) y las páginas separadas de All-on-4 y All-on-6: «Todas me gustan, muy bien.»

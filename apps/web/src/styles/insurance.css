@@ -25,10 +25,11 @@
 /* Muro de logos: cuadritos blancos, todos del mismo alto. En /insurance 2 / 3 / 6 columnas; en la home (.ins__side) 2 / 3 / 4 y colapsado. */
 .ins-wall{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:20px;padding:0;list-style:none}
 .ins-wall[hidden]{display:none}
-.ins-plan{position:relative;display:grid;grid-template-rows:1fr auto;place-items:center;height:104px;padding:12px 10px 10px;border-radius:14px;background:#fff;transition-property:translate,box-shadow;transition-duration:.25s;transition-timing-function:var(--ease)}
+.ins-plan{position:relative;display:grid;grid-template-rows:1fr auto;place-items:center;height:104px;padding:12px 10px 10px;border-radius:14px;transition-property:translate,box-shadow;transition-duration:.25s;transition-timing-function:var(--ease)}
 .ins-plan[hidden]{display:none}
 .ins-plan img{width:min(calc(40px * sqrt(var(--ar,4))),128px);height:auto;max-height:46px;object-fit:contain}
-.ins-plan__name{margin-top:6px;color:var(--color-field-text);font:600 12px/1.25 var(--font-sans);text-align:center}
+/* r8b: contorno claro igual en TODOS los logos de aseguradoras (inicio, Seguros, Beneficios): PNG a color sin fondo + contorno fino y un resplandor suave, sin pintarlos ni placa blanca. Se comparte con .bcard__logo (benefits-r2.css). */
+.ins-plan img,.bcard__logo img{filter:drop-shadow(0 0 .7px #fff) drop-shadow(0 0 1.1px rgba(255,255,255,.9)) drop-shadow(0 0 4px rgba(200,225,255,.4))}
 /* barrita inferior con el color de la marca (--brand viene de `accent` en content/insurers.ts) y ficha que sube; las fichas no son enlaces */
 .ins-plan::after{content:"";position:absolute;left:18%;right:18%;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--brand,var(--color-medic));transform:scaleY(0);transform-origin:bottom;transition:transform .25s var(--ease)}
 .ins-plan:hover{translate:0 -3px;box-shadow:0 16px 28px -18px var(--brand,#34bfcc)}

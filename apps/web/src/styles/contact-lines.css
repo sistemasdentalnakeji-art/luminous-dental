@@ -1,0 +1,103 @@
+/* Contact rehecho (r8c, 27-11): solo bajo `.contact` (pages/Contact.tsx, que también lleva `lines`). Marcado propio (.ct-*).
+   Orden (r11e): héroe centrado = título + letrero 24/7 + texto + llamar, señales, aviso y dirección; luego UNA sección (.ct-visit): foto de la recepción + mapa con moneda | cita + datos. */
+.contact{--ct-gap:clamp(28px,5vw,88px);--ct-mint:#97ead9}
+
+/* ── Héroe (r11e): todo centrado, en este orden: título (misma tipografía que los títulos del sitio, igual que `.pg h1.h2`), letrero 24/7, texto y llamar; abajo señales, aviso y dirección ── */
+.contact{--ct-red:#ff4650;--ct-red-deep:#ff1428}
+.contact .ct-hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding-block:clamp(36px,5vw,80px) clamp(44px,5.5vw,88px)}
+.contact .ct-hero__top{width:100%;display:flex;flex-direction:column;align-items:center;gap:clamp(28px,4vw,48px)}
+.contact .ct-title{margin:0;width:100%;max-width:760px;container-type:inline-size;display:flex;flex-direction:column;align-items:center;gap:clamp(18px,3cqw,34px);text-align:center}
+.contact .ct-title__text{font:400 clamp(40px,5vw,72px)/1.04 var(--font-serif);letter-spacing:-.02em;color:#fff;text-wrap:balance}
+.contact .ct-hero__copy{display:flex;flex-direction:column;align-items:center}
+.contact .ct-lead{margin:0;max-width:34em;font-size:clamp(18px,1.5vw,21px);line-height:1.55;font-weight:450;color:#f4f9ff;text-wrap:pretty}
+.contact .ct-calllabel{margin:clamp(26px,3vw,40px) 0 14px;font:400 clamp(21px,1.9vw,26px)/1.2 var(--font-serif);color:#fff}
+.contact .ct-call{min-height:80px;padding:12px 32px;gap:14px;font-size:clamp(24px,2.5vw,34px);font-weight:600;letter-spacing:.01em}
+.contact .ct-call svg{flex:none}
+.contact .ct-signs{width:100%;max-width:1080px;margin-top:clamp(32px,4vw,56px);padding-top:clamp(20px,2.4vw,32px);border-top:1px solid var(--ln-div)}
+.contact .ct-signs h2{margin:0 0 14px;font:600 17px/1.3 var(--font-sans);color:var(--ct-mint);letter-spacing:0}
+.contact .ct-signs ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px clamp(20px,3vw,48px);margin:0;padding:0;list-style:none;text-align:left}
+.contact .ct-signs li{display:flex;gap:10px;align-items:flex-start;font-size:clamp(17px,1.4vw,19px);line-height:1.4;font-weight:450;color:#f4f9ff}
+.contact .ct-signs li svg{flex:none;margin-top:3px;color:var(--ct-mint)}
+.contact .ct-safety{margin:clamp(22px,2.6vw,32px) 0 0;max-width:36em;font-size:clamp(16.5px,1.3vw,18px);line-height:1.5;font-weight:450;color:#f4f9ff;text-wrap:pretty}
+.contact .ct-where{margin:12px 0 0;display:inline-flex;align-items:center;gap:8px;font-size:clamp(16.5px,1.3vw,18px);font-weight:600;color:#fff}
+.contact .ct-where svg{flex:none;color:var(--ct-mint)}
+
+
+/* Letrero «24/7» (r11): celdas oscuras de tablero con el dígito encendido en rojo; los dígitos ruedan (RollCounter). Tamaño = ancho del bloque del título. */
+.contact .ct-sign{display:inline-flex;align-items:center;gap:.1em;font-size:min(calc(100cqw / 4.3),150px);line-height:1}
+.contact .ct-sign__n{color:var(--ct-red);--counter-gap:0px;text-shadow:0 0 .06em #fff3,0 0 .12em var(--ct-red),0 0 .34em var(--ct-red-deep)}
+.contact .ct-sign .counter__digit{width:.66em;margin:0 .035em;padding:.1em .06em;border-radius:.09em;background:linear-gradient(180deg,#240a12,#12060b);box-shadow:inset 0 0 0 1px rgba(255,70,80,.22),0 0 .5em rgba(255,20,40,.22)}
+.contact .ct-sign .counter__digit::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.5),transparent 24%,transparent 47%,rgba(0,0,0,.85) 49.4%,rgba(255,255,255,.07) 50.6%,transparent 53%,transparent 76%,rgba(0,0,0,.5))}
+.contact .ct-sign__slash{width:.09em;height:.95em;margin:0 .1em;border-radius:.05em;background:var(--ct-red);transform:skewX(-14deg);box-shadow:0 0 .12em var(--ct-red),0 0 .4em var(--ct-red-deep)}
+
+/* Contador de dígitos (React Bits «Counter», MIT + Commons Clause; ver docs/creditos.md): reglas originales */
+.counter{position:relative;display:inline-flex;align-items:baseline;line-height:1;white-space:nowrap;direction:ltr;unicode-bidi:isolate}
+.counter__sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+.counter__row{display:inline-flex;align-items:baseline;margin:0 calc(var(--counter-gap,0px) / -2);user-select:none;-webkit-user-select:none}
+.counter__affix,.counter__digit,.counter__symbol{margin:0 calc(var(--counter-gap,0px) / 2 * var(--counter-shown,1));opacity:var(--counter-shown,1)}
+.counter__affix{white-space:pre}
+.counter__digit{position:relative;display:inline-block;box-sizing:content-box;line-height:calc(1em + var(--counter-padding,0px));text-align:center}
+.counter__sizer{visibility:hidden}
+.counter__window{position:absolute;top:calc(var(--counter-fade,0em) * -1);right:0;bottom:calc(var(--counter-fade,0em) * -1);left:0;overflow:hidden;pointer-events:none}
+.counter__strip{position:absolute;inset:0}
+.counter__numeral{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;will-change:transform}
+.counter__symbol{position:relative;display:inline-flex;justify-content:center;clip-path:inset(-0.5em 0)}
+.counter__symbol-text{display:inline-block;white-space:pre}
+.counter__blur{position:absolute;width:0;height:0;overflow:hidden}
+.counter__measure{position:absolute;top:0;left:0;height:0;overflow:hidden;white-space:nowrap;visibility:hidden;pointer-events:none}
+.counter__measure>span{display:inline-block}
+
+/* ── Fotos: una imagen con borde neutro fino; sin tarjeta ni marco de color ── */
+.contact .ct-photo{position:relative;margin:0;overflow:hidden;border-radius:6px;background:var(--color-surface-deep);box-shadow:0 36px 80px -36px rgba(47,99,173,.6)}
+.contact .ct-photo img{display:block;width:100%;height:100%;object-fit:cover;filter:brightness(.94) saturate(.96)}
+.contact .ct-photo::after{content:"";position:absolute;inset:0;border-radius:inherit;outline:1px solid rgba(255,255,255,.14);outline-offset:-1px;pointer-events:none}
+
+/* ── Una sola sección: foto | cita + datos; mapa abajo ── */
+.contact .ct-visit{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);grid-template-areas:"side main";column-gap:var(--ct-gap);padding-block:clamp(40px,5.5vw,88px)}
+.contact .ct-side{grid-area:side;display:flex;flex-direction:column;gap:clamp(20px,2.4vw,32px);min-width:0}
+.contact .ct-photo--desk{aspect-ratio:5/4}
+.contact .ct-photo--desk img{position:absolute;inset:0;object-position:72% 40%}
+.contact .ct-main{grid-area:main;min-width:0}
+.contact .ct-book{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(14px,1.6vw,22px);padding-bottom:clamp(28px,3.4vw,48px)}
+.contact .ct-book .h2{margin:0}
+.contact .ct-book p{margin:0;max-width:28em;font-size:clamp(18px,1.5vw,21px);line-height:1.55;font-weight:450;color:#f4f9ff;text-wrap:pretty}
+.contact .ct-book__btn{min-height:68px;gap:12px;padding-inline:40px;font-size:clamp(18px,1.6vw,21px);margin-top:6px}
+
+/* Datos: una fila por dato, línea fina arriba, etiqueta | valor (el horario es el dato que más se busca: sin tarjeta, a lectura corrida) */
+.contact .ct-ledger{display:block;font-style:normal;border-bottom:1px solid var(--ln-div)}
+.contact .ct-row{display:grid;grid-template-columns:clamp(140px,14vw,184px) minmax(0,1fr);column-gap:24px;align-items:baseline;padding-block:22px;border-top:1px solid var(--ln-div)}
+.contact .ct-k{display:inline-flex;align-items:center;gap:10px;font-size:16.5px;font-weight:600;color:var(--ct-mint)}
+.contact .ct-k svg{flex:none}
+.contact .ct-v{display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-width:0;font-size:clamp(18px,1.5vw,20px);line-height:1.45;font-weight:450;color:#fff;overflow-wrap:anywhere}
+.contact .ct-link{display:inline-flex;align-items:center;gap:8px;min-height:44px;color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.4);text-underline-offset:5px;text-decoration-thickness:1px;transition-property:color,text-decoration-color;transition-duration:.18s}
+.contact .ct-link:hover,.contact .ct-link:focus-visible{color:var(--color-medic-soft);text-decoration-color:currentColor}
+.contact .ct-link svg{transition:transform .18s}
+.contact .ct-link:hover svg{transform:translateX(3px)}
+.contact .ct-row--hours .hours{gap:0}
+.contact .ct-row--hours .hours__row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 28px;padding-block:9px;border-top:1px solid var(--ln-div)}
+.contact .ct-row--hours .hours__row:first-child{padding-top:0;border-top:0}
+.contact .ct-row--hours .hours__row:last-child{padding-bottom:0}
+.contact .ct-row--hours .hours dt{font-weight:500}
+.contact .ct-row--hours .hours dd{text-align:right;font-variant-numeric:tabular-nums}
+.contact .ct-row--social{align-items:center}
+.contact .ct-row--social .ct-k{padding-left:0}
+
+/* Mapa sin moneda: el plano está dibujado en vertical (767 x 866); en la columna angosta, bajo la foto, el pin de la clínica queda a la vista (a todo lo ancho lo cortaba) */
+.contact .ct-map{display:flex;flex:1;min-width:0}
+.contact .ct-map .loc-map{flex:1;min-height:clamp(380px,32vw,440px);margin:0;padding:0;border:0;border-radius:6px;overflow:hidden}
+.contact .ct-map .loc-map::before{display:none}
+
+/* ── Tableta y celular ── */
+@media (max-width:900px){
+  .contact .ct-signs ul{grid-template-columns:minmax(0,1fr)}
+  .contact .ct-visit{grid-template-columns:minmax(0,1fr);grid-template-areas:"main" "side";row-gap:clamp(32px,6vw,56px)}
+  .contact .ct-photo--desk{aspect-ratio:4/3}
+  .contact .ct-map .loc-map{min-height:420px}
+}
+@media (max-width:560px){
+  .contact .ct-call{width:100%;padding-inline:16px}
+  .contact .ct-book__btn{width:100%;padding-inline:20px}
+  .contact .ct-row{grid-template-columns:minmax(0,1fr);row-gap:8px;padding-block:18px}
+  .contact .ct-row--social{grid-template-columns:auto 1fr;align-items:center}
+  .contact .ct-row--social .ct-v{align-items:flex-end}
+}

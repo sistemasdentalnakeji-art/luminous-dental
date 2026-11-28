@@ -18,7 +18,7 @@ export default function About() {
   const dr = t.doctor
 
   return (
-    <>
+    <div className="about lines">
       <header className="wrap ab-hero">
         <div className="ab-hero__copy">
           <p className="pill">{t.pill}</p>
@@ -42,7 +42,7 @@ export default function About() {
       </header>
 
       <section className="wrap ab-facts" aria-label={t.factsLabel}>
-        <ul>
+        <ul className="ln-frame">
           {t.facts.map((f) => {
             const body = (
               <>
@@ -95,7 +95,7 @@ export default function About() {
       </section>
 
       <section className="wrap ab-emg" aria-labelledby="emg-h2">
-        <div className="ab-emg__panel">
+        <div className="ab-emg__panel ln-frame">
           <div>
             <h2 id="emg-h2">{t.emergency.heading}</h2>
             <p className="ab-emg__t">{t.emergency.title}</p>
@@ -113,7 +113,7 @@ export default function About() {
 
       <section className="wrap ab-office" aria-labelledby="office-h">
         <h2 className="h2" id="office-h"><SoftBlurIn>{t.office.heading}</SoftBlurIn></h2>
-        <div className="ab-office__grid">
+        <div className="ab-office__grid ln-frame">
           <div>
             <h3>{t.office.addressLabel}</h3>
             <p><a href={clinic.mapsUrl} target="_blank" rel="noopener noreferrer">{clinic.address.street}<br />{clinic.address.city}, {clinic.address.state}<span className="sr-only"> {t.close.newTab}</span></a></p>
@@ -142,7 +142,7 @@ export default function About() {
       </section>
 
       <section className="wrap ab-close" aria-labelledby="close-h">
-        <div className="ab-close__panel">
+        <div className="ab-close__panel ln-frame">
           <h2 className="ab-close__t" id="close-h">{t.close.title}</h2>
           <div className="ab-close__r">
             <p>{t.close.text}</p>
@@ -153,6 +153,6 @@ export default function About() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }

@@ -1,0 +1,29 @@
+/* Ícono con aura (r11d, 27-11-2026): una sola pieza para el menú de Servicios (.dropdown__icon), el hub de Servicios (.hx-star), los destacados (.icon-badge)
+   y los íconos de Beneficios. Base oscura + resplandor suave + contorno luminoso, con la paleta de Luminous (menta, azul medicina, medicina claro).
+   El dibujo del ícono no se toca. Reposo quieto; gira/late con el cursor o el foco del contenedor; en el menú respira lento (opacidad y escala, 6 s). */
+@property --aura-angle{syntax:'<angle>';inherits:false;initial-value:0deg}
+:is(.aura,.dropdown__icon){--aura-width:2px;--aura-blur:8px;position:relative;isolation:isolate;background:rgba(10,21,41,.8);color:#fff}
+:is(.aura,.dropdown__icon)::before,:is(.aura,.dropdown__icon)::after{content:"";position:absolute;inset:calc(var(--aura-width) * -1);border-radius:inherit;background:conic-gradient(from var(--aura-angle),var(--color-mint),var(--color-medic),var(--color-medic-soft),var(--color-medic),var(--color-mint));pointer-events:none;animation-play-state:paused}
+:is(.aura,.dropdown__icon)::before{z-index:-1;filter:blur(var(--aura-blur));opacity:.5;animation:aura-pulse 1.8s ease-in-out infinite alternate}
+:is(.aura,.dropdown__icon)::after{z-index:-1;padding:var(--aura-width);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;opacity:.9;animation:aura-spin 2.6s linear infinite}
+.sc__body:is(:hover,:focus-within) .aura::before,.sc__body:is(:hover,:focus-within) .aura::after,
+.hx-link:is(:hover,:focus-visible) .aura::before,.hx-link:is(:hover,:focus-visible) .aura::after,
+.bcard:is(:hover,:focus-within) .aura::before,.bcard:is(:hover,:focus-within) .aura::after,
+.bh-points li:hover .aura::before,.bh-points li:hover .aura::after{animation-play-state:running}
+/* menú: fondo fijo; el trazo menta recorre el contorno en bucle mientras el panel está abierto (cerrado = display:none) */
+.dropdown__icon::before{opacity:.35;animation:none}
+.dropdown__icon::after{background:conic-gradient(from var(--aura-angle),transparent 0 45%,var(--color-mint) 100%);opacity:1;animation:aura-spin 3s linear infinite;animation-play-state:running}
+@keyframes aura-spin{to{--aura-angle:360deg}}
+@keyframes aura-pulse{from{opacity:.4;transform:scale(1)}to{opacity:.75;transform:scale(1.08)}}
+@keyframes aura-breathe{0%,100%{opacity:.25;transform:scale(1)}50%{opacity:.6;transform:scale(1.07)}}
+@media (prefers-reduced-motion:reduce){:is(.aura,.dropdown__icon)::before,:is(.aura,.dropdown__icon)::after{animation:none!important}}
+html[data-motion-paused] :is(.aura,.dropdown__icon)::before,html[data-motion-paused] :is(.aura,.dropdown__icon)::after{animation:none!important}
+
+/* hub de Servicios: el ícono pasa de 24 px suelto a baldosa de 44 px */
+.hx .hx-list .hx-link{grid-template-columns:44px minmax(0,1fr)}
+.hx .hx-link .hx-star{width:44px;height:44px;margin-top:0;place-items:center;border-radius:14px;color:#fff}
+/* Beneficios: los íconos de los tres puntos (encabezado) y de las tarjetas */
+.lines .bh-points__icon.aura,.bh-points__icon.aura{width:44px;height:44px;border-radius:14px;background:rgba(10,21,41,.8);color:#fff}
+.lines .bcard__icon.aura,.bcard__icon.aura{width:56px;height:56px;border-radius:18px;background:rgba(10,21,41,.8);color:#fff;box-shadow:none}
+/* menú de Servicios (r11f): el nowrap de .nav-list se heredaba y el texto salía del panel; columnas iguales y el texto baja de renglón */
+@media (min-width:1280px){.dropdown--services .dropdown__list{grid-template-columns:repeat(3,minmax(0,1fr))}.dropdown--services .dropdown__link{white-space:normal;overflow-wrap:anywhere}}

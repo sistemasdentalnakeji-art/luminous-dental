@@ -1,37 +1,21 @@
 /* Hub de Servicios (pages/Services.tsx): todos los servicios fijos y visibles; cada tarjeta es un enlace a su página. Los filtros por necesidad solo resaltan, no esconden. */
-.svc-filter{margin-top:clamp(28px,4vw,44px)}
-.svc-filter__label{margin-bottom:12px;font:400 clamp(24px,2.6vw,32px)/1.15 var(--font-serif);letter-spacing:-.01em;color:#fff}
-.svc-chips{display:flex;flex-wrap:wrap;gap:8px}
-.svc-chip{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border-radius:999px;border:1.5px solid var(--color-line-ui);background:rgba(255,255,255,.04);color:#fff;font:600 16px/1.2 var(--font-sans);cursor:pointer;transition:background-color .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease)}
-.svc-chip:hover{background:rgba(255,255,255,.1);border-color:var(--color-sky)}
-.svc-chip[aria-pressed=true]{background:var(--color-medic);border-color:var(--color-medic);color:var(--color-night)}
-.svc-status{margin-top:14px;min-height:1.5em;font-size:15px;color:var(--color-text2)}
-.svc-note{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;margin-top:6px}
-.svc-note p{color:#fff;font-weight:600}
 
 .svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:14px;padding:0;list-style:none}
 /* Composición sin huecos (escritorio): rejilla de 6 columnas. 5 servicios = 3 arriba y 2 más anchos abajo; 4 = 2 y 2; 1 = una tarjeta ancha en horizontal. */
 @media (min-width:1001px){
   .svc-grid{grid-template-columns:repeat(6,minmax(0,1fr))}
   .svc-grid>li{grid-column:span 2}
-  .svc-grid[data-n="5"]>li:nth-child(n+4),.svc-grid[data-n="4"]>li,.svc-grid[data-n="2"]>li{grid-column:span 3}
-  .svc-grid[data-n="1"]>li{grid-column:1/-1}
-  .svc-grid[data-n="1"] .svc-card{flex-direction:row;align-items:center;gap:clamp(16px,3vw,40px);min-height:0}
-  .svc-grid[data-n="1"] .svc-card__line{max-width:36em}
-  .svc-grid[data-n="1"] .svc-card__go{align-self:center;margin-left:auto}
 }
 .svc-grid>li{display:flex}
 .svc-card{position:relative;display:flex;flex-direction:column;gap:12px;width:100%;min-height:210px;padding:clamp(22px,2.4vw,30px);border-radius:26px;border:1px solid var(--color-line);background:linear-gradient(165deg,rgba(24,50,96,.78),rgba(11,26,54,.9));color:var(--color-text);text-decoration:none;overflow:hidden;transition:translate .3s var(--ease),border-color .3s var(--ease),box-shadow .3s var(--ease),opacity .3s var(--ease)}
 .svc-card::after{content:"";position:absolute;right:-40px;top:-40px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(123,195,235,.22),transparent 70%);pointer-events:none}
 .svc-card:hover,.svc-card:focus-visible{translate:0 -4px;border-color:var(--color-medic);box-shadow:0 26px 42px -26px rgba(52,191,204,.65)}
-.svc-card[data-match=true]{border-color:var(--color-medic);box-shadow:0 0 0 1px var(--color-medic),0 22px 38px -26px rgba(52,191,204,.7)}
-.svc-card[data-dim=true]{opacity:.6}
 .svc-card__name{font:400 clamp(24px,2.3vw,30px)/1.12 var(--font-serif);letter-spacing:-.01em;color:#fff;text-wrap:balance}
 .svc-card__line{flex:1;text-wrap:pretty;color:var(--color-text)}
 .svc-card__go{display:inline-flex;align-items:center;justify-content:center;align-self:flex-end;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--color-line-ui);color:#fff;transition:background-color .25s var(--ease),color .25s var(--ease),border-color .25s var(--ease)}
 .svc-card:hover .svc-card__go,.svc-card:focus-visible .svc-card__go{background:var(--color-medic);border-color:var(--color-medic);color:var(--color-night)}
-@media (prefers-reduced-motion:reduce){.svc-chip,.svc-card,.svc-card__go{transition:none}}
-html[data-motion-paused] .svc-chip,html[data-motion-paused] .svc-card,html[data-motion-paused] .svc-card__go{transition:none}
+@media (prefers-reduced-motion:reduce){.svc-card,.svc-card__go{transition:none}}
+html[data-motion-paused] .svc-card,html[data-motion-paused] .svc-card__go{transition:none}
 .catalog-group:has(.svc-grid){grid-template-columns:minmax(0,3fr) minmax(0,9fr)}
 @media (max-width:1000px){.catalog-group:has(.svc-grid){grid-template-columns:minmax(0,1fr)}}
 .svc-card{min-height:190px}

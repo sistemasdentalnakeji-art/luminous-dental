@@ -1,6 +1,6 @@
 // Página de servicio, las mismas secciones en el mismo orden que la plantilla de Dental Nakeji:
 // 1. Hero (migas de pan, título, subtítulo, 3 puntos, botones) · 2. Sobre el tratamiento (título en forma de pregunta, párrafo, botón al blog,
-// y a la derecha la figura de ese servicio si la tiene; sin figura = sin caja vacía) · 3. Formulario de cita con el servicio elegido.
+// y a la derecha la figura animada de ese servicio (ResultFigure, como en destacados) si la tiene; sin figura = sin caja vacía) · 3. Formulario de cita con el servicio elegido.
 import { lazy, Suspense } from 'react'
 import { Icon } from '@/components/Icon'
 import { blogHref, hrefOf } from '@/config/routes'
@@ -13,8 +13,9 @@ import { ui } from '@/content/ui'
 import { useLang } from '@/lib/lang'
 import { Link } from '@/lib/router'
 import '@/styles/service-photo.css'
+import '@/styles/services-lines.css'
 
-const Figure = lazy(() => import('@/features/figure/Figure'))
+const ResultFigure = lazy(() => import('@/features/figure/ResultFigure')) // la misma figura animada flotante de los destacados del inicio (r11)
 
 export default function Service({ page }: { page: ServicePage }) {
   const lang = useLang()
@@ -24,7 +25,7 @@ export default function Service({ page }: { page: ServicePage }) {
   const photo = servicePhotos[page.id]
   const src = (dir: string) => `${import.meta.env.BASE_URL}images/servicios/${dir}${photo?.file}.webp`
   return (
-    <>
+    <div className="lines svx">
       <section className={`service-hero wrap${photo ? ' service-hero--photo' : ''}`} aria-labelledby="service-h">
         {photo && (
           <div className="service-hero__bg">
@@ -55,7 +56,7 @@ export default function Service({ page }: { page: ServicePage }) {
       </section>
       {(hasText || page.figure) && (
         <section className="sec wrap" aria-labelledby={page.about ? 'service-about-h' : undefined} aria-label={page.about ? undefined : T.aboutEyebrow}>
-          <div className={`service-about${hasText && page.figure ? '' : ' service-about--solo'}`}>
+          <div className={`service-about ln-frame${hasText && page.figure ? '' : ' service-about--solo'}`}>
             {hasText && (
               <div>
                 {page.about && (
@@ -70,13 +71,13 @@ export default function Service({ page }: { page: ServicePage }) {
             )}
             {page.figure && (
               <div className="service-spot">
-                <Suspense fallback={<div className="fig-hold" aria-hidden="true" />}><Figure only={page.figure} /></Suspense>
+                <Suspense fallback={<div className="fig-hold" aria-hidden="true" />}><ResultFigure id={page.figure} name={page.name} /></Suspense>
               </div>
             )}
           </div>
         </section>
       )}
       {beforeAfter[page.id] && <ServiceBeforeAfter id="service-ba" cases={beforeAfter[page.id]} />}
-    </>
+    </div>
   )
 }

@@ -3,7 +3,7 @@ import { hrefOf } from '@/config/routes'
 import { clinic } from '@/content/clinic'
 import { financers, financeText, type Financer } from '@/content/financing'
 import { useLang } from '@/lib/lang'
-import { Link } from '@/lib/router'
+import { Link, NewTab } from '@/lib/router'
 
 const base = import.meta.env.BASE_URL
 export const LogoPanel = ({ f, size = 'md' }: { f: Financer; size?: 'md' | 'lg' }) => (
@@ -18,7 +18,7 @@ export default function Financing({ slug }: { slug: string }) {
   const f = financers.find((x) => x.slug === slug)!
   const steps = T.steps(f.name)
   return (
-    <section className="sec wrap pg fin-page" aria-labelledby="fin-h">
+    <section className="sec wrap pg lines fin-page" aria-labelledby="fin-h">
       <Link className="fin-back" href={hrefOf('financing', lang)}>← {T.title}</Link>
       <header className="fin-hero">
         <LogoPanel f={f} size="lg" />
@@ -27,8 +27,8 @@ export default function Financing({ slug }: { slug: string }) {
           <h1 className="h2" id="fin-h">{f.name}</h1>
           <p className="ins-lead">{f.about[lang]}</p>
           <div className="ins-actions">
-            <a className="btn" href={f.site} target="_blank" rel="noopener noreferrer">{T.official(f.name)}</a>
-            <a className="tlink" href={clinic.bookingUrl} target="_blank" rel="noopener noreferrer">{T.book}</a>
+            <a className="btn" href={f.site} target="_blank" rel="noopener noreferrer">{T.official(f.name)}<NewTab /></a>
+            <a className="tlink" href={clinic.bookingUrl} target="_blank" rel="noopener noreferrer">{T.book}<NewTab /></a>
           </div>
         </div>
       </header>
@@ -43,7 +43,7 @@ export default function Financing({ slug }: { slug: string }) {
       <ul className="fin-grid fin-grid--sm">
         {financers.filter((x) => x.slug !== slug).map((o) => (
           <li key={o.slug}>
-            <Link className="fin-card" href={hrefOf(`financing:${o.slug}`, lang)} aria-label={`${o.name}: ${T.more}`}>
+            <Link className="fin-card ln-frame" href={hrefOf(`financing:${o.slug}`, lang)} aria-label={`${o.name}: ${T.more}`}>
               <LogoPanel f={o} />
               <span className="fin-card__name">{o.name}</span>
             </Link>

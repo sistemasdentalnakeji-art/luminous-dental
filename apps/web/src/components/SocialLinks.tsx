@@ -15,7 +15,7 @@ export function SocialLinks({ iconSize = 32 }: { iconSize?: number }) {
     <ul className="social-links" aria-label={t.social}>
       {links.map((l) => (
         <li key={l.id}>
-          <a className="icon-button" href={l.href} target="_blank" rel="noopener noreferrer" aria-label={t.socialOn(clinic.name, l.label)}>
+          <a className="icon-button" href={l.href} target="_blank" rel="noopener noreferrer" aria-label={`${t.socialOn(clinic.name, l.label)} ${t.opensNewTab}`}>
             <BrandIcon name={l.id} size={iconSize} />
           </a>
         </li>

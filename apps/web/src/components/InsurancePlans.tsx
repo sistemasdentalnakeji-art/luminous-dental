@@ -1,4 +1,4 @@
-// Buscador «Find your plan» y muro de 24 logos en cuadritos blancos (docs/diseno-segunda-ronda-23nov.md, B · «La tarjeta»). Estilos en styles/insurance.css.
+// Buscador «Find your plan» y muro de 24 logos a color con contorno claro, sin placa (docs/diseno-segunda-ronda-23nov.md, B · «La tarjeta»; r8b). Estilos en styles/insurance.css.
 // variant="home": tarjeta de adorno (sin buscador) y el muro colapsado (12 / 9 / 8 fichas según el ancho, lo decide el CSS); el texto y el botón «See all insurance plans» van bajo la tarjeta y llevan a /insurance.
 // variant="full" (/insurance): buscador simple y muro completo, sin botón.
 // Movimiento (home): una sola entrada al llegar a pantalla (la tarjeta sube y las fichas se reparten); con reducir movimiento o la pausa todo queda visible y quieto (insurance.css).
@@ -54,9 +54,8 @@ export function InsurancePlans({ variant = 'full' }: { variant?: 'home' | 'full'
             hidden={!matches.has(name)}
             style={{ '--brand': accent, '--i': i } as CSSProperties}
           >
-            {/* --ar: proporción del logo, para que cada logo ocupe un área parecida. alt vacío: el nombre visible ya lo dice. */}
-            <img src={`${base}insurers/${file}.webp`} width={width} height={height} alt="" style={{ '--ar': width / height } as CSSProperties} loading="lazy" decoding="async" />
-            <span className="ins-plan__name">{name}</span>
+            {/* --ar: proporción del logo, para que cada logo ocupe un área parecida. r8b: en inicio y en Seguros, el mismo PNG sin fondo a color original con contorno claro (insurance.css), sin placa ni nombre debajo; el nombre queda en alt. */}
+            <img src={`${base}insurers/png/${file}.png`} width={width} height={height} alt={name} style={{ '--ar': width / height } as CSSProperties} loading="lazy" decoding="async" />
           </li>
         ))}
       </ul>

@@ -1,0 +1,38 @@
+/* lines.css · estilo «sin tarjetas, con líneas» (r7). Trae: variables --ln-line/--ln-div/--ln-pad, marco de línea fina (arriba se dibuja al entrar, abajo fija) para .sc .book .ins__grid .agr-feature .loc-card o cualquier bloque con la clase `ln-frame`, SAHARA (.agr-feature) y contacto (.loc-card/.contact-item) en líneas, y el halo de legibilidad del texto. Se aplica poniendo `lines` en la raíz de la página (<div className="home lines">); lo específico de una página va en su propio css bajo su clase (home-lines.css). Se importa antes que home-lines.css en main.tsx. */
+.lines{--ln-line:var(--color-line-ui);--ln-div:var(--color-line);--ln-pad:clamp(32px,4vw,64px)}
+
+/* ── Legibilidad sin caja: un halo del color del cielo detrás de cada letra apaga las estrellas bajo el texto sin dibujar nada como tarjeta. Se queda fuera: portada (.hx), títulos grandes (h1, h2, .rv: sus palabras de color son texto recortado y el halo las ensucia), reseñas de Google, botones, tarjeta de adorno, animación y controles. ── */
+.lines{text-shadow:0 0 18px rgba(10,21,41,.78),0 1px 3px rgba(10,21,41,.55)}
+.lines :is(.hx,.reviews,.btn,.sc__cta,.sc__badge,.ins-card,.sc__fig,button,input,textarea,select),
+.lines :is(.hx,.reviews,.btn,.sc__cta,.sc__badge,.ins-card,.sc__fig,h1,h2,.rv) *,
+.lines :is(h1,h2,.rv){text-shadow:none}
+
+/* ── Marco de líneas: arriba la línea se dibuja sola (el detalle extra), abajo una línea fija ── */
+.lines :is(.ln-frame,.sc,.book,.ins__grid,.agr-feature,.loc-card){background:linear-gradient(var(--ln-line),var(--ln-line)) 0 0/100% 1px no-repeat;border:0;border-bottom:1px solid var(--ln-line);border-radius:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+
+/* «El marco se dibuja»: la línea de arriba corre de izquierda a derecha mientras el bloque entra en pantalla (cronología de scroll; sin soporte, con reducir movimiento o con la pausa queda dibujada y quieta). */
+@keyframes ln-draw{from{background-size:0 1px}to{background-size:100% 1px}}
+@supports (animation-timeline:view()){
+  @media (prefers-reduced-motion:no-preference){
+    html:not([data-motion-paused]) .lines :is(.ln-frame,.sc,.book,.ins__grid,.agr-feature,.loc-card){animation:ln-draw linear both;animation-timeline:view();animation-range:entry 5% entry 75%}
+  }
+}
+
+/* ── SAHARA (.agr-feature): logo | beneficio, divisor vertical en medio ── */
+.lines .agr-feature{gap:0;padding:var(--ln-pad) 0;overflow:visible}
+.lines .agr-feature::before{display:none}
+.lines .agr-feature__name{padding-bottom:clamp(24px,4vw,40px)}
+.lines .agr-feature__body{padding-top:clamp(24px,4vw,40px);border-top:1px solid var(--ln-div)}
+.lines .agr-card__badge{padding:0;border-radius:0;background:none;color:var(--color-mint)}
+@media (min-width:900px){
+  .lines .agr-feature__name{padding:0 clamp(28px,4.4vw,80px) 0 0}
+  .lines .agr-feature__body{padding:0 0 0 clamp(28px,4.4vw,80px);border-top:0;border-left:1px solid var(--ln-div)}
+}
+
+/* ── Contacto (.loc-card): filas de línea y un divisor fino entre el contacto y el mapa ── */
+.lines .loc-card{padding:0 0 8px}
+.lines .contact-item{padding-block:14px}
+.lines .contact-item__label{font-size:14.5px}
+@media (min-width:1001px){
+  .lines .loc-map::before{content:"";position:absolute;top:0;bottom:0;left:calc(clamp(24px,3vw,48px) / -2);width:1px;background:var(--ln-div);pointer-events:none}
+}

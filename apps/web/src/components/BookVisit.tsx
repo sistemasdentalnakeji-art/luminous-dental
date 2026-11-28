@@ -1,57 +1,46 @@
-import type { ReactNode } from 'react'
 import { Icon } from '@/components/Icon'
 import { RevealText } from '@/components/RevealText'
-import { clinic, clinicText } from '@/content/clinic'
+import { clinic } from '@/content/clinic'
 import { bookVisitText } from '@/content/bookVisit'
-import { financers } from '@/content/financing'
 import { useLang } from '@/lib/lang'
 
-/** bare: sin sección ni tarjeta (Contact la pone en su propia columna). */
-function Outer({ bare, children, ...p }: { bare: boolean; children: ReactNode; className: string; id: string; "aria-labelledby": string }) {
-  return bare ? <div>{children}</div> : <section {...p}>{children}</section>
-}
+const STAR = 'M50 0C54 30 70 46 100 50C70 54 54 70 50 100C46 70 30 54 0 50C30 46 46 30 50 0Z' // la estrella de cuatro puntas del logo
+// Estrellitas satélite: centro (x, y) en un plano de 520 y escala de la estrella de 100.
+const SATS = [
+  { x: 70, y: 130, s: 0.26, d: '0s', t: '5.2s' },
+  { x: 455, y: 95, s: 0.18, d: '1.7s', t: '4.4s' },
+  { x: 480, y: 370, s: 0.3, d: '.8s', t: '6s' },
+  { x: 120, y: 455, s: 0.2, d: '2.6s', t: '4.8s' },
+  { x: 400, y: 470, s: 0.12, d: '3.4s', t: '5.6s' },
+  { x: 30, y: 330, s: 0.12, d: '1.1s', t: '4.2s' },
+]
 
 /**
- * Sección informativa del inicio y de Contact (sin campos): qué pasa al reservar y un botón grande a la reserva de Adit (otra pestaña, noopener).
- * La clínica agenda y cobra en Adit (clinic.bookingUrl). Tarjeta de vidrio como el resto del inicio; estilos .bv* en styles/home-b1.css.
+ * Reserva del inicio (r9, 27-11): una estrella grande, la del logo, con su pequeña constelación a la derecha; título, texto y el botón a la agenda en línea de Adit
+ * (clinic.bookingUrl, pestaña nueva con aviso para lector) a la izquierda. Sin campos, sin líneas divisoras ni tarjeta. Estilos .bv* en styles/home-b1.css.
  */
-export function BookVisit({ bare = false }: { bare?: boolean }) {
-  const lang = useLang()
-  const t = bookVisitText[lang]
-  const hours = clinicText[lang].hours.slice(0, 2).map((r) => `${r.days}: ${r.time}`).join(' · ')
-  const names = new Intl.ListFormat(lang, { style: 'long', type: 'conjunction' }).format(financers.map((f) => f.name))
-  const points = [
-    { icon: 'clock', title: t.points.hours, text: hours },
-    { icon: 'shield', title: t.points.insurance.title, text: t.points.insurance.text },
-    { icon: 'card', title: t.points.financing.title, text: t.points.financing.text(names) },
-  ] as const
+export function BookVisit() {
+  const t = bookVisitText[useLang()]
   return (
-    <Outer bare={bare} className="wrap appt-sec" id={t.id} aria-labelledby="appt-h">
-      <div className={bare ? "bv bv--bare" : "book bv"}>
-        <svg className="bv__star" viewBox="-10 -10 120 120" aria-hidden="true" focusable="false">
-          <defs><linearGradient id="bv-star" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#fff" /><stop offset=".45" stopColor="#8fe3e8" /><stop offset="1" stopColor="#34bfcc" /></linearGradient></defs>
-          <path d="M50 0C54 30 70 46 100 50C70 54 54 70 50 100C46 70 30 54 0 50C30 46 46 30 50 0Z" fill="url(#bv-star)" />
-        </svg>
-        <div className="bv__intro">
+    <section className="wrap appt-sec" id={t.id} aria-labelledby="appt-h">
+      <div className="bv">
+        <div className="bv__copy">
           <RevealText className="h2" id="appt-h" accent={t.accent}>{t.heading}</RevealText>
           <p>{t.text}</p>
-          <p className="bv__emg"><Icon name="phone" size={18} />{t.emergency}</p>
+          <a className="btn bv__book" href={clinic.bookingUrl} target="_blank" rel="noopener noreferrer">{t.cta}<Icon name="arrowRight" size={20} /><span className="sr-only"> {t.newTab}</span></a>
         </div>
-        <div className="bv__main">
-          <ul className="bv__points">
-            {points.map((p) => (
-              <li key={p.title}>
-                <span className="bv__icon" aria-hidden="true"><Icon name={p.icon} size={22} /></span>
-                <div><h3>{p.title}</h3><p>{p.text}</p></div>
-              </li>
+        <div className="bv__sky" aria-hidden="true">
+          <svg className="bv__star" viewBox="-10 -10 120 120" focusable="false">
+            <defs><linearGradient id="bv-star" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#fff" /><stop offset=".45" stopColor="#8fe3e8" /><stop offset="1" stopColor="#34bfcc" /></linearGradient></defs>
+            <path d={STAR} fill="url(#bv-star)" />
+          </svg>
+          <svg className="bv__sats" viewBox="0 0 520 520" focusable="false">
+            {SATS.map((q) => (
+              <path key={q.x} className="bv__sat" d={STAR} fill="#cfeeff" transform={`translate(${q.x - 50 * q.s} ${q.y - 50 * q.s}) scale(${q.s})`} style={{ animationDelay: q.d, animationDuration: q.t }} />
             ))}
-          </ul>
-          <div className="book__cta">
-            <a className="btn bv__book" href={clinic.bookingUrl} target="_blank" rel="noopener noreferrer">{t.cta}<Icon name="arrowRight" size={20} /><span className="sr-only"> {t.newTab}</span></a>
-            <a className="btn btn-ghost bv__call" href={clinic.phone.href}><span className="bv__call-l">{t.call}</span><span className="nw">{clinic.phone.label}</span></a>
-          </div>
+          </svg>
         </div>
       </div>
-    </Outer>
+    </section>
   )
 }

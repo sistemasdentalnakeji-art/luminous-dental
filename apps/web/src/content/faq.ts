@@ -5,7 +5,7 @@ import type { L10n, Lang } from '@/lib/lang'
 
 // Preguntas frecuentes (26-11-2026, B3). Estructura copiada de Dental Nakeji (data/faq.ts, pages/faq/FaqPage.tsx): grupos con preguntas, buscador y acordeón.
 // Solo datos de Luminous: horario, 24/7, Adit, seguros, financiamiento y dirección salen de content/clinic.ts y financing.ts. Textos NUEVOS, POR APROBAR (docs/datos.md).
-// POR CONFIRMAR (no se escribieron, para no inventar): plazo de cancelación, tolerancia de llegada tarde, depósito, edad mínima de pacientes, garantías, formas de pago aceptadas, número de WhatsApp.
+// POR CONFIRMAR (no se escribieron, para no inventar): plazo de cancelación, tolerancia de llegada tarde, depósito, edad mínima de pacientes, garantías, formas de pago aceptadas.
 // Para agregar una pregunta: un objeto más en el grupo, en los dos idiomas (TypeScript avisa si falta uno).
 export interface FaqItem { question: string; answer: string }
 export interface FaqGroup { id: string; title: string; items: FaqItem[] }

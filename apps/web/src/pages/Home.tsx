@@ -15,7 +15,7 @@ export default function Home() {
   const { coverage } = home[lang]
   // Orden del inicio (dueña, 26-11): para mover un bloque basta cambiar su línea de lugar.
   return (
-    <div className="home">
+    <div className="home lines">
       <Hero />
 
       <FamilyCare />

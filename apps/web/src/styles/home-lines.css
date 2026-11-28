@@ -1,99 +1,108 @@
-/* Prueba del 26-11 (r6): el inicio sin fondos de tarjeta, con el lenguaje de la fila de datos de About (about.css .ab-facts): línea fina arriba y abajo de cada bloque,
-   divisores verticales finos entre columnas, aire y jerarquía con la letra. Todo vive bajo `.home` (pages/Home.tsx): para quitar la prueba se borra este archivo,
-   su import en main.tsx y la clase `home` de Home.tsx. Se queda igual: reseñas de Google (.reviews), fotos y selectores del antes/después, botones, íconos y la ficha de moneda del mapa. */
-.home{--hl-line:var(--color-line-ui);--hl-div:var(--color-line);--hl-pad:clamp(32px,4vw,64px)}
+/* Inicio sin fondos de tarjeta (r6, r7): lo específico del inicio, bajo `.home` (pages/Home.tsx, que también lleva `lines`). Lo común (variables --ln-*, marco de línea que se dibuja, SAHARA, contacto, halo de legibilidad) vive en styles/lines.css.
+   Se queda igual: reseñas de Google (.reviews), fotos y selectores del antes/después, botones, íconos y la ficha de moneda del mapa. Para quitar el estilo se borran los dos css, sus imports en main.tsx y las clases `home lines` de Home.tsx. */
 
-/* ── Marco de líneas: arriba la línea se dibuja sola (el detalle extra), abajo una línea fija ── */
-.home :is(.sc,.book,.ins__grid,.agr-feature,.loc-card){background:linear-gradient(var(--hl-line),var(--hl-line)) 0 0/100% 1px no-repeat;border:0;border-bottom:1px solid var(--hl-line);border-radius:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
-
-/* Detalle extra: «el marco se dibuja». La línea de arriba corre de izquierda a derecha mientras el bloque entra en pantalla (cronología de scroll; sin soporte o con
-   reducir movimiento o la pausa queda dibujada y quieta). */
-@keyframes hl-draw{from{background-size:0 1px}to{background-size:100% 1px}}
-@supports (animation-timeline:view()){
-  @media (prefers-reduced-motion:no-preference){
-    html:not([data-motion-paused]) .home :is(.sc,.book,.ins__grid,.agr-feature,.loc-card){animation:hl-draw linear both;animation-timeline:view();animation-range:entry 5% entry 75%}
-  }
-}
+/* ── Legibilidad (r7): sin cajas; el texto de lectura sube de tamaño, de peso y de claridad ── */
+.home .sc__text{font-size:clamp(18px,1.5vw,21px);font-weight:450;color:rgba(244,249,255,.95)}
+.home .sc__chips li{font-size:clamp(17px,1.35vw,19px);color:#f4f9ff}
+.home .sc__eyebrow{font-size:15px}
+.home .fam__link p{font-size:clamp(17.5px,1.4vw,19px);font-weight:450;color:#f4f9ff}
+.home .fam__path--live .fam__stop:not(.is-lit) .fam__link{opacity:.88}
+.home .agr-feature__body p{font-size:clamp(18px,1.45vw,20px);font-weight:450;color:#f4f9ff}
+.home .agr-card__badge{font-size:15px}
+.home .contact-item__value,.home .contact-item .hours{font-size:17px}
+.home .ins-more p{font-weight:450}
 
 /* ── Servicios destacados: sin vidrio; las pestañas son filas con línea ── */
 .home .sc{overflow:visible}
-.home .sc__rail{padding:0 clamp(12px,1.2vw,18px) 0 0;background:none;border-right:1px solid var(--hl-div)}
+.home .sc__rail{padding:0 clamp(12px,1.2vw,18px) 0 0;background:none;border-right:1px solid var(--ln-div)}
 .home .sc__tabs{gap:0;margin:0}
-.home .sc__tab{border:0;border-bottom:1px solid var(--hl-div);border-radius:0;background:none;padding:0 8px 0 2px;color:rgba(244,249,255,.8);transition-property:color,border-color,box-shadow}
+.home .sc__tab{border:0;border-bottom:1px solid var(--ln-div);border-radius:0;background:none;padding:0 8px 0 2px;color:rgba(244,249,255,.92);transition-property:color,border-color,box-shadow}
 .home .sc__tabs>li:last-child .sc__tab{border-bottom-color:transparent}
-.home .sc__tab::before{display:none}
-.home .sc__tab:hover{background:none;border-bottom-color:var(--hl-line);color:#fff}
+/* r8b: cada pestaña es una estrella (marca de cuatro puntas) y no hay chevrón; la elegida se dorada y titila (ver «Most requested» abajo) */
+.home .sc__tab{overflow:visible;padding-left:32px}
+.home .sc__tab svg{display:none}
+.home .sc__tab span{text-wrap:balance}
+.home .sc__tab::before{left:5px;top:50%;bottom:auto;width:12px;height:12px;margin-top:-6px;background:rgba(244,249,255,.5);clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);transform:none;transition-property:background-color,scale}
+.home .sc__tab::after{content:"";position:absolute;z-index:-1;left:-1px;top:50%;width:24px;height:24px;margin-top:-12px;border-radius:50%;background:radial-gradient(circle,rgba(224,182,92,.5),transparent 68%);opacity:0;transition:opacity .3s}
+.home .sc__tab:hover::before{background:#fff}
+.home .sc__tab[aria-current="true"]::before{background:var(--color-gold);transform:none;scale:1.35;animation:sc-twinkle 3.6s ease-in-out infinite}
+.home .sc__tab[aria-current="true"]::after{opacity:1}
+.home .sc__tab:hover{background:none;border-bottom-color:var(--ln-line);color:#fff}
 .home .sc__tab[aria-current="true"]{background:none;border-bottom-color:var(--color-medic);box-shadow:0 1px 0 var(--color-medic);color:#fff}
 .home .sc__tabs>li:last-child .sc__tab[aria-current="true"]{border-bottom-color:var(--color-medic)}
 .home .sc__tab:active{transform:none}
 .home .sc__fig{margin-block:clamp(14px,1.6vw,24px)}
+/* Destacados (r9): se queda la estrella dorada y SOLO se ilumina el servicio elegido (las demás son estrellas tenues unidas por un hilo azul fino, sin tramo dorado).
+   El letrero «Most requested» ya no está en el riel: va en el encabezado de la sección (.featured-tag). */
+/* r10: sin letrero; «los más solicitados» es el subtítulo bajo el título (texto corriente, sin línea ni píldora). */
+.home .featured-head{display:block}
+.featured-sub{margin:14px 0 0;max-width:38em;font-size:clamp(18px,1.5vw,21px);font-weight:450;color:#f4f9ff;text-wrap:pretty}
+/* r10: la estrella elegida, un poco más grande (1.35 a 1.75) y en azul agua (--color-medic), ya no dorada; su resplandor también */
+.home .sc__tab[aria-current="true"]::before{background:var(--color-medic);scale:1.75}
+.home .sc__tab[aria-current="true"]::after{width:34px;height:34px;margin-top:-17px;left:-6px;background:radial-gradient(circle,rgba(52,191,204,.5),transparent 68%)}
+@keyframes sc-twinkle{0%,100%{scale:1.75;opacity:1}50%{scale:1.45;opacity:.72}}
+.home .sc__tab:not([aria-current="true"])::before{animation:none}
+@media (max-width:767px){
+  .home .sc__tab{padding-left:28px}
+  .home .sc__tab::before{left:8px}
+  .home .sc__tab::after{left:2px}
+  .home .sc__tab[aria-current="true"]::after{left:-3px}
+}
+@media (min-width:768px){
+  .home .sc__tabs{position:relative}
+  .home .sc__tabs::before{content:"";position:absolute;left:10px;width:1px;top:10%;bottom:10%;background:rgba(123,195,235,.32);pointer-events:none}
+}
+@media (prefers-reduced-motion:reduce){.home .sc__tab[aria-current="true"]::before{animation:none}}
+html[data-motion-paused] .home .sc__tab::before{animation:none}
 
-/* ── Reserva: dos columnas con divisor vertical; los tres puntos ya iban separados por líneas ── */
-.home .book{column-gap:0;row-gap:0;align-items:stretch;padding:var(--hl-pad) 0}
-.home .bv__intro{justify-content:center;padding-right:clamp(24px,4.4vw,80px)}
-.home .bv__main{justify-content:center;padding-left:clamp(24px,4.4vw,80px);border-left:1px solid var(--hl-div)}
-.home .bv__star{right:0}
-
-/* ── Seguros: tarjeta de adorno a la izquierda, logos en rejilla de líneas a la derecha (sin placas blancas: el logo va en blanco sobre el cielo) ── */
+/* ── Seguros: tarjeta de adorno a la izquierda, logos a su color original (PNG sin fondo, sin nombre) en rejilla de líneas a la derecha ── */
 .home .ins__grid{column-gap:0;align-items:stretch}
-.home .ins__left{padding-block:var(--hl-pad);padding-right:clamp(24px,4vw,56px)}
-.home .ins__side{border-left:1px solid var(--hl-div)}
+.home .ins__left{padding-block:var(--ln-pad);padding-right:clamp(24px,4vw,56px)}
+.home .ins__side{border-left:1px solid var(--ln-div)}
 .home .ins__side .ins-wall{gap:0}
-.home .ins__side .ins-plan{height:clamp(96px,8vw,112px);border-radius:0;background:none;box-shadow:0 1px 0 var(--hl-div);translate:none}
-.home .ins__side .ins-plan:not(:nth-child(4n+1)){box-shadow:-1px 0 0 var(--hl-div),0 1px 0 var(--hl-div)}
-.home .ins__side .ins-plan:hover{translate:none;box-shadow:0 1px 0 var(--hl-div)}
-.home .ins__side .ins-plan:not(:nth-child(4n+1)):hover{box-shadow:-1px 0 0 var(--hl-div),0 1px 0 var(--hl-div)}
-.home .ins__side .ins-plan img{filter:brightness(0) invert(1);opacity:.92}
-.home .ins__side .ins-plan__name{color:var(--color-text2);font-size:13px}
+.home .ins__side .ins-plan{grid-template-rows:1fr;height:clamp(112px,10vw,132px);padding:14px 16px;border-radius:0;background:none;box-shadow:0 1px 0 var(--ln-div);translate:none}
+.home .ins__side .ins-plan:not(:nth-child(4n+1)){box-shadow:-1px 0 0 var(--ln-div),0 1px 0 var(--ln-div)}
+.home .ins__side .ins-plan:hover{translate:none;box-shadow:0 1px 0 var(--ln-div)}
+.home .ins__side .ins-plan:not(:nth-child(4n+1)):hover{box-shadow:-1px 0 0 var(--ln-div),0 1px 0 var(--ln-div)}
+/* r8: logos más grandes (dueña: «están muy chiquitos»). r8b: el contorno claro de TODOS los logos de aseguradoras vive en insurance.css (`.ins-plan img`), igual en inicio, Seguros y Beneficios */
+.home .ins__side .ins-plan img{width:min(calc(68px * sqrt(var(--ar,4))),100%,210px);max-height:84px;opacity:1}
 .home .ins__side .ins-plan::after{left:0;right:0}
 @media (max-width:959px){
-  .home .ins__left{padding-right:0;padding-bottom:var(--hl-pad)}
-  .home .ins__side{border-left:0;border-top:1px solid var(--hl-div)}
-  .home .ins__side .ins-plan:not(:nth-child(4n+1)){box-shadow:0 1px 0 var(--hl-div)}
-  .home .ins__side .ins-plan:not(:nth-child(3n+1)){box-shadow:-1px 0 0 var(--hl-div),0 1px 0 var(--hl-div)}
-  .home .ins__side .ins-plan:not(:nth-child(4n+1)):hover{box-shadow:0 1px 0 var(--hl-div)}
-  .home .ins__side .ins-plan:not(:nth-child(3n+1)):hover{box-shadow:-1px 0 0 var(--hl-div),0 1px 0 var(--hl-div)}
+  .home .ins__left{padding-right:0;padding-bottom:var(--ln-pad)}
+  .home .ins__side{border-left:0;border-top:1px solid var(--ln-div)}
+  .home .ins__side .ins-plan:not(:nth-child(4n+1)){box-shadow:0 1px 0 var(--ln-div)}
+  .home .ins__side .ins-plan:not(:nth-child(3n+1)){box-shadow:-1px 0 0 var(--ln-div),0 1px 0 var(--ln-div)}
+  .home .ins__side .ins-plan:not(:nth-child(4n+1)):hover{box-shadow:0 1px 0 var(--ln-div)}
+  .home .ins__side .ins-plan:not(:nth-child(3n+1)):hover{box-shadow:-1px 0 0 var(--ln-div),0 1px 0 var(--ln-div)}
 }
 @media (max-width:559px){
-  .home .ins__side .ins-plan:not(:nth-child(3n+1)){box-shadow:0 1px 0 var(--hl-div)}
-  .home .ins__side .ins-plan:not(:nth-child(2n+1)){box-shadow:-1px 0 0 var(--hl-div),0 1px 0 var(--hl-div)}
-  .home .ins__side .ins-plan:not(:nth-child(3n+1)):hover{box-shadow:0 1px 0 var(--hl-div)}
-  .home .ins__side .ins-plan:not(:nth-child(2n+1)):hover{box-shadow:-1px 0 0 var(--hl-div),0 1px 0 var(--hl-div)}
+  .home .ins__side .ins-plan{padding-inline:12px}
+  .home .ins__side .ins-plan:not(:nth-child(3n+1)){box-shadow:0 1px 0 var(--ln-div)}
+  .home .ins__side .ins-plan:not(:nth-child(2n+1)){box-shadow:-1px 0 0 var(--ln-div),0 1px 0 var(--ln-div)}
+  .home .ins__side .ins-plan:not(:nth-child(3n+1)):hover{box-shadow:0 1px 0 var(--ln-div)}
+  .home .ins__side .ins-plan:not(:nth-child(2n+1)):hover{box-shadow:-1px 0 0 var(--ln-div),0 1px 0 var(--ln-div)}
+}
+/* en escritorio la rejilla de logos reparte sus filas hasta la línea de abajo, sin hueco bajo la última fila */
+@media (min-width:960px){
+  .home .ins__side{display:flex}
+  .home .ins__side .ins-wall{flex:1;grid-auto-rows:minmax(120px,1fr)}
+  .home .ins__side .ins-plan{height:auto}
 }
 
-/* ── Convenios (SAHARA): logo | beneficio, divisor vertical en medio ── */
-.home .agr-feature{gap:0;padding:var(--hl-pad) 0;overflow:visible}
-.home .agr-feature::before{display:none}
-.home .agr-feature__name{padding-bottom:clamp(24px,4vw,40px)}
-.home .agr-feature__body{padding-top:clamp(24px,4vw,40px);border-top:1px solid var(--hl-div)}
-.home .agr-card__badge{padding:0;border-radius:0;background:none;color:var(--color-mint)}
-@media (min-width:900px){
-  .home .agr-feature__name{padding:0 clamp(28px,4.4vw,80px) 0 0}
-  .home .agr-feature__body{padding:0 0 0 clamp(28px,4.4vw,80px);border-top:0;border-left:1px solid var(--hl-div)}
-}
+/* ── SAHARA (r7): logo centrado en su columna y más grande, sin hueco ── */
+.home .agr-feature__name{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(14px,1.6vw,22px);text-align:center}
+.home .agr-feature__logo{width:min(100%,clamp(300px,36vw,520px));margin:0}
 
-/* ── Visit us: contacto en filas de línea, y un divisor fino entre el contacto y el mapa ── */
-.home .loc-card{padding:0 0 8px}
-.home .contact-item{padding-block:14px}
-@media (min-width:1001px){
-  .home .loc-map::before{content:"";position:absolute;top:0;bottom:0;left:calc(clamp(24px,3vw,48px) / -2);width:1px;background:var(--hl-div);pointer-events:none}
-}
-
+/* ── Reserva y Visit us: ajustes de pantalla chica ── */
 @media (max-width:1000px){
-  .home .book{padding:var(--hl-pad) 0}
-  .home .bv__intro{padding-right:0;padding-bottom:var(--hl-pad)}
-  .home .bv__main{padding-left:0;padding-top:var(--hl-pad);border-left:0;border-top:1px solid var(--hl-div)}
 }
 @media (max-width:767px){
-  .home .sc__rail{padding:0;border-right:0;border-bottom:1px solid var(--hl-div)}
+  .home .sc__rail{padding:0;border-right:0;border-bottom:1px solid var(--ln-div)}
   .home .sc__tab{padding:0 16px;border-bottom-color:transparent}
   .home .sc__tabs>li:last-child .sc__tab{border-bottom-color:transparent}
   .home .sc__tab[aria-current="true"],.home .sc__tabs>li:last-child .sc__tab[aria-current="true"]{border-bottom-color:var(--color-medic)}
 }
 
-/* Seguros en escritorio: la rejilla de logos reparte sus filas hasta la línea de abajo, sin hueco bajo la última fila */
-@media (min-width:960px){
-  .home .ins__side{display:flex}
-  .home .ins__side .ins-wall{flex:1;grid-auto-rows:minmax(96px,1fr)}
-  .home .ins__side .ins-plan{height:auto}
-}
+/* ── Visit us (r10): sin el marco de líneas que cerraba la sección (línea de arriba que se dibuja, línea de abajo y divisor vertical del mapa); solo en el inicio ── */
+.home .loc-sec .loc-card{background:none;border:0;animation:none}
+.home .loc-sec .loc-map::before{display:none}

@@ -37,6 +37,7 @@ const en = {
   before: 'Before', after: 'After',
   cases: 'Cases', showCase: 'Show case:', note: 'Individual results vary.',
   show: 'Show',
+  pause: 'Pause', play: 'Resume',
   showingBefore: 'Showing before', showingAfter: 'Showing after',
   split: (b: number, a: number) => `Before ${b}% on the left, after ${a}% on the right`,
 }
@@ -47,6 +48,7 @@ const es: typeof en = {
   before: 'Antes', after: 'Después',
   cases: 'Casos', showCase: 'Ver el caso:', note: 'Los resultados varían de una persona a otra.',
   show: 'Mostrar',
+  pause: 'Pausar', play: 'Reanudar',
   showingBefore: 'Se muestra el antes', showingAfter: 'Se muestra el después',
   split: (b, a) => `Antes ${b}% a la izquierda, después ${a}% a la derecha`,
 }

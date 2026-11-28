@@ -173,24 +173,45 @@ const defs: Def[] = [
     },
   },
   {
-    // NUEVO, POR APROBAR (25-11): textos adaptados de Dental Nakeji (all-on-4 y all-on-6 en una sola página). Sin precios ni promesas. La figura es la de implantes (aún no hay paso propio).
-    slugEs: 'all-on-4-y-all-on-6', icon: 'implant', figure: 'implants', glyph: 'allon', blogKey: 'all-on-4-implants',
+    // 27-11 r13: separado en dos páginas como en Dental Nakeji; textos de Nakeji adaptados a Luminous (sin ciudad, precios ni promociones). POR APROBAR. La figura es la de implantes (aún no hay paso propio).
+    slugEs: 'implantes-all-on-4', icon: 'implant', figure: 'implants', glyph: 'allon', blogKey: 'all-on-4-implants',
     en: {
-      name: 'All-on-4 & All-on-6', title: 'All-on-4 & All-on-6',
-      subtitle: 'A fixed prosthesis that replaces a full arch of teeth, supported by four or six implants.',
-      highlights: ['A full arch on 4 or 6 implants.', 'Fixed teeth in a single prosthesis.', 'Bone and bite evaluation for each arch.'],
+      name: 'All-on-4 Implants', title: 'All-on-4 Implants',
+      subtitle: 'A fixed prosthesis that replaces a full arch with four implants.',
+      highlights: ['A full arch on 4 implants.', 'Fixed teeth in a single prosthesis.', 'Bone evaluation for each arch.'],
       about: {
-        title: 'What are All-on-4 and All-on-6?',
-        text: 'All-on-4 and All-on-6 are options for replacing the teeth of a full arch with a fixed prosthesis supported by four or six implants placed in the jawbone. The number of implants alone does not decide which one is best: before proposing a plan, our dentist studies your mouth, gums, bone and bite to determine whether either option is right for your case. Ask about the stages of treatment, the follow-up visits and the daily care a fixed prosthesis needs.',
+        title: 'What is All-on-4?',
+        text: 'All-on-4 is an option for replacing the teeth of a full arch with a fixed prosthesis supported by four implants. The implants are placed in the jawbone and support the new teeth. Before proposing a plan, our dentist studies your mouth, gums, bone and bite to determine whether this alternative is right for your case. Ask about the stages of treatment, the follow-up visits and the daily care a fixed prosthesis needs.',
       },
     },
     es: {
-      name: 'All-on-4 y All-on-6', title: 'All-on-4 y All-on-6',
-      subtitle: 'Una prótesis fija que reemplaza una arcada completa de dientes, sostenida por cuatro o seis implantes.',
-      highlights: ['Una arcada completa sobre 4 o 6 implantes.', 'Dientes fijos en una sola prótesis.', 'Evaluación del hueso y de la mordida para cada arcada.'],
+      name: 'Implantes All-on-4', title: 'Implantes All-on-4',
+      subtitle: 'Una prótesis fija que reemplaza una arcada completa con cuatro implantes.',
+      highlights: ['Una arcada completa sobre 4 implantes.', 'Dientes fijos en una sola prótesis.', 'Evaluación del hueso de cada arcada.'],
       about: {
-        title: '¿Qué son All-on-4 y All-on-6?',
-        text: 'All-on-4 y All-on-6 son opciones para reemplazar los dientes de una arcada completa con una prótesis fija sostenida por cuatro o seis implantes colocados en el hueso de la mandíbula. El número de implantes por sí solo no decide cuál es la mejor opción: antes de proponer un plan, nuestro dentista estudia tu boca, encías, hueso y mordida para determinar si alguna de las dos es adecuada para tu caso. Pregunta por las etapas del tratamiento, las visitas de seguimiento y el cuidado diario que necesita una prótesis fija.',
+        title: '¿Qué es All-on-4?',
+        text: 'All-on-4 es una opción para reemplazar los dientes de una arcada completa con una prótesis fija sostenida por cuatro implantes. Los implantes se colocan en el hueso de la mandíbula y sirven de soporte a los nuevos dientes. Antes de proponer un plan, nuestro dentista estudia tu boca, encías, hueso y mordida para determinar si esta alternativa es adecuada para tu caso. Pregunta por las etapas del tratamiento, las visitas de seguimiento y el cuidado diario que necesita una prótesis fija.',
+      },
+    },
+  },
+  {
+    slugEs: 'implantes-all-on-6', icon: 'implant', figure: 'implants', glyph: 'allon', blogKey: 'all-on-6-implants',
+    en: {
+      name: 'All-on-6 Implants', title: 'All-on-6 Implants',
+      subtitle: 'A fixed full arch with six support points.',
+      highlights: ['Six implants per arch.', 'Fixed prosthesis on implants.', 'Plan based on bone and bite.'],
+      about: {
+        title: 'What is All-on-6?',
+        text: 'All-on-6 uses six implants to support a fixed prosthesis that replaces the teeth of an arch. It can be considered when almost all of the upper or lower teeth are missing. The number of implants alone does not determine which treatment is best: our dentist evaluates your bone, gums and bite before proposing a plan. Ask about the stages of treatment, the follow-up visits and the daily care a fixed prosthesis needs.',
+      },
+    },
+    es: {
+      name: 'Implantes All-on-6', title: 'Implantes All-on-6',
+      subtitle: 'Una arcada completa y fija con seis puntos de apoyo.',
+      highlights: ['Seis implantes por arcada.', 'Prótesis fija sobre implantes.', 'Plan según hueso y mordida.'],
+      about: {
+        title: '¿Qué es All-on-6?',
+        text: 'All-on-6 utiliza seis implantes para sostener una prótesis fija que reemplaza los dientes de una arcada. Puede considerarse cuando faltan casi todos los dientes superiores o inferiores. El número de implantes por sí solo no define cuál tratamiento conviene: nuestro dentista evalúa tu hueso, encías y mordida antes de proponerte un plan. Pregunta por las etapas del tratamiento, las visitas de seguimiento y el cuidado diario que necesita una prótesis fija.',
       },
     },
   },
@@ -274,15 +295,16 @@ const enText = {
     title: 'Featured services',
     cta: 'View all services',
     // NUEVO, para aprobación: nombres cortos de las 5 pestañas bajo el carrusel, en el mismo orden que featuredIds
-    tabs: ['All-on-4 & All-on-6', 'Implants', 'Braces & Invisalign', 'Dentures & bridges', 'Whitening'],
+    tabs: ['All-on-4', 'All-on-6', 'Implants', 'Braces & Invisalign', 'Dentures & bridges', 'Whitening'],
     card: 'Learn more about this service', // como el botón de la tarjeta de Dental Nakeji («Conocer más del servicio»)
-    carousel: 'Featured services',
-    badge: 'Most requested',
+    carousel: 'Featured services carousel',
+    badge: "Our patients' most requested treatments",
     accent: 'services', // palabra del título que brilla (RevealText)
     offers: 'what it offers',
     // Textos propios de la tarjeta del inicio (más descriptivos que los de la página de cada servicio), por id de servicio. Solo hechos generales, sin promesas. POR APROBAR.
     copy: {
-      'all-on-4-and-all-on-6': { text: 'These options replace the teeth of a full arch with a fixed prosthesis held by four or six implants. We start with an exam of your mouth, gums and bone to see if this is right for you.', points: ['A fixed prosthesis on 4 or 6 implants.', 'An exam of your bone, gums and bite first.', 'A plan built around your case.'] },
+      'all-on-4-implants': { text: 'All-on-4 replaces the teeth of a full arch with a fixed prosthesis held by four implants. We start with an exam of your mouth, gums and bone to see if this is right for you.', points: ['A fixed prosthesis on 4 implants.', 'An exam of your bone, gums and bite first.', 'A plan built around your case.'] },
+      'all-on-6-implants': { text: 'All-on-6 uses six implants to hold a fixed prosthesis for a full arch, and can be considered when almost all of the upper or lower teeth are missing. We start with an exam of your mouth, gums and bone.', points: ['A fixed prosthesis on 6 implants.', 'An exam of your bone, gums and bite first.', 'A plan built around your case.'] },
       'invisalign-and-braces': { text: 'Straight teeth fit together better and are easier to keep clean. We will go over clear aligners and traditional braces with you, so you can choose what fits your life.', points: ['Clear aligners or traditional braces.', 'Options for teens and adults.', 'A first visit to talk through your goals.'] },
       'dental-implants': { text: 'Implants are artificial teeth that replace teeth that are damaged, lost or decayed. We start by getting to know your health and your smile, then build a plan around you.', points: ['Single, multiple or full-arch options.', 'A consultation to check if implants are right for you.', 'A personalized plan, step by step.'] },
       'dentures-and-bridges': { text: 'Missing teeth can change how you chew and how you feel about your smile. We will look at your case, hear your concerns and explain your options in plain words.', points: ['Full or partial dentures.', 'Bridges that close the gap between teeth.', 'An exam first, to recommend the right fit.'] },
@@ -308,14 +330,15 @@ const esText: typeof enText = {
   featured: {
     title: 'Servicios destacados',
     cta: 'Ver todos los servicios',
-    tabs: ['All-on-4 y All-on-6', 'Implantes', 'Brackets e Invisalign', 'Dentaduras y puentes', 'Blanqueamiento'],
+    tabs: ['All-on-4', 'All-on-6', 'Implantes', 'Brackets e Invisalign', 'Dentaduras y puentes', 'Blanqueamiento'],
     card: 'Conocer más del servicio',
-    carousel: 'Servicios destacados',
-    badge: 'Los más solicitados',
+    carousel: 'Carrusel de servicios destacados',
+    badge: 'Los tratamientos más solicitados por nuestros pacientes',
     accent: 'destacados',
     offers: 'qué ofrece',
     copy: {
-      'all-on-4-and-all-on-6': { text: 'Estas opciones reemplazan los dientes de una arcada completa con una prótesis fija sostenida por cuatro o seis implantes. Empezamos con un examen de tu boca, encías y hueso para ver si es lo adecuado para ti.', points: ['Una prótesis fija sobre 4 o 6 implantes.', 'Primero, un examen de tu hueso, encías y mordida.', 'Un plan hecho a la medida de tu caso.'] },
+      'all-on-4-implants': { text: 'All-on-4 reemplaza los dientes de una arcada completa con una prótesis fija sostenida por cuatro implantes. Empezamos con un examen de tu boca, encías y hueso para ver si es lo adecuado para ti.', points: ['Una prótesis fija sobre 4 implantes.', 'Primero, un examen de tu hueso, encías y mordida.', 'Un plan hecho a la medida de tu caso.'] },
+      'all-on-6-implants': { text: 'All-on-6 usa seis implantes para sostener una prótesis fija de una arcada completa, y puede considerarse cuando faltan casi todos los dientes superiores o inferiores. Empezamos con un examen de tu boca, encías y hueso.', points: ['Una prótesis fija sobre 6 implantes.', 'Primero, un examen de tu hueso, encías y mordida.', 'Un plan hecho a la medida de tu caso.'] },
       'invisalign-and-braces': { text: 'Los dientes alineados encajan mejor y es más fácil mantenerlos limpios. Revisaremos contigo los alineadores transparentes y los brackets tradicionales, para que elijas lo que va con tu vida.', points: ['Alineadores transparentes o brackets tradicionales.', 'Opciones para adolescentes y adultos.', 'Una primera visita para platicar tus metas.'] },
       'dental-implants': { text: 'Los implantes son dientes artificiales que reemplazan dientes dañados, perdidos o con caries. Empezamos por conocer tu salud y tu sonrisa, y luego armamos un plan a tu medida.', points: ['Opciones individuales, múltiples o de arcada completa.', 'Una consulta para saber si los implantes son para ti.', 'Un plan personalizado, paso a paso.'] },
       'dentures-and-bridges': { text: 'Los dientes faltantes pueden cambiar tu forma de masticar y cómo te sientes con tu sonrisa. Revisaremos tu caso, escucharemos tus inquietudes y te explicaremos tus opciones con palabras sencillas.', points: ['Dentaduras completas o parciales.', 'Puentes que cierran el espacio entre dientes.', 'Primero un examen, para recomendar el ajuste adecuado.'] },
@@ -332,5 +355,5 @@ const esText: typeof enText = {
 }
 export const serviceText: L10n<typeof enText> = { en: enText, es: esText }
 
-/** Los cinco servicios de la sección «Featured services» de la home, de mayor a menor costo típico (dueña, 25-11), por id. Cada uno tiene su propia figura (All-on-4 & All-on-6 reusa la de implantes). */
-export const featuredIds = ['all-on-4-and-all-on-6', 'dental-implants', 'invisalign-and-braces', 'dentures-and-bridges', 'teeth-whitening'] as const
+/** Los seis servicios de la sección «Featured services» de la home, de mayor a menor costo típico (dueña, 25-11), por id. Cada uno tiene su propia figura (All-on-4 y All-on-6 reusan la de implantes). */
+export const featuredIds = ['all-on-4-implants', 'all-on-6-implants', 'dental-implants', 'invisalign-and-braces', 'dentures-and-bridges', 'teeth-whitening'] as const

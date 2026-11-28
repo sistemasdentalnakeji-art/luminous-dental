@@ -1,0 +1,425 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>LD-RW-2026-06 · Reporte Luminous Dental</title><style>/* Formato LD-RW v2 (27-11-2026). Tipografía del sitio: Newsreader (títulos) y Figtree (texto). */
+@font-face{font-family:Figtree;font-weight:300 800;src:url(fonts/figtree-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212}
+@font-face{font-family:Figtree;font-weight:300 800;src:url(fonts/figtree-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+1E00-1EFF,U+2190-21FF}
+@font-face{font-family:Newsreader;font-style:normal;font-weight:200 600;src:url(fonts/newsreader-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+2000-206F}
+@font-face{font-family:Newsreader;font-style:normal;font-weight:200 600;src:url(fonts/newsreader-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+1E00-1EFF}
+@font-face{font-family:Newsreader;font-style:italic;font-weight:200 600;src:url(fonts/newsreader-italic-latin.woff2) format('woff2')}
+:root{--night:#0a1529;--navy:#14284a;--ink:#121d33;--text:#2c3649;--muted:#6a7488;--line:#e2e6ee;--paper:#fbfaf7;--soft:#f1f3f7;--blue:#2f63ad;--sky:#7bc3eb;
+  --gold:#E0B65C;--gold-ink:#9a6f1c;--red:#E0262D;--red-bg:#fde7e7;--green:#11875a;--green-bg:#e2f4ec;--serif:Newsreader,Georgia,serif;--sans:Figtree,Arial,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;background:#8f98a7;color:var(--text);font:400 10.5px/1.55 var(--sans)}
+.sheet{width:8.5in;height:11in;margin:16px auto;background:var(--paper);position:relative;overflow:hidden;display:flex;flex-direction:column}
+@page{size:letter;margin:0}
+@media print{html,body{background:var(--paper)}.sheet{margin:0;break-after:page}.sheet:last-child{break-after:auto}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+
+/* portada */
+.cover{background:var(--night);color:#e9f0fb;padding:.62in .62in .45in}
+.cover::after{content:"";position:absolute;right:-1.6in;top:2.2in;width:5in;height:5in;border-radius:50%;background:radial-gradient(circle,rgba(123,195,235,.10),transparent 65%);pointer-events:none}
+.cover .stamp{position:absolute;top:.5in;right:.55in;border:2px solid var(--red);color:var(--red);border-radius:4px;padding:5px 14px;font:800 10.5px/1.2 var(--sans);letter-spacing:.22em}
+.cover .logo{width:2.15in;margin-top:.1in}
+.cover .mid{margin:auto 0}
+.cover .t1{font:400 17px/1.3 var(--serif);color:#d4def0;letter-spacing:.01em}
+.cover h1{font:400 52px/1.05 var(--serif);margin:.1in 0 .14in;color:#fff;letter-spacing:-.01em}
+.cover .rule{width:.5in;height:3px;background:var(--gold);border-radius:2px}
+.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:18px 22px;border-top:1px solid #2a3c5e;padding-top:16px}
+.fields span{display:block;font:700 9px/1.3 var(--sans);letter-spacing:.16em;color:var(--sky);text-transform:uppercase}
+.fields b{display:block;font:600 13px/1.4 var(--sans);color:var(--gold);margin-top:4px}
+.conf{margin-top:18px}
+.conf span{display:block;font:700 8.5px/1.3 var(--sans);letter-spacing:.14em;color:var(--sky);text-transform:uppercase}
+.conf p{margin:4px 0 0;font-size:9px;line-height:1.5;color:#b9c6db}
+
+/* encabezado y pie de cada hoja */
+.rh{display:flex;align-items:center;gap:10px;padding:.3in .5in .12in;border-bottom:1px solid var(--line);font:600 8px/1 var(--sans);letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.rh b{color:var(--ink);font-weight:800}
+.rh .sep{color:#c5cbd6}
+.rh .c{margin-left:auto;color:var(--red);font-weight:800;letter-spacing:.18em}
+.body{flex:1;min-height:0;padding:.26in .5in .1in;display:flex;flex-direction:column}
+.ft{display:flex;justify-content:space-between;align-items:center;padding:.1in .5in .26in;border-top:1px solid var(--line);font-size:8.5px;color:var(--muted)}
+.ft em{font-style:normal;color:var(--blue);font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:8px}
+
+/* hoja de cambio: info | fotos */
+.chg{display:grid;grid-template-columns:2.55in 1fr;gap:.32in;flex:1;min-height:0}
+.info{display:flex;flex-direction:column;gap:13px;padding-right:.28in;border-right:1px solid var(--line)}
+.eyebrow{display:flex;align-items:center;gap:9px;font:800 8.5px/1 var(--sans);letter-spacing:.18em;color:var(--blue);text-transform:uppercase}
+.eyebrow .no{font:500 13px/1 var(--serif);letter-spacing:0;color:#fff;background:var(--navy);border-radius:4px;padding:4px 7px}
+.title{margin:2px 0 0;font:400 27px/1.1 var(--serif);color:var(--ink);letter-spacing:-.005em}
+.status{align-self:flex-start;font:800 8px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;padding:5px 9px;border-radius:99px}
+.status.ok{background:var(--green-bg);color:var(--green)}
+.status.done{background:#e6eefa;color:var(--blue)}
+.blk h3{margin:0 0 5px;font:800 8px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px}
+.blk h3::after{content:"";flex:1;height:1px;background:var(--line)}
+.blk p{margin:0;font-size:10.5px;line-height:1.6;color:var(--text)}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.kpi{background:#fff;border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:5px;padding:8px 9px 7px}
+.kpi b{display:block;font:500 19px/1.05 var(--serif);color:var(--ink)}
+.kpi span{display:block;margin-top:3px;font-size:8.5px;line-height:1.3;color:var(--muted)}
+ul.checks{margin:0;padding:0;list-style:none;display:grid;gap:5px}
+ul.checks li{position:relative;padding-left:17px;font-size:10px;line-height:1.45}
+ul.checks li::before{content:"";position:absolute;left:0;top:3px;width:10px;height:10px;border-radius:50%;background:var(--green-bg);box-shadow:inset 0 0 0 1px var(--green)}
+ul.checks li::after{content:"";position:absolute;left:3.2px;top:5.3px;width:4px;height:2px;border-left:1.5px solid var(--green);border-bottom:1.5px solid var(--green);transform:rotate(-45deg)}
+.src p{font-size:9.5px;color:var(--muted)}
+
+.shots{display:flex;flex-direction:column;gap:14px;min-height:0}
+.shot img,.gal img,.celgrid img{display:block;width:100%;height:auto;border-radius:4px;border:1px solid #d9dee7;box-shadow:0 1px 2px rgba(16,29,51,.06),0 6px 16px -10px rgba(16,29,51,.35)}
+.tag{display:flex;align-items:center;gap:8px;margin-bottom:6px;height:16px}
+.pill{font:800 8px/1 var(--sans);letter-spacing:.16em;padding:4px 8px;border-radius:3px;color:#fff}
+.pill.antes{background:var(--red)}
+.pill.ahora{background:var(--green)}
+.tag .when{font:600 8.5px/1 var(--sans);color:var(--muted)}
+.tag .cap{font:400 10px/1 var(--serif);font-style:italic;color:var(--ink);margin-left:auto}
+.celrow{margin-top:2px}
+.celhead{font:800 8px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.celhead::after{content:"";flex:1;height:1px;background:var(--line)}
+.celgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.celgrid.three{grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px}
+figure{margin:0}
+figcaption{margin-top:4px;font-size:9px;color:var(--muted)}
+.gal{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px}
+
+/* resumen, índice y pendientes */
+.sum{display:flex;flex-direction:column;gap:16px}
+.sumhead .eyebrow{margin-bottom:6px}
+.big{margin:0;font:400 34px/1.1 var(--serif);color:var(--ink);letter-spacing:-.01em}
+.lead{margin:8px 0 0;font-size:11.5px;line-height:1.6;color:var(--text);max-width:6.6in}
+.bigkpis{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.bk{background:var(--night);border-radius:7px;padding:12px 12px 11px;color:#cfdaec}
+.bk b{display:block;font:400 30px/1 var(--serif);color:var(--gold)}
+.bk span{display:block;margin-top:6px;font-size:9px;line-height:1.35}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:7px;padding:12px 14px}
+.panel h3{margin:0 0 10px;font:800 8.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
+.bar{display:grid;grid-template-columns:1.25in 1fr 22px;align-items:center;gap:8px;margin-bottom:7px;font-size:10px}
+.bt{height:9px;background:var(--soft);border-radius:99px;overflow:hidden}
+.bt i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--sky));border-radius:99px}
+.bar b{font:600 12px/1 var(--serif);color:var(--ink);text-align:right}
+.panel ul.checks li{font-size:10px}
+.panel ul.checks b{color:var(--ink)}
+table.qa{width:100%;border-collapse:collapse;font-size:10px}
+.qa th{text-align:left;font:800 8px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:0 6px 7px;border-bottom:1px solid var(--line)}
+.qa td{padding:7px 6px;border-bottom:1px solid var(--line);vertical-align:middle}
+.qa tr:last-child td{border-bottom:0}
+.qa td:first-child{font-weight:700;color:var(--ink)}
+.chip{font:800 7.5px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;padding:3px 6px;border-radius:99px;margin-right:6px}
+.chip.ok{background:var(--green-bg);color:var(--green)}
+
+.toc{display:grid;gap:18px;margin-top:6px}
+.tgh{display:flex;align-items:center;gap:10px;font:800 9px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;padding-bottom:7px;border-bottom:2px solid var(--ink)}
+.tgn{font:500 15px/1 var(--serif);letter-spacing:0;color:var(--gold-ink)}
+.ti{display:flex;align-items:baseline;gap:8px;padding:3px 0 3px 26px;font:400 13px/1.35 var(--serif);color:var(--ink)}
+.ti .dots{flex:1;border-bottom:1px dotted #b8c0cd;transform:translateY(-3px)}
+.ti .tn{font:700 10.5px/1 var(--sans);color:var(--ink);min-width:18px;text-align:right}
+
+.pend{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pcard{background:#fff;border:1px solid var(--line);border-radius:7px;padding:13px 14px;border-top:4px solid var(--navy)}
+.ph{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.pn{font:500 22px/1 var(--serif);color:var(--gold-ink)}
+.ph h3{margin:0;font:400 19px/1 var(--serif);color:var(--ink)}
+.prio{margin-left:auto;font:800 7.5px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;padding:4px 7px;border-radius:99px}
+.prio.hi{background:var(--red-bg);color:#b3161c}
+.prio.mid{background:#fbf1dc;color:var(--gold-ink)}
+.cnt{font:700 9px/1 var(--sans);color:#fff;background:var(--ink);border-radius:99px;padding:4px 7px}
+ul.todo{margin:0;padding:0;list-style:none;display:grid;gap:7px}
+ul.todo li{position:relative;padding-left:20px;font-size:10.5px;line-height:1.5}
+ul.todo li::before{content:"";position:absolute;left:0;top:2px;width:11px;height:11px;border:1.5px solid #9aa4b5;border-radius:3px}
+.next p{margin:0;font-size:11px;line-height:1.6}
+.sign{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:34px}
+.sign div{border-top:1px solid var(--ink);padding-top:5px;font-size:9.5px;color:var(--muted)}
+
+/* ---- v2.1 (27-11-2026, ajustes de Jadro) ---- */
+/* títulos de hoja «Azul | Negro», mismo tamaño */
+.phead{margin-bottom:2px}
+.big{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.big .hb{color:var(--blue)}
+.big .vl{width:2px;height:32px;background:var(--line);background:#c9d1de;border-radius:2px}
+/* datos de cada cambio */
+.kpi{padding:8px 9px 8px}
+.kpi .kl{display:block;font:800 7.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.kpi b{font:500 17px/1.1 var(--serif)}
+.kpi .ks{display:block;margin-top:3px;font-size:8.5px;line-height:1.3;color:var(--muted)}
+.blk p{font-size:11.5px;line-height:1.55;color:var(--ink)}
+/* título visible arriba de cada foto y etiqueta dentro de la foto */
+.stitle{display:flex;align-items:center;gap:8px;margin-bottom:6px;font:700 12.5px/1.2 var(--sans);color:var(--ink)}
+.stitle::before{content:"";width:4px;height:13px;border-radius:2px;background:var(--gold)}
+.frame{position:relative}
+.frame .pill{position:absolute;right:9px;bottom:9px;font-size:8.5px;padding:5px 9px;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.35),0 0 0 1.5px rgba(255,255,255,.85)}
+.celgrid .frame .pill{right:7px;bottom:7px}
+.gal .shot .stitle{font-size:11px;margin-bottom:4px}
+/* resumen: dos tarjetas alargadas */
+.two.tall{flex:1;align-items:stretch}
+.two.tall .panel{display:flex;flex-direction:column;padding:16px 16px}
+.area{padding:10px 0;border-bottom:1px solid var(--line)}
+.area:last-child{border-bottom:0}
+.area .bar{margin-bottom:5px;font-weight:700;color:var(--ink)}
+.area .al{font-size:9.5px;line-height:1.5;color:var(--muted)}
+.team{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:12px}
+.team div{background:var(--night);border-radius:6px;padding:9px 10px}
+.team b{display:block;font:400 24px/1 var(--serif);color:var(--gold)}
+.team span{display:block;margin-top:4px;font-size:8.5px;color:#cfdaec}
+.agent{border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:6px;padding:10px 11px;margin-bottom:10px}
+.ah{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.an{font:800 8px/1 var(--sans);letter-spacing:.12em;color:#fff;background:var(--navy);border-radius:3px;padding:4px 6px}
+.at{font:400 15px/1 var(--serif);color:var(--ink)}
+.ah .chip{margin-left:auto;margin-right:0}
+.agent p{margin:0 0 8px;font-size:10px;line-height:1.5;color:var(--text)}
+.ast{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.ast div{background:var(--soft);border-radius:4px;padding:6px 7px}
+.ast b{display:block;font:500 15px/1 var(--serif);color:var(--ink)}
+.ast span{display:block;margin-top:3px;font-size:8px;line-height:1.25;color:var(--muted)}
+.verdict{margin-top:auto;background:var(--green-bg);border-radius:6px;padding:10px 12px;font-size:10.5px;line-height:1.5;color:#0d5a3d}
+.verdict b{color:var(--green)}
+.crew{margin-top:8px;font-size:9px;color:var(--muted)}
+/* pendientes en azul noche con oro */
+.pcard{background:var(--night);border:0;border-top:4px solid var(--gold);color:#dbe4f2}
+.pcard .pn{color:var(--gold)}
+.pcard .ph h3{color:#fff}
+.pcard .prio.hi{background:rgba(224,38,45,.18);color:#ff9ea2}
+.pcard .prio.mid{background:rgba(224,182,92,.16);color:var(--gold)}
+.pcard .cnt{background:var(--gold);color:var(--night)}
+.pcard ul.todo li{color:#dbe4f2}
+.pcard ul.todo li::before{border-color:rgba(224,182,92,.75)}
+.body>.sum{flex:1}
+.two.tall .panel:first-child .area{flex:1;display:flex;flex-direction:column;justify-content:center}
+.area .al{font-size:10px}
+.team{margin-bottom:14px}
+.agent{margin-bottom:12px;padding:12px 12px}
+.body>.sum{flex:0 0 auto}
+.two.tall .panel:first-child .area{flex:0 0 auto;display:block;padding:13px 0}
+.two.tall{flex:0 0 auto}
+.bk{padding:16px 14px 14px}.bk b{font-size:36px}.bk span{font-size:9.5px;margin-top:8px}
+.bigkpis{gap:10px}
+.verdict{margin-top:6px}
+
+/* ---- v2.2 (27-11-2026) ---- */
+:root{--aqua:#34bfcc;--aqua-bg:#e3f6f8;--aqua-ink:#0f6f78}
+/* encabezados «En escritorio» / «En celular»: barra oro, negro y línea divisora */
+.sechead{display:flex;align-items:center;gap:8px;margin-bottom:8px;font:800 12px/1.2 var(--sans);color:var(--ink)}
+.sechead::before{content:"";width:4px;height:14px;border-radius:2px;background:var(--gold);flex:none}
+.sechead::after{content:"";flex:1;height:1px;background:var(--line)}
+.celrow{margin-top:6px}
+.collab{font:700 9px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.gal{gap:12px 12px}
+/* qué se cambió / por qué: tarjetas que resaltan junto a las fotos */
+.qp{border-radius:7px;padding:11px 13px 12px}
+.qp h3{margin:0 0 6px;font:800 8px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase}
+.qp p{margin:0;font:500 12.5px/1.5 var(--sans);color:var(--ink)}
+.qp.que{background:#eaf1fb;border-left:4px solid var(--blue)}
+.qp.que h3{color:var(--blue)}
+.qp.why{background:#fbf3e1;border-left:4px solid var(--gold)}
+.qp.why h3{color:var(--gold-ink)}
+/* cambios por área: lista con ES y EN */
+.lhead{display:grid;grid-template-columns:1fr 34px 34px;align-items:center;gap:6px;padding-bottom:6px;border-bottom:2px solid var(--ink);font:800 7.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.lang{text-align:center;border-radius:3px;padding:3px 0;color:#fff;letter-spacing:.1em}
+.lang.es{background:var(--navy)}.lang.en{background:var(--blue)}
+.larea{margin-top:10px;font:800 8px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
+.lrow{display:grid;grid-template-columns:1fr 34px 34px;align-items:center;gap:6px;padding:6px 0;border-bottom:1px solid var(--line)}
+.lrow b{display:block;font-size:10.5px;color:var(--ink)}
+.lrow span{display:block;font-size:9px;line-height:1.35;color:var(--muted);margin-top:1px}
+.lrow em,.ltotal em{font:500 15px/1 var(--serif);font-style:normal;color:var(--ink);text-align:center}
+.ltotal{display:grid;grid-template-columns:1fr 34px 34px 40px;align-items:center;gap:6px;margin-top:10px;padding:10px 10px;background:var(--night);border-radius:6px;color:#cfdaec}
+.ltotal b{display:block;font-size:10.5px;color:#fff}
+.ltotal span{display:block;font-size:8.5px;margin-top:2px}
+.ltotal em{color:#fff}
+.ltotal strong{font:500 20px/1 var(--serif);color:var(--gold);text-align:center}
+.lnote{margin:9px 0 0;font-size:9.5px;line-height:1.45;color:var(--muted)}
+/* pendientes: números en azul agua */
+.pcard .cnt{background:var(--aqua);color:var(--night)}
+/* firmas */
+.firmas{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:30px;padding:0 8px}
+.firma .fl{display:block;font:800 8.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
+.firma .fline{height:70px;border-bottom:1.5px solid var(--ink)}
+.firma b{display:block;margin-top:7px;font:500 15px/1.2 var(--serif);color:var(--ink)}
+.firma .fr{display:block;margin-top:2px;font-size:9.5px;color:var(--muted)}
+</style></head><body>
+<section class="sheet cover">
+  <div class="stamp">CONFIDENCIAL</div>
+  <img class="logo" src="../RW-2026-04/img/logo.png" alt="Luminous Dental">
+  <div class="mid"><div class="t1">Proyecto página web</div><h1>Luminous Dental</h1><div class="rule"></div></div>
+  <div class="fields">
+    <div><span>Reporte</span><b>LD-RW-2026-06</b></div>
+    <div><span>Empresa</span><b>Luminous Dental · Las Vegas, NV</b></div>
+    <div><span>Departamento</span><b>IT · Páginas web</b></div>
+    <div><span>Dirigido a</span><b>Dirección</b></div>
+    <div><span>Elaboró</span><b>Jadro Montes</b></div>
+    <div><span>Fecha</span><b>27 de noviembre de 2026</b></div>
+  </div>
+  <div class="conf"><span>Documento interno de uso exclusivo de la empresa</span>
+  <p>Aviso de confidencialidad. Este documento es propiedad de Luminous Dental y contiene información reservada. Queda prohibido copiarlo, distribuirlo o divulgarlo, en todo o en parte, sin autorización por escrito de la empresa. Si usted lo recibió por error, avise a quien se lo envió y elimínelo.</p></div>
+</section>
+<section class="sheet is-sum"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="sum"><div class="phead"><h2 class="big"><span class="hb">Contenido</span><span class="vl"></span><span>Índice</span></h2></div>
+  <div class="toc"><div class="tg"><div class="tgh"><span class="tgn">01</span><span>Resumen</span></div><div class="ti"><span class="tt">Resumen del día</span><span class="dots"></span><span class="tn">3</span></div></div><div class="tg"><div class="tgh"><span class="tgn">02</span><span>Inicio</span></div><div class="ti"><span class="tt">Antes y después del inicio</span><span class="dots"></span><span class="tn">4</span></div><div class="ti"><span class="tt">Encabezado, logo y fondo</span><span class="dots"></span><span class="tn">5</span></div></div><div class="tg"><div class="tgh"><span class="tgn">03</span><span>Menú y servicios</span></div><div class="ti"><span class="tt">Menú de Servicios con íconos</span><span class="dots"></span><span class="tn">6</span></div><div class="ti"><span class="tt">Página de Servicios</span><span class="dots"></span><span class="tn">7</span></div><div class="ti"><span class="tt">Servicios destacados</span><span class="dots"></span><span class="tn">8</span></div></div><div class="tg"><div class="tgh"><span class="tgn">04</span><span>Contacto y beneficios</span></div><div class="ti"><span class="tt">Contacto · emergencias 24/7</span><span class="dots"></span><span class="tn">9</span></div><div class="ti"><span class="tt">Seguros, Financiamiento y Convenios</span><span class="dots"></span><span class="tn">10</span></div></div><div class="tg"><div class="tgh"><span class="tgn">05</span><span>Fotos de servicios</span></div><div class="ti"><span class="tt">Blanqueamiento dental</span><span class="dots"></span><span class="tn">11</span></div><div class="ti"><span class="tt">Implantes dentales</span><span class="dots"></span><span class="tn">12</span></div><div class="ti"><span class="tt">Carillas y coronas</span><span class="dots"></span><span class="tn">13</span></div><div class="ti"><span class="tt">All-on-4 y All-on-6</span><span class="dots"></span><span class="tn">14</span></div><div class="ti"><span class="tt">Resinas estéticas</span><span class="dots"></span><span class="tn">15</span></div><div class="ti"><span class="tt">Aparatos dentales</span><span class="dots"></span><span class="tn">16</span></div><div class="ti"><span class="tt">Cuidado dental de rutina</span><span class="dots"></span><span class="tn">17</span></div></div><div class="tg"><div class="tgh"><span class="tgn">06</span><span>Blog</span></div><div class="ti"><span class="tt">Blog · portada</span><span class="dots"></span><span class="tn">18</span></div><div class="ti"><span class="tt">Artículo · Coronas dentales</span><span class="dots"></span><span class="tn">19</span></div><div class="ti"><span class="tt">Artículo · All-on-4</span><span class="dots"></span><span class="tn">20</span></div><div class="ti"><span class="tt">Artículo · Extracciones</span><span class="dots"></span><span class="tn">21</span></div><div class="ti"><span class="tt">Los otros 8 artículos</span><span class="dots"></span><span class="tn">22</span></div></div><div class="tg"><div class="tgh"><span class="tgn">07</span><span>Pendientes</span></div><div class="ti"><span class="tt">Pendientes</span><span class="dots"></span><span class="tn">23</span></div></div></div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Índice</em> &nbsp; HOJA 2 DE 23</span></div></section>
+<section class="sheet is-sum"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="sum">
+  <div class="phead"><h2 class="big"><span class="hb">Resumen</span><span class="vl"></span><span>Lo que cambió el 27 de noviembre</span></h2></div>
+  <div class="bigkpis">
+    <div class="bk"><b>19</b><span>secciones con cambios visuales</span></div><div class="bk"><b>18</b><span>fotos nuevas o reemplazadas</span></div><div class="bk"><b>86</b><span>páginas revisadas por QA</span></div><div class="bk"><b>17</b><span>errores encontrados y corregidos</span></div><div class="bk"><b>7</b><span>agentes trabajando en el día</span></div><div class="bk"><b>430</b><span>cargas de página medidas</span></div><div class="bk"><b>137</b><span>archivos del sitio tocados</span></div><div class="bk"><b>1,937</b><span>capturas de verificación</span></div>
+  </div>
+  <div class="two tall">
+    <div class="panel"><h3>Cambios por área</h3>
+      <div class="lhead"><span>Qué cambió · en qué páginas</span><span class="lang es">ES</span><span class="lang en">EN</span></div>
+      <div class="larea">Inicio</div><div class="lrow"><div><b>Antes y después y servicios destacados</b><span>Inicio</span></div><em>1</em><em>1</em></div><div class="larea">Servicios</div><div class="lrow"><div><b>Listas por tipo con íconos</b><span>Página de Servicios</span></div><em>1</em><em>1</em></div><div class="lrow"><div><b>Fotos nuevas</b><span>Blanqueamiento, Implantes, Carillas, Resinas, Aparatos y Cuidado de rutina</span></div><em>6</em><em>6</em></div><div class="lrow"><div><b>Dos páginas nuevas</b><span>All-on-4 y All-on-6</span></div><em>2</em><em>2</em></div><div class="larea">Contacto y beneficios</div><div class="lrow"><div><b>Emergencias 24/7 al centro</b><span>Contacto</span></div><em>1</em><em>1</em></div><div class="lrow"><div><b>Botón verde para llamar</b><span>Seguros, Financiamiento y Convenios</span></div><em>3</em><em>3</em></div><div class="larea">Blog</div><div class="lrow"><div><b>Fotos en las tarjetas</b><span>Portada del blog</span></div><em>1</em><em>1</em></div><div class="lrow"><div><b>Foto en cada artículo</b><span>11 artículos</span></div><em>11</em><em>11</em></div>
+      <div class="ltotal"><div><b>Total de páginas con cambio propio</b><span>Cada página cuenta una vez por idioma</span></div><em>26</em><em>26</em><strong>52</strong></div>
+      <p class="lnote">Además, el encabezado, el logo, el menú y el fondo cambiaron en todas las páginas: 43 en español y 43 en inglés (86 en total).</p>
+    </div>
+    <div class="panel"><h3>Pruebas de QA</h3>
+      <div class="team"><div><b>7</b><span>agentes en el día</span></div><div><b>2</b><span>agentes de QA</span></div><div><b>5</b><span>revisiones</span></div></div>
+      <div class="agent"><div class="ah"><span class="an">QA 1</span><span class="at">Pruebas funcionales</span><span class="chip ok">Pasa</span></div><p>Abrió cada página en celular, tableta y PC y probó menús, botones, enlaces, fotos y el cambio de idioma.</p><div class="ast"><div><b>3</b><span>revisiones</span></div><div><b>86</b><span>páginas</span></div><div><b>+530</b><span>cargas</span></div><div><b>5</b><span>detalles corregidos</span></div></div></div><div class="agent"><div class="ah"><span class="an">QA 2</span><span class="at">Accesibilidad</span><span class="chip ok">Pasa</span></div><p>Revisó que el sitio se use bien con teclado y zoom, y que todos los textos se lean con claridad.</p><div class="ast"><div><b>2</b><span>revisiones</span></div><div><b>86</b><span>páginas</span></div><div><b>3,089</b><span>textos medidos</span></div><div><b>10</b><span>hallazgos corregidos</span></div></div></div>
+      <div class="verdict"><b>Resultado general:</b> el sitio pasa las pruebas. Las 15 fallas que encontraron los agentes de QA ya están corregidas, con 0 errores de consola y 0 enlaces rotos.</div>
+    </div>
+  </div>
+</div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Resumen</em> &nbsp; HOJA 3 DE 23</span></div></section>
+<section class="sheet is-chg"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="chg"><div class="info">
+    <div class="eyebrow"><span class="no">01</span><span>Inicio</span></div>
+    <h2 class="title">Antes y después del inicio</h2>
+    <div class="status ok">Aprobado</div>
+    <div class="qp que"><h3>Qué se cambió</h3><p>Una sola foto con el antes y el después. Una línea la recorre sola y se puede pausar.</p></div><div class="qp why"><h3>Por qué</h3><p>Gerencia lo pidió así y eligió esta opción entre tres propuestas.</p></div>
+    <div class="blk"><h3>Datos</h3><div class="kpis"><div class="kpi"><span class="kl">Páginas</span><b>2</b><span class="ks">inicio en ES y EN</span></div><div class="kpi"><span class="kl">Idiomas</span><b>ES y EN</b><span class="ks">las dos versiones</span></div><div class="kpi"><span class="kl">Probado en</span><b>8 tamaños</b><span class="ks">celular a pantalla grande</span></div><div class="kpi"><span class="kl">Revisión</span><b>Pasa</b><span class="ks">QA del 27-11</span></div></div></div>
+    
+  </div><div class="shots"><div class="sechead">En escritorio</div><div class="shot"><div class="frame"><img src="img/antes-pc-inicio-heroe.jpg" style="height:2.75in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-inicio-heroe.jpg" style="height:2.75in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div><div class="celrow"><div class="sechead">En celular</div><div class="celgrid"><div class="frame"><img src="img/antes-cel-inicio-heroe__0_1330_750_840.jpg" style="height:2.51in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div><div class="frame"><img src="img/ahora-cel-inicio-heroe__0_600_750_840.jpg" style="height:2.51in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div></div></div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Inicio</em> &nbsp; HOJA 4 DE 23</span></div></section>
+<section class="sheet is-chg"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="chg"><div class="info">
+    <div class="eyebrow"><span class="no">02</span><span>Inicio</span></div>
+    <h2 class="title">Encabezado, logo y fondo</h2>
+    <div class="status ok">Aprobado</div>
+    <div class="qp que"><h3>Qué se cambió</h3><p>Logo más grande y sin recuadro. Sin redes ni teléfono arriba, fondo azul liso y sin WhatsApp.</p></div><div class="qp why"><h3>Por qué</h3><p>Gerencia pidió un logo más visible, como letrero. La clínica no usa WhatsApp.</p></div>
+    <div class="blk"><h3>Datos</h3><div class="kpis"><div class="kpi"><span class="kl">Páginas</span><b>Todas</b><span class="ks">el encabezado sale en cada página</span></div><div class="kpi"><span class="kl">Idiomas</span><b>ES y EN</b><span class="ks">las dos versiones</span></div><div class="kpi"><span class="kl">Probado en</span><b>5 tamaños</b><span class="ks">celular a PC grande</span></div><div class="kpi"><span class="kl">Revisión</span><b>Pasa</b><span class="ks">QA del 27-11</span></div></div></div>
+    
+  </div><div class="shots"><div class="sechead">En escritorio</div><div class="shot"><div class="frame"><img src="img/antes-pc-inicio-arriba__0_0_760_175.jpg" style="" alt=""><span class="pill antes">ANTES</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-inicio-arriba__0_0_760_175.jpg" style="" alt=""><span class="pill ahora">AHORA</span></div></div><div class="shot"><div class="frame"><img src="img/antes-pc-inicio-arriba__900_0_540_95.jpg" style="" alt=""><span class="pill antes">ANTES</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-inicio-arriba__900_0_540_95.jpg" style="" alt=""><span class="pill ahora">AHORA</span></div></div><div class="celrow"><div class="sechead">En celular</div><div class="celgrid"><div class="frame"><img src="img/antes-cel-inicio-arriba__0_0_750_250.jpg" style="height:0.75in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div><div class="frame"><img src="img/ahora-cel-inicio-arriba__0_0_750_250.jpg" style="height:0.75in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div></div></div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Inicio</em> &nbsp; HOJA 5 DE 23</span></div></section>
+<section class="sheet is-chg"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="chg"><div class="info">
+    <div class="eyebrow"><span class="no">03</span><span>Menú y servicios</span></div>
+    <h2 class="title">Menú de Servicios con íconos</h2>
+    <div class="status ok">Aprobado</div>
+    <div class="qp que"><h3>Qué se cambió</h3><p>Cada servicio tiene su ícono con un brillo de color. El texto ya no se sale del menú.</p></div><div class="qp why"><h3>Por qué</h3><p>Gerencia pidió los mismos íconos en todo el sitio.</p></div>
+    <div class="blk"><h3>Datos</h3><div class="kpis"><div class="kpi"><span class="kl">Páginas</span><b>Todas</b><span class="ks">el menú sale en cada página</span></div><div class="kpi"><span class="kl">Idiomas</span><b>ES y EN</b><span class="ks">las dos versiones</span></div><div class="kpi"><span class="kl">Probado en</span><b>5 tamaños</b><span class="ks">celular a PC grande</span></div><div class="kpi"><span class="kl">Revisión</span><b>Pasa</b><span class="ks">QA del 27-11</span></div></div></div>
+    
+  </div><div class="shots"><div class="sechead">En escritorio</div><div class="shot"><div class="frame"><img src="img/antes-pc-menu-servicios.jpg" style="" alt=""><span class="pill antes">ANTES</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-menu-servicios.jpg" style="" alt=""><span class="pill ahora">AHORA</span></div></div></div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Menú y servicios</em> &nbsp; HOJA 6 DE 23</span></div></section>
+<section class="sheet is-chg"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="chg"><div class="info">
+    <div class="eyebrow"><span class="no">04</span><span>Menú y servicios</span></div>
+    <h2 class="title">Página de Servicios</h2>
+    <div class="status ok">Aprobado</div>
+    <div class="qp que"><h3>Qué se cambió</h3><p>Sin tarjetas ni filtros: los 12 servicios en listas por tipo, cada uno con su ícono.</p></div><div class="qp why"><h3>Por qué</h3><p>Se ve más limpio y se llega a cada servicio con un clic.</p></div>
+    <div class="blk"><h3>Datos</h3><div class="kpis"><div class="kpi"><span class="kl">Páginas</span><b>2</b><span class="ks">servicios en ES y EN</span></div><div class="kpi"><span class="kl">Idiomas</span><b>ES y EN</b><span class="ks">las dos versiones</span></div><div class="kpi"><span class="kl">Probado en</span><b>5 tamaños</b><span class="ks">celular a PC grande</span></div><div class="kpi"><span class="kl">Revisión</span><b>Pasa</b><span class="ks">QA del 27-11</span></div></div></div>
+    
+  </div><div class="shots"><div class="sechead">En escritorio</div><div class="shot"><div class="frame"><img src="img/antes-pc-hub-servicios.jpg" style="height:2.60in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-hub-servicios.jpg" style="height:2.60in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div><div class="celrow"><div class="sechead">En celular</div><div class="celgrid"><div class="frame"><img src="img/antes-cel-hub-servicios__0_745_750_940.jpg" style="height:2.81in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div><div class="frame"><img src="img/ahora-cel-hub-servicios__0_795_750_940.jpg" style="height:2.81in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div></div></div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Menú y servicios</em> &nbsp; HOJA 7 DE 23</span></div></section>
+<section class="sheet is-chg"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="chg"><div class="info">
+    <div class="eyebrow"><span class="no">05</span><span>Menú y servicios</span></div>
+    <h2 class="title">Servicios destacados</h2>
+    <div class="status ok">Aprobado</div>
+    <div class="qp que"><h3>Qué se cambió</h3><p>Ahora son 6 pestañas con ícono: All-on-4 y All-on-6 van por separado.</p></div><div class="qp why"><h3>Por qué</h3><p>Para que coincida con las nuevas páginas de servicios.</p></div>
+    <div class="blk"><h3>Datos</h3><div class="kpis"><div class="kpi"><span class="kl">Páginas</span><b>2</b><span class="ks">inicio en ES y EN</span></div><div class="kpi"><span class="kl">Idiomas</span><b>ES y EN</b><span class="ks">las dos versiones</span></div><div class="kpi"><span class="kl">Probado en</span><b>2 tamaños</b><span class="ks">celular y PC</span></div><div class="kpi"><span class="kl">Revisión</span><b>Sin errores</b><span class="ks">revisión del programador</span></div></div></div>
+    
+  </div><div class="shots"><div class="sechead">En escritorio</div><div class="shot"><div class="frame"><img src="img/antes-pc-inicio-destacados.jpg" style="height:2.60in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-inicio-destacados.jpg" style="height:2.60in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div><div class="celrow"><div class="sechead">En celular</div><div class="celgrid"><div class="frame"><img src="img/antes-cel-inicio-destacados__0_540_750_940.jpg" style="height:2.81in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div><div class="frame"><img src="img/ahora-cel-inicio-destacados__0_540_750_940.jpg" style="height:2.81in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div></div></div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Menú y servicios</em> &nbsp; HOJA 8 DE 23</span></div></section>
+<section class="sheet is-chg"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="chg"><div class="info">
+    <div class="eyebrow"><span class="no">06</span><span>Contacto y beneficios</span></div>
+    <h2 class="title">Contacto · emergencias 24/7</h2>
+    <div class="status ok">Aprobado</div>
+    <div class="qp que"><h3>Qué se cambió</h3><p>Emergencias al centro, con un 24/7 grande y el botón para llamar.</p></div><div class="qp why"><h3>Por qué</h3><p>Gerencia pidió destacar que se atiende a cualquier hora.</p></div>
+    <div class="blk"><h3>Datos</h3><div class="kpis"><div class="kpi"><span class="kl">Páginas</span><b>2</b><span class="ks">contacto en ES y EN</span></div><div class="kpi"><span class="kl">Idiomas</span><b>ES y EN</b><span class="ks">las dos versiones</span></div><div class="kpi"><span class="kl">Probado en</span><b>5 tamaños</b><span class="ks">celular a PC grande</span></div><div class="kpi"><span class="kl">Revisión</span><b>Pasa</b><span class="ks">QA del 27-11</span></div></div></div>
+    
+  </div><div class="shots"><div class="sechead">En escritorio</div><div class="shot"><div class="frame"><img src="img/antes-pc-contacto-arriba.jpg" style="height:2.60in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-contacto-arriba.jpg" style="height:2.60in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div><div class="celrow"><div class="sechead">En celular</div><div class="celgrid"><div class="frame"><img src="img/antes-cel-contacto-arriba__0_1840_750_940.jpg" style="height:2.81in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div><div class="frame"><img src="img/ahora-cel-contacto-arriba__0_0_750_940.jpg" style="height:2.81in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div></div></div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Contacto y beneficios</em> &nbsp; HOJA 9 DE 23</span></div></section>
+<section class="sheet is-chg"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="chg"><div class="info">
+    <div class="eyebrow"><span class="no">07</span><span>Contacto y beneficios</span></div>
+    <h2 class="title">Seguros, Financiamiento y Convenios</h2>
+    <div class="status ok">Aprobado</div>
+    <div class="qp que"><h3>Qué se cambió</h3><p>Las tres páginas se ven igual y el teléfono es un botón verde.</p></div><div class="qp why"><h3>Por qué</h3><p>Gerencia pidió que fueran iguales y que llamar fuera más fácil.</p></div>
+    <div class="blk"><h3>Datos</h3><div class="kpis"><div class="kpi"><span class="kl">Páginas</span><b>6</b><span class="ks">3 páginas en ES y EN</span></div><div class="kpi"><span class="kl">Idiomas</span><b>ES y EN</b><span class="ks">las dos versiones</span></div><div class="kpi"><span class="kl">Probado en</span><b>5 tamaños</b><span class="ks">celular a PC grande</span></div><div class="kpi"><span class="kl">Revisión</span><b>Pasa</b><span class="ks">QA del 27-11</span></div></div></div>
+    
+  </div><div class="shots"><div class="sechead">En escritorio</div><div class="shot"><div class="frame"><img src="img/antes-pc-seguros-encabezado.jpg" style="height:2.60in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-seguros-encabezado.jpg" style="height:2.60in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div><div class="celrow"><div class="sechead">En celular</div><div class="celgrid"><div class="frame"><img src="img/antes-cel-seguros-encabezado__0_200_750_940.jpg" style="height:2.81in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div><div class="frame"><img src="img/ahora-cel-seguros-encabezado__0_200_750_940.jpg" style="height:2.81in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div></div></div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Contacto y beneficios</em> &nbsp; HOJA 10 DE 23</span></div></section>
+<section class="sheet is-chg"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="chg"><div class="info">
+    <div class="eyebrow"><span class="no">08</span><span>Fotos de servicios</span></div>
+    <h2 class="title">Blanqueamiento dental</h2>
+    <div class="status ok">Aprobado</div>
+    <div class="qp que"><h3>Qué se cambió</h3><p>Nueva foto: una guía de tonos de dientes.</p></div><div class="qp why"><h3>Por qué</h3><p>Gerencia pidió una foto que muestre el tratamiento.</p></div>
+    <div class="blk"><h3>Datos</h3><div class="kpis"><div class="kpi"><span class="kl">Páginas</span><b>2</b><span class="ks">ES y EN</span></div><div class="kpi"><span class="kl">Idiomas</span><b>ES y EN</b><span class="ks">las dos versiones</span></div><div class="kpi"><span class="kl">Probado en</span><b>2 tamaños</b><span class="ks">celular y PC</span></div><div class="kpi"><span class="kl">Revisión</span><b>Sin errores</b><span class="ks">revisión del programador</span></div></div></div>
+    <div class="blk src"><h3>Foto</h3><p>Karola G · Pexels (uso comercial libre).</p></div>
+  </div><div class="shots"><div class="sechead">En escritorio</div><div class="shot"><div class="frame"><img src="img/antes-pc-serv-blanqueamiento-dental.jpg" style="" alt=""><span class="pill antes">ANTES</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-serv-blanqueamiento-dental.jpg" style="" alt=""><span class="pill ahora">AHORA</span></div></div><div class="celrow"><div class="sechead">En celular</div><div class="celgrid"><div class="frame"><img src="img/antes-cel-serv-blanqueamiento-dental.jpg" style="height:3.30in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div><div class="frame"><img src="img/ahora-cel-serv-blanqueamiento-dental.jpg" style="height:3.30in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div></div></div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Fotos de servicios</em> &nbsp; HOJA 11 DE 23</span></div></section>
+<section class="sheet is-chg"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="chg"><div class="info">
+    <div class="eyebrow"><span class="no">09</span><span>Fotos de servicios</span></div>
+    <h2 class="title">Implantes dentales</h2>
+    <div class="status ok">Aprobado</div>
+    <div class="qp que"><h3>Qué se cambió</h3><p>Nueva foto: un implante con su corona.</p></div><div class="qp why"><h3>Por qué</h3><p>Gerencia pidió una foto que muestre el tratamiento.</p></div>
+    <div class="blk"><h3>Datos</h3><div class="kpis"><div class="kpi"><span class="kl">Páginas</span><b>2</b><span class="ks">ES y EN</span></div><div class="kpi"><span class="kl">Idiomas</span><b>ES y EN</b><span class="ks">las dos versiones</span></div><div class="kpi"><span class="kl">Probado en</span><b>2 tamaños</b><span class="ks">celular y PC</span></div><div class="kpi"><span class="kl">Revisión</span><b>Sin errores</b><span class="ks">revisión del programador</span></div></div></div>
+    <div class="blk src"><h3>Foto</h3><p>Jonathan Borba · Unsplash (uso comercial libre).</p></div>
+  </div><div class="shots"><div class="sechead">En escritorio</div><div class="shot"><div class="frame"><img src="img/antes-pc-serv-implantes-dentales.jpg" style="" alt=""><span class="pill antes">ANTES</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-serv-implantes-dentales.jpg" style="" alt=""><span class="pill ahora">AHORA</span></div></div><div class="celrow"><div class="sechead">En celular</div><div class="celgrid"><div class="frame"><img src="img/antes-cel-serv-implantes-dentales.jpg" style="height:3.30in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div><div class="frame"><img src="img/ahora-cel-serv-implantes-dentales.jpg" style="height:3.30in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div></div></div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Fotos de servicios</em> &nbsp; HOJA 12 DE 23</span></div></section>
+<section class="sheet is-chg"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="chg"><div class="info">
+    <div class="eyebrow"><span class="no">10</span><span>Fotos de servicios</span></div>
+    <h2 class="title">Carillas y coronas</h2>
+    <div class="status ok">Aprobado</div>
+    <div class="qp que"><h3>Qué se cambió</h3><p>No tenía foto. Ahora muestra carillas de porcelana.</p></div><div class="qp why"><h3>Por qué</h3><p>Gerencia pidió otra foto; la que había traía el nombre de otra clínica.</p></div>
+    <div class="blk"><h3>Datos</h3><div class="kpis"><div class="kpi"><span class="kl">Páginas</span><b>2</b><span class="ks">ES y EN</span></div><div class="kpi"><span class="kl">Idiomas</span><b>ES y EN</b><span class="ks">las dos versiones</span></div><div class="kpi"><span class="kl">Probado en</span><b>2 tamaños</b><span class="ks">celular y PC</span></div><div class="kpi"><span class="kl">Revisión</span><b>Sin errores</b><span class="ks">revisión del programador</span></div></div></div>
+    <div class="blk src"><h3>Foto</h3><p>Pavel Danilyuk · Pexels (uso comercial libre).</p></div>
+  </div><div class="shots"><div class="sechead">En escritorio</div><div class="shot"><div class="frame"><img src="img/antes-pc-serv-carillas-y-coronas-de-porcelana.jpg" style="" alt=""><span class="pill antes">ANTES</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-serv-carillas-y-coronas-de-porcelana.jpg" style="" alt=""><span class="pill ahora">AHORA</span></div></div><div class="celrow"><div class="sechead">En celular</div><div class="celgrid"><div class="frame"><img src="img/antes-cel-serv-carillas-y-coronas-de-porcelana.jpg" style="height:3.30in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div><div class="frame"><img src="img/ahora-cel-serv-carillas-y-coronas-de-porcelana.jpg" style="height:3.30in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div></div></div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Fotos de servicios</em> &nbsp; HOJA 13 DE 23</span></div></section>
+<section class="sheet is-chg"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="chg"><div class="info">
+    <div class="eyebrow"><span class="no">11</span><span>Fotos de servicios</span></div>
+    <h2 class="title">All-on-4 y All-on-6</h2>
+    <div class="status ok">Aprobado</div>
+    <div class="qp que"><h3>Qué se cambió</h3><p>Ahora son dos páginas, cada una con su foto: una con 4 implantes y otra con 6.</p></div><div class="qp why"><h3>Por qué</h3><p>Gerencia pidió separarlas para explicar mejor cada tratamiento.</p></div>
+    <div class="blk"><h3>Datos</h3><div class="kpis"><div class="kpi"><span class="kl">Páginas</span><b>4</b><span class="ks">2 nuevas por idioma</span></div><div class="kpi"><span class="kl">Idiomas</span><b>ES y EN</b><span class="ks">las dos versiones</span></div><div class="kpi"><span class="kl">Probado en</span><b>2 tamaños</b><span class="ks">celular y PC</span></div><div class="kpi"><span class="kl">Revisión</span><b>Sin errores</b><span class="ks">revisión del programador</span></div></div></div>
+    <div class="blk src"><h3>Foto</h3><p>Fotos de Dental Nakeji, con permiso de Gerencia.</p></div>
+  </div><div class="shots"><div class="sechead">En escritorio</div><div class="shot"><div class="frame"><img src="img/antes-pc-serv-all-on-4-y-all-on-6.jpg" style="" alt=""><span class="pill antes">ANTES</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-serv-implantes-all-on-4.jpg" style="" alt=""><span class="pill ahora">AHORA</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-serv-implantes-all-on-6.jpg" style="" alt=""><span class="pill ahora">AHORA</span></div></div><div class="celrow"><div class="sechead">En celular</div><div class="celgrid"><div class="frame"><img src="img/antes-cel-serv-all-on-4-y-all-on-6.jpg" style="height:2.59in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div><div class="frame"><img src="img/ahora-cel-serv-implantes-all-on-4.jpg" style="height:2.59in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div></div></div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Fotos de servicios</em> &nbsp; HOJA 14 DE 23</span></div></section>
+<section class="sheet is-chg"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="chg"><div class="info">
+    <div class="eyebrow"><span class="no">12</span><span>Fotos de servicios</span></div>
+    <h2 class="title">Resinas estéticas</h2>
+    <div class="status ok">Aprobado</div>
+    <div class="qp que"><h3>Qué se cambió</h3><p>No tenía foto. Ahora muestra una sonrisa de cerca.</p></div><div class="qp why"><h3>Por qué</h3><p>Todos los servicios deben tener foto.</p></div>
+    <div class="blk"><h3>Datos</h3><div class="kpis"><div class="kpi"><span class="kl">Páginas</span><b>2</b><span class="ks">ES y EN</span></div><div class="kpi"><span class="kl">Idiomas</span><b>ES y EN</b><span class="ks">las dos versiones</span></div><div class="kpi"><span class="kl">Probado en</span><b>5 tamaños</b><span class="ks">celular a PC grande</span></div><div class="kpi"><span class="kl">Revisión</span><b>Pasa</b><span class="ks">QA del 27-11</span></div></div></div>
+    <div class="blk src"><h3>Foto</h3><p>Ozkan Guner · Unsplash (uso comercial libre).</p></div>
+  </div><div class="shots"><div class="sechead">En escritorio</div><div class="shot"><div class="frame"><img src="img/antes-pc-serv-resinas-esteticas.jpg" style="" alt=""><span class="pill antes">ANTES</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-serv-resinas-esteticas.jpg" style="" alt=""><span class="pill ahora">AHORA</span></div></div><div class="celrow"><div class="sechead">En celular</div><div class="celgrid"><div class="frame"><img src="img/antes-cel-serv-resinas-esteticas.jpg" style="height:3.30in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div><div class="frame"><img src="img/ahora-cel-serv-resinas-esteticas.jpg" style="height:3.30in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div></div></div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Fotos de servicios</em> &nbsp; HOJA 15 DE 23</span></div></section>
+<section class="sheet is-chg"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="chg"><div class="info">
+    <div class="eyebrow"><span class="no">13</span><span>Fotos de servicios</span></div>
+    <h2 class="title">Aparatos dentales</h2>
+    <div class="status ok">Aprobado</div>
+    <div class="qp que"><h3>Qué se cambió</h3><p>No tenía foto. Ahora muestra un modelo con brackets.</p></div><div class="qp why"><h3>Por qué</h3><p>Todos los servicios deben tener foto.</p></div>
+    <div class="blk"><h3>Datos</h3><div class="kpis"><div class="kpi"><span class="kl">Páginas</span><b>2</b><span class="ks">ES y EN</span></div><div class="kpi"><span class="kl">Idiomas</span><b>ES y EN</b><span class="ks">las dos versiones</span></div><div class="kpi"><span class="kl">Probado en</span><b>5 tamaños</b><span class="ks">celular a PC grande</span></div><div class="kpi"><span class="kl">Revisión</span><b>Pasa</b><span class="ks">QA del 27-11</span></div></div></div>
+    <div class="blk src"><h3>Foto</h3><p>Harold Hisona · Unsplash (uso comercial libre).</p></div>
+  </div><div class="shots"><div class="sechead">En escritorio</div><div class="shot"><div class="frame"><img src="img/antes-pc-serv-aparatos-dentales.jpg" style="" alt=""><span class="pill antes">ANTES</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-serv-aparatos-dentales.jpg" style="" alt=""><span class="pill ahora">AHORA</span></div></div><div class="celrow"><div class="sechead">En celular</div><div class="celgrid"><div class="frame"><img src="img/antes-cel-serv-aparatos-dentales.jpg" style="height:2.37in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div><div class="frame"><img src="img/ahora-cel-serv-aparatos-dentales.jpg" style="height:2.37in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div></div></div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Fotos de servicios</em> &nbsp; HOJA 16 DE 23</span></div></section>
+<section class="sheet is-chg"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="chg"><div class="info">
+    <div class="eyebrow"><span class="no">14</span><span>Fotos de servicios</span></div>
+    <h2 class="title">Cuidado dental de rutina</h2>
+    <div class="status ok">Aprobado</div>
+    <div class="qp que"><h3>Qué se cambió</h3><p>No tenía foto. Ahora muestra la recepción de la clínica.</p></div><div class="qp why"><h3>Por qué</h3><p>Es una foto propia de Luminous Dental.</p></div>
+    <div class="blk"><h3>Datos</h3><div class="kpis"><div class="kpi"><span class="kl">Páginas</span><b>2</b><span class="ks">ES y EN</span></div><div class="kpi"><span class="kl">Idiomas</span><b>ES y EN</b><span class="ks">las dos versiones</span></div><div class="kpi"><span class="kl">Probado en</span><b>5 tamaños</b><span class="ks">celular a PC grande</span></div><div class="kpi"><span class="kl">Revisión</span><b>Pasa</b><span class="ks">QA del 27-11</span></div></div></div>
+    <div class="blk src"><h3>Foto</h3><p>Luminous Dental · sitio oficial de la clínica.</p></div>
+  </div><div class="shots"><div class="sechead">En escritorio</div><div class="shot"><div class="frame"><img src="img/antes-pc-serv-cuidado-dental-de-rutina.jpg" style="" alt=""><span class="pill antes">ANTES</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-serv-cuidado-dental-de-rutina.jpg" style="" alt=""><span class="pill ahora">AHORA</span></div></div><div class="celrow"><div class="sechead">En celular</div><div class="celgrid"><div class="frame"><img src="img/antes-cel-serv-cuidado-dental-de-rutina.jpg" style="height:3.30in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div><div class="frame"><img src="img/ahora-cel-serv-cuidado-dental-de-rutina.jpg" style="height:3.30in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div></div></div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Fotos de servicios</em> &nbsp; HOJA 17 DE 23</span></div></section>
+<section class="sheet is-chg"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="chg"><div class="info">
+    <div class="eyebrow"><span class="no">15</span><span>Blog</span></div>
+    <h2 class="title">Blog · portada</h2>
+    <div class="status ok">Aprobado</div>
+    <div class="qp que"><h3>Qué se cambió</h3><p>Los 11 artículos tienen su propia foto.</p></div><div class="qp why"><h3>Por qué</h3><p>Gerencia pidió fotos del tema y sin repetir.</p></div>
+    <div class="blk"><h3>Datos</h3><div class="kpis"><div class="kpi"><span class="kl">Páginas</span><b>24</b><span class="ks">portada y 11 artículos, ES y EN</span></div><div class="kpi"><span class="kl">Idiomas</span><b>ES y EN</b><span class="ks">las dos versiones</span></div><div class="kpi"><span class="kl">Probado en</span><b>5 tamaños</b><span class="ks">celular a PC grande</span></div><div class="kpi"><span class="kl">Revisión</span><b>Pasa</b><span class="ks">QA del 27-11</span></div></div></div>
+    <div class="blk src"><h3>Foto</h3><p>2 de la clínica y 9 de Unsplash (uso comercial libre).</p></div>
+  </div><div class="shots"><div class="sechead">En escritorio</div><div class="shot"><div class="frame"><img src="img/antes-pc-blog-portada.jpg" style="height:4.20in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-blog-portada.jpg" style="height:4.20in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div></div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Blog</em> &nbsp; HOJA 18 DE 23</span></div></section>
+<section class="sheet is-chg"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="chg"><div class="info">
+    <div class="eyebrow"><span class="no">16</span><span>Blog</span></div>
+    <h2 class="title">Artículo · Coronas dentales</h2>
+    <div class="status ok">Aprobado</div>
+    <div class="qp que"><h3>Qué se cambió</h3><p>Antes solo tenía el título. Ahora abre con una foto de un dentista con el modelo de un diente.</p></div><div class="qp why"><h3>Por qué</h3><p>Se ve más completo y ayuda a entender el tema.</p></div>
+    <div class="blk"><h3>Datos</h3><div class="kpis"><div class="kpi"><span class="kl">Páginas</span><b>2</b><span class="ks">ES y EN</span></div><div class="kpi"><span class="kl">Idiomas</span><b>ES y EN</b><span class="ks">las dos versiones</span></div><div class="kpi"><span class="kl">Probado en</span><b>5 tamaños</b><span class="ks">celular a PC grande</span></div><div class="kpi"><span class="kl">Revisión</span><b>Pasa</b><span class="ks">QA del 27-11</span></div></div></div>
+    <div class="blk src"><h3>Foto</h3><p>Harold Hisona · Unsplash.</p></div>
+  </div><div class="shots"><div class="sechead">En escritorio</div><div class="shot"><div class="frame"><img src="img/antes-pc-art-coronas-dentales.jpg" style="" alt=""><span class="pill antes">ANTES</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-art-coronas-dentales.jpg" style="" alt=""><span class="pill ahora">AHORA</span></div></div><div class="celrow"><div class="sechead">En celular</div><div class="celgrid"><div class="frame"><img src="img/antes-cel-art-coronas-dentales.jpg" style="height:2.99in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div><div class="frame"><img src="img/ahora-cel-art-coronas-dentales.jpg" style="height:2.99in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div></div></div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Blog</em> &nbsp; HOJA 19 DE 23</span></div></section>
+<section class="sheet is-chg"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="chg"><div class="info">
+    <div class="eyebrow"><span class="no">17</span><span>Blog</span></div>
+    <h2 class="title">Artículo · All-on-4</h2>
+    <div class="status ok">Aprobado</div>
+    <div class="qp que"><h3>Qué se cambió</h3><p>Antes solo tenía el título. Ahora abre con una foto de modelos de dientes con implantes.</p></div><div class="qp why"><h3>Por qué</h3><p>Se ve más completo y ayuda a entender el tema.</p></div>
+    <div class="blk"><h3>Datos</h3><div class="kpis"><div class="kpi"><span class="kl">Páginas</span><b>2</b><span class="ks">ES y EN</span></div><div class="kpi"><span class="kl">Idiomas</span><b>ES y EN</b><span class="ks">las dos versiones</span></div><div class="kpi"><span class="kl">Probado en</span><b>5 tamaños</b><span class="ks">celular a PC grande</span></div><div class="kpi"><span class="kl">Revisión</span><b>Pasa</b><span class="ks">QA del 27-11</span></div></div></div>
+    <div class="blk src"><h3>Foto</h3><p>Jonathan Borba · Unsplash.</p></div>
+  </div><div class="shots"><div class="sechead">En escritorio</div><div class="shot"><div class="frame"><img src="img/antes-pc-art-implantes-all-on-4.jpg" style="" alt=""><span class="pill antes">ANTES</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-art-implantes-all-on-4.jpg" style="" alt=""><span class="pill ahora">AHORA</span></div></div><div class="celrow"><div class="sechead">En celular</div><div class="celgrid"><div class="frame"><img src="img/antes-cel-art-implantes-all-on-4.jpg" style="height:2.99in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div><div class="frame"><img src="img/ahora-cel-art-implantes-all-on-4.jpg" style="height:2.99in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div></div></div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Blog</em> &nbsp; HOJA 20 DE 23</span></div></section>
+<section class="sheet is-chg"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="chg"><div class="info">
+    <div class="eyebrow"><span class="no">18</span><span>Blog</span></div>
+    <h2 class="title">Artículo · Extracciones</h2>
+    <div class="status ok">Aprobado</div>
+    <div class="qp que"><h3>Qué se cambió</h3><p>Antes solo tenía el título. Ahora abre con una foto de una radiografía de los dientes.</p></div><div class="qp why"><h3>Por qué</h3><p>Se ve más completo y ayuda a entender el tema.</p></div>
+    <div class="blk"><h3>Datos</h3><div class="kpis"><div class="kpi"><span class="kl">Páginas</span><b>2</b><span class="ks">ES y EN</span></div><div class="kpi"><span class="kl">Idiomas</span><b>ES y EN</b><span class="ks">las dos versiones</span></div><div class="kpi"><span class="kl">Probado en</span><b>5 tamaños</b><span class="ks">celular a PC grande</span></div><div class="kpi"><span class="kl">Revisión</span><b>Pasa</b><span class="ks">QA del 27-11</span></div></div></div>
+    <div class="blk src"><h3>Foto</h3><p>Harold Hisona · Unsplash.</p></div>
+  </div><div class="shots"><div class="sechead">En escritorio</div><div class="shot"><div class="frame"><img src="img/antes-pc-art-extracciones-y-muelas-del-juicio.jpg" style="" alt=""><span class="pill antes">ANTES</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-art-extracciones-y-muelas-del-juicio.jpg" style="" alt=""><span class="pill ahora">AHORA</span></div></div><div class="celrow"><div class="sechead">En celular</div><div class="celgrid"><div class="frame"><img src="img/antes-cel-art-extracciones-y-muelas-del-juicio.jpg" style="height:3.24in;object-fit:cover;object-position:top" alt=""><span class="pill antes">ANTES</span></div><div class="frame"><img src="img/ahora-cel-art-extracciones-y-muelas-del-juicio.jpg" style="height:3.24in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div></div></div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Blog</em> &nbsp; HOJA 21 DE 23</span></div></section>
+<section class="sheet is-chg"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="chg"><div class="info"><div class="eyebrow"><span class="no">19</span><span>Blog</span></div>
+    <h2 class="title">Los otros 8 artículos</h2><div class="status ok">Aprobado</div>
+    <div class="qp que"><h3>Qué se cambió</h3><p>Los otros 8 artículos también abren con su foto.</p></div><div class="qp why"><h3>Por qué</h3><p>Ningún artículo se queda sin foto y ninguna foto se repite en el blog.</p></div>
+    <div class="blk"><h3>Datos</h3><div class="kpis"><div class="kpi"><span class="kl">Páginas</span><b>16</b><span class="ks">8 artículos en ES y EN</span></div><div class="kpi"><span class="kl">Idiomas</span><b>ES y EN</b><span class="ks">las dos versiones</span></div><div class="kpi"><span class="kl">Probado en</span><b>5 tamaños</b><span class="ks">celular a PC grande</span></div><div class="kpi"><span class="kl">Revisión</span><b>Pasa</b><span class="ks">QA del 27-11</span></div></div></div>
+    <div class="blk src"><h3>Foto</h3><p>Unsplash (uso comercial libre); Implantes y Ortodoncia son de la clínica.</p></div></div><div class="shots"><div class="sechead">En escritorio</div><div class="gal"><div class="shot"><div class="frame"><img src="img/ahora-pc-art-implantes-dentales-que-son.jpg" style="height:1.95in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-art-ortodoncia-alineacion-y-mordida.jpg" style="height:1.95in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-art-implantes-all-on-6.jpg" style="height:1.95in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-art-dentaduras-parciales-y-completas.jpg" style="height:1.95in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-art-carillas-dentales.jpg" style="height:1.95in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-art-blanqueamiento-dental.jpg" style="height:1.95in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-art-alineadores-transparentes.jpg" style="height:1.95in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div><div class="shot"><div class="frame"><img src="img/ahora-pc-art-limpieza-dental-profesional.jpg" style="height:1.95in;object-fit:cover;object-position:top" alt=""><span class="pill ahora">AHORA</span></div></div></div></div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Blog</em> &nbsp; HOJA 22 DE 23</span></div></section>
+<section class="sheet is-sum"><div class="rh"><b>LD-RW-2026-06</b><span>Luminous Dental · Las Vegas, NV</span><span class="sep">|</span><span>IT · Páginas web</span><span class="sep">|</span><span>27 de noviembre de 2026</span><span class="c">Confidencial</span></div><div class="body"><div class="sum"><div class="phead"><h2 class="big"><span class="hb">Pendientes</span><span class="vl"></span><span>Lo que falta para lanzar</span></h2></div>
+  <p class="lead">Pendientes de Jadro Montes (Sistemas), por tema y en orden de prioridad. Todo lo demás ya fue aprobado.</p>
+  <div class="pend"><div class="pcard"><div class="ph"><span class="pn">1</span><h3>Servicios</h3><span class="prio hi">Prioridad alta</span><span class="cnt">3</span></div><ul class="todo"><li>Terminar la sección de Servicios: mejorar la información de los 12 servicios.</li><li>Agregar secciones y más detalle a cada servicio.</li><li>Últimos retoques (son pocos). Ej.: la foto de Implantes es la misma que la del artículo All-on-4 del blog.</li></ul></div><div class="pcard"><div class="ph"><span class="pn">2</span><h3>Revisión</h3><span class="prio hi">Prioridad alta</span><span class="cnt">3</span></div><ul class="todo"><li>Verificar en celular todas las vistas de todas las páginas.</li><li>Verificar bien el contenido en español.</li><li>Verificar bien el contenido en inglés.</li></ul></div><div class="pcard"><div class="ph"><span class="pn">3</span><h3>Backend</h3><span class="prio mid">Prioridad media</span><span class="cnt">2</span></div><ul class="todo"><li>Verificar que el backend esté bien (formulario, citas, reseñas) para lanzar en Google.</li><li>Revisar la seguridad del proyecto y de Claude, como se hizo en Dental Nakeji.</li></ul></div><div class="pcard"><div class="ph"><span class="pn">4</span><h3>Publicación</h3><span class="prio mid">Prioridad media</span><span class="cnt">4</span></div><ul class="todo"><li>Conectar GitHub: iniciar sesión y subir la rama webpage-V1.26.11.26.</li><li>Crear el repositorio privado.</li><li>Crear la cuenta de Vercel.</li><li>Conectar Vercel al repositorio y a la rama de producción.</li></ul></div></div>
+  <div class="firmas">
+    <div class="firma"><span class="fl">Elaboró</span><div class="fline"></div><b>Ing. Jadro Montes</b><span class="fr">Encargado del área tecnológica</span></div>
+    <div class="firma"><span class="fl">Recibió</span><div class="fline"></div><b>Dirección</b></div>
+  </div></div></div><div class="ft"><span>Dirigido a Dirección &nbsp;|&nbsp; Elaboró Jadro Montes &nbsp;|&nbsp; Documento interno de uso exclusivo de la empresa</span><span><em>Pendientes</em> &nbsp; HOJA 23 DE 23</span></div></section>
+</body></html>

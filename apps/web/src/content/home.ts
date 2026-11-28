@@ -193,9 +193,9 @@ const en = {
     emergencyLine: 'Emergencies 24/7',
     request: { label: 'Request an appointment', href: clinic.bookingUrl },
     legal: 'Luminous Dental, Las Vegas. All rights reserved.', // el componente agrega el año
-    note: 'Individual results vary.',
+    note: 'Individual results may vary.',
     // NUEVO, para aprobación: detiene toda animación decorativa de la página (WCAG 2.2.2).
-    motion: { pause: 'Pause decorative animations', play: 'Play decorative animations' },
+    motion: { pause: 'Pause animations', play: 'Resume animations' },
   },
 }
 
@@ -356,7 +356,7 @@ const es: typeof en = {
     request: { label: 'Solicita tu cita', href: clinic.bookingUrl },
     legal: 'Luminous Dental, Las Vegas. Todos los derechos reservados.',
     note: 'Los resultados varían de una persona a otra.',
-    motion: { pause: 'Pausar animaciones decorativas', play: 'Reproducir animaciones decorativas' },
+    motion: { pause: 'Pausar animaciones', play: 'Reanudar animaciones' },
   },
 }
 

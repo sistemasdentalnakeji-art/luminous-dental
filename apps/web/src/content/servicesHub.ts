@@ -5,7 +5,7 @@ import type { L10n } from '@/lib/lang'
 const needs = [
   { id: 'pain', ids: ['routine-dental-care', 'wisdom-tooth-removal', 'porcelain-veneers-and-crowns'] },
   { id: 'smile', ids: ['porcelain-veneers-and-crowns', 'cosmetic-bonding', 'teeth-whitening', 'invisalign-and-braces'] },
-  { id: 'missing', ids: ['dental-implants', 'all-on-4-and-all-on-6', 'dentures-and-bridges'] },
+  { id: 'missing', ids: ['dental-implants', 'all-on-4-implants', 'all-on-6-implants', 'dentures-and-bridges'] },
   { id: 'checkup', ids: ['routine-dental-care', 'dental-cleaning'] },
 ] as const
 export type NeedId = (typeof needs)[number]['id']

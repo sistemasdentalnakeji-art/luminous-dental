@@ -1,0 +1,27 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Héroe r11 · propuesta B (maqueta)</title>
+<link rel="stylesheet" href="hero-r11.css"><style>
+/* B · «Sonrisa a sangre»: la imagen se sale por el borde derecho, sin marco ni tarjeta; se funde con la noche. Divisor a todo lo alto. */
+.b .hx{min-height:min(100svh,820px)}
+.b .hx-copy{position:relative;z-index:2}
+.b .hx-slot{position:absolute;z-index:1;right:0;top:calc(var(--hbar-h) + 8px);width:min(57vw,880px);height:min(640px,calc(100% - var(--hbar-h) - 24px))}
+.b .cmp-wrap,.b .cmp,.b .cmp-stage{height:100%}
+.b .cmp-media{-webkit-mask:linear-gradient(to right,transparent 0,#000 26%),linear-gradient(to bottom,transparent 0,#000 12%,#000 64%,transparent 84%);-webkit-mask-composite:source-in;mask:linear-gradient(to right,transparent 0,#000 26%),linear-gradient(to bottom,transparent 0,#000 12%,#000 64%,transparent 84%);mask-composite:intersect}
+.b .cmp-tag{top:auto;bottom:56px;background:none;padding:0;font:italic 300 34px/1 var(--font-serif);text-shadow:0 2px 18px rgb(6 14 30/.95),0 0 4px rgb(6 14 30/.9)}
+.b .cmp-tag-b{left:calc(var(--pos) - 22px);transform:translateX(-100%);color:#fff}
+.b .cmp-tag-a{left:calc(var(--pos) + 22px);color:var(--color-mint)}
+.b .cmp-hint{bottom:24px;display:none}
+.b .cmp-foot{position:absolute;left:0;right:var(--pad);bottom:0;display:flex;justify-content:flex-end;align-items:center;gap:6px 22px;flex-wrap:wrap}
+.b .cmp-note{display:none}
+@media (max-width:1000px){
+ .b .hx{min-height:0}.b .hx-grid{pointer-events:auto;padding-bottom:0}
+ .b .hx-copy{display:contents}.b .hx-pill{order:1;justify-self:start}.b h1{order:2}.b .hx-slot{order:3;position:relative;top:auto;right:auto;width:calc(100% + 2*var(--pad));margin:0 calc(-1*var(--pad)) 0;height:330px}
+ .b .hx-sub{order:4;margin-top:6px}.b .hx-actions{order:5}.b .hx-more{order:6}.b .hx-grid{display:flex;flex-direction:column;align-items:stretch}
+ .b .cmp-media{-webkit-mask:linear-gradient(to bottom,transparent 0,#000 14%,#000 58%,transparent 80%);mask:linear-gradient(to bottom,transparent 0,#000 14%,#000 58%,transparent 80%)}
+ .b .cmp-tag{font-size:26px;bottom:50px}.b .cmp-foot{right:0;left:0;justify-content:center}.b .hx-pill{align-self:flex-start}
+}
+</style></head><body class="b"><header class="hdr" id="hdr"></header>
+<main class="hx" id="top"><div class="wrap hx-grid"><div class="hx-copy" id="copy"></div><div class="hx-slot" id="slot"></div></div></main>
+<script src="common.js"></script><script type="module">
+import { splitHTML, initSplit } from './compare.js'
+document.getElementById('slot').innerHTML = splitHTML(); initSplit(document.querySelector('.cmp'))
+</script></body></html>

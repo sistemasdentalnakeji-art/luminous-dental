@@ -1,21 +1,25 @@
-/* Antes/después del héroe (components/BeforeAfter.tsx). Prefijo ba-. r4 (26-11-2026): par apilado, las dos fotos completas a la vez, sin divisor ni marco que lo envuelva.
-   Arriba el antes (neutro), debajo el después (borde y etiqueta menta); casos como rectángulos con miniatura. */
-.ba{display:flex;flex-direction:column;gap:14px;width:100%;max-width:640px;margin-inline:auto;min-width:0}
-.ba-pair{display:grid}
-.ba-case{grid-area:1/1;display:flex;flex-direction:column;gap:10px;opacity:0;visibility:hidden;transition:opacity .45s var(--ease),visibility 0s .45s}
-.ba-case[data-on=true]{opacity:1;visibility:visible;transition-delay:0s}
-.ba-fig{position:relative;margin:0;aspect-ratio:5/2;overflow:hidden;border-radius:8px;border:1px solid rgb(207 227 255/.3);background:#08142b}
-.ba-fig img{display:block;width:100%;height:100%;object-fit:cover;user-select:none}
-.ba-fig-after{border:2px solid var(--color-mint);box-shadow:0 0 28px -8px rgb(63 207 174/.5)}
-.ba-fig figcaption{position:absolute;left:10px;bottom:10px;padding:6px 14px;border-radius:6px;background:rgb(5 11 26/.78);color:#fff;font:600 14px/1.2 var(--font-sans)}
-.ba-fig-after figcaption{background:var(--color-mint);color:#06122b}
-.ba-pick{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.ba-pick button{display:flex;align-items:center;gap:12px;min-height:56px;padding:6px 14px 6px 6px;border-radius:8px;border:1px solid rgb(207 227 255/.28);background:rgb(207 227 255/.05);color:rgb(207 227 255/.92);font:600 15px/1.25 var(--font-sans);text-align:left;cursor:pointer;transition:background-color .2s,border-color .2s,color .2s}
-.ba-pick button img{flex:none;width:64px;height:44px;border-radius:5px;object-fit:cover}
-.ba-pick button:hover{border-color:rgb(207 227 255/.6);color:#fff}
-.ba-pick button[aria-pressed=true]{border-color:var(--color-mint);background:rgb(63 207 174/.14);color:#fff;box-shadow:inset 3px 0 0 var(--color-mint)}
-.ba :focus-visible{outline:2px solid #fff;outline-offset:2px}
-.ba-cap{margin:0;font-size:14px;line-height:1.4;color:rgb(207 227 255/.85);text-align:center}
-@media (max-width:480px){.ba{gap:12px}.ba-pick button{gap:10px;padding-right:10px;font-size:14px}.ba-pick button img{width:52px;height:38px}.ba-fig figcaption{left:8px;bottom:8px;padding:5px 11px;font-size:13px}}
+/* Antes/después del héroe (components/BeforeAfter.tsx). Prefijo ba-. r11b (27-11-2026), propuesta B «Sonrisa a sangre»: una sola foto a sangre por la derecha,
+   sin marco; el después se corta con clip-path y se funde con la noche; divisor a todo lo alto; solo las palabras Antes/Después. */
+.ba{position:relative;height:100%;min-width:0;--pos:50%}
+.ba-stage{position:relative;height:100%;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none}
+.ba-media{position:absolute;inset:0;overflow:hidden;-webkit-mask:linear-gradient(to right,transparent 0,#000 26%),linear-gradient(to bottom,transparent 0,#000 12%,#000 64%,transparent 84%);-webkit-mask-composite:source-in;mask:linear-gradient(to right,transparent 0,#000 26%),linear-gradient(to bottom,transparent 0,#000 12%,#000 64%,transparent 84%);mask-composite:intersect}
+.ba-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 45%;pointer-events:none;-webkit-user-drag:none}
+.ba-after{clip-path:inset(0 0 0 var(--pos))}
+.ba-line{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;margin-left:-1px;pointer-events:none;background:linear-gradient(to bottom,transparent,var(--color-mint) 14%,#d9fff4 50%,var(--color-mint) 86%,transparent);box-shadow:0 0 16px 2px rgb(63 207 174/.6),0 0 46px 6px rgb(63 207 174/.25)}
+.ba-handle{position:absolute;top:50%;left:var(--pos);width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;background:#fff;color:var(--color-ink);display:grid;place-items:center;cursor:grab;box-shadow:0 8px 24px rgb(0 0 0/.45),0 0 0 7px rgb(63 207 174/.3)}
+.ba-handle:active{cursor:grabbing}
+.ba :focus-visible{outline:3px solid #fff;outline-offset:3px}
+.ba-tag{--al:clamp(160px,calc(var(--pos) + 22px),calc(100% - 190px));position:absolute;bottom:56px;font:italic 300 34px/1 var(--font-serif);pointer-events:none;text-shadow:0 2px 18px rgb(6 14 30/.95),0 0 4px rgb(6 14 30/.9)}
+.ba-tag-b{left:min(max(calc(var(--pos) - 22px),110px),calc(var(--al) - 24px));transform:translateX(-100%);color:#fff}
+.ba-tag-a{left:var(--al);color:var(--color-mint)}
+.ba-pause{position:absolute;right:max(calc(var(--pad) + 28px),84px);bottom:4px;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px 0 14px;border-radius:999px;border:1px solid rgb(207 227 255/.35);background:rgb(5 11 26/.6);color:rgb(244 249 255/.92);font:600 14px/1.2 var(--font-sans);cursor:pointer;transition:background-color .2s,border-color .2s,color .2s}
+.ba-pause:hover:not(:disabled){border-color:rgb(207 227 255/.7);color:#fff}
+.ba-pause:disabled{opacity:.55;cursor:default}
+@media (max-width:1000px){
+  .ba-media{-webkit-mask:linear-gradient(to bottom,transparent 0,#000 14%,#000 58%,transparent 80%);mask:linear-gradient(to bottom,transparent 0,#000 14%,#000 58%,transparent 80%)}
+  .ba-tag{font-size:26px;bottom:50px}/* sin espacio para seguir al divisor: cada palabra queda en su esquina */
+  .ba-tag-b{left:var(--pad);transform:none}.ba-tag-a{left:auto;right:var(--pad)}
+  .ba-pause{right:auto;left:50%;transform:translateX(-50%);bottom:0}
+}
 @media (prefers-reduced-motion:reduce){.ba *{transition:none!important}}
 html[data-motion-paused] .ba *{transition:none!important}

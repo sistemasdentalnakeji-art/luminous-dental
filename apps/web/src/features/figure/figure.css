@@ -80,6 +80,7 @@
 .brk-stage:focus-visible{outline:3px solid var(--color-medic);outline-offset:2px}
 .brk-bob{animation:brk-bob 7s ease-in-out infinite;animation-play-state:paused}
 .result-fig[data-live] .brk-bob{animation-play-state:running} /* el bucle suave solo corre mientras la figura está en pantalla */
+.result-fig[data-paused] .brk-bob{animation-play-state:paused}
 .result-fig{display:block;width:100%}
 .result-wrap{position:relative;width:100%}
 .result-pause{position:absolute;top:0;right:0;display:grid;place-items:center;width:44px;height:44px;padding:0;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:rgba(10,21,41,.45);cursor:pointer}

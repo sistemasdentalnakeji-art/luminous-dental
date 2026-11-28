@@ -154,7 +154,11 @@ export function counterpart(path: string): string {
 // La página combinada de antes (seguros y financiamiento juntos) es ahora el hub de Beneficios.
 const MERGED_BENEFITS = ['/en/insurance-financing', '/es/seguros-y-financiamiento', '/insurance-financing']
 
+// La página combinada de antes (All-on-4 y All-on-6 juntos, hasta el 26-11) lleva a la de All-on-4.
+const MERGED_ALLON: Record<string, string> = { '/en/services/all-on-4-and-all-on-6': '/en/services/all-on-4-implants', '/es/servicios/all-on-4-y-all-on-6': '/es/servicios/implantes-all-on-4' }
+
 export function redirectOf(path: string): string | null {
+  if (path in MERGED_ALLON) return MERGED_ALLON[path]
   if (path === '/') return routeOf('home', 'en').path
   if (MERGED_BENEFITS.includes(path)) return routeOf('benefits', path.startsWith('/es') ? 'es' : 'en').path
   if (path === '/en' || path === '/es' || path.startsWith('/en/') || path.startsWith('/es/')) return null

@@ -3,7 +3,7 @@ import { Icon } from '@/components/Icon'
 import { home } from '@/content/home'
 import { hrefOf } from '@/config/routes'
 import { useLang } from '@/lib/lang'
-import { Link } from '@/lib/router'
+import { Link, NewTab } from '@/lib/router'
 
 const BeforeAfter = lazy(() => import('@/components/BeforeAfter')) // carga aparte: lo pesado no frena el titular
 
@@ -22,7 +22,7 @@ export function Hero() {
           </h1>
           <p className="hx-sub">{hero.support}</p>
           <div className="hx-actions">
-            <a className="hx-btn hx-btn-main" href={hero.primaryCta.href} target="_blank" rel="noopener noreferrer">{hero.primaryCta.label}<span className="hx-bub"><Icon name="arrowRight" size={18} /></span></a>
+            <a className="hx-btn hx-btn-main" href={hero.primaryCta.href} target="_blank" rel="noopener noreferrer">{hero.primaryCta.label}<span className="hx-bub"><Icon name="arrowRight" size={18} /></span><NewTab /></a>
             <a className="hx-btn hx-btn-ghost" href={hero.secondaryCta.href}>{hero.secondaryCta.label}<span className="hx-bub"><Icon name="phone" size={16} /></span></a>
           </div>
           <a className="hx-more" href={hero.more.href}>{hero.more.label}<Icon name="chevronDown" size={18} /></a>

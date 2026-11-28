@@ -24,7 +24,7 @@
  background:linear-gradient(115deg,rgba(255,255,255,.07) 0%,rgba(255,255,255,.015) 34%,transparent 58%) padding-box,linear-gradient(150deg,rgba(30,70,125,.55),rgba(8,20,42,.68)) padding-box,linear-gradient(135deg,rgba(255,255,255,.55),rgba(52,191,204,.28) 45%,rgba(123,195,235,.12) 72%,rgba(255,255,255,.3)) border-box;
  -webkit-backdrop-filter:blur(18px) saturate(1.35);backdrop-filter:blur(18px) saturate(1.35);box-shadow:0 30px 60px -32px rgba(0,8,24,.95),inset 0 1px 0 rgba(255,255,255,.18)}
 .sc__rail{display:flex;flex-direction:column;padding:clamp(16px,1.6vw,22px) clamp(12px,1.1vw,14px);border-right:1px solid var(--color-line);background:linear-gradient(180deg,rgba(255,255,255,.05),transparent)}
-.sc__tabs{position:relative;flex:1;display:grid;grid-template-rows:repeat(5,1fr);gap:10px;list-style:none;padding:0}
+.sc__tabs{position:relative;flex:1;display:grid;grid-template-rows:repeat(6,1fr);gap:10px;list-style:none;padding:0}
 .sc__tabs>li{display:grid}
 /* 26-11-2026 r2 (D2): cada servicio es su propio rectángulo (radio 8 px); el activo se rellena de menta y le crece la barra del borde izquierdo. Sin indicador que viaja: cada rectángulo cambia en su lugar. */
 .sc__tab{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;margin:0;padding:0 12px 0 20px;border:1px solid var(--color-line);border-radius:8px;overflow:hidden;background:rgba(255,255,255,.03);color:var(--color-text2);text-align:left;font:600 clamp(16.5px,1.3vw,19px)/1.2 var(--font-sans);letter-spacing:.012em;cursor:pointer;transition-property:background-color,border-color,color,transform;transition-duration:.25s;transition-timing-function:ease-out}
@@ -113,16 +113,5 @@ html[data-motion-paused] .sc__tab,html[data-motion-paused] .sc__tab::before,html
 html[data-motion-paused] .sc__slide>*{animation:none}
 @media (prefers-reduced-motion:reduce){.sc__tab,.sc__tab::before,.sc__tab svg{transition:none}.sc__slide>*{animation:none!important}}
 
-/* ── Ícono de servicio, copiado de Dental Nakeji (24-11-2026, r4): baldosa de vidrio esmerilado de 56 px con contorno luminoso «.siri» (styles/components/siri.css y
-   services.css de Nakeji) con los colores de Luminous (azul medicina en lugar del dorado/azul de Nakeji). El contorno gira solo con el cursor o el foco dentro de la diapositiva; quieto con reducir movimiento y con la pausa. ── */
-@property --siri-angle{syntax:'<angle>';inherits:false;initial-value:0deg}
-.siri{--siri-width:2.5px;--siri-blur:9px;--siri-a:var(--color-sky);--siri-b:var(--color-medic);--siri-c:var(--color-glow);--siri-d:var(--color-medic-soft);position:relative}
-.siri::before,.siri::after{content:"";position:absolute;inset:calc(var(--siri-width) * -1);border-radius:inherit;background:conic-gradient(from var(--siri-angle),var(--siri-a),var(--siri-b),var(--siri-c),var(--siri-d),var(--siri-a));pointer-events:none;animation-play-state:paused}
-.siri::before{z-index:-1;filter:blur(var(--siri-blur));opacity:.85;animation:siri-pulse 1.6s ease-in-out infinite alternate}
-.siri::after{padding:var(--siri-width);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;animation:siri-spin 2.2s linear infinite;animation-play-state:paused}
-.sc__body:hover .siri::before,.sc__body:hover .siri::after,.sc__body:focus-within .siri::before,.sc__body:focus-within .siri::after{animation-play-state:running}
-@keyframes siri-spin{to{--siri-angle:360deg}}
-@keyframes siri-pulse{from{opacity:.55;transform:scale(1)}to{opacity:1;transform:scale(1.08)}}
-@media (prefers-reduced-motion:reduce){.siri::before,.siri::after{animation:none!important}}
-html[data-motion-paused] .siri::before,html[data-motion-paused] .siri::after{animation:none!important}
+/* Ícono de servicio: baldosa de 56 px; su aura vive en styles/icon-aura.css (r11d, pieza común). */
 .icon-badge{display:inline-grid;flex:none;place-items:center;width:56px;height:56px;border-radius:18px;background:rgba(255,255,255,.14);color:#fff;-webkit-backdrop-filter:blur(10px) saturate(1.2);backdrop-filter:blur(10px) saturate(1.2)}

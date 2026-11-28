@@ -5,7 +5,6 @@
 // El código de la figura carga una sola vez (en su propio archivo), para las cinco tarjetas, así nunca bloquea el primer dibujo.
 import { lazy, Suspense } from 'react'
 import { Carousel } from '@/components/Carousel'
-import { ServiceGlyph } from '@/components/ServiceGlyph'
 import { RevealText } from '@/components/RevealText'
 import { Icon } from '@/components/Icon'
 import { hrefOf } from '@/config/routes'
@@ -27,9 +26,10 @@ export function FeaturedServices() {
     <section className="sec wrap featured" aria-labelledby="featured-h">
       <header className="featured-head">
         <RevealText className="h2" id="featured-h" line accent={T.featured.accent}>{T.featured.title}</RevealText>
+        {/* r10: la idea «más solicitados» va como subtítulo bajo el título, sin letrero, línea ni píldora */}
+        <p className="featured-sub">{T.featured.badge}</p>
       </header>
       <div className="featured-stage">
-      <span className="sc__badge">{T.featured.badge}</span>
       <Carousel
         label={T.featured.carousel}
         className="carousel--services"
@@ -40,7 +40,7 @@ export function FeaturedServices() {
               <p className="sc__eyebrow">{s.group}</p>
               {/* Sin caja de fondo: arriba el ícono, en medio la información (título, gancho y frases con check) y abajo el botón. */}
               <div className="sc__head">
-                <span className="icon-badge siri" aria-hidden="true"><ServiceGlyph id={s.glyph ?? s.figure!} size={28} /></span>
+                <span className="icon-badge aura" aria-hidden="true"><Icon name={s.icon} size={28} /></span>
                 <h3 className="sc__title">{s.title}</h3>
               </div>
               <div className="sc__card">

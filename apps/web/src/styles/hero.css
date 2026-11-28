@@ -1,7 +1,9 @@
 /* Héroe del inicio (components/Hero.tsx): columna izquierda de «Luminous Dental - Smile Makeover.html». Prefijo hx- para no chocar con site.css. */
-.hx{--hx-accent:var(--color-mint)} /* color de acento de la cursiva y la pastilla */
+.hx{--hx-accent:var(--color-mint);position:relative} /* color de acento de la cursiva y la pastilla */
 .hx-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.15fr);gap:clamp(36px,5vw,80px);align-items:center;padding-block:clamp(40px,6vw,84px) clamp(32px,4vw,56px)}
-.hx-slot{min-height:0} /* comparador antes/después */
+.hx-copy{position:relative;z-index:2}
+/* r11b: el comparador antes/después sale a sangre por el borde derecho de la pantalla (no ocupa columna) */
+.hx-slot{position:absolute;z-index:1;right:0;top:max(8px,calc((100% - 640px)/2));width:min(57vw,1300px);height:min(640px,calc(100% - 24px))} /* r12: centrado a lo alto del héroe y más ancho en pantallas grandes, para que los dientes no queden pegados al borde derecho y arriba */
 .hx-pill{display:inline-flex;align-items:center;gap:10px;margin:0;padding:7px 14px 7px 10px;border-radius:999px;background:rgb(10 21 41/.55);border:1px solid rgb(52 191 204/.35);color:var(--hx-accent);font:600 14px/1.4 var(--font-sans);letter-spacing:.02em}
 .hx-pill svg{color:var(--color-medic)}
 .hx-copy h1{font:350 clamp(44px,5.8vw,86px)/1 var(--font-serif);letter-spacing:-.035em;margin:24px 0;color:#fff}
@@ -24,5 +26,9 @@
 /* entrada: solo opacidad y transform, nunca sobre el titular. Con movimiento reducido site.css apaga las animaciones y todo queda visible. */
 @keyframes hx-in{from{opacity:0;transform:translateY(14px)}}
 .hx-copy>:not(h1){animation:hx-in .9s var(--ease) .35s backwards}
-@media (max-width:1000px){.hx-grid{grid-template-columns:1fr;gap:0}.hx-sub{max-width:42ch}}
+@media (max-width:1000px){.hx-grid{grid-template-columns:1fr;gap:0}.hx-sub{max-width:42ch}
+  /* celular y tableta: titular, luego la imagen a todo el ancho, luego el resto */
+  .hx-grid{display:flex;flex-direction:column;align-items:stretch}.hx-copy{display:contents}.hx-pill{order:1;align-self:flex-start}.hx-copy h1{order:2}
+  .hx-slot{order:3;position:relative;top:auto;right:auto;width:calc(100% + 2*var(--pad));margin-inline:calc(-1*var(--pad));height:330px}
+  .hx-sub{order:4;margin-top:16px}.hx-actions{order:5}.hx-more{order:6}}
 @media (max-width:760px){.hx-copy h1{font-size:clamp(44px,12.5vw,58px);margin:18px 0}.hx-sub{font-size:17.5px}.hx-actions{max-width:none}}

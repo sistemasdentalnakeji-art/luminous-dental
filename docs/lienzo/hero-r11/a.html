@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Héroe r11 · propuesta A (maqueta)</title>
+<link rel="stylesheet" href="hero-r11.css"><style>
+/* A · «Ventana de luz»: columna doble como hoy, pero UNA sola imagen con divisor luminoso que se arrastra. */
+.a .cmp{width:100%;max-width:640px;margin-inline:auto}
+.a .cmp-stage{aspect-ratio:16/10;border-radius:28px;border:1px solid rgb(207 227 255/.34);background:#08142b;box-shadow:0 36px 70px -34px rgb(0 0 0/.75)}
+.a .cmp-media{border-radius:inherit}
+.a .cmp-tag{top:16px}.a .cmp-tag-b{left:16px}.a .cmp-tag-a{right:16px}
+.a .cmp-hint{bottom:18px}
+.a .cmp-foot{display:flex;justify-content:space-between;align-items:center;gap:6px 18px;flex-wrap:wrap;margin:12px 4px 0;max-width:640px;margin-inline:auto}
+@media (max-width:1000px){.a .hx-grid{display:flex;flex-direction:column;align-items:stretch}.a .hx-copy{display:contents}.a .hx-pill{order:1;align-self:flex-start}.a h1{order:2}.a .hx-slot{order:3;margin:6px 0 22px}.a .hx-sub{order:4}.a .hx-actions{order:5}.a .hx-more{order:6}}
+@media (max-width:760px){.a .cmp-stage{aspect-ratio:4/3;border-radius:22px}.a .cmp-foot{justify-content:center;text-align:center}}
+</style></head><body class="a"><header class="hdr" id="hdr"></header>
+<main class="hx" id="top"><div class="wrap hx-grid"><div class="hx-copy" id="copy"></div><div class="hx-slot" id="slot"></div></div></main>
+<script src="common.js"></script><script type="module">
+import { splitHTML, initSplit } from './compare.js'
+document.getElementById('slot').innerHTML = splitHTML(); initSplit(document.querySelector('.cmp'))
+</script></body></html>

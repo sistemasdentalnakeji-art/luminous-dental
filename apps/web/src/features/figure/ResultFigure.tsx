@@ -107,7 +107,7 @@ export default function ResultFigure({ id, name }: { id: ServiceId; name: string
 
   return (
     <div className="result-wrap">
-      <div className="brk-card result-fig" ref={ref} />
+      <div className="brk-card result-fig" ref={ref} data-paused={paused || allPaused ? '' : undefined} />
       {!still && (
         <button type="button" className="result-pause" aria-label={(paused ? T.playNamed : T.pauseNamed).replace('{name}', name)} onClick={() => setPaused((p) => !p)}>
           <svg viewBox="0 0 20 20" aria-hidden="true">

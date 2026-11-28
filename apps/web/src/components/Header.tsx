@@ -6,7 +6,6 @@ import { flushSync } from 'react-dom'
 import { Icon, type IconName } from '@/components/Icon'
 import { LanguageSwitch } from '@/components/LanguageSwitch'
 import { NeonLogo } from '@/components/NeonLogo'
-import { SocialLinks } from '@/components/SocialLinks'
 import { hrefOf } from '@/config/routes'
 import { home } from '@/content/home'
 import { servicesOf } from '@/content/services'
@@ -111,17 +110,11 @@ export function Header({ path, appointmentHref }: { path: string; appointmentHre
             </nav>
             <div className="site-menu__row">
               <Link className="btn site-menu__cta" href={appointmentHref} onClick={() => setMenuOpen(false)}>{header.cta.label}</Link>
-              <a className="tlink" href={header.phone.href}>{header.phone.label}</a>
+              <div className="site-menu__lang"><LanguageSwitch path={path} /></div>
             </div>
-            <div className="site-menu__lang"><LanguageSwitch path={path} /></div>
-            <div className="site-menu__social"><SocialLinks /></div>
           </div>
           <div className="hdr-r">
             <LanguageSwitch className="lang-switch--bar" path={path} />
-            <div className="hdr-social"><SocialLinks iconSize={28} /></div>
-            <a className="hdr-phone" href={header.phone.href} aria-label={header.phone.label}>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" /></svg>
-            </a>
             <Link className="btn hdr-cta" href={appointmentHref}>{header.cta.label}</Link>
             <button
               ref={toggle}

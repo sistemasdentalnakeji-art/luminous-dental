@@ -20,9 +20,35 @@
   .neon.lit .neon-on, .neon.unlit .neon-on { opacity: 1; animation: none; }
   .neon.lit .neon-glow, .neon.unlit .neon-glow { opacity: calc(var(--glow) * .85); animation: none; }
 }
-html[data-motion-paused] .neon .neon-on, .ftr .neon .neon-on { opacity: 1; animation: none; }
-html[data-motion-paused] .neon .neon-glow, .ftr .neon .neon-glow { opacity: calc(var(--glow) * .85); animation: none; }
+html[data-motion-paused] .neon .neon-on { opacity: 1; animation: none; }
+html[data-motion-paused] .neon .neon-glow { opacity: calc(var(--glow) * .85); animation: none; }
 
 /* Margen derecho de la línea legal = fichas flotantes (44 px de toque) + su separación del borde + aire, para que nunca queden encima del texto ni de la pausa */
 .ftr .ftr-legal { padding-right: calc(clamp(14px, 2vw, 26px) + 44px + 16px); }
 @media (max-width: 767px) { .ftr .ftr-legal { padding-right: calc(4px + 46px + 12px); } }
+
+/* Logo del pie (r8, components/StarLogo.tsx): logo quieto; la estrella (copia recortada) se enciende al entrar en pantalla y luego late. Solo opacity y scale. */
+.starlogo{position:relative;width:clamp(190px,17vw,240px);aspect-ratio:520/297;margin:0 0 clamp(16px,2vw,24px)}
+.starlogo a{position:absolute;inset:0;display:block;min-height:44px}
+.starlogo img{display:block;width:100%;height:100%}
+.starlogo__base{position:absolute;inset:0}
+.starlogo__star{position:absolute;inset:0;transform-origin:87.5% 20%;filter:brightness(1.7) drop-shadow(0 0 5px #bfe3ff) drop-shadow(0 0 16px #3a90e8);opacity:.85}
+.starlogo__star img{clip-path:inset(0 2% 66% 77%)}
+.starlogo.unlit .starlogo__star{opacity:0}
+.starlogo.lit .starlogo__star{animation:sl-ignite 1.4s linear both,sl-twinkle 4.5s ease-in-out 1.4s infinite}
+@keyframes sl-ignite{0%{opacity:0}12%{opacity:1}22%{opacity:.2}38%{opacity:1}52%{opacity:.5}100%{opacity:.85}}
+@keyframes sl-twinkle{0%,100%{opacity:.6;scale:1}50%{opacity:1;scale:1.12}}
+@media (prefers-reduced-motion:reduce){.starlogo.lit .starlogo__star,.starlogo.unlit .starlogo__star{animation:none;opacity:.85}}
+html[data-motion-paused] .starlogo .starlogo__star{animation:none;opacity:.85}
+
+/* r8c: línea divisora fina arriba de la franja final; «Individual results may vary» en la columna Legal; pausa como texto (sigue siendo <button>) */
+.ftr .ftr-legal{border-top:1px solid rgba(255,255,255,.28)}
+.ftr .ftr-note{color:#cddaee;font-size:14px;line-height:1.4;padding-block:8px;max-width:16em}
+.ftr .ftr-textbtn{appearance:none;background:none;border:0;border-radius:4px;padding:0;margin:0;min-height:44px;min-width:44px;display:inline-flex;align-items:center;font:inherit;color:rgba(255,255,255,.88);cursor:pointer;text-decoration:none}
+.ftr address a[href^="tel:"]{white-space:nowrap} /* r9b: el teléfono no se parte en «805-» / «8688» */
+.ftr .ftr-textbtn:hover{color:var(--color-sky)}
+.ftr .ftr-textbtn:focus-visible{outline:2px solid var(--color-medic);outline-offset:3px}
+/* los enlaces y el texto de la franja final comparten tamaño */
+.ftr .ftr-legal>a,.ftr .ftr-legal>.ftr-textbtn{font-size:14px;color:#cddaee}
+.ftr .ftr-legal>a:hover,.ftr .ftr-legal>.ftr-textbtn:hover{color:var(--color-sky)}
+.ftr .ftr-emg{padding:0 24px}

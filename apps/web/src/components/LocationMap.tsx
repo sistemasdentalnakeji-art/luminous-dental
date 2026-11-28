@@ -18,6 +18,8 @@ import { useLang } from '@/lib/lang'
 
 interface LocationMapProps {
   name: string
+  /** false (Contact, r8): sin la moneda ni el botón; el mapa queda abierto y quieto. */
+  coin?: boolean
 }
 
 const CLOSE_REST = 1300 // ms: cerrar tarda ~1,2 s (location-map.css), luego un breve descanso antes de que la moneda vuelva a girar
@@ -67,9 +69,9 @@ function ChipFace({ top, bottom, id }: { top: string; bottom: string; id: string
 /** Índice del elemento: lo usa el CSS para escalonar la aparición. */
 const step = (index: number) => ({ '--i': index }) as CSSProperties
 
-export function LocationMap({ name }: LocationMapProps) {
+export function LocationMap({ name, coin: withCoin = true }: LocationMapProps) {
   const ui = locationText[useLang()].map
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(!withCoin)
   const stageRef = useRef<HTMLDivElement>(null)
   const toggleRef = useRef<HTMLButtonElement>(null)
   const expandedRef = useRef(false)
@@ -230,11 +232,11 @@ export function LocationMap({ name }: LocationMapProps) {
     >
         {/* Cerrada: una clásica ficha de casino dibujada para Luminous (docs/FICHA-MAPA.md): borde azul sólido ancho con 8 bloques de porcelana, filetes dorados finos,
             centro azul noche con el swoosh y la estrella del propio logo, texto en arco. Dos caras y una pila de discos para el canto: gira como una moneda. */}
-        <div className="loc__coin" aria-hidden="true">
+        {withCoin && <div className="loc__coin" aria-hidden="true">
           {EDGE.map((z) => <span key={z} className={`loc__edge${z === 0 ? ' loc__edge--gold' : ''}`} style={{ '--z': `${z}px` } as CSSProperties} />)}
           <span className="loc__side loc__side--front"><ChipFace top={ui.chipTop} bottom={ui.chipBottom} id="f" /></span>
           <span className="loc__side loc__side--back"><ChipFace top={ui.chipTop} bottom={ui.chipBottom} id="b" /></span>
-        </div>
+        </div>}
 
       {/* Va encima de la moneda: al abrir se funde sobre ella y crece; al cerrar se encoge hasta ser un disco y se funde dejando ver la moneda. */}
       <div className="loc__card">
@@ -280,19 +282,21 @@ export function LocationMap({ name }: LocationMapProps) {
         <p className="sr-only">{name}</p>
 
         {/* Un solo botón cubre y alterna la tarjeta. */}
-        <button ref={toggleRef} type="button" className="loc__toggle" aria-expanded={expanded} onClick={toggle}>
-          <span className="sr-only">{expanded ? ui.close : ui.open}</span>
-        </button>
-        <span className="loc__close" aria-hidden="true">
-          <Icon name="close" size={18} />
-        </span>
+        {withCoin && <>
+          <button ref={toggleRef} type="button" className="loc__toggle" aria-expanded={expanded} onClick={toggle}>
+            <span className="sr-only">{expanded ? ui.close : ui.open}</span>
+          </button>
+          <span className="loc__close" aria-hidden="true">
+            <Icon name="close" size={18} />
+          </span>
+        </>}
 
 
       <p className="loc__credit" aria-hidden="true">© OpenStreetMap contributors</p>
 
-      <p className="loc__hint" aria-hidden="true">
+      {withCoin && <p className="loc__hint" aria-hidden="true">
         {ui.hint}
-      </p>
+      </p>}
     </div>
   )
 }

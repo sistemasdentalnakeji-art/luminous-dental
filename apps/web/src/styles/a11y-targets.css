@@ -1,0 +1,8 @@
+/* r9b · A3: zona táctil >= 44 px (WCAG 2.5.8 / buena práctica) sin cambiar lo que se ve: el pseudo-elemento solo agranda el área que responde al toque. */
+.crumbs a,.blog-shelf h3 a,.ab-office p a[href^="tel:"],.ab-office p a[href^="mailto:"]{position:relative}
+.crumbs a::after,.blog-shelf h3 a::after,.ab-office p a[href^="tel:"]::after,.ab-office p a[href^="mailto:"]::after{content:"";position:absolute}
+.crumbs a::after{inset:0 -7px}
+.blog-shelf h3 a::after{inset:-9px 0}
+/* teléfono y correo van en dos líneas seguidas: cada uno crece hacia afuera para que las zonas no se encimen */
+.ab-office p a[href^="tel:"]::after{inset:-22px 0 0}
+.ab-office p a[href^="mailto:"]::after{inset:0 0 -22px}

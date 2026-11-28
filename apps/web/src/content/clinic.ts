@@ -16,7 +16,6 @@ export const clinic = {
     facebook: 'https://www.facebook.com/profile.php?id=61554688456073',
     instagram: 'https://www.instagram.com/luminousdentalvegas',
   },
-  whatsapp: null as string | null, // POR CONFIRMAR: número de WhatsApp de la clínica (solo dígitos con código de país)
   doctor: { name: 'Dr. Christian Hahn' },
   outOfTownUrl: 'https://stay.saharalasvegas.com/promo?hotel=SLSLV&accessCode=LUMI',
 } as const
@@ -75,7 +74,8 @@ export const services = [
   { group: 'General Dentistry', name: 'Dental Appliances', source: 'https://luminousdentallv.com/' },
   { group: 'Cosmetic Dentistry', name: 'Porcelain Veneers & Crowns', source: 'https://luminousdentallv.com/porcelain-veneers-crowns/' },
   { group: 'Cosmetic Dentistry', name: 'Cosmetic Bonding', source: 'https://luminousdentallv.com/cosmetic-bonding/' },
-  { group: 'Cosmetic Dentistry', name: 'All-on-4 & All-on-6', source: 'https://luminousdentallv.com/' }, // POR CONFIRMAR: lo pidió la dueña el 25-11; el sitio oficial no tiene página
+  { group: 'Cosmetic Dentistry', name: 'All-on-4 Implants', source: 'https://luminousdentallv.com/' }, // POR CONFIRMAR: lo pidió la dueña el 25-11; el sitio oficial no tiene página
+  { group: 'Cosmetic Dentistry', name: 'All-on-6 Implants', source: 'https://luminousdentallv.com/' }, // ídem (separado en dos el 27-11)
   { group: 'Cosmetic Dentistry', name: 'Dental Implants', source: 'https://luminousdentallv.com/dental-implants/' },
   { group: 'Cosmetic Dentistry', name: 'Teeth Whitening', source: 'https://luminousdentallv.com/teeth-whitening/' },
   { group: 'Orthodontics', name: 'Invisalign & Braces', source: 'https://luminousdentallv.com/' },

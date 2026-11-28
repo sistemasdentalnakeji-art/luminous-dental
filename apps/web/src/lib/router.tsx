@@ -1,5 +1,7 @@
 import { useEffect, useState, type AnchorHTMLAttributes, type MouseEvent } from 'react'
 import { prefetch } from '@/lib/pages'
+import { useLang } from '@/lib/lang'
+import { ui } from '@/content/ui'
 
 // Router mínimo (sin dependencias): rutas limpias con la History API. El servidor debe enviar cada ruta a index.html.
 const EVENT = 'ld:navigate'
@@ -29,6 +31,9 @@ export function navigate(to: string, replace = false) {
 const internal = (href: string) => href.startsWith('/') && !href.startsWith('//')
 const external = (href: string) => /^https?:\/\//.test(href)
 
+/** Aviso para lectores de pantalla en los enlaces que abren otra pestaña (sin cambio visible). */
+export const NewTab = () => <span className="sr-only"> {ui[useLang()].opensNewTab}</span>
+
 /** Enlace que se queda dentro del sitio cuando la dirección es una ruta ("/en/about", "/es/servicios#cosmetic"; sácala con hrefOf(clave, idioma) de config/routes.ts); las anclas funcionan como siempre y los enlaces externos (http/https) se abren en otra pestaña con noopener, salvo que se pida otra cosa. */
 export function Link({ href, onClick, ...rest }: AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }) {
   const go = (e: MouseEvent<HTMLAnchorElement>) => {
@@ -38,5 +43,5 @@ export function Link({ href, onClick, ...rest }: AnchorHTMLAttributes<HTMLAnchor
     navigate(href)
   }
   const warm = () => { if (internal(href)) prefetch(href) } // empieza a cargar la página antes del clic
-  return <a href={internal(href) ? BASE + href : href} onClick={go} onPointerEnter={warm} onFocus={warm} onTouchStart={warm} {...(external(href) && !rest.target ? { target: '_blank', rel: 'noopener noreferrer' } : {})} {...rest} />
+  return <a href={internal(href) ? BASE + href : href} onClick={go} onPointerEnter={warm} onFocus={warm} onTouchStart={warm} {...(external(href) && !rest.target ? { target: '_blank', rel: 'noopener noreferrer' } : {})} {...rest}>{rest.children}{(rest.target ?? (external(href) ? '_blank' : '')) === '_blank' && <NewTab />}</a>
 }
